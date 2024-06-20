@@ -14,7 +14,7 @@
                 @click="toggle"
                 data-type="youtube"
                 data-id="S_CGed6E610"
-                class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-700 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-emerald-600 dark:text-white cursor-pointer"
+                class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-700 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-cyan-600 dark:text-white cursor-pointer"
               >
                 <i
                   class="mdi mdi-play inline-flex items-center justify-center text-2xl"
@@ -37,12 +37,12 @@
           <h3
             class="mb-6 md:text-[26px] text-2xl md:leading-normal leading-normal font-semibold"
           >
-            Find Best Companies.
+            Encuentra pasantias en las mejores empresas
           </h3>
 
           <p class="text-slate-400 max-w-xl">
-            Search all the open positions on the web. Get your own personalized
-            salary estimate. Read reviews on over 30000+ companies worldwide.
+            Conoce las empresas que se encuentran en este programa y con todas
+            las pasantias que cuenta cada una en un solo CLICK
           </p>
 
           <div class="grid md:grid-cols-2 grid-cols-1 gap-6 mt-8">
@@ -65,9 +65,10 @@
                     class="block text-[16px] font-semibold hover:text-emerald-600 transition-all duration-500"
                     >{{ item.name }}</router-link
                   > -->
-                  <span class="block text-sm text-emerald-600">{{
+                  <span class="block text-sm text-cyan-600">{{
                     item.vacancy
                   }}</span>
+                  5 Vacantes
                 </div>
               </div>
             </div>
@@ -77,7 +78,7 @@
             <div class="md:col-span-12">
               <a
                 href=""
-                class="btn btn-link text-slate-400 hover:text-emerald-600 after:bg-emerald-600 duration-500 ease-in-out"
+                class="btn btn-link text-slate-400 hover:text-cyan-600 after:bg-cyan-600 duration-500 ease-in-out"
                 >See More Companies
                 <i class="uil uil-arrow-right align-middle"></i
               ></a>
@@ -137,39 +138,45 @@ export default {
       datas: [
         {
           id: 1,
-          image: "../../assets/images/company/facebook-logo.png",
+          image:
+            "https://editorial.aristeguinoticias.com/wp-content/uploads/2023/11/garfield-fuera-de-casa-3-14112023.jpeg",
           name: "Facebook",
-          vacancy: "5 Vacancy",
+          vacancy: "Garfield ",
         },
         {
           id: 2,
-          image: "../../assets/images/company/google-logo.png",
+          image:
+            "https://play-lh.googleusercontent.com/xmVUpHMpkci0tY46MtQkyfpz-HTnYp8E8SSjLulr5t97wI7Q-7RBpa46mWr_Zw4VNtrz",
           name: "Google",
-          vacancy: "5 Vacancy",
+          vacancy: "Mercantil Santa Cruz ",
         },
         {
           id: 3,
-          image: "../../assets/images/company/android.png",
+          image:
+            "https://yt3.googleusercontent.com/uXmPvIfLu_mkH1K2eyyATnP9uS0k7JoUep9JKIgxWP6Hg6FtlayBq-emdHp3MlogRkuA4M-6=s900-c-k-c0x00ffffff-no-rj",
           name: "Android",
-          vacancy: "5 Vacancy",
+          vacancy: "Bisa",
         },
         {
           id: 4,
-          image: "../../assets/images/company/lenovo.png",
-          name: "Lenovo",
+          image:
+            "https://play-lh.googleusercontent.com/a_SdjKAz3foUzgPTMd0vYZdyR9eBfsO1yFWhkgIYztdqq3zLsQAQaszkovEiY5KOxg0",
+          name: "Fie",
           vacancy: "5 Vacancy",
         },
         {
           id: 5,
-          image: "../../assets/images/company/spotify.png",
-          name: "Spotify",
-          vacancy: "5 Vacancy",
+          image:
+            "https://www.diariomotor.com/imagenes/2012/10/Toyota-logo-1989-2560x1440-720x394.webp",
+          name: "Toyota",
+          vacancy: "Toyota",
         },
         {
           id: 6,
-          image: "../../assets/images/company/linkedin.png",
-          name: "Linkedin",
-          vacancy: "5 Vacancy",
+          image:
+            "https://editorial.aristeguinoticias.com/wp-content/uploads/2023/11/garfield-fuera-de-casa-3-14112023.jpeg",
+          name: "Facebook",
+          vacancy: "Garfield ",
         },
       ],
     };

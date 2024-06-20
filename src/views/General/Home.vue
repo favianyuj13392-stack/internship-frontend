@@ -14,7 +14,7 @@
         <h4
           class="lg:leading-normal leading-normal text-4xl lg:text-6xl mb-5 font-bold text-white"
         >
-          INTERSHIP <br />
+          INTERNSHIP <br />
           by Universidad Catolica Boliviana
         </h4>
         <p class="text-white/50 text-lg max-w-xl mx-auto">
@@ -41,14 +41,14 @@
                           type="text"
                           id="job-keyword"
                           class="form-input filter-input-box bg-gray-50 dark:bg-slate-800 border-0"
-                          placeholder="Carrera"
+                          placeholder="Busca tu interes..."
                         />
                       </div>
 
                       <div
                         class="filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800"
                       >
-                        <i class="uil uil-map-marker icons"></i>
+                        <i class="uil uil-graduation-cap icons"></i>
                         <vSelect
                           :options="options"
                           v-model="selected"
@@ -62,7 +62,7 @@
                         name="search"
                         style="height: 60px"
                         class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white searchbtn submit-btn w-100"
-                        value="Enviar"
+                        value="Buscar"
                       />
                     </div>
                     <!--end grid-->
@@ -101,18 +101,21 @@
 
   <services />
 
+
+  <div class="container md:py-10 py-10">
+      <services />
+    </div>
+
+    <popularjob />
+    <company />
  -->
   <section class="relative md:py-16 py-16">
     <div class="container md:py-10 py-10"><counter /></div>
 
     <question />
     <cta />
-    <div class="container md:py-10 py-10">
-      <services />
-    </div>
-    <explore />
-    <popularjob />
     <company />
+    <explore />
   </section>
 
   <switcher />
@@ -136,8 +139,13 @@ import explore from "@/components/explore-job.vue";
 export default {
   data() {
     return {
-      options: ["Afghanistan", "Azerbaijan", "Bahamas", "Bahrain"],
-      selected: "Afghanistan",
+      options: [
+        "Ingenieria de Sistemas",
+        "Comunicación",
+        "Psicopedagogia",
+        "Administracion",
+      ],
+      selected: "Ingenieria de Sistemas",
     };
   },
   components: {

@@ -4,7 +4,7 @@
       <h3
         class="mb-4 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
       >
-        INTERSHIP BY CATO
+        INTERNSHIP BY CATO
       </h3>
 
       <p class="text-slate-400 max-w-xl mx-auto">
@@ -39,21 +39,21 @@ export default {
       datas: [
         {
           name: "Qué es la ",
-          name2: "Intership",
+          name2: "INTERNSHIP",
           name3: "by Cato ?",
           desc: "La Internship es un programa diseñado para conectar a los estudiantes con oportunidades de pasantías en empresas asociadas, brindándoles experiencias prácticas que complementan su formación académica.",
         },
         {
-          name: " Cual es nuestra vision ?",
+          name: " Cuál es nuestra visión ?",
           desc: "La visión de Internship en la UCB La Paz es ser el puente efectivo entre nuestros estudiantes y el mundo profesional, facilitando experiencias enriquecedoras que preparen a nuestros alumnos para enfrentar los desafíos del mercado laboral global con confianza y competencia.",
         },
         {
-          name: " Cual es nuestra mision  ?",
+          name: " Cuál es nuestra misión  ?",
           desc: "La misión de Internship en la UCB La Paz es conectar a nuestros estudiantes con experiencias prácticas en empresas, preparando profesionales listos para el mercado laboral.",
         },
         {
           name: " Cómo puedo",
-          name2: "UNIRMES",
+          name2: "UNIRME",
           name3: " en el programa Internship ?",
           desc: "Para postular a las pasantías a través del programa Internship de la UCB La Paz, primero crea tu cuenta en nuestro sistema con tus datos personales y académicos.",
         },
