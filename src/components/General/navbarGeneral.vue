@@ -86,23 +86,6 @@
       </div>
       <!-- End Mobile Toggle -->
 
-      <!--Login button Start-->
-      <ul class="buy-button list-none mb-0">
-        <li class="inline-block mb-0">
-          <div class="relative top-[3px]">
-            <i class="uil uil-search text-lg absolute top-[3px] end-3"></i>
-            <input
-              type="text"
-              class="form-input h-9 pe-10 rounded-3xl sm:w-44 w-36 border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900"
-              name="s"
-              id="searchItem"
-              placeholder="Buscar..."
-            />
-          </div>
-        </li>
-
-        <!--end dropdown-->
-      </ul>
       <!--Login button End-->
 
       <div id="navigation" :class="toggle === false ? 'none' : 'block'">
@@ -917,6 +900,12 @@
           <li :class="activeMenu === '/contact' ? 'active' : ''">
             <router-link to="/contact" class="sub-menu-item"
               >Contactanos</router-link
+            >
+          </li>
+
+          <li :class="activeMenu === '/contact' ? 'active' : ''">
+            <router-link to="/contact" class="sub-menu-item"
+              >Iniciar Sesión</router-link
             >
           </li>
         </ul>
