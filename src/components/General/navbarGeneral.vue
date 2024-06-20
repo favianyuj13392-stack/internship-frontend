@@ -19,12 +19,12 @@
           <span class="inline-block dark:hidden">
             <img
               src="../../assets/images/logo-dark.png"
-              class="h-[24px] l-dark"
+              class="h-[70px] l-dark"
               alt=""
             />
             <img
               src="../../assets/images/logo-light.png"
-              class="h-[24px] l-light"
+              class="h-[70px] l-light"
               alt=""
             />
           </span>

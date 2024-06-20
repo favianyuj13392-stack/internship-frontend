@@ -20,7 +20,8 @@
       </label>
     </span>
   </div>
-
+  <!-- descargar 
+   
   <div class="fixed top-1/2 -right-11 z-50 hidden sm:block">
     <a
       href="https://1.envato.market/jobstack-vue"
@@ -29,6 +30,9 @@
       ><i class="mdi mdi-cart-outline me-1"></i> Download</a
     >
   </div>
+  
+  -->
+
   <!-- Switcher -->
 
   <!-- LTR & RTL Mode Code -->

@@ -14,8 +14,8 @@
         <h4
           class="lg:leading-normal leading-normal text-4xl lg:text-6xl mb-5 font-bold text-white"
         >
-          Find & Hire Experts <br />
-          for any Job
+          INTERSHIP <br />
+          by Universidad Catolica Boliviana
         </h4>
         <p class="text-white/50 text-lg max-w-xl mx-auto">
           Find Jobs, Employment & Career Opportunities. Some of the companies
@@ -60,8 +60,8 @@
                         id="search"
                         name="search"
                         style="height: 60px"
-                        class="btn bg-emerald-600 hover:bg-emerald-700 border-emerald-600 hover:border-emerald-700 text-white searchbtn submit-btn w-100"
-                        value="Search"
+                        class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white searchbtn submit-btn w-100"
+                        value="Enviar"
                       />
                     </div>
                     <!--end grid-->
@@ -149,7 +149,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.detalle {
-  background-color: #33e4ff; /* Cambia a cualquier color que necesites */
+.map-marker-icon {
+  color: #00ff00;
 }
 </style>

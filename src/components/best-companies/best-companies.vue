@@ -97,10 +97,14 @@
   >
     <div class="h-[100%] flex items-center justify-center">
       <iframe
-        src="https://www.youtube.com/embed/S_CGed6E610?feature=oembed"
-        width="700"
-        height="500"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/vJl3o_5Mmkw?si=w5e9F26u_KmIbyrd"
+        title="YouTube video player"
         frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
       ></iframe>
     </div>
     <button class="text-slate-400 absolute top-[20px] right-[20px]">
