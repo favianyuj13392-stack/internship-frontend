@@ -19,12 +19,12 @@
           <span class="inline-block dark:hidden">
             <img
               src="../../assets/images/logo-dark.png"
-              class="h-[24px] l-dark"
+              class="h-[70px] l-dark"
               alt=""
             />
             <img
               src="../../assets/images/logo-light.png"
-              class="h-[24px] l-light"
+              class="h-[70px] l-light"
               alt=""
             />
           </span>
@@ -96,7 +96,7 @@
               class="form-input h-9 pe-10 rounded-3xl sm:w-44 w-36 border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900"
               name="s"
               id="searchItem"
-              placeholder="Search..."
+              placeholder="Buscar..."
             />
           </div>
         </li>
@@ -192,7 +192,7 @@
             <router-link
               to=""
               @click="submenu(menuOpen === '/index' ? '' : '/index')"
-              >Home</router-link
+              >Inicio</router-link
             >
             <ul
               class="submenu"
@@ -300,7 +300,7 @@
               to=""
               @click="submenu(menuOpen === '/index-jobs' ? '' : '/index-jobs')"
             >
-              Jobs
+              Pasantias
             </router-link>
             <ul
               class="submenu"
@@ -574,7 +574,7 @@
             <router-link
               to=""
               @click="submenu(menuOpen === '/pages' ? '' : '/pages')"
-              >Pages</router-link
+              >Empresas</router-link
             >
             <ul
               class="submenu"
@@ -976,7 +976,7 @@
 
           <li :class="activeMenu === '/contact' ? 'active' : ''">
             <router-link to="/contact" class="sub-menu-item"
-              >Contact</router-link
+              >Contactanos</router-link
             >
           </li>
         </ul>

@@ -18,8 +18,9 @@
           by Universidad Catolica Boliviana
         </h4>
         <p class="text-white/50 text-lg max-w-xl mx-auto">
-          Find Jobs, Employment & Career Opportunities. Some of the companies
-          we've helped recruit excellent applicants over the years.
+          Únete a nosotros en esta emocionante etapa de tu educación, donde el
+          aprendizaje se transforma en experiencia y las conexiones se
+          convierten en oportunidades concretas para el futuro.
         </p>
 
         <div class="d-flex" id="reserve-form">
@@ -40,7 +41,7 @@
                           type="text"
                           id="job-keyword"
                           class="form-input filter-input-box bg-gray-50 dark:bg-slate-800 border-0"
-                          placeholder="Search your Keywords"
+                          placeholder="Carrera"
                         />
                       </div>
 
@@ -77,8 +78,10 @@
 
         <div class="mt-4">
           <span class="text-white/60"
-            ><span class="text-white">Popular Searches :</span> Designer,
-            Developer, Web, IOS, PHP Senior Engineer</span
+            ><span class="text-white"
+              >Tu primer paso en el mundo laboral por :</span
+            >
+            Universidad Catolica Boliviana "San Pablo"</span
           >
         </div>
       </div>
@@ -99,12 +102,14 @@
   <services />
 
  -->
-  <section class="relative md:py-24 py-16">
-    <div class="container">
+  <section class="relative md:py-16 py-16">
+    <div class="container md:py-10 py-10"><counter /></div>
+
+    <question />
+    <cta />
+    <div class="container md:py-10 py-10">
       <services />
     </div>
-    <cta />
-    <question />
     <explore />
     <popularjob />
     <company />
@@ -115,6 +120,7 @@
 </template>
 
 <script>
+import counter from "@/components/counter.vue";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import navbar from "@/components/General/navbarGeneral.vue";
@@ -126,6 +132,7 @@ import cta from "@/components/job-cta/two-job-cta.vue";
 import company from "@/components/best-companies/best-companies.vue";
 import question from "@/components/job-questions.vue";
 import explore from "@/components/explore-job.vue";
+
 export default {
   data() {
     return {
@@ -144,6 +151,7 @@ export default {
     company,
     question,
     explore,
+    counter,
   },
 };
 </script>

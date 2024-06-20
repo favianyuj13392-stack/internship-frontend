@@ -2,7 +2,7 @@
   <div class="container md:mt-24 mt-16">
     <div class="grid grid-cols-1">
       <div
-        class="relative overflow-hidden bg-emerald-600 rounded-md shadow dark:shadow-gray-700"
+        class="relative overflow-hidden bg-amber-400 rounded-md shadow dark:shadow-gray-700"
       >
         <div class="grid md:grid-cols-2 items-center gap-[30px]">
           <div class="relative">
@@ -14,7 +14,7 @@
                 @click="toggle"
                 data-type="youtube"
                 data-id="S_CGed6E610"
-                class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-700 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-emerald-600 dark:text-white cursor-pointer"
+                class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-700 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-amber-600 dark:text-white cursor-pointer"
               >
                 <i
                   class="mdi mdi-play inline-flex items-center justify-center text-2xl"
@@ -26,28 +26,28 @@
           <div>
             <div class="text-white p-4">
               <h4 class="leading-normal text-4xl mb-3 font-semibold">
-                Get the job of your <br />
-                dreams quickly.
+                Consigue la pasantía de <br />
+                tus sueños rápidamente.
               </h4>
 
               <p class="text-white/70 text-lg max-w-xl">
-                Search all the open positions on the web. Get your own
-                personalized salary estimate. Read reviews on over 30000+
-                companies worldwide.
+                Busca todas las posiciones abiertas en nuestro sistema. Lee
+                opiniones sobre nuestras empresas asociadas.
               </p>
 
               <ul class="list-none text-white/50 mt-4">
                 <li class="mb-1 flex">
                   <i class="uil uil-check-circle text-white text-xl me-2"></i>
-                  Digital Marketing Solutions for Tomorrow
+                  Soluciones prácticas para tu futuro
                 </li>
                 <li class="mb-1 flex">
                   <i class="uil uil-check-circle text-white text-xl me-2"></i>
-                  Our Talented & Experienced Marketing Agency
+                  Nuestro programa de pasantías conecta talento con
+                  oportunidades.
                 </li>
                 <li class="mb-1 flex">
                   <i class="uil uil-check-circle text-white text-xl me-2"></i>
-                  Create your own skin to match your brand
+                  Crea tu perfil para destacar tu marca personal.
                 </li>
               </ul>
             </div>
