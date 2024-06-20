@@ -87,32 +87,59 @@
     <!--end container-->
   </section>
   <!--end section-->
-  <!-- Hero End -->
+  <!--end section-->
+  <!-- Hero End
+
+    <h1>hola</h1>
+      <div class="container">
+
+  </div>
+
+    <popularjob />
+    <company />
+
+
+ -->
+  <section class="relative md:py-24 py-16">
+    <cta />
+    <question />
+    <explore />
+  </section>
+  <switcher />
+  <footers />
+  <services />
 </template>
 
 <script>
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
 import navbar from "@/components/navbar/navbar.vue";
+import switcher from "@/components/switcher.vue";
+import footers from "@/components/footer/footer.vue";
+import services from "@/components/job-services.vue";
+import popularjob from "@/components/popular-job/popular-job.vue";
+import cta from "@/components/job-cta/two-job-cta.vue";
+import company from "@/components/best-companies/best-companies.vue";
+import question from "@/components/job-questions.vue";
+import explore from "@/components/explore-job.vue";
 export default {
   data() {
     return {
-      options: [
-        "Afghanistan",
-        "Azerbaijan",
-        "Bahamas",
-        "Bahrain",
-        "Canada",
-        "Cape Verde",
-        "Denmark",
-        "Djibouti",
-        "Eritrea",
-        "Estonia",
-        "Gambia",
-      ],
+      options: ["Afghanistan", "Azerbaijan", "Bahamas", "Bahrain"],
       selected: "Afghanistan",
     };
   },
   components: {
     navbar,
+    switcher,
+    footers,
+    vSelect,
+    services,
+    popularjob,
+    cta,
+    company,
+    question,
+    explore,
   },
 };
 </script>
