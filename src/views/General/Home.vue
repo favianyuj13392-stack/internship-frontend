@@ -48,11 +48,11 @@
                         class="filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800"
                       >
                         <i class="uil uil-map-marker icons"></i>
-                        <v-select
+                        <vSelect
                           :options="options"
                           v-model="selected"
                           class="ms-10"
-                        ></v-select>
+                        ></vSelect>
                       </div>
 
                       <input
@@ -91,29 +91,33 @@
   <!-- Hero End
 
     <h1>hola</h1>
-      <div class="container">
+    
 
-  </div>
 
-    <popularjob />
     <company />
 
+  <services />
 
  -->
   <section class="relative md:py-24 py-16">
+    <div class="container">
+      <services />
+    </div>
     <cta />
     <question />
     <explore />
+    <popularjob />
+    <company />
   </section>
+
   <switcher />
   <footers />
-  <services />
 </template>
 
 <script>
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
-import navbar from "@/components/navbar/navbar.vue";
+import navbar from "@/components/General/navbarGeneral.vue";
 import switcher from "@/components/switcher.vue";
 import footers from "@/components/footer/footer.vue";
 import services from "@/components/job-services.vue";
@@ -144,4 +148,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.detalle {
+  background-color: #33e4ff; /* Cambia a cualquier color que necesites */
+}
+</style>
