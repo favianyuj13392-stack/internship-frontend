@@ -14,12 +14,13 @@
         <h4
           class="lg:leading-normal leading-normal text-4xl lg:text-6xl mb-5 font-bold text-white"
         >
-          Find & Hire Experts <br />
-          for any Job
+          INTERNSHIP <br />
+          by Universidad Catolica Boliviana
         </h4>
         <p class="text-white/50 text-lg max-w-xl mx-auto">
-          Find Jobs, Employment & Career Opportunities. Some of the companies
-          we've helped recruit excellent applicants over the years.
+          Únete a nosotros en esta emocionante etapa de tu educación, donde el
+          aprendizaje se transforma en experiencia y las conexiones se
+          convierten en oportunidades concretas para el futuro.
         </p>
 
         <div class="d-flex" id="reserve-form">
@@ -40,19 +41,19 @@
                           type="text"
                           id="job-keyword"
                           class="form-input filter-input-box bg-gray-50 dark:bg-slate-800 border-0"
-                          placeholder="Search your Keywords"
+                          placeholder="Busca tu interes..."
                         />
                       </div>
 
                       <div
                         class="filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800"
                       >
-                        <i class="uil uil-map-marker icons"></i>
-                        <v-select
+                        <i class="uil uil-graduation-cap icons"></i>
+                        <vSelect
                           :options="options"
                           v-model="selected"
                           class="ms-10"
-                        ></v-select>
+                        ></vSelect>
                       </div>
 
                       <input
@@ -60,8 +61,8 @@
                         id="search"
                         name="search"
                         style="height: 60px"
-                        class="btn bg-emerald-600 hover:bg-emerald-700 border-emerald-600 hover:border-emerald-700 text-white searchbtn submit-btn w-100"
-                        value="Search"
+                        class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white searchbtn submit-btn w-100"
+                        value="Buscar"
                       />
                     </div>
                     <!--end grid-->
@@ -77,8 +78,10 @@
 
         <div class="mt-4">
           <span class="text-white/60"
-            ><span class="text-white">Popular Searches :</span> Designer,
-            Developer, Web, IOS, PHP Senior Engineer</span
+            ><span class="text-white"
+              >Tu primer paso en el mundo laboral por :</span
+            >
+            Universidad Catolica Boliviana "San Pablo"</span
           >
         </div>
       </div>
@@ -91,29 +94,39 @@
   <!-- Hero End
 
     <h1>hola</h1>
-      <div class="container">
+    
 
-  </div>
+
+    <company />
+
+  <services />
+
+
+  <div class="container md:py-10 py-10">
+      <services />
+    </div>
 
     <popularjob />
     <company />
-
-
  -->
-  <section class="relative md:py-24 py-16">
-    <cta />
+  <section class="relative md:py-16 py-16">
+    <div class="container md:py-10 py-10"><counter /></div>
+
     <question />
+    <cta />
+    <company />
     <explore />
   </section>
+
   <switcher />
   <footers />
-  <services />
 </template>
 
 <script>
+import counter from "@/components/counter.vue";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
-import navbar from "@/components/navbar/navbar.vue";
+import navbar from "@/components/General/navbarGeneral.vue";
 import switcher from "@/components/switcher.vue";
 import footers from "@/components/footer/footer.vue";
 import services from "@/components/job-services.vue";
@@ -122,11 +135,17 @@ import cta from "@/components/job-cta/two-job-cta.vue";
 import company from "@/components/best-companies/best-companies.vue";
 import question from "@/components/job-questions.vue";
 import explore from "@/components/explore-job.vue";
+
 export default {
   data() {
     return {
-      options: ["Afghanistan", "Azerbaijan", "Bahamas", "Bahrain"],
-      selected: "Afghanistan",
+      options: [
+        "Ingenieria de Sistemas",
+        "Comunicación",
+        "Psicopedagogia",
+        "Administracion",
+      ],
+      selected: "Ingenieria de Sistemas",
     };
   },
   components: {
@@ -140,8 +159,13 @@ export default {
     company,
     question,
     explore,
+    counter,
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.map-marker-icon {
+  color: #00ff00;
+}
+</style>

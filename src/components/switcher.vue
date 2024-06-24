@@ -20,7 +20,8 @@
       </label>
     </span>
   </div>
-
+  <!-- descargar 
+   
   <div class="fixed top-1/2 -right-11 z-50 hidden sm:block">
     <a
       href="https://1.envato.market/jobstack-vue"
@@ -29,6 +30,9 @@
       ><i class="mdi mdi-cart-outline me-1"></i> Download</a
     >
   </div>
+  
+  -->
+
   <!-- Switcher -->
 
   <!-- LTR & RTL Mode Code -->
@@ -65,7 +69,7 @@
     @click="scrollToTop"
     v-show="showTopButton"
     id="back-to-top"
-    class="fixed text-lg cursor-pointer rounded-full z-10 bottom-5 end-5 h-9 w-9 text-center bg-emerald-600 text-white leading-9"
+    class="fixed text-lg cursor-pointer rounded-full z-10 bottom-5 end-5 h-9 w-9 text-center bg-cyan-600 text-white leading-9"
     ><i class="uil uil-arrow-up"></i
   ></a>
   <!-- Back to top -->
