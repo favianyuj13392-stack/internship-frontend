@@ -13,39 +13,29 @@
     </div>
   </div>
   <!--end grid-->
+
   <div class="grid grid-cols-1 mt-7 relative">
-    <div class="tiny-five-item overflow-hidden">
-      <div class="flex items-center justify-between">
+    <div class="tiny-five-item">
+      <div v-for="item in datas" :key="item" class="tiny-slide">
         <div
-          v-for="(item, index) in datas"
-          :key="item.id"
-          class="tiny-slide w-1/5 sm:w-1/6 md:w-1/5 lg:w-1/6 xl:w-1/6 flex-shrink-0"
+          class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-700 transition duration-500 m-1"
         >
-          <div
-            class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-700 transition duration-500 m-1"
-          >
-            <img
-              :src="item.image"
-              :alt="item.name"
-              class="w-10rem h-20rem object-cover"
-            />
-            <div class="absolute inset-0 bg-slate-900/50"></div>
-            <div class="absolute inset-x-0 bottom-0 p-4">
-              <a
-                href="#"
-                class="text-lg font-semibold text-white hover:text-emerald-600 transition-all duration-500"
-                >{{ item.name }}</a
-              >
-            </div>
+          <img :src="item.image" alt="" />
+          <div class="absolute inset-0 bg-slate-900/50"></div>
+
+          <div class="absolute bottom-0 p-4">
+            <a
+              href=""
+              class="text-lg font-semibold text-white hover:text-emerald-600 transition-all duration-500"
+              >{{ item.name }}</a
+            >
           </div>
         </div>
       </div>
     </div>
   </div>
-
   <!--grid-->
 </template>
-
 <script>
 import { tns } from "tiny-slider/src/tiny-slider";
 import image01 from "../assets/images/work/01.jpg";

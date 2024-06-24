@@ -8,36 +8,18 @@
   <section
     class="relative table w-full py-36 bg-[url('../../assets/images/hero/bg.jpg')] bg-top bg-no-repeat bg-cover"
   >
-    <div class="absolute inset-0 bg-emerald-900/90"></div>
+    <div class="absolute inset-0 bg-cyan-900/90"></div>
     <div class="container">
       <div class="grid grid-cols-1 text-center mt-10">
         <h3
           class="md:text-3xl text-2xl md:leading-snug tracking-wide leading-snug font-medium text-white"
         >
-          Job Vacancies
+          Pasantías
         </h3>
       </div>
       <!--end grid-->
     </div>
     <!--end container-->
-
-    <div class="absolute text-center z-10 bottom-5 start-0 end-0 mx-3">
-      <ul
-        class="breadcrumb tracking-[0.5px] breadcrumb-light mb-0 inline-block"
-      >
-        <li
-          class="inline breadcrumb-item text-[15px] font-semibold duration-500 ease-in-out text-white/50 hover:text-white"
-        >
-          <router-link to="/">Jobstack</router-link>
-        </li>
-        <li
-          class="inline breadcrumb-item text-[15px] font-semibold duration-500 ease-in-out text-white"
-          aria-current="page"
-        >
-          Job Listing
-        </li>
-      </ul>
-    </div>
   </section>
   <!--end section-->
   <div class="relative">
@@ -61,109 +43,306 @@
   <section class="relative md:py-24 py-16">
     <div class="container">
       <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
-        <!--sidebar 
-       
-       -->
-        <div
-          v-for="item in datas"
-          :key="item"
-          class="group relative overflow-hidden bg-white dark:bg-slate-900 shadow hover:shadow-md dark:shadow-gray-700 dark:hover:shadow-gray-700 hover:-mt-2 rounded-md transition-all duration-500 h-fit"
-        >
-          <div class="p-6">
-            <div class="flex items-center">
-              <div
-                class="size-14 min-w-[56px] flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md"
-              >
-                <img :src="item.image" class="size-8" alt="" />
+        <div class="lg:col-span-4 md:col-span-6">
+          <div
+            class="shadow dark:shadow-gray-700 p-6 rounded-md bg-white dark:bg-slate-900 sticky top-20"
+          >
+            <form>
+              <div class="grid grid-cols-1 gap-3">
+                <div>
+                  <label for="searchname" class="font-semibold"
+                    >Search Company</label
+                  >
+                  <div class="relative mt-2">
+                    <i
+                      class="uil uil-search text-lg absolute top-[5px] start-3"
+                    ></i>
+                    <input
+                      name="search"
+                      id="searchname"
+                      type="text"
+                      class="form-input border border-slate-100 dark:border-slate-800 ps-10"
+                      placeholder="Search"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="font-semibold">Categories</label>
+                  <select
+                    class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-1"
+                  >
+                    <option value="WD">Web Designer</option>
+                    <option value="WD">Web Developer</option>
+                    <option value="UI">UI / UX Desinger</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="font-semibold">Location</label>
+                  <select
+                    class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-1"
+                  >
+                    <option value="NY">New York</option>
+                    <option value="MC">North Carolina</option>
+                    <option value="SC">South Carolina</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="font-semibold">Job Types</label>
+                  <div class="block mt-2">
+                    <div class="flex justify-between">
+                      <div class="inline-flex items-center mb-0">
+                        <input
+                          class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
+                          type="checkbox"
+                          value=""
+                          id="fulltime"
+                        />
+                        <label
+                          class="form-checkbox-label text-slate-400"
+                          for="fulltime"
+                          >Full Time</label
+                        >
+                      </div>
+
+                      <span
+                        class="bg-cyan-600/10 text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full h-5"
+                        >3</span
+                      >
+                    </div>
+                    <div class="flex justify-between">
+                      <div class="inline-flex items-center mb-0">
+                        <input
+                          class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
+                          type="checkbox"
+                          value=""
+                          id="parttime"
+                        />
+                        <label
+                          class="form-checkbox-label text-slate-400"
+                          for="parttime"
+                          >Part Time</label
+                        >
+                      </div>
+
+                      <span
+                        class="bg-cyan-600/10 text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full h-5"
+                        >7</span
+                      >
+                    </div>
+                    <div class="flex justify-between">
+                      <div class="inline-flex items-center mb-0">
+                        <input
+                          class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
+                          type="checkbox"
+                          value=""
+                          id="Freelancing"
+                        />
+                        <label
+                          class="form-checkbox-label text-slate-400"
+                          for="Freelancing"
+                          >Freelancing</label
+                        >
+                      </div>
+
+                      <span
+                        class="bg-cyan-600/10 text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full h-5"
+                        >4</span
+                      >
+                    </div>
+                    <div class="flex justify-between">
+                      <div class="inline-flex items-center mb-0">
+                        <input
+                          class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
+                          type="checkbox"
+                          value=""
+                          id="fixedprice"
+                        />
+                        <label
+                          class="form-checkbox-label text-slate-400"
+                          for="fixedprice"
+                          >Fixed Price</label
+                        >
+                      </div>
+
+                      <span
+                        class="bg-cyan-600/10 text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full h-5"
+                        >6</span
+                      >
+                    </div>
+                    <div class="flex justify-between">
+                      <div class="inline-flex items-center mb-0">
+                        <input
+                          class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
+                          type="checkbox"
+                          value=""
+                          id="Remote"
+                        />
+                        <label
+                          class="form-checkbox-label text-slate-400"
+                          for="Remote"
+                          >Remote</label
+                        >
+                      </div>
+
+                      <span
+                        class="bg-cyan-600/10 text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full h-5"
+                        >7</span
+                      >
+                    </div>
+                    <div class="flex justify-between">
+                      <div class="inline-flex items-center mb-0">
+                        <input
+                          class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
+                          type="checkbox"
+                          value=""
+                          id="hourlybasis"
+                        />
+                        <label
+                          class="form-checkbox-label text-slate-400"
+                          for="hourlybasis"
+                          >Hourly Basis</label
+                        >
+                      </div>
+
+                      <span
+                        class="bg-cyan-600/10 text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full h-5"
+                        >44</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="font-semibold">Salary</label>
+                  <div class="block mt-2">
+                    <div>
+                      <label class="inline-flex items-center">
+                        <input
+                          type="radio"
+                          class="form-radio border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
+                          name="radio-colors"
+                          value="1"
+                          checked
+                        />
+                        <span class="text-slate-400">10k - 15k</span>
+                      </label>
+                    </div>
+                    <div>
+                      <label class="inline-flex items-center">
+                        <input
+                          type="radio"
+                          class="form-radio border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
+                          name="radio-colors"
+                          value="1"
+                        />
+                        <span class="text-slate-400">15k - 25k</span>
+                      </label>
+                    </div>
+                    <div>
+                      <label class="inline-flex items-center">
+                        <input
+                          type="radio"
+                          class="form-radio border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
+                          name="radio-colors"
+                          value="1"
+                        />
+                        <span class="text-slate-400">more than 25K</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <input
+                    type="submit"
+                    class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white rounded-md w-full"
+                    value="Apply Filter"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!--end col-->
+
+        <!--TARTJETAZOOO-->
+        <div class="lg:col-span-8 md:col-span-6">
+          <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-[30px]">
+            <div
+              v-for="item in datas"
+              :key="item"
+              class="group p-6 rounded-lg border border-cyan-600/20 dark:border-cyan-600/40 bg-white dark:bg-slate-900 hover:bg-cyan-600/[0.02] hover:dark:bg-cyan-600/5 hover:shadow-md hover:shadow-cyan-600/5 transition-all duration-500"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <div
+                    class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-full mb-2"
+                  >
+                    <img :src="item.image" class="size-8" alt="" />
+                  </div>
+                  <router-link
+                    class="text-lg hover:text-cyan-600 font-semibold transition-all duration-500"
+                    >{{ item.name }}</router-link
+                  >
+                </div>
+
+                <div class="flex items-center">
+                  <router-link
+                    to="/job-apply"
+                    class="btn btn-icon rounded-full bg-cyan-600/5 group-hover:bg-cyan-600 border-cyan-600/10 text-cyan-600 group-hover:text-white ms-1"
+                    ><i class="uil uil-arrow-up-right"></i
+                  ></router-link>
+                </div>
               </div>
 
-              <div class="ms-3">
-                <span class="inline-block text-sm text-slate-400">{{
-                  item.day
-                }}</span>
-                <div>
-                  <span
-                    class="bg-emerald-600/10 inline-block text-emerald-600 text-xs px-2.5 py-0.5 font-semibold rounded-full me-1"
-                    >{{ item.type }}</span
-                  >
-                  <span class="text-sm font-medium inline-block me-1"
-                    >Est. time:
-                    <span class="text-slate-400">{{ item.time }}</span></span
-                  >
-                  <span class="text-sm font-medium inline-block me-1"
-                    >Hourly:
-                    <span class="text-slate-400">{{ item.salary }}</span></span
-                  >
+              <div class="mt-3">
+                <router-link
+                  class="text-xl hover:text-cyan-600 font-semibold transition-all duration-500"
+                  >{{ item.job }}</router-link
+                >
+                <p class="text-slate-400 mt-2">
+                  Looking for an experienced Web Designer for an our company.
+                </p>
+
+                <div class="mt-3">
+                  <a href="">
+                    <span
+                      class="bg-rose-500/5 hover:bg-rose-500/20 dark:bg-rose-500/10 hover:dark:bg-rose-500/30 inline-block text-rose-500 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500"
+                      >{{ item.type }}</span
+                    >
+                  </a>
+                  <a href="">
+                    <span
+                      class="bg-purple-600/5 hover:bg-yellow-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500"
+                      >{{ item.salary }}</span
+                    >
+                  </a>
+                  <a href="">
+                    <span
+                      class="bg-cyan-600/5 hover:bg-cyan-600/20 dark:bg-cyan-600/10 hover:dark:bg-cyan-600/30 inline-block text-cyan-600 px-4 text-[14px] font-medium rounded-full mt-2 transition-all duration-500"
+                      ><i class="uil uil-map-marker"></i>
+                      {{ item.location }}</span
+                    >
+                  </a>
                 </div>
               </div>
             </div>
-
-            <p class="text-slate-400 py-3">{{ item.title }}</p>
-
-            <div>
-              <span
-                v-for="language in item.language"
-                :key="language"
-                class="bg-slate-100 dark:bg-slate-800 inline-block text-slate-900 dark:text-slate-300 text-xs px-2.5 py-0.5 font-semibold rounded-full me-1"
-                >{{ language }}</span
-              >
-            </div>
+            <!--end content-->
           </div>
-
-          <div
-            class="px-6 py-2 bg-slate-50 dark:bg-slate-800 lg:flex justify-between items-center"
-          >
-            <div class="lg:inline-block flex justify-between">
-              <span class="inline-block me-1 font-semibold"
-                ><i
-                  class="mdi mdi-check-decagram mdi-18px text-blue-500 me-1"
-                ></i
-                >Verified</span
-              >
-              <ul
-                class="list-none inline-block me-1 text-yellow-400 space-x-0.5"
-              >
-                <li class="inline"><i class="mdi mdi-star text-lg"></i></li>
-                <li class="inline"><i class="mdi mdi-star text-lg"></i></li>
-                <li class="inline"><i class="mdi mdi-star text-lg"></i></li>
-                <li class="inline"><i class="mdi mdi-star text-lg"></i></li>
-                <li class="inline"><i class="mdi mdi-star text-lg"></i></li>
-                <li class="inline text-slate-400 font-semibold">4.8</li>
-              </ul>
-              <span class="inline-block me-1 text-slate-400"
-                ><i
-                  class="uil uil-map-marker text-[18px] text-slate-900 dark:text-white me-1"
-                ></i
-                >{{ item.location }}</span
-              >
-            </div>
-
-            <router-link
-              to="/job-apply"
-              class="btn btn-sm rounded-md bg-emerald-600 hover:bg-emerald-700 border-emerald-600 hover:border-emerald-700 text-white md:ms-2 w-full lg:w-auto lg:mt-0 mt-4"
-              >Apply Now</router-link
-            >
-          </div>
-
-          <a
-            href=""
-            class="btn btn-icon rounded-full bg-emerald-600/5 hover:bg-emerald-600 border-emerald-600/10 hover:border-emerald-600 text-emerald-600 hover:text-white absolute top-0 end-0 m-3"
-            ><i data-feather="bookmark" class="size-4"></i
-          ></a>
-        </div>
-        <!--end content-->
-        <div class="lg:col-span-8 md:col-span-6">
-          <div class="grid grid-cols-1 gap-[30px]">
-            <listings />
-          </div>
+          <!--end grid-->
+          <!--end grid-->
+          holaa
           <pagination />
         </div>
       </div>
     </div>
   </section>
   <footers />
+  <switcher />
 </template>
-
 <script>
 import navbar from "@/components/General/navbarGeneral.vue";
 
@@ -176,163 +355,135 @@ export default {
       datas: [
         {
           id: 1,
-          image: "../../../assets/images/company/facebook-logo.png",
-          name: "Web Designer",
-          day: "2 days ago",
-          type: "Full Time",
-          time: "1 to 3 months",
-          salary: "$16 - $20",
+          image:
+            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
+          name: "Facebook",
+          job: "Web Designer / Developer",
           title: "Looking for an experienced Web Designer for an our company.",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
+          type: "Full Time",
+          salary: "$4,000 - $4,500",
           location: "Australia",
         },
         {
           id: 2,
-          image: "../../../assets/images/company/google-logo.png",
-          name: "Marketing Director",
-          day: "2 days ago",
-          type: "Part Time",
-          time: "1 to 3 months",
-          salary: "$16 - $20",
+          image:
+            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
+          name: "Google",
+          job: "Marketing Director",
           title: "Looking for an experienced Web Designer for an our company.",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          location: "USA",
+          type: "Full Time",
+          salary: "$4,000 - $4,500",
+          location: "Australia",
         },
         {
           id: 3,
-          image: "../../../assets/images/company/android.png",
-          name: "App Developer",
-          day: "2 days ago",
-          type: "Remote",
-          time: "1 to 3 months",
-          salary: "$16 - $20",
+          image:
+            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
+          name: "Android",
+          job: "Application Developer",
           title: "Looking for an experienced Web Designer for an our company.",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          location: "China",
+          type: "Full Time",
+          salary: "$4,000 - $4,500",
+          location: "Australia",
         },
         {
           id: 4,
-          image: "../../../assets/images/company/lenovo-logo.pn",
-          name: "Product Designer",
-          day: "2 days ago",
-          type: "WFH",
-          time: "1 to 3 months",
-          salary: "$16 - $20",
+          image:
+            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
+          name: "Lenovo",
+          job: "Senior Product Designer",
           title: "Looking for an experienced Web Designer for an our company.",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          location: "Dubai",
+          type: "Full Time",
+          salary: "$4,000 - $4,500",
+          location: "Australia",
         },
         {
           id: 5,
-          image: "../../../assets/images/company/facebook-logo.png",
-          name: "Web Designer",
-          day: "2 days ago",
-          type: "Full Time",
-          time: "1 to 3 months",
-          salary: "$16 - $20",
+          image:
+            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
+          name: "Spotify",
+          job: "C++ Developer",
           title: "Looking for an experienced Web Designer for an our company.",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
+          type: "Full Time",
+          salary: "$4,000 - $4,500",
           location: "Australia",
         },
         {
           id: 6,
-          image: "../../../assets/images/company/google-logo.png",
-          name: "Marketing Director",
-          day: "2 days ago",
-          type: "Part Time",
-          time: "1 to 3 months",
-          salary: "$16 - $20",
+          image:
+            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
+          name: "Linkedin",
+          job: "Php Developer",
           title: "Looking for an experienced Web Designer for an our company.",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          location: "USA",
+          type: "Full Time",
+          salary: "$4,000 - $4,500",
+          location: "Australia",
         },
         {
           id: 7,
-          image: "../../../assets/images/company/android.png",
-          name: "App Developer",
-          day: "2 days ago",
-          type: "Remote",
-          time: "1 to 3 months",
-          salary: "$16 - $20",
+          image:
+            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
+          name: "Circle CI",
+          job: "Web Designer / Developer",
           title: "Looking for an experienced Web Designer for an our company.",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          location: "China",
+          type: "Full Time",
+          salary: "$4,000 - $4,500",
+          location: "Australia",
         },
         {
           id: 8,
-          image: "../../../assets/images/company/lenovo-logo.pn",
-          name: "Product Designer",
-          day: "2 days ago",
-          type: "WFH",
-          time: "1 to 3 months",
-          salary: "$16 - $20",
+          image:
+            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
+          name: "Skype",
+          job: "Marketing Director",
           title: "Looking for an experienced Web Designer for an our company.",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          location: "Dubai",
+          type: "Full Time",
+          salary: "$4,000 - $4,500",
+          location: "Australia",
+        },
+        {
+          id: 9,
+          image:
+            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
+          name: "Snapchat",
+          job: "Application Developer",
+          title: "Looking for an experienced Web Designer for an our company.",
+          type: "Full Time",
+          salary: "$4,000 - $4,500",
+          location: "Australia",
+        },
+        {
+          id: 10,
+          image:
+            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
+          name: "Shreethemes",
+          job: "Senior Product Designer",
+          title: "Looking for an experienced Web Designer for an our company.",
+          type: "Full Time",
+          salary: "$4,000 - $4,500",
+          location: "Australia",
+        },
+        {
+          id: 11,
+          image:
+            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
+          name: "Telegram",
+          job: "C++ Developer",
+          title: "Looking for an experienced Web Designer for an our company.",
+          type: "Full Time",
+          salary: "$4,000 - $4,500",
+          location: "Australia",
+        },
+        {
+          id: 12,
+          image:
+            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
+          name: "Whatsapp",
+          job: "Php Developer",
+          title: "Looking for an experienced Web Designer for an our company.",
+          type: "Full Time",
+          salary: "$4,000 - $4,500",
+          location: "Australia",
         },
       ],
     };

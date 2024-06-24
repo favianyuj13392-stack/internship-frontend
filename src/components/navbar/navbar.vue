@@ -168,101 +168,10 @@
       <div id="navigation" :class="toggle === false ? 'none' : 'block'">
         <!-- Navigation Menu-->
         <ul class="navigation-menu" :class="lightNav">
-          <li
-            :class="
-              [
-                '/index',
-                '/',
-                '/index-two',
-                '/index-three',
-                '/index-four',
-                '/index-five',
-                '/index-six',
-                '/index-seven',
-                '/index-eight',
-                '/index-nine',
-                '/index-ten',
-              ].includes(activeMenu)
-                ? 'active'
-                : ''
-            "
-            class="has-submenu parent-menu-item"
-          >
-            <span class="menu-arrow"></span>
-            <router-link
-              to=""
-              @click="submenu(menuOpen === '/index' ? '' : '/index')"
-              >Inicio</router-link
+          <li :class="activeMenu === '/contact' ? 'active' : ''">
+            <router-link to="/contact" class="sub-menu-item"
+              >In</router-link
             >
-            <ul
-              class="submenu"
-              :class="
-                [
-                  '/index',
-                  '/',
-                  '/index-two',
-                  '/index-three',
-                  '/index-four',
-                  '/index-five',
-                  '/index-six',
-                  '/index-seven',
-                  '/index-eight',
-                  '/index-nine',
-                  '/index-ten',
-                ].includes(menuOpen)
-                  ? 'open'
-                  : ''
-              "
-            >
-              <li :class="activeMenu === '/' ? 'active' : ''">
-                <router-link to="/" class="sub-menu-item">Hero One</router-link>
-              </li>
-              <li :class="activeMenu === '/index-two' ? 'active' : ''">
-                <router-link to="/index-two" class="sub-menu-item"
-                  >Hero Two</router-link
-                >
-              </li>
-              <li :class="activeMenu === '/index-three' ? 'active' : ''">
-                <router-link to="/index-three" class="sub-menu-item"
-                  >Hero Three</router-link
-                >
-              </li>
-              <li :class="activeMenu === '/index-four' ? 'active' : ''">
-                <router-link to="/index-four" class="sub-menu-item"
-                  >Hero Four</router-link
-                >
-              </li>
-              <li :class="activeMenu === '/index-five' ? 'active' : ''">
-                <router-link to="/index-five" class="sub-menu-item"
-                  >Hero Five</router-link
-                >
-              </li>
-              <li :class="activeMenu === '/index-six' ? 'active' : ''">
-                <router-link to="/index-six" class="sub-menu-item"
-                  >Hero Six
-                </router-link>
-              </li>
-              <li :class="activeMenu === '/index-seven' ? 'active' : ''">
-                <router-link to="/index-seven" class="sub-menu-item"
-                  >Hero Seven
-                </router-link>
-              </li>
-              <li :class="activeMenu === '/index-eight' ? 'active' : ''">
-                <router-link to="/index-eight" class="sub-menu-item"
-                  >Hero Eight</router-link
-                >
-              </li>
-              <li :class="activeMenu === '/index-nine' ? 'active' : ''">
-                <router-link to="/index-nine" class="sub-menu-item"
-                  >Hero Nine</router-link
-                >
-              </li>
-              <li :class="activeMenu === '/index-ten' ? 'active' : ''">
-                <router-link to="/index-ten" class="sub-menu-item"
-                  >Hero Ten</router-link
-                >
-              </li>
-            </ul>
           </li>
 
           <li
