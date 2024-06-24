@@ -79,7 +79,7 @@
               <a
                 href=""
                 class="btn btn-link text-slate-400 hover:text-cyan-600 after:bg-cyan-600 duration-500 ease-in-out"
-                >See More Companies
+                >Ver más empresas
                 <i class="uil uil-arrow-right align-middle"></i
               ></a>
             </div>

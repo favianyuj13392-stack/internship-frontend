@@ -112,9 +112,7 @@
             class="has-submenu parent-menu-item"
           >
             <span class="menu-arrow"></span>
-            <router-link
-              to=""
-              @click="submenu(menuOpen === '/index' ? '' : '/index')"
+            <router-link to="" @click="submenu(menuOpen === '/' ? '' : '/')"
               >Inicio</router-link
             >
             <ul
@@ -221,7 +219,7 @@
             <span class="menu-arrow"></span
             ><router-link
               to=""
-              @click="submenu(menuOpen === '/index-jobs' ? '' : '/index-jobs')"
+              @click="submenu(menuOpen === '/pasantias' ? '' : '/pasantias')"
             >
               Pasantias
             </router-link>
@@ -229,8 +227,8 @@
               class="submenu"
               :class="
                 [
-                  '/index-jobs',
-                  '/job-grid-one',
+                  '/pasantias',
+                  '/pasantias',
                   '/job-grid-two',
                   '/job-grid-three',
                   '/job-grid-four',
@@ -242,8 +240,8 @@
                   : ''
               "
             >
-              <li :class="activeMenu === '/job-categories' ? 'active' : ''">
-                <router-link to="/job-categories" class="sub-menu-item"
+              <li :class="activeMenu === '/pasantias' ? 'active' : ''">
+                <router-link to="/pasantias" class="sub-menu-item"
                   >Job Categories</router-link
                 >
               </li>
@@ -902,12 +900,13 @@
               >Contactanos</router-link
             >
           </li>
-
-          <li :class="activeMenu === '/contact' ? 'active' : ''">
-            <router-link to="/contact" class="sub-menu-item"
-              >Iniciar Sesión</router-link
-            >
-          </li>
+          <div class="jhessika">
+            <li :class="activeMenu === '/contact' ? 'active' : ''">
+              <router-link to="/contact" class="sub-menu-item"
+                >Iniciar Sesión</router-link
+              >
+            </li>
+          </div>
         </ul>
         <!--end navigation menu-->
       </div>
@@ -995,4 +994,17 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.jhessika {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: rgb(0, 148, 188);
+  color: rgb(255, 255, 255);
+  border-radius: 0.385rem;
+  height: 3rem;
+}
+
+.jhessika:hover {
+  background-color: rgb(22, 102, 148);
+}
+</style>
