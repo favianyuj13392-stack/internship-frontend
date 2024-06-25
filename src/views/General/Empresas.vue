@@ -127,7 +127,7 @@
 
               <div class="ms-3">
                 <router-link
-                  to="/Empresas/Detalle"
+                  to="/empresas/detalle"
                   class="block text-[20px] font-semibold hover:text-cyan-600 transition-all duration-500"
                   >{{ item.name }}</router-link
                 >

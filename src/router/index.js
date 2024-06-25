@@ -24,18 +24,18 @@ const router = createRouter({
       component: Pasantias,
     },
     {
-      path: "/Pasantias/Detalle",
-      name: "PasantiasDetalle",
+      path: "/pasantias/detalle",
+      name: "pasantias-detalle",
       component: PasantiasDetalle,
     },
     {
-      path: "/Empresas",
-      name: "Empresas",
+      path: "/empresas",
+      name: "empresas",
       component: Empresas,
     },
     {
-      path: "/Empresas/Detalle",
-      name: "EmpresasDetalle",
+      path: "/empresas/detalle",
+      name: "empresas-detalle",
       component: EmpresasDetalle,
     },
     {
