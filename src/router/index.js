@@ -5,6 +5,7 @@ import Pasantias from "../views/General/Pasantias.vue";
 import PasantiasDetalle from "../views/General/PasantiasDetalle.vue";
 import Empresas from "../views/General/Empresas.vue";
 import EmpresasDetalle from "../views/General/EmpresasDetalle.vue";
+import Contactanos from "../views/General/Contactanos.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -37,6 +38,11 @@ const router = createRouter({
       path: "/empresas/detalle",
       name: "empresas-detalle",
       component: EmpresasDetalle,
+    },
+    {
+      path: "/contactanos",
+      name: "contactanos",
+      component: Contactanos,
     },
     {
       path: "/about",
