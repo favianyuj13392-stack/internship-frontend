@@ -291,7 +291,7 @@
 
                 <div class="flex items-center">
                   <router-link
-                    to="/job-apply"
+                    to="/Pasantias/Detalle"
                     class="btn btn-icon rounded-full bg-cyan-600/5 group-hover:bg-cyan-600 border-cyan-600/10 text-cyan-600 group-hover:text-white ms-1"
                     ><i class="uil uil-arrow-up-right"></i
                   ></router-link>
