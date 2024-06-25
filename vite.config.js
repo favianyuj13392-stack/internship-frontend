@@ -11,4 +11,11 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  esbuild: {
+    sourcemap:false,
+  },
+  css: {
+    devSourcemap: false,
+  },
 });
+
