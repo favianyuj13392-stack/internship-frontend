@@ -138,7 +138,8 @@
 <script>
 import navbar from "@/components/General/navbarGeneral.vue";
 import footers from "@/components/footer/footer.vue";
-import switcher from "@/components/switcher.vue";
+
+import switcher from "@/components/General/switcher.vue";
 export default {
   data() {
     return {

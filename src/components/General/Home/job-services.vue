@@ -37,8 +37,8 @@
 </template>
 <script>
 import { tns } from "tiny-slider/src/tiny-slider";
-import image01 from "../assets/images/work/01.jpg";
-import image02 from "../assets/images/work/02.jpg";
+import image01 from "@/assets/images/work/01.jpg";
+import image02 from "@/assets/images/work/02.jpg";
 export default {
   data() {
     return {
