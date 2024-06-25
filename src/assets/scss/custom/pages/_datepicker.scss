@@ -90,7 +90,7 @@
   @apply hidden;
 }
 .vs__selected {
-  @apply bg-cyan-600 text-white
+  @apply bg-cyan-600 text-white h-5
   dark:text-cyan-400;
 }
 
@@ -103,7 +103,7 @@
 }
 
 .vs--single .vs__selected {
-  @apply mb-1;
+  @apply mb-1 text-gray-500 h-10;
 }
 
 .vs--single .vs__selected {

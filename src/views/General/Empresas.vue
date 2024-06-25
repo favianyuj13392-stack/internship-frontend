@@ -77,14 +77,14 @@
                     </div>
 
                     <div
-                      class="multiple2 filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800"
+                      class="filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800"
                     >
                       <i class="uil uil-briefcase-alt icons"></i>
                       <v-select
                         :options="options2"
                         v-model="selected2"
                         multiple
-                        class="ms-10 multiple"
+                        class="ms-10"
                       ></v-select>
                     </div>
 
@@ -544,18 +544,10 @@ export default {
   components: {
     navbar,
     vSelect,
-
     footers,
     switcher,
   },
 };
 </script>
 
-<style lang="scss" scoped>
-.vs__selected .multiple {
-  height: 1rem;
-  background-color: rgb(68, 83, 83);
-}
-.multiple2 {
-}
-</style>
+<style lang="scss" scoped></style>
