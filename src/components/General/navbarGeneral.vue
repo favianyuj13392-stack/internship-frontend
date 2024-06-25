@@ -102,7 +102,9 @@
           </li>
 
           <li :class="activeMenu === '/' ? 'active' : ''">
-            <router-link to="/" class="sub-menu-item">Empresas</router-link>
+            <router-link to="/Empresas" class="sub-menu-item"
+              >Empresas</router-link
+            >
           </li>
 
           <li :class="activeMenu === '/contact' ? 'active' : ''">
