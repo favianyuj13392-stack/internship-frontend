@@ -4,11 +4,10 @@
       <h3
         class="mb-4 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
       >
-        Trending Services
+        Empresas junto a nosotros
       </h3>
       <p class="text-slate-400 max-w-xl">
-        Search all the open positions on the web. Get your own personalized
-        salary estimate. Read reviews on over 30000+ companies worldwide.
+        Contamos con conexion de mas de 10 empresas reconocidas a nivel nacional
       </p>
     </div>
   </div>

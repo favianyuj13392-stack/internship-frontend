@@ -111,8 +111,6 @@
   <section class="relative md:py-16 py-16">
     <div class="container md:py-10 py-10">
       <services />
-      <counter />
-      
     </div>
 
     <question />
