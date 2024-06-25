@@ -124,18 +124,18 @@
 </template>
 
 <script>
-import counter from "@/components/counter.vue";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import navbar from "@/components/General/navbarGeneral.vue";
-import switcher from "@/components/switcher.vue";
+import counter from "@/components/General/Home/counter.vue";
+import services from "@/components/General/Home/job-services.vue";
+import popularjob from "@/components/General/Home/popular-job.vue";
+import company from "@/components/General/Home/best-companies.vue";
+import cta from "@/components/General/Home/two-job-cta.vue";
+import question from "@/components/General/Home/job-questions.vue";
+import explore from "@/components/General/Home/explore-job.vue";
+import switcher from "@/components/General/switcher.vue";
 import footers from "@/components/footer/footer.vue";
-import services from "@/components/job-services.vue";
-import popularjob from "@/components/popular-job/popular-job.vue";
-import cta from "@/components/job-cta/two-job-cta.vue";
-import company from "@/components/best-companies/best-companies.vue";
-import question from "@/components/job-questions.vue";
-import explore from "@/components/explore-job.vue";
 
 export default {
   data() {

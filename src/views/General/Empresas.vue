@@ -271,7 +271,8 @@ import navbar from "@/components/General/navbarGeneral.vue";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import footers from "@/components/footer/footer.vue";
-import switcher from "@/components/switcher.vue";
+
+import switcher from "@/components/General/switcher.vue";
 export default {
   data() {
     return {

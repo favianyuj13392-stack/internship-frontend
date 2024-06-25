@@ -5,7 +5,7 @@
         <div class="relative">
           <div class="relative flex justify-end">
             <img
-              src="../../assets/images/about/ab03.jpg"
+              src="@/assets/images/about/ab03.jpg"
               class="lg:w-[400px] w-[280px] rounded-md shadow dark:shadow-gray-700"
               alt=""
             />
@@ -24,7 +24,7 @@
           </div>
           <div class="absolute md:-start-5 start-0 -bottom-16">
             <img
-              src="../../assets/images/about/ab04.jpg"
+              src="@/assets/images/about/ab04.jpg"
               class="lg:w-[280px] w-[200px] border-8 border-white dark:border-slate-900 rounded-md shadow dark:shadow-gray-700"
               alt=""
             />

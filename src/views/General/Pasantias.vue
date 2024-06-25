@@ -412,9 +412,9 @@
 <script>
 import navbar from "@/components/General/navbarGeneral.vue";
 
-import explore from "@/components/explore-job.vue";
+import explore from "@/components/General/Home/explore-job.vue";
 import footers from "@/components/footer/footer.vue";
-import switcher from "@/components/switcher.vue";
+import switcher from "@/components/General/switcher.vue";
 export default {
   data() {
     return {
