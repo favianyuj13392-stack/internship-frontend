@@ -12,11 +12,7 @@
                   href="#"
                   class="flex justify-center md:justify-start focus:outline-none"
                 >
-                  <img
-                    src="../../assets/images/logo-light.png"
-                    class=""
-                    alt=""
-                  />
+                  <img src="@/assets/images/logo-light.png" class="" alt="" />
                 </a>
               </div>
               <!--end col-->
@@ -131,15 +127,15 @@ export default {
         },
         {
           name: "Pasantias",
-          link: "/",
+          link: "/pasantias",
         },
         {
           name: "Empresas",
-          link: "/",
+          link: "/empresas",
         },
         {
-          name: "Contactanoss",
-          link: "/",
+          name: "Contactos",
+          link: "/contactanos",
         },
       ],
     };

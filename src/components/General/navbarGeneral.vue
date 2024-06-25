@@ -101,14 +101,15 @@
             >
           </li>
 
-
           <li :class="activeMenu === '/empresas' ? 'active' : ''">
-            <router-link to="/empresas" class="sub-menu-item">Empresas</router-link>
+            <router-link to="/empresas" class="sub-menu-item"
+              >Empresas</router-link
+            >
           </li>
 
-          <li :class="activeMenu === '/contact' ? 'active' : ''">
-            <router-link to="/contact" class="sub-menu-item"
-              >Contactanos</router-link
+          <li :class="activeMenu === '/contactanos' ? 'active' : ''">
+            <router-link to="/contactanos" class="sub-menu-item"
+              >Contactos</router-link
             >
           </li>
           <div class="jhessika">

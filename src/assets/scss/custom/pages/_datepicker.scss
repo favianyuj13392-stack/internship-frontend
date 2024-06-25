@@ -90,15 +90,12 @@
   @apply hidden;
 }
 .vs__selected {
-  @apply dark:text-slate-400;
+  @apply bg-cyan-600 text-white h-5
+  dark:text-cyan-400;
 }
 
 .vs__open-indicator {
   @apply hidden;
-}
-
-.vs__search {
-  @apply ms-10 bg-gray-50 m-0;
 }
 
 .vs__dropdown-menu {
@@ -106,7 +103,7 @@
 }
 
 .vs--single .vs__selected {
-  @apply mb-1;
+  @apply mb-1 text-gray-500 h-10;
 }
 
 .vs--single .vs__selected {
