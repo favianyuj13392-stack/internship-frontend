@@ -31,7 +31,7 @@
 
             <div class="">
               <router-link
-                to="/candidate-profile-setting"
+                to="/perfil/estudiante/editar"
                 class="btn btn-icon rounded-full bg-cyan-600/5 hover:bg-cyan-600 border-cyan-600/10 hover:border-cyan-600 text-cyan-600 hover:text-white"
                 ><i data-feather="settings" class="size-4"></i
               ></router-link>
@@ -365,7 +365,7 @@
                     <a
                       href="https://dribbble.com/shreethemes"
                       target="_blank"
-                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-emerald-600 dark:hover:border-emerald-600 hover:bg-emerald-600 dark:hover:bg-emerald-600 hover:text-white dark:text-white text-slate-400"
+                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
                       ><i
                         class="uil uil-dribbble align-middle"
                         title="dribbble"
@@ -376,7 +376,7 @@
                     <a
                       href="https://www.behance.net/shreethemes"
                       target="_blank"
-                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-emerald-600 dark:hover:border-emerald-600 hover:bg-emerald-600 dark:hover:bg-emerald-600 hover:text-white dark:text-white text-slate-400"
+                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
                       ><i class="uil uil-behance" title="Behance"></i
                     ></a>
                   </li>
@@ -384,7 +384,7 @@
                     <a
                       href="http://linkedin.com/company/shreethemes"
                       target="_blank"
-                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-emerald-600 dark:hover:border-emerald-600 hover:bg-emerald-600 dark:hover:bg-emerald-600 hover:text-white dark:text-white text-slate-400"
+                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
                       ><i class="uil uil-linkedin" title="Linkedin"></i
                     ></a>
                   </li>
@@ -392,7 +392,7 @@
                     <a
                       href="https://www.facebook.com/shreethemes"
                       target="_blank"
-                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-emerald-600 dark:hover:border-emerald-600 hover:bg-emerald-600 dark:hover:bg-emerald-600 hover:text-white dark:text-white text-slate-400"
+                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
                       ><i
                         class="uil uil-facebook-f align-middle"
                         title="facebook"
@@ -403,7 +403,7 @@
                     <a
                       href="https://www.instagram.com/shreethemes/"
                       target="_blank"
-                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-emerald-600 dark:hover:border-emerald-600 hover:bg-emerald-600 dark:hover:bg-emerald-600 hover:text-white dark:text-white text-slate-400"
+                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
                       ><i
                         class="uil uil-instagram align-middle"
                         title="instagram"
@@ -414,7 +414,7 @@
                     <a
                       href="https://twitter.com/shreethemes"
                       target="_blank"
-                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-emerald-600 dark:hover:border-emerald-600 hover:bg-emerald-600 dark:hover:bg-emerald-600 hover:text-white dark:text-white text-slate-400"
+                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
                       ><i
                         class="uil uil-twitter align-middle"
                         title="twitter"
@@ -424,7 +424,7 @@
                   <li class="inline">
                     <a
                       href="mailto:support@shreethemes.in"
-                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-emerald-600 dark:hover:border-emerald-600 hover:bg-emerald-600 dark:hover:bg-emerald-600 hover:text-white dark:text-white text-slate-400"
+                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
                       ><i
                         class="uil uil-envelope align-middle"
                         title="email"
@@ -445,7 +445,7 @@
 
                 <a
                   href="@/assets/images/calvin-carlo-resume.pdf"
-                  class="btn bg-emerald-600 hover:bg-emerald-700 border-emerald-600 dark:border-emerald-600 text-white rounded-md w-full"
+                  class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md w-full"
                   download
                   ><i class="uil uil-file-download-alt"></i> Download CV</a
                 >
@@ -463,7 +463,6 @@
 
 <script>
 import navbar from "@/components/General/navbarGeneral.vue";
-import profile from "@/components/candidates/candidate-profile.vue";
 import footers from "@/components/footer/footer.vue";
 import switcher from "@/components/General/switcher.vue";
 import image from "@/assets/images/team/01.jpg";
@@ -559,7 +558,6 @@ export default {
   },
   components: {
     navbar,
-    profile,
     switcher,
     footers,
   },

@@ -133,7 +133,7 @@
                   <span
                     class="btn btn-icon rounded-full bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white"
                     ><img
-                      src="@/assets/images/team/01.jpg"
+                      src="https://pbs.twimg.com/media/F-2shOZWkAAS63M.jpg"
                       class="rounded-full"
                       alt=""
                   /></span>
@@ -146,18 +146,18 @@
                   <ul class="py-2 text-start">
                     <li>
                       <router-link
-                        to="/candidate-profile"
+                        to="/perfil/estudiante"
                         class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
                         ><i data-feather="user" class="size-4 me-2"></i
-                        >Profile</router-link
+                        >Perfil</router-link
                       >
                     </li>
                     <li>
                       <router-link
-                        to="/candidate-profile-setting"
+                        to="/perfil/estudiante/editar"
                         class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
                         ><i data-feather="settings" class="size-4 me-2"></i
-                        >Settings</router-link
+                        >Configuraciones</router-link
                       >
                     </li>
                     <li
@@ -165,18 +165,18 @@
                     ></li>
                     <li>
                       <router-link
-                        to="/lock-screen"
+                        to="/perfil/estudiante/editar"
                         class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
                         ><i data-feather="lock" class="size-4 me-2"></i
-                        >Lockscreen</router-link
+                        >Bloquear</router-link
                       >
                     </li>
                     <li>
                       <router-link
-                        to="/login"
+                        to="/perfil/estudiante/editar"
                         class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
                         ><i data-feather="log-out" class="size-4 me-2"></i
-                        >Logout</router-link
+                        >Salir</router-link
                       >
                     </li>
                   </ul>

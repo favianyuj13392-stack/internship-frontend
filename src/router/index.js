@@ -7,9 +7,9 @@ import Empresas from "../views/General/Empresas.vue";
 import EmpresasDetalle from "../views/General/EmpresasDetalle.vue";
 import Contactanos from "../views/General/Contactanos.vue";
 
-
-
-
+//estudiante
+import PerfilEstudiante from "@/views/Estudiante/PerfilEstudiante.vue";
+import EditarPerfilEstudiante from "@/views/Estudiante/EditarPerfilEstudiante.vue";
 
 
 
@@ -61,6 +61,17 @@ const router = createRouter({
     },
     
 
+    //estudiante
+    {
+      path: "/perfil/estudiante",
+      name: "perfil-estudiante",
+      component: PerfilEstudiante,
+    },
+    {
+      path: "/perfil/estudiante/editar",
+      name: "perfil-estudiante-editar",
+      component: EditarPerfilEstudiante,
+    },
 
 
 
