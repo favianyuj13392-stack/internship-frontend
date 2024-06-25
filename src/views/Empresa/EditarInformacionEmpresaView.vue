@@ -205,81 +205,7 @@
               <!--end content-->
             </div>
   
-            <div class="p-6 rounded-md shadow dark:shadow-gray-800 mt-8">
-              <h5 class="text-xl font-semibold">Leave A Comment:</h5>
-  
-              <form class="mt-8">
-                <div class="grid lg:grid-cols-12 lg:gap-6">
-                  <div class="lg:col-span-6 mb-5">
-                    <div class="text-start">
-                      <label for="name" class="font-semibold">Your Name:</label>
-                      <div class="form-icon relative mt-2">
-                        <i
-                          data-feather="user"
-                          class="size-4 absolute top-3 start-4"
-                        ></i>
-                        <input
-                          name="name"
-                          id="name"
-                          type="text"
-                          class="form-input ps-11"
-                          placeholder="Name :"
-                        />
-                      </div>
-                    </div>
-                  </div>
-  
-                  <div class="lg:col-span-6 mb-5">
-                    <div class="text-start">
-                      <label for="email" class="font-semibold">Your Email:</label>
-                      <div class="form-icon relative mt-2">
-                        <i
-                          data-feather="mail"
-                          class="size-4 absolute top-3 start-4"
-                        ></i>
-                        <input
-                          name="email"
-                          id="email"
-                          type="email"
-                          class="form-input ps-11"
-                          placeholder="Email :"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-  
-                <div class="grid grid-cols-1">
-                  <div class="mb-5">
-                    <div class="text-start">
-                      <label for="comments" class="font-semibold"
-                        >Your Comment:</label
-                      >
-                      <div class="form-icon relative mt-2">
-                        <i
-                          data-feather="message-circle"
-                          class="size-4 absolute top-3 start-4"
-                        ></i>
-                        <textarea
-                          name="comments"
-                          id="comments"
-                          class="form-input ps-11 h-28"
-                          placeholder="Message :"
-                        ></textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <button
-                  type="submit"
-                  id="submit"
-                  name="send"
-                  class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white rounded-md w-full"
-                >
-                  Send Message
-                </button>
-              </form>
-            </div>
+           
           </div>
           <!--end col-->
   
@@ -403,69 +329,16 @@
                 </li>
               </ul>
   
-              <div class="mt-4 pt-2 border-t dark:border-t-gray-700">
-                <h5 class="text-lg font-semibold">Contact us</h5>
-  
-                <form>
-                  <div class="grid grid-cols-1 gap-2">
-                    <div>
-                      <label for="name2" class="font-semibold">Your Name:</label>
-                      <input
-                        name="name"
-                        id="name2"
-                        type="text"
-                        class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                        placeholder="Name :"
-                      />
-                    </div>
-  
-                    <div>
-                      <label for="email2" class="font-semibold"
-                        >Your Email:</label
-                      >
-                      <input
-                        name="email"
-                        id="email2"
-                        type="email"
-                        class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                        placeholder="Email :"
-                      />
-                    </div>
-  
-                    <div>
-                      <label for="subject" class="font-semibold"
-                        >Your Question:</label
-                      >
-                      <input
-                        name="subject"
-                        id="subject"
-                        class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                        placeholder="Subject :"
-                      />
-                    </div>
-  
-                    <div>
-                      <label for="comments2" class="font-semibold"
-                        >Your Comment:</label
-                      >
-                      <textarea
-                        name="comments"
-                        id="comments2"
-                        class="form-input border border-slate-100 dark:border-slate-800 mt-2 textarea"
-                        placeholder="Message :"
-                      ></textarea>
-                    </div>
-                  </div>
-                  <button
-                    type="submit"
-                    id="submit2"
-                    name="send"
-                    class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md"
-                  >
-                    Send Message
-                  </button>
-                </form>
-              </div>
+             
+
+
+
+              
+
+
+
+
+
             </div>
           </div>
           <!--end col-->
