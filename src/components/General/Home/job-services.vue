@@ -19,6 +19,7 @@
         <div
           class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-700 transition duration-500 m-1"
         >
+          <!--arreglar el tamańo-->
           <img :src="item.image" alt="" />
           <div class="absolute inset-0 bg-slate-900/50"></div>
 

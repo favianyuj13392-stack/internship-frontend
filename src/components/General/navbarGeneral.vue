@@ -287,4 +287,11 @@ export default {
 .jhessika:hover {
   background-color: rgb(22, 102, 148);
 }
+.btn-icon {
+  display: inline-block;
+  transition: transform 0.3s ease-in-out;
+}
+.btn-icon:hover {
+  transform: scale(1.2);
+}
 </style>
