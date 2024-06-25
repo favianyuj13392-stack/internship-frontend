@@ -51,7 +51,7 @@
               <div class="grid grid-cols-1 gap-3">
                 <div>
                   <label for="searchname" class="font-semibold"
-                    >Search Company</label
+                    >Buscar pasantia</label
                   >
                   <div class="relative mt-2">
                     <i
@@ -62,7 +62,7 @@
                       id="searchname"
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 ps-10"
-                      placeholder="Search"
+                      placeholder="Nombre de pasantia"
                     />
                   </div>
                 </div>
@@ -259,7 +259,7 @@
                   <input
                     type="submit"
                     class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white rounded-md w-full"
-                    value="Apply Filter"
+                    value="Aplicar filtros"
                   />
                 </div>
               </div>
@@ -291,7 +291,7 @@
 
                 <div class="flex items-center">
                   <router-link
-                    to="/job-apply"
+                    to="/Pasantias/Detalle"
                     class="btn btn-icon rounded-full bg-cyan-600/5 group-hover:bg-cyan-600 border-cyan-600/10 text-cyan-600 group-hover:text-white ms-1"
                     ><i class="uil uil-arrow-up-right"></i
                   ></router-link>

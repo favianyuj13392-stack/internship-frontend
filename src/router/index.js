@@ -2,7 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import Home from "../views/General/Home.vue";
 import Pasantias from "../views/General/Pasantias.vue";
-
+import PasantiasDetalle from "../views/General/PasantiasDetalle.vue";
+import Empresas from "../views/General/Empresas.vue";
+import EmpresasDetalle from "../views/General/EmpresasDetalle.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -20,6 +22,21 @@ const router = createRouter({
       path: "/pasantias",
       name: "Pasantias",
       component: Pasantias,
+    },
+    {
+      path: "/Pasantias/Detalle",
+      name: "PasantiasDetalle",
+      component: PasantiasDetalle,
+    },
+    {
+      path: "/Empresas",
+      name: "Empresas",
+      component: Empresas,
+    },
+    {
+      path: "/Empresas/Detalle",
+      name: "EmpresasDetalle",
+      component: EmpresasDetalle,
     },
     {
       path: "/about",
