@@ -6,6 +6,21 @@ import PasantiasDetalle from "../views/General/PasantiasDetalle.vue";
 import Empresas from "../views/General/Empresas.vue";
 import EmpresasDetalle from "../views/General/EmpresasDetalle.vue";
 import Contactanos from "../views/General/Contactanos.vue";
+
+
+
+
+
+
+
+
+import PasantiasEmpresaView from "@/views/Empresa/PasantiasEmpresaView.vue";
+import InformacionEmpresaView from "@/views/Empresa/EditarInformacionEmpresaView.vue";
+import InformacionPasantiaEmpresaView from "@/views/Empresa/InformacionPasantiaEmpresaView.vue";
+
+
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -44,14 +59,35 @@ const router = createRouter({
       name: "contactanos",
       component: Contactanos,
     },
+    
+
+
+
+
+
+
+
+
+
+
+
+    //empresa
     {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import("../views/AboutView.vue"),
+      path: "/empresa/administrador/pasantias",
+      name: "PasantiasEmpresaView",
+      component: PasantiasEmpresaView,
     },
+    {
+      path: "/empresa/administrador/informacion",
+      name: "InformacionEmpresaView",
+      component: InformacionEmpresaView,
+    },
+    {
+      path: "/empresa/administrador/pasantias/informacion/:id",
+      name: "InformacionPasantiaEmpresaView",
+      component: InformacionPasantiaEmpresaView,
+      props: true,
+    }
   ],
 });
 
