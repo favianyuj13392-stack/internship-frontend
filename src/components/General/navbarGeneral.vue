@@ -211,7 +211,6 @@
 <script>
 import vClickOutside from "v-click-outside";
 import feather from "feather-icons";
-import loader from "sass-loader";
 export default {
   directives: {
     clickOutside: vClickOutside.directive,
@@ -255,11 +254,15 @@ export default {
     this.scrollToTop();
 
     /*
-    let loader = this.$loading.show();
+    let loader = this.$loading.show(
+      {
+
+      }
+    );
                 // simulate AJAX
                 setTimeout(() => {
                     loader.hide()
-                }, 5000)*/
+                }, 5000);*/
   },
   unmounted() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -276,6 +279,7 @@ export default {
         height: 2,
         backgroundColor: "#000000",
         opacity: 0.7,
+        lockScroll: true,
       });
     },
     unlock() {

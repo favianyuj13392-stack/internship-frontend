@@ -23,6 +23,11 @@ import SolicitudPasantiaAdministrador from "@/views/Administrador/SolicitudPasan
 import PasantiaAdministrador from "@/views/Administrador/PasantiaAdministrador.vue";
 import EmpresaAdministrador from "@/views/Administrador/EmpresaAdministrador.vue";
 
+
+//completar registro
+import FinishRegisterEstudiante from "@/views/CompletarRegistro/CompletarRegistroEstudianteView.vue";
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -118,6 +123,20 @@ const router = createRouter({
       name: "SolicitudPasantiaAdministrador",
       component: SolicitudPasantiaAdministrador,
     },
+
+
+
+
+
+
+
+
+    //completado de registro
+    {
+      path: "/fihish/register-estudiante",
+      name: "FinishRegisterEstudiante",
+      component: FinishRegisterEstudiante,
+    }
   ],
 });
 

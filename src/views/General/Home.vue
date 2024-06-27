@@ -153,6 +153,7 @@ export default {
   },
 
   async beforeMount() {
+    let loader = this.$loading.show( );
      const existencia = await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
      if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("ESTUDIANTE")){
         this.$router.push("/fihish/register-estudiante");
@@ -160,12 +161,7 @@ export default {
      else if(existencia==false){
         this.$router.push("/fihish/register-empresa");
      }
-     
-
-
-
-      
-     
+      loader.hide();
   },
 
   data() {
