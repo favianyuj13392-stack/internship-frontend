@@ -133,11 +133,23 @@
                 >
                   <span
                     class="btn btn-icon rounded-full bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white"
-                    ><img
+                    >
+                    
+                    <img
+                      v-if="$keycloak.tokenParsed.picture"
                       :src="$keycloak.tokenParsed.picture"
                       class="rounded-full"
                       alt=""
-                  /></span>
+                  />
+                  <img
+                    v-else
+                    src="@/assets/images/user-empty.png"
+                    class="rounded-full"
+                    alt=""
+                  />
+                
+                
+                </span>
                 </button>
                 <!-- Dropdown menu -->
                 <div
@@ -173,11 +185,11 @@
                       >
                     </li>
                     <li>
-                      <router-link
-                      @click="handleLogout()"
+                      <a
+                      @click="$keycloak.logout"
                         class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
                         ><i data-feather="log-out" class="size-4 me-2"></i
-                        >Salir</router-link
+                        >Salir</a
                       >
                     </li>
                   </ul>
@@ -242,6 +254,18 @@ export default {
     document.addEventListener("click", this.handleClickOutside);
     feather.replace();
     this.scrollToTop();
+
+
+    /*
+    let loader = this.$loading.show();
+                // simulate AJAX
+                setTimeout(() => {
+                    loader.hide()
+                }, 5000)*/
+
+    
+
+
   },
   unmounted() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -250,7 +274,9 @@ export default {
 
   methods: {
     handleLogout() {
-      this.$keycloak.logoutFn();
+      this.$keycloak.logout({
+        redirectUri: window.location.origin,
+      });
     },
     handler() {
       this.toggle = !this.toggle;

@@ -6,7 +6,10 @@ import "@/assets/scss/tailwind.scss";
 import "@/assets/libs/@mdi/font/css/materialdesignicons.min.css";
 import "@/assets/libs/@iconscout/unicons/css/line.css";
 import authConfig from '../auth_config.json'
-import VueKeycloakJs from '@dsb-norge/vue-keycloak-js'
+import Keycloak from 'keycloak-js'
+import {LoadingPlugin} from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
+
 
 
 const app = createApp(App)
@@ -17,26 +20,76 @@ pinia.use(({ store }) => {
 app.use(pinia)
 app.use(router)
 
-    app.use(VueKeycloakJs, {
-        init:{
-          onLoad:'check-sso',
-          silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
-          redirectUri: window.location.origin,
-        },
-        config:{
-          realm: authConfig.realm,
-          url: authConfig.url,
-          clientId: authConfig.clientId,
-        },
-        logout: {
-          redirectUri: window.location.origin,
-        },
-        onReady: (keycloak) => {
-          console.log(keycloak)
-          app.mount('#app')
+
+app.use(LoadingPlugin, {
+  color: '#0891b2',
+  loader: 'dots',
+  width: 64,
+  height: 64,
+  backgroundColor: '#ffffff',
+  opacity: 0.5,
+  zIndex: 999,
+  isFullPage: true,
+  canCancel: false,
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const keycloak = new Keycloak({
+    url: authConfig.url,
+    realm: authConfig.realm,
+    clientId: authConfig.clientId,
+});
+
+keycloak.authenticated = false;
+
+
+
+
+
+
+
+try {
+    keycloak.onReady = (auth) => {
+        app.config.globalProperties.$keycloak = keycloak;
+
+        app.mount("#app");
+
+    };
+
+    const keycloakVar= await keycloak.init({
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+        redirectUri: window.location.origin,
+    });
+
+
+
+
+
+
     
-        },
-      })
+} catch (error) {
+    console.error("Keycloak error", error);
+    
+}
+
+
+ 
 
 
 
