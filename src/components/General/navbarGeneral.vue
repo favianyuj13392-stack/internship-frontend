@@ -113,14 +113,15 @@
             >
           </li>
 
-          <div v-if="prueba" class="jhessika">
+          <div v-if="!$keycloak.authenticated && !isLoading"
+          @click="$keycloak.login" class="jhessika">
             <li :class="activeMenu === '/contact' ? 'active' : ''">
-              <router-link to="/contact" class="sub-menu-item"
+              <router-link  class="sub-menu-item"
                 >Iniciar Sesión</router-link
               >
             </li>
           </div>
-          <div v-else>
+          <div v-if="$keycloak.authenticated">
             <ul class="buy-button list-none mb-0">
               <li class="dropdown inline-block relative ps-1">
                 <button
@@ -133,7 +134,7 @@
                   <span
                     class="btn btn-icon rounded-full bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white"
                     ><img
-                      src="https://pbs.twimg.com/media/F-2shOZWkAAS63M.jpg"
+                      :src="$keycloak.tokenParsed.picture"
                       class="rounded-full"
                       alt=""
                   /></span>
@@ -173,7 +174,7 @@
                     </li>
                     <li>
                       <router-link
-                        to="/perfil/estudiante/editar"
+                      @click="handleLogout()"
                         class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
                         ><i data-feather="log-out" class="size-4 me-2"></i
                         >Salir</router-link
@@ -218,6 +219,11 @@ export default {
       required: true,
     },
   },
+  computed: {
+    isLoading() {
+      return this.$keycloak.ready == false;
+    },
+  },
   data() {
     return {
       toggle: false,
@@ -243,6 +249,9 @@ export default {
   },
 
   methods: {
+    handleLogout() {
+      this.$keycloak.logoutFn();
+    },
     handler() {
       this.toggle = !this.toggle;
     },
