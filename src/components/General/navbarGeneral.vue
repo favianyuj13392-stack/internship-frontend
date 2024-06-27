@@ -177,11 +177,11 @@
                       class="border-t border-gray-100 dark:border-gray-800 my-2"
                     ></li>
                     <li>
-                      <router-link
-                        to="/perfil/estudiante/editar"
+                      <a
+                        @click="block()"
                         class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
                         ><i data-feather="lock" class="size-4 me-2"></i
-                        >Bloquear</router-link
+                        >Bloquear</a
                       >
                     </li>
                     <li>
@@ -213,6 +213,7 @@
 <script>
 import vClickOutside from "v-click-outside";
 import feather from "feather-icons";
+import loader from "sass-loader";
 export default {
   directives: {
     clickOutside: vClickOutside.directive,
@@ -273,6 +274,48 @@ export default {
   },
 
   methods: {
+    block(){
+      let loader = this.$loading.show({
+                    container: this.fullPage ? null : this.$refs.formContainer,
+                    canCancel: true,
+                    onCancel: this.unlock(),
+                    width: 2,
+                    height: 2,
+                    backgroundColor: '#000000',
+                    opacity: 0.7,
+                });
+
+
+
+
+
+         
+
+
+
+
+                
+    },
+    unlock(){
+
+
+
+
+
+      let loader = this.$loading.show({
+                    // Optional parameters
+                    container: this.fullPage ? null : this.$refs.formContainer,
+                  
+                });
+                
+                // simulate AJAX
+ loader.hide();         
+      console.log("unlock")
+    },
+
+    
+
+
     handleLogout() {
       this.$keycloak.logout({
         redirectUri: window.location.origin,

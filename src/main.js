@@ -93,6 +93,9 @@ try {
     
 } catch (error) {
     console.error("Keycloak error", error);
+    keycloak.logout({
+        redirectUri: window.location.origin,
+      });
     
 }
 
