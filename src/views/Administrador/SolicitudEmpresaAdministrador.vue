@@ -140,40 +140,48 @@
           >
         </div>
 
+        <div class="md:block flex justify-between md:mt-0 mt-2 mr-1">
+          <span class="text-slate-400"
+            ><i class="fas fa-user"></i> {{ item.nombre }}</span
+          >
+          <span class="block font-semibold md:mt-1 mt-0">{{
+            item.correo
+          }}</span>
+        </div>
         <div class="md:block flex justify-between md:mt-0 mt-4">
           <span class="block"
             ><span
               class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full"
-              >{{ item.type }}</span
+              >Fecha:</span
             ></span
           >
           <span class="block text-slate-400 text-sm md:mt-1 mt-0"
             ><i class="uil uil-clock"></i> {{ item.day }}</span
           >
         </div>
-
         <div class="md:block flex justify-between md:mt-0 mt-2">
           <span class="text-slate-400"
             ><i class="uil uil-map-marker"></i> {{ item.country }}</span
           >
-          <span class="block font-semibold md:mt-1 mt-0">{{
-            item.salary
-          }}</span>
+          <span class="block"
+            ><span
+              class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full"
+              >{{ item.type }}</span
+            ></span
+          >
         </div>
 
         <div class="md:mt-0 mt-4">
           <a
             href=""
-            class="btn btn-icon rounded-full bg-cyan-600/5 hover:bg-cyan-600 border-cyan-600/10 hover:border-cyan-600 text-cyan-600 hover:text-white md:relative absolute top-0 end-0 md:m-0 m-3"
-            ><i data-feather="bookmark" class="size-4"></i
+            class="btn btn-icon rounded-full bg-yellow-600/5 hover:bg-yellow-600 border-yellow-600/10 hover:border-yellow-600 text-yellow-600 hover:text-white md:relative absolute top-0 end-0 md:m-0 m-3"
+            ><i data-feather="mail" class="size-4"></i
           ></a>
           <router-link
             class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto"
-            >Apply Now</router-link
+            >Más información</router-link
           >
         </div>
-
-        <span :class="item.class"><i :class="item.icon"></i></span>
       </div>
       <!--end content-->
     </div>
@@ -249,12 +257,14 @@ export default {
             "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
           day: "20th Feb 2023",
           type: "Full Time",
-          job: "Web Designer",
-          country: "Australia",
+          job: " NOMBRE EMPRESA",
+          country: "Miraflores",
           salary: "$4,000 - $4,500",
           class:
             "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
           icon: "uil uil-star",
+          correo: "@ucb.edu.bo",
+          nombre: "Nombre",
         },
         {
           id: 2,
