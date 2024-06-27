@@ -333,6 +333,8 @@ export default {
   color: rgb(255, 255, 255);
   border-radius: 0.385rem;
   height: 3rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
 }
 
 .jhessika:hover {
@@ -347,6 +349,7 @@ export default {
 }
 @media (max-width: 991px) {
   .jhessika {
+    border-radius: 0;
     margin: 0;
     padding: 0.5rem 0rem 0rem 1.9rem;
   }
