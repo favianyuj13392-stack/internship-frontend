@@ -11,15 +11,17 @@ import Contactanos from "../views/General/Contactanos.vue";
 import PerfilEstudiante from "@/views/Estudiante/PerfilEstudiante.vue";
 import EditarPerfilEstudiante from "@/views/Estudiante/EditarPerfilEstudiante.vue";
 
-
-
-
+//empresa
 import PasantiasEmpresaView from "@/views/Empresa/PasantiasEmpresaView.vue";
 import InformacionEmpresaView from "@/views/Empresa/EditarInformacionEmpresaView.vue";
 import InformacionPasantiaEmpresaView from "@/views/Empresa/InformacionPasantiaEmpresaView.vue";
 
-
-
+//administrador
+import DashboardAdministrador from "@/views/Administrador/DashboardAdministrador.vue";
+import SolicitudEmpresaAdministrador from "@/views/Administrador/SolicitudEmpresaAdministrador.vue";
+import SolicitudPasantiaAdministrador from "@/views/Administrador/SolicitudPasantiaAdministrador.vue";
+import PasantiaAdministrador from "@/views/Administrador/PasantiaAdministrador.vue";
+import EmpresaAdministrador from "@/views/Administrador/EmpresaAdministrador.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,7 +61,6 @@ const router = createRouter({
       name: "contactanos",
       component: Contactanos,
     },
-    
 
     //estudiante
     {
@@ -72,15 +73,6 @@ const router = createRouter({
       name: "perfil-estudiante-editar",
       component: EditarPerfilEstudiante,
     },
-
-
-
-
-
-
-
-
-
 
     //empresa
     {
@@ -98,7 +90,34 @@ const router = createRouter({
       name: "InformacionPasantiaEmpresaView",
       component: InformacionPasantiaEmpresaView,
       props: true,
-    }
+    },
+
+    //administrador
+    {
+      path: "/administrador/dashboard",
+      name: "DashboardAdministrador",
+      component: DashboardAdministrador,
+    },
+    {
+      path: "/administrador/empresa",
+      name: "EmpresaAdministrador",
+      component: EmpresaAdministrador,
+    },
+    {
+      path: "/administrador/solicitud/empresa",
+      name: "SolicitudEmpresaAdministrador",
+      component: SolicitudEmpresaAdministrador,
+    },
+    {
+      path: "/administrador/pasantia",
+      name: "PasantiaAdministrador",
+      component: PasantiaAdministrador,
+    },
+    {
+      path: "/administrador/solicitud/pasantia",
+      name: "SolicitudPasantiaAdministrador",
+      component: SolicitudPasantiaAdministrador,
+    },
   ],
 });
 

@@ -91,27 +91,43 @@
       <div id="navigation" :class="toggle === false ? 'none' : 'block'">
         <!-- Navigation Menu-->
         <ul class="navigation-menu" :class="lightNav">
-          <li :class="activeMenu === '/' ? 'active' : ''">
-            <router-link to="/" class="sub-menu-item">Inicio</router-link>
-          </li>
-
-          <li :class="activeMenu === '/pasantias' ? 'active' : ''">
-            <router-link to="/pasantias" class="sub-menu-item"
-              >Pasantías</router-link
+          <li
+            :class="activeMenu === '/administrador/dashboard' ? 'active' : ''"
+          >
+            <router-link to="/administrador/dashboard" class="sub-menu-item"
+              >Inicio</router-link
             >
           </li>
 
-          <li :class="activeMenu === '/empresas' ? 'active' : ''">
-            <router-link to="/empresas" class="sub-menu-item"
-              >Empresas</router-link
-            >
-          </li>
+      
+          <!-- Inicio de menu de empresas-->
+          <li :class="['/administrador/empresa', '/administrador/solicitud/empresa'].includes(activeMenu) ? 'active' : ''"
+                        class="has-submenu parent-menu-item"><span class="menu-arrow"></span>
+                        <router-link to="/administrador/dashboard" @click="submenu(menuOpen === '/administrador/dashboard' ? '' : '/administrador/dashboard')">Empresa</router-link>
+                        <ul class="submenu"
+                        :class="['/administrador/empresa', '/administrador/solicitud/empresa'].includes(menuOpen) ? 'open' : ''">
+                            <li :class="activeMenu === '/administrador/empresa' ? 'active' : ''"><router-link to="/administrador/empresa"
+                                    class="sub-menu-item">Empresas</router-link></li>
+                            <li :class="activeMenu === '/administrador/solicitud/empresa' ? 'active' : ''"><router-link to="/administrador/solicitud/empresa"
+                                    class="sub-menu-item">Solicitudes Empresa</router-link></li>
+                           
+                        </ul>
+                    </li>
+           <!-- fin de menu de empresas-->
 
-          <li :class="activeMenu === '/contactanos' ? 'active' : ''">
-            <router-link to="/contactanos" class="sub-menu-item"
-              >Contactos</router-link
-            >
-          </li>
+     
+          <li :class="['/administrador/pasantia', '/administrador/solicitud/pasantia'].includes(activeMenu) ? 'active' : ''"
+                        class="has-submenu parent-menu-item"><span class="menu-arrow"></span>
+                        <router-link to="/administrador/dashboard" @click="submenu(menuOpen === '/administrador/dashboard' ? '' : '/administrador/dashboard')">Pasantias</router-link>
+                        <ul class="submenu"
+                        :class="['/administrador/pasantia', '/administrador/solicitud/pasantia'].includes(menuOpen) ? 'open' : ''">
+                            <li :class="activeMenu === '/administrador/pasantia' ? 'active' : ''"><router-link to="/administrador/pasantia"
+                                    class="sub-menu-item">Pasantias</router-link></li>
+                            <li :class="activeMenu === '/administrador/solicitud/pasantia' ? 'active' : ''"><router-link to="/administrador/solicitud/pasantia"
+                                    class="sub-menu-item">Solicitudes Pasantias</router-link></li>
+                           
+                        </ul>
+                    </li>
 
           <div
             v-if="!$keycloak.authenticated && !isLoading"
@@ -190,6 +206,8 @@
                         >Salir</a
                       >
                     </li>
+
+                
                   </ul>
                 </div>
               </li>
@@ -255,11 +273,11 @@ export default {
     this.scrollToTop();
 
     /*
-    let loader = this.$loading.show();
-                // simulate AJAX
-                setTimeout(() => {
-                    loader.hide()
-                }, 5000)*/
+      let loader = this.$loading.show();
+                  // simulate AJAX
+                  setTimeout(() => {
+                      loader.hide()
+                  }, 5000)*/
   },
   unmounted() {
     window.removeEventListener("scroll", this.handleScroll);
