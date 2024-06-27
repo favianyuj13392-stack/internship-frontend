@@ -1,28 +1,21 @@
 <template>
   <router-view></router-view>
   <loading
-    v-if="isLoading"
+    v-if="!$keycloak_loaded"
     :can-cancel="false"
     :is-full-page="true"
   />
-  
-  </template>
+</template>
 
 <script>
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
+
 export default {
   name: "App",
   components: {
     Loading
-  },
-  
-  computed: {
-    isLoading() {
-      return this.$keycloak == undefined;
-    },
-  },
-  
+  }
 };
 </script>
 

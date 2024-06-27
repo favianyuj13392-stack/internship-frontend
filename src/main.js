@@ -58,6 +58,8 @@ const keycloak = new Keycloak({
 keycloak.authenticated = false;
 
 
+app.config.globalProperties.$keycloak = keycloak;
+app.config.globalProperties.$keycloak_loaded = false;
 
 
 
@@ -65,9 +67,14 @@ keycloak.authenticated = false;
 
 try {
     keycloak.onReady = (auth) => {
-        app.config.globalProperties.$keycloak = keycloak;
-
+            app.config.globalProperties.$keycloak = keycloak;
+        app.config.globalProperties.$keycloak_loaded = true;
+        
+  
         app.mount("#app");
+        console.log("Keycloak is ready", keycloak);
+
+        
 
     };
 
@@ -79,6 +86,7 @@ try {
 
 
 
+    
 
 
 
