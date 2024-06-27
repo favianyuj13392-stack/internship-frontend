@@ -137,7 +137,37 @@ import explore from "@/components/General/Home/explore-job.vue";
 import switcher from "@/components/General/switcher.vue";
 import footers from "@/components/footer/footer.vue";
 
+
+
+
+
+import {useAuthStore} from "@/stores/authStore.js";
+
+
 export default {
+  setup(){
+    const authStore = useAuthStore();
+    return{
+      authStore
+    }
+  },
+
+  async beforeMount() {
+     const existencia = await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
+     if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("ESTUDIANTE")){
+        this.$router.push("/fihish/register-estudiante");
+     }
+     else if(existencia==false){
+        this.$router.push("/fihish/register-empresa");
+     }
+     
+
+
+
+      
+     
+  },
+
   data() {
     return {
       options: [
