@@ -113,12 +113,13 @@
             >
           </li>
 
-          <div v-if="!$keycloak.authenticated && !isLoading"
-          @click="$keycloak.login" class="jhessika">
+          <div
+            v-if="!$keycloak.authenticated && !isLoading"
+            @click="$keycloak.login"
+            class="jhessika"
+          >
             <li :class="activeMenu === '/contact' ? 'active' : ''">
-              <router-link  class="sub-menu-item"
-                >Iniciar Sesión</router-link
-              >
+              <router-link class="sub-menu-item">Iniciar Sesión</router-link>
             </li>
           </div>
           <div v-if="$keycloak.authenticated">
@@ -133,23 +134,20 @@
                 >
                   <span
                     class="btn btn-icon rounded-full bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white"
-                    >
-                    
+                  >
                     <img
                       v-if="$keycloak.tokenParsed.picture"
                       :src="$keycloak.tokenParsed.picture"
                       class="rounded-full"
                       alt=""
-                  />
-                  <img
-                    v-else
-                    src="@/assets/images/user-empty.png"
-                    class="rounded-full"
-                    alt=""
-                  />
-                
-                
-                </span>
+                    />
+                    <img
+                      v-else
+                      src="@/assets/images/user-empty.png"
+                      class="rounded-full"
+                      alt=""
+                    />
+                  </span>
                 </button>
                 <!-- Dropdown menu -->
                 <div
@@ -186,7 +184,7 @@
                     </li>
                     <li>
                       <a
-                      @click="$keycloak.logout"
+                        @click="$keycloak.logout"
                         class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
                         ><i data-feather="log-out" class="size-4 me-2"></i
                         >Salir</a
@@ -256,17 +254,12 @@ export default {
     feather.replace();
     this.scrollToTop();
 
-
     /*
     let loader = this.$loading.show();
                 // simulate AJAX
                 setTimeout(() => {
                     loader.hide()
                 }, 5000)*/
-
-    
-
-
   },
   unmounted() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -274,47 +267,27 @@ export default {
   },
 
   methods: {
-    block(){
+    block() {
       let loader = this.$loading.show({
-                    container: this.fullPage ? null : this.$refs.formContainer,
-                    canCancel: true,
-                    onCancel: this.unlock(),
-                    width: 2,
-                    height: 2,
-                    backgroundColor: '#000000',
-                    opacity: 0.7,
-                });
-
-
-
-
-
-         
-
-
-
-
-                
+        container: this.fullPage ? null : this.$refs.formContainer,
+        canCancel: true,
+        onCancel: this.unlock(),
+        width: 2,
+        height: 2,
+        backgroundColor: "#000000",
+        opacity: 0.7,
+      });
     },
-    unlock(){
-
-
-
-
-
+    unlock() {
       let loader = this.$loading.show({
-                    // Optional parameters
-                    container: this.fullPage ? null : this.$refs.formContainer,
-                  
-                });
-                
-                // simulate AJAX
- loader.hide();         
-      console.log("unlock")
+        // Optional parameters
+        container: this.fullPage ? null : this.$refs.formContainer,
+      });
+
+      // simulate AJAX
+      loader.hide();
+      console.log("unlock");
     },
-
-    
-
 
     handleLogout() {
       this.$keycloak.logout({
@@ -371,5 +344,11 @@ export default {
 }
 .btn-icon:hover {
   transform: scale(1.2);
+}
+@media (max-width: 991px) {
+  .jhessika {
+    margin: 0;
+    padding: 0.5rem 0rem 0rem 1.9rem;
+  }
 }
 </style>
