@@ -474,51 +474,57 @@
       <!--- MAS EMPREASA RELACIONADA-->
 
       <!--end container-->
-      <div class="grid grid-cols-1 pb-8 py-10 text-center">
-        <h3
-          class="mb-4 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
-        >
-          Related Companies
-        </h3>
 
-        <p class="text-slate-400 dark:text-slate-300 max-w-xl mx-auto">
-          Search all the open positions on the web. Get your own personalized
-          salary estimate. Read reviews on over 30000+ companies worldwide.
-        </p>
-      </div>
-      <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-[30px]">
+      <!--end container-->
+      <!-- FIN DE EMPRESAS RELACINADAS-->
+      <!--end grid-->
+    </div>
+    <div class="grid grid-cols-1 pb-8 py-10 text-center">
+      <h3
+        class="mb-4 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
+      >
+        Usuarios de la empresa
+      </h3>
+
+      <p class="text-slate-400 dark:text-slate-300 max-w-xl mx-auto">
+        Todos los usuarios que tienen acceso a la empresa
+      </p>
+    </div>
+    <div class="container">
+      <div
+        class="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[30px]"
+      >
         <div
           v-for="item in datas"
           :key="item"
-          class="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6"
+          class="group px-3 py-5 rounded-md shadow dark:shadow-gray-700 hover:shadow-cyan-600/10 dark:hover:shadow-cyan-600/10 text-center bg-white dark:bg-slate-900 hover:bg-cyan-600/5 dark:hover:bg-cyan-600/5 transition duration-500"
         >
+          <router-link>
+            <i
+              class="uil uil-trash-alt size-8 bg-red-600/5 hover:bg-red-600 text-red-600 hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-700 transition duration-500"
+            ></i>
+          </router-link>
           <div
-            class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md relative -mt-12"
+            class="size-16 bg-cyan-600/5 group-hover:bg-cyan-600 text-cyan-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-700 transition duration-500 mx-auto"
           >
-            <img :src="item.image" class="size-8" alt="" />
+            <i class="uil uil-user"></i>
           </div>
 
-          <div class="mt-4">
-            <router-link class="text-lg hover:text-cyan-600 font-semibold">{{
-              item.name
-            }}</router-link>
-            <p class="text-slate-400 mt-2">{{ item.title }}</p>
-          </div>
-
-          <div
-            class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between"
-          >
-            <span class="text-slate-400"
-              ><i class="uil uil-map-marker"></i> {{ item.location }}</span
+          <div class="content mt-1">
+            <a
+              href=""
+              class="title text-lg font-semibold hover:text-cyan-600"
+              >{{ item.name }}</a
             >
-            <span class="block font-semibold text-cyan-600">{{
-              item.job
-            }}</span>
+            <p class="text-slate-400 mt-1">
+              {{ item.name2 }} <br />
+              {{ item.job }}
+            </p>
           </div>
         </div>
+
         <!--end content-->
       </div>
-      <!-- FIN DE EMPRESAS RELACINADAS-->
       <!--end grid-->
     </div>
     <!--FIN DE LA INFROMACION DE LA EMPRESA-->
@@ -550,16 +556,18 @@ export default {
       datas: [
         {
           id: 1,
+          icon: "uil uil-use",
           image:
             "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Facebook",
+          name: "Daniel Aldazosa",
+          name2: "@ucb.edu.bo",
           day: "2 days ago",
           type: "Full Time",
           job: "Web Designer / Developer",
           country: "Australia",
           vacancy: "21 applied",
           vacancy2: "of 40 vacancy",
-          job: "6 Jobs",
+          job: "7777761",
           location: "Rush",
           title: "Digital Marketing Solutions for Tomorrow",
         },
