@@ -65,8 +65,8 @@
               </div>
             </div>
             <div class="ms-4">
-              <h5 class="text-lg font-semibold">Mr. Calvin carlo</h5>
-              <p class="text-slate-400">Web Designer</p>
+              <h5 class="text-lg font-semibold">{{ estudianteDto.persona.nombre+' '+estudianteDto.persona.apellidoPaterno+' '+estudianteDto.persona.apellidoMaterno }}</h5>
+              <p class="text-slate-400">Estudiante</p>
             </div>
           </div>
         </div>
@@ -222,35 +222,17 @@
                         placeholder="First Name:" id="WordPress" name="number" required="" />
                     </div>
 
-                    <div class="">
-                      <label class="form-label font-medium" for="JavaScript">JavaScript</label>
-                      <input type="number" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                        placeholder="First Name:" id="JavaScript" name="number" required="" />
-                    </div>
+              
 
-                    <div class="">
-                      <label class="form-label font-medium" for="HTML">HTML</label>
-                      <input type="number" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                        placeholder="First Name:" id="HTML" name="number" required="" />
-                    </div>
+                    
+                  </div>
 
-                    <div class="">
-                      <label class="form-label font-medium" for="Figma">Figma</label>
-                      <input type="number" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                        placeholder="First Name:" id="Figma" name="number" required="" />
-                    </div>
+                  <div class="grid grid-cols-1 gap-4 mt-5">
+                <input  id="submit" name="send"
+                @click="agregarHabilidad()"
+                      class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
+                      value="Agregar Nueva Habilildad" />
 
-                    <div class="">
-                      <label class="form-label font-medium" for="Photoshop">Photoshop</label>
-                      <input type="number" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                        placeholder="First Name:" id="Photoshop" name="number" required="" />
-                    </div>
-
-                    <div class="">
-                      <label class="form-label font-medium" for="Illustration">Illustration</label>
-                      <input type="number" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                        placeholder="First Name:" id="Illustration" name="number" required="" />
-                    </div>
                   </div>
 
                   
