@@ -729,52 +729,39 @@ export default {
       paginaFormulario:1,
 
 
-      personaDto: {
-        "idUsuarios": 1,
-        "kc_UUID": "123e4567-e89b-12d3-a456-426614174000",
-        "correo": "example@example.com",
-        "fechaRegistro": "2023-06-27",
-        "horaRegistro": "12:34:56",
-        "idRoles": 2,
-        "idPersonas": 3,
-        "idCarreras": 4,
+      estudianteDto: {
+        "idUsuarios": 10001,
+        "kc_UUID": "asdkasdja-sdajfsdbkfasd-32",
+        "correo": "daniel.aldazosa@ucb.edu.bo",
+        "fechaRegistro": "2024-06-28",
+        "horaRegistro": "11:50:07",
+        "idRoles": 1,
+        "idPersonas": 100001,
+        "idCarreras": 1,
         "persona": {
-          "idPersona": 3,
-          "nombre": "Juan",
-          "apellidoPaterno": "Perez",
-          "apellidoMaterno": "Lopez",
-          "telefono": 123456789,
-          "ci": "1234567",
-          "fotoPerfil": "foto_perfil.jpg",
-          "anioIngresoUniversidad": 2020,
-          "descripcion": "Estudiante de ingeniería",
-          "habilidades": ["programación", "matemáticas"],
-          "habilidadesSeleccionada": ["Java", "Python"],
-          "experiencia": ["Proyecto A", "Proyecto B"],
-          "fechaDeNacimiento": "2000-01-01",
-          "redesSociales": {
-            "linkedin": "https://linkedin.com/in/juanperez",
-            "twitter": "https://twitter.com/juanperez"
-          }
+            "idPersona": 100001,
+            "nombre": "Daniel Ignacio",
+            "apellidoPaterno": "Aldazosa",
+            "apellidoMaterno": "Miranda",
+            "telefono": 60176430,
+            "ci": "6959943",
+            "fotoPerfil": "https://backend-sistemas.serverbb.online/api/v1/public/files/download/blob_20240520-221153808",
+            "anioIngresoUniversidad": 2020,
+            "descripcion": "slkdf sldklfjsald flskdfs dlfksdfjskdf sdfskdfjsldjk",
+            "habilidades": "{\"habilidades\": \"todas\"}",
+            "habilidadesSeleccionada": "{\"habilidades_seleccionadas\": \"todas\"}",
+            "experiencia": "{\"trabajo\": \"mucho\"}",
+            "fechaDeNacimiento": "2002-12-17",
+            "redesSociales": "{\"facebook\": \"facebook.com\"}"
         },
-        "institucion": {
-          "idInstituciones": 5,
-          "nombre": "Instituto Tecnológico",
-          "descripcion": "Institución educativa",
-          "direccion": "Calle Falsa 123",
-          "fotoInstitucion": "foto_institucion.jpg",
-          "correo": "instituto@example.com",
-          "sectores": ["educación", "tecnología"],
-          "logoEmpresa": "logo_empresa.jpg",
-          "fotos": ["foto1.jpg", "foto2.jpg"],
-          "redesSociales": {
-            "facebook": "https://facebook.com/instituto",
-            "instagram": "https://instagram.com/instituto"
-          },
-          "activo": true
-        },
-        "cargo": "Estudiante"
-      }
+        "carrera": {
+            "idCarreras": 1,
+            "nombre": "Ing. Sistemas",
+            "descripcion": "INGENIERIA EN SISTEMAS"
+        }
+      },
+     
+      
 
     };
   },
