@@ -6,38 +6,68 @@
   />
   <!-- Start Hero -->
   <section
-    class="relative table w-full py-36 bg-[url('../../assets/images/hero/bg.jpg')] bg-top bg-no-repeat bg-cover"
+    class="py-20 w-full table relative bg-[url('../../assets/images/hero/bg2.jpg')] bg-top bg-no-repeat bg-cover"
   >
-    <div class="absolute inset-0 bg-cyan-900/90"></div>
-    <div class="container">
-      <div class="grid grid-cols-1 text-center mt-10">
-        <h3
-          class="md:text-3xl text-2xl md:leading-snug tracking-wide leading-snug font-medium text-white"
-        >
-          Empresas asociadas
+    <div class="absolute inset-0 bg-slate-900/70"></div>
+    <div class="container relative">
+      <div class="grid grid-cols-1 text-center">
+        <h3 class="mb-4 md:text-[26px] text-2xl text-white font-medium">
+          Solicitudes de pasantias
         </h3>
+
+        <p class="text-white/80 max-w-xl mx-auto">
+          Lugar donde podras las solicitudes de pasantias.
+        </p>
+
+        <a
+          @click="toggle"
+          data-type="youtube"
+          data-id="S_CGed6E610"
+          class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-800 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-cyan-600 mx-auto mt-10 cursor-pointer"
+        >
+          <i
+            class="mdi mdi-play inline-flex items-center justify-center text-2xl"
+          ></i>
+        </a>
       </div>
       <!--end grid-->
     </div>
     <!--end container-->
   </section>
   <!--end section-->
-  <div class="relative">
-    <div
-      class="shape absolute start-0 end-0 sm:-bottom-px -bottom-[2px] overflow-hidden z-1 text-white dark:text-slate-900"
-    >
-      <svg
-        class="w-full h-auto"
-        viewBox="0 0 2880 48"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z"
-          fill="currentColor"
-        ></path>
-      </svg>
+  <!-- End -->
+
+  <!-- iframe start  -->
+  <div
+    :class="isActive ? 'fixed' : 'hidden'"
+    class="bg-black/[0.9] top-0 left-0 bottom-0 w-[100%] h-[100%] z-999"
+  >
+    <div class="h-[100%] flex items-center justify-center">
+      <iframe
+        src="https://www.youtube.com/embed/S_CGed6E610?feature=oembed"
+        width="700"
+        height="500"
+        frameborder="0"
+      ></iframe>
     </div>
+    <button class="text-slate-400 absolute top-[20px] right-[20px]">
+      <svg
+        stroke="currentColor"
+        fill="none"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="size-5"
+        height="1em"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        @click="toggle"
+      >
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
   </div>
   <!-- End Hero -->
 
@@ -61,7 +91,7 @@
                         type="text"
                         id="job-keyword"
                         class="form-input filter-input-box bg-gray-50 dark:bg-slate-800 border-0"
-                        placeholder="Buscar empresa"
+                        placeholder="Buscar pasantia"
                       />
                     </div>
 
@@ -83,7 +113,6 @@
                       <v-select
                         :options="options2"
                         v-model="selected2"
-                        multiple
                         class="ms-10"
                       ></v-select>
                     </div>
@@ -110,155 +139,65 @@
     </div>
     <!--end container-->
     <!-- JOBGRIDDONNN-->
-    <div class="container mt-10">
-      <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-[30px]">
+    <div class="container md:mt-16 mt-16">
+      <div
+        class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
+      >
         <div
           v-for="item in datas"
           :key="item"
-          class="group shadow dark:shadow-gray-700 p-6 rounded-md bg-white dark:bg-slate-900"
+          class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-500"
         >
-          <div class="flex items-center justify-between">
-            <div class="flex items-center">
-              <div
-                class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md"
-              >
-                <img :src="item.image" class="size-8" alt="" />
-              </div>
-
-              <div class="ms-3">
-                <router-link
-                  to="/empresas/detalle"
-                  class="block text-[20px] font-semibold hover:text-cyan-600 transition-all duration-500"
-                  >{{ item.name }}</router-link
-                >
-                <span class="block text-sm text-slate-400">junto a UCB</span>
-              </div>
-            </div>
-
-            <span
-              class="bg-cyan-600/10 group-hover:bg-cyan-600 inline-block text-cyan-600 group-hover:text-white text-xs px-2.5 py-0.5 font-semibold rounded-full transition-all duration-500"
-              ><i
-                class="mdi mdi-check-decagram mdi-18px text-blue-500 me-1 group-hover:text-white"
-              ></i
-              >Verificado</span
+          <div class="p-6">
+            <router-link
+              class="title h5 text-lg font-semibold hover:text-cyan-600"
+              >{{ item.name }}</router-link
             >
-          </div>
-
-          <div class="mt-6">
-            <p
-              class="text-slate-400 text-lg hover:text-cyan-600 transition-all duration-500"
-            >
-              Descripcion de la empresa
+            <router-link
+              to="/pasantias/detalle"
+              class="btn btn-icon rounded-full bg-cyan-600/5 group-hover:bg-cyan-600 border-cyan-600/10 text-cyan-600 group-hover:text-white ms-1 ml-3"
+              ><i class="uil uil-arrow-up-right"></i
+            ></router-link>
+            <p class="text-slate-400 mt-2">
+              <i class="uil uil-clock text-cyan-600"></i> {{ item.day }}
             </p>
-            <div class="py-2">
+
+            <div class="flex justify-between items-center mt-4">
               <span
-                v-for="language in item.language"
-                :key="language"
-                class="bg-slate-100 dark:bg-slate-800 inline-block text-slate-900 dark:text-slate-300 text-xs px-2.5 py-0.5 font-semibold rounded-full me-1"
-                >{{ language }}</span
+                class="bg-cyan-600/5 text-cyan-600 text-xs font-bold px-2.5 py-0.5 rounded h-5"
+                >{{ item.type }}</span
               >
+
+              <p class="text-slate-400">
+                <i class="uil uil-usd-circle text-cyan-600"></i>
+                {{ item.salary }}
+              </p>
             </div>
           </div>
 
-          <div class="mt-1">
-            <div class="mt-2 mb-2">
-              <span class="text-slate-400 text-sm"
-                ><span
-                  class="text-slate-900 dark:text-white font-semibold inline-block"
-                  >10 pasantias disponibles</span
-                >
-                de 40
-              </span>
-            </div>
-            <div
-              class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-[6px]"
-            >
-              <div
-                class="bg-cyan-600 h-[6px] rounded-full"
-                style="width: 55%"
-              ></div>
-            </div>
-            <div class="mt-2">
-              <h6 class="text-base font-medium">
-                <i class="uil uil-map-marker"></i> La Paz, Bolivia
-              </h6>
+          <div
+            class="flex items-center p-6 border-t border-gray-100 dark:border-gray-700"
+          >
+            <img
+              :src="item.image"
+              class="size-12 shadow-md dark:shadow-gray-800 rounded-md p-2 bg-white dark:bg-slate-900"
+              alt=""
+            />
+
+            <div class="ms-3">
+              <router-link>
+                <h6 class="mb-0 font-semibold text-base">
+                  {{ item.company }}
+                </h6></router-link
+              >
+              <span class="text-slate-400 text-sm">{{ item.location }}</span>
             </div>
           </div>
         </div>
-
-        <!--end content-->
       </div>
-      <!--end grid-->
-
-      <!--PAGINACIONNN-->
-      <div class="grid md:grid-cols-12 grid-cols-1 mt-8">
-        <div class="md:col-span-12 text-center">
-          <nav aria-label="Page navigation example">
-            <ul class="inline-flex items-center -space-x-px">
-              <li>
-                <a
-                  href="#"
-                  class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-s-3xl hover:text-white border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
-                >
-                  <i
-                    class="uil uil-angle-left text-[20px] rtl:rotate-180 rtl:-mt-1"
-                  ></i>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
-                  >1</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
-                  >2</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  aria-current="page"
-                  class="z-10 size-[40px] inline-flex justify-center items-center text-white bg-cyan-600 border border-cyan-600"
-                  >3</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
-                  >4</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
-                  >5</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-e-3xl hover:text-white border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
-                >
-                  <i
-                    class="uil uil-angle-right text-[20px] rtl:rotate-180 rtl:-mt-1"
-                  ></i>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <!--end col-->
-      </div>
-      <!--end grid-->
-      <!--FIN DE PAGINACION-->
     </div>
+
+    <!--end container-->
 
     <!--FIIINDE JOB-->
   </section>
@@ -291,7 +230,7 @@ export default {
         "Gambia",
       ],
       selected: "Miraflores",
-      options2: ["Tecnologia", "Freelancer", "Remote Work", "Office Work"],
+      options2: ["Facebook", "Freelancer", "Remote Work", "Office Work"],
       selected2: [],
       datas: [
         {
@@ -314,11 +253,15 @@ export default {
             "Graphics",
             "Bootstrap",
           ],
+          salary: "$950 - $1100/mo",
+
+          company: "Facebook Ltd.",
+          location: "Australia",
         },
         {
           id: 2,
           image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
           name: "Google",
           day: "2 days ago",
           type: "Part Time",
@@ -335,6 +278,10 @@ export default {
             "Graphics",
             "Bootstrap",
           ],
+          salary: "$950 - $1100/mo",
+
+          company: "Facebook Ltd.",
+          location: "Australia",
         },
         {
           id: 3,
@@ -356,6 +303,10 @@ export default {
             "Graphics",
             "Bootstrap",
           ],
+          salary: "$950 - $1100/mo",
+
+          company: "Facebook Ltd.",
+          location: "Australia",
         },
         {
           id: 4,
@@ -377,6 +328,10 @@ export default {
             "Graphics",
             "Bootstrap",
           ],
+          salary: "$950 - $1100/mo",
+
+          company: "Facebook Ltd.",
+          location: "Australia",
         },
         {
           id: 5,
@@ -398,6 +353,10 @@ export default {
             "Graphics",
             "Bootstrap",
           ],
+          salary: "$950 - $1100/mo",
+
+          company: "Facebook Ltd.",
+          location: "Australia",
         },
         {
           id: 6,
@@ -419,6 +378,10 @@ export default {
             "Graphics",
             "Bootstrap",
           ],
+          salary: "$950 - $1100/mo",
+
+          company: "Facebook Ltd.",
+          location: "Australia",
         },
         {
           id: 7,
@@ -439,6 +402,10 @@ export default {
             "Graphics",
             "Bootstrap",
           ],
+          salary: "$950 - $1100/mo",
+
+          company: "Facebook Ltd.",
+          location: "Australia",
         },
         {
           id: 8,
@@ -459,6 +426,10 @@ export default {
             "Graphics",
             "Bootstrap",
           ],
+          salary: "$950 - $1100/mo",
+
+          company: "Facebook Ltd.",
+          location: "Australia",
         },
         {
           id: 9,
@@ -479,6 +450,10 @@ export default {
             "Graphics",
             "Bootstrap",
           ],
+          salary: "$950 - $1100/mo",
+
+          company: "Facebook Ltd.",
+          location: "Australia",
         },
         {
           id: 10,
@@ -499,6 +474,10 @@ export default {
             "Graphics",
             "Bootstrap",
           ],
+          salary: "$950 - $1100/mo",
+
+          company: "Facebook Ltd.",
+          location: "Australia",
         },
         {
           id: 11,
@@ -519,6 +498,10 @@ export default {
             "Graphics",
             "Bootstrap",
           ],
+          salary: "$950 - $1100/mo",
+
+          company: "Facebook Ltd.",
+          location: "Australia",
         },
         {
           id: 12,
@@ -539,6 +522,10 @@ export default {
             "Graphics",
             "Bootstrap",
           ],
+          salary: "$950 - $1100/mo",
+
+          company: "Facebook Ltd.",
+          location: "Australia",
         },
       ],
     };
@@ -552,4 +539,21 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.bg-cover {
+  background-size: cover;
+}
+
+.bg-center {
+  background-position: center;
+}
+
+.jhess {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Puedes ajustar la opacidad según tus necesidades */
+}
+</style>

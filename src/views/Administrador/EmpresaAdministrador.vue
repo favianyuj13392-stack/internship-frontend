@@ -121,66 +121,73 @@
     </div>
   </section>
 
-  <div class="container mt-2">
-    <div class="grid grid-cols-1 gap-[30px]">
+  <div class="container">
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px]">
       <div
         v-for="item in datas"
         :key="item"
-        class="group relative overflow-hidden md:flex justify-between items-center rounded shadow hover:shadow-md dark:shadow-gray-700 transition-all duration-500 p-5"
+        class="group relative overflow-hidden bg-white dark:bg-slate-900 rounded-md shadow dark:shadow-gray-700"
       >
-        <div class="flex items-center">
-          <div
-            class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md"
-          >
-            <img :src="item.image" class="size-8" alt="" />
+        <div class="relative overflow-hidden h-40">
+          <img
+            :src="item.image"
+            class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-500"
+            alt=""
+          />
+        </div>
+
+        <div class="relative p-6">
+          <div class="absolute start-6 -top-4">
+            <span
+              class="bg-cyan-600 text-white text-[12px] px-2.5 py-1 font-semibold rounded-full h-5"
+              >{{ item.name }}</span
+            >
           </div>
-          <router-link
-            class="text-lg hover:text-cyan-600 font-semibold transition-all duration-500 ms-3 min-w-[180px]"
-            >{{ item.job }}</router-link
-          >
-        </div>
 
-        <div class="md:block flex justify-between md:mt-0 mt-4">
-          <span class="block"
-            ><span
-              class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full"
-              >{{ item.type }}</span
-            ></span
-          >
-          <span class="block text-slate-400 text-sm md:mt-1 mt-0"
-            ><i class="uil uil-clock"></i> {{ item.day }}</span
-          >
-        </div>
+          <div class="">
+            <div class="flex mb-4">
+              <span class="text-slate-400 text-sm"
+                ><i
+                  class="uil uil-calendar-alt text-slate-900 dark:text-white me-2"
+                ></i
+                >{{ item.date }}</span
+              >
+              <span class="text-slate-400 text-sm ms-3"
+                ><i
+                  class="uil uil-clock text-slate-900 dark:text-white me-2"
+                ></i
+                >{{ item.time }}</span
+              >
+            </div>
 
-        <div class="md:block flex justify-between md:mt-0 mt-2">
-          <span class="text-slate-400"
-            ><i class="uil uil-map-marker"></i> {{ item.country }}</span
-          >
-          <span class="block font-semibold md:mt-1 mt-0">{{
-            item.salary
-          }}</span>
-        </div>
+            <router-link
+              class="title text-lg font-semibold hover:text-cyan-600 duration-500 ease-in-out"
+              >{{ item.title }}</router-link
+            >
 
-        <div class="md:mt-0 mt-4">
-          <a
-            href=""
-            class="btn btn-icon rounded-full bg-yellow-600/5 hover:bg-yellow-600 border-yellow-600/10 hover:border-yellow-600 text-yellow-600 hover:text-white md:relative absolute top-0 end-0 md:m-0 m-3"
-            ><i data-feather="pause" class="size-4"></i
-          ></a>
-          <router-link
-            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto"
-            >Más información</router-link
-          >
+            <div class="flex justify-between items-center mt-3">
+              <router-link
+                to="/empresas/detalle"
+                class="btn btn-link hover:text-cyan-600 after:bg-cyan-600 duration-500 ease-in-out"
+                >Ver empresa <i class="uil uil-arrow-right"></i
+              ></router-link>
+              <span class="text-slate-400 text-sm"
+                >by
+                <a
+                  href=""
+                  class="text-slate-900 dark:text-white hover:text-cyan-600 dark:hover:text-cyan-600 font-medium"
+                  >{{ item.company }}</a
+                ></span
+              >
+            </div>
+          </div>
         </div>
-
-        <span
-          class="w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1"
-          ><i class="uil uil-star"></i
-        ></span>
       </div>
       <!--end content-->
     </div>
+    <!--end grid-->
   </div>
+  <!--end container-->
   <!--PAGINACIONNN-->
   <div class="grid md:grid-cols-12 grid-cols-1 mt-8">
     <div class="md:col-span-12 text-center">
@@ -271,16 +278,6 @@
         <popularjob />
         <company />
      -->
-  <section class="relative md:py-16 py-16">
-    <div class="container md:py-10 py-10">
-      <services />
-    </div>
-
-    <question />
-    <cta />
-    <company />
-    <explore />
-  </section>
 
   <switcher />
   <footers />
@@ -315,7 +312,7 @@ export default {
         {
           id: 1,
           image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
+            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
           day: "20th Feb 2023",
           type: "Full Time",
           job: "Web Designer",
@@ -324,6 +321,11 @@ export default {
           class:
             "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
           icon: "uil uil-star",
+          name: "Arts",
+          date: "20th February, 2023",
+          time: "5 min read",
+          title: "11 Tips to Help You Get New Clients Through Cold Calling",
+          company: "Google",
         },
         {
           id: 2,
@@ -337,6 +339,11 @@ export default {
           class:
             "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
           icon: "uil uil-star",
+          name: "Arts",
+          date: "20th February, 2023",
+          time: "5 min read",
+          title: "11 Tips to Help You Get New Clients Through Cold Calling",
+          company: "Google",
         },
         {
           id: 3,
@@ -350,6 +357,11 @@ export default {
           salary: "$4,000 - $4,500",
           class:
             "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
+          name: "Arts",
+          date: "20th February, 2023",
+          time: "5 min read",
+          title: "11 Tips to Help You Get New Clients Through Cold Calling",
+          company: "Google",
         },
         {
           id: 4,
@@ -363,6 +375,11 @@ export default {
           salary: "$4,000 - $4,500",
           class:
             "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
+          name: "Arts",
+          date: "20th February, 2023",
+          time: "5 min read",
+          title: "11 Tips to Help You Get New Clients Through Cold Calling",
+          company: "Google",
         },
         {
           id: 5,
@@ -377,6 +394,11 @@ export default {
           class:
             "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
           icon: "uil uil-star",
+          name: "Arts",
+          date: "20th February, 2023",
+          time: "5 min read",
+          title: "11 Tips to Help You Get New Clients Through Cold Calling",
+          company: "Google",
         },
         {
           id: 6,
@@ -391,6 +413,11 @@ export default {
           class:
             "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
           icon: "uil uil-star",
+          name: "Arts",
+          date: "20th February, 2023",
+          time: "5 min read",
+          title: "11 Tips to Help You Get New Clients Through Cold Calling",
+          company: "Google",
         },
         {
           id: 7,
