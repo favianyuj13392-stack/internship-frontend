@@ -22,11 +22,10 @@ import SolicitudEmpresaAdministrador from "@/views/Administrador/SolicitudEmpres
 import SolicitudPasantiaAdministrador from "@/views/Administrador/SolicitudPasantiaAdministrador.vue";
 import PasantiaAdministrador from "@/views/Administrador/PasantiaAdministrador.vue";
 import EmpresaAdministrador from "@/views/Administrador/EmpresaAdministrador.vue";
-
-
+import EmpresaDetalleAdministrador from "@/views/Administrador/EmpresaDetalleAdministrador.vue";
+import PasantiaDetalleAdministrador from "@/views/Administrador/PasantiaDetalleAdministrador.vue";
 //completar registro
 import FinishRegisterEstudiante from "@/views/CompletarRegistro/CompletarRegistroEstudianteView.vue";
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -114,6 +113,11 @@ const router = createRouter({
       component: SolicitudEmpresaAdministrador,
     },
     {
+      path: "/administrador/empresa/detalle",
+      name: "EmpresaDetalleAdministrador",
+      component: EmpresaDetalleAdministrador,
+    },
+    {
       path: "/administrador/pasantia",
       name: "PasantiaAdministrador",
       component: PasantiaAdministrador,
@@ -123,20 +127,18 @@ const router = createRouter({
       name: "SolicitudPasantiaAdministrador",
       component: SolicitudPasantiaAdministrador,
     },
-
-
-
-
-
-
-
+    {
+      path: "/administrador/pasantia/detalle",
+      name: "PasantiaDetalleAdministrador",
+      component: PasantiaDetalleAdministrador,
+    },
 
     //completado de registro
     {
       path: "/finish/register-estudiante",
       name: "FinishRegisterEstudiante",
       component: FinishRegisterEstudiante,
-    }
+    },
   ],
 });
 
