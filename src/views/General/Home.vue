@@ -153,6 +153,9 @@ export default {
   },
 
   async beforeMount() {
+    if(!this.$keycloak.authenticated){
+      return;
+    }
     let loader = this.$loading.show( );
      const existencia = await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
      if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("ESTUDIANTE")){
