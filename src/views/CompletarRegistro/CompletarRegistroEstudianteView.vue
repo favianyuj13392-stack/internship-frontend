@@ -191,15 +191,15 @@
               </div>
               <!--end row-->
               <div class="grid grid-cols-2 gap-4 mt-5">
-                <input  id="submit" name="send"
+                <button  id="submit" name="send"
                 @click="this.$keycloak.logout()"
                       class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                      value="Cancelar" />
+                       >Cancelar</button>
 
-                <input  id="submit" name="send"
+                <button  id="submit" name="send"
                 @click="paginaFormulario=2"
                       class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      value="Siguiente" />
+                      >Siguiente</button>
         </div>
               
              
@@ -213,13 +213,34 @@
           <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
             <div class="grid grid-cols-1 gap-4">
               <div>
-                <h5 class="text-lg font-semibold mb-4">Skills :</h5>
+                <h5 class="text-lg font-semibold mb-4">Habilidades :</h5>
                 <div>
                   <div class="grid grid-cols-1 gap-4">
-                    <div class="">
-                      <label class="form-label font-medium" for="WordPress">WordPress</label>
-                      <input type="number" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                        placeholder="First Name:" id="WordPress" name="number" required="" />
+                    <div class="grid grid-cols-3 gap-4 mt-5 pt-3" v-for="habilidad in estudianteDto.persona.habilidades" :id="habilidad.habilidad">
+                      <label class="form-label font-medium" for="WordPress">{{ habilidad.habilidad }}</label>
+  
+                        <StarRatingComponent name="rating" v-model="habilidad.nivel" :disabled="false" ></StarRatingComponent>
+                        <div class="grid grid-cols-2 gap-4 mt-0">
+                          <button  id="submit" name="send"
+                          v-if="habilidad.principal==false"
+                          @click="habilidad.principal=true"
+                                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer"
+                               >Secundario</button>
+
+                               <button  id="submit" name="send"
+                               v-if="habilidad.principal==true"
+
+                          @click="habilidad.principal=false"
+                                class="btn border-yellow-600 bg-yellow-600 hover:bg-yellow-700 text-white text-sm p-0 rounded-md cursor-pointer"
+                               >Principal</button>
+
+                          <button  id="submit" name="send"
+                          @click="eliminarHabilidad(habilidad)"
+                                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+                                >Eliminar</button>
+
+                        </div>
+                            
                     </div>
 
               
@@ -228,24 +249,24 @@
                   </div>
 
                   <div class="grid grid-cols-1 gap-4 mt-5">
-                <input  id="submit" name="send"
-                @click="agregarHabilidad()"
+                <button  id="submit" name="send"
+                @click="showNuevaHabilidadModal=true"
                       class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
-                      value="Agregar Nueva Habilildad" />
+                      >Agregar Nueva Habilidad</button>
 
                   </div>
 
                   
         <div class="grid grid-cols-2 gap-4 mt-5">
-                <input  id="submit" name="send"
+                <button  id="submit" name="send"
                 @click="paginaFormulario=1"
                       class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                      value="Atrás" />
+                      >Atrás</button>
 
-                <input  id="submit" name="send"
+                <button  id="submit" name="send"
                 @click="paginaFormulario=3"
                       class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      value="Siguiente" />
+                      >Siguiente</button>
         </div>
       </div>
               </div>
@@ -257,69 +278,53 @@
           <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
             <div class="grid grid-cols-1 gap-4">
               <div>
-                <h5 class="text-lg font-semibold mb-4">Experience :</h5>
+                <h5 class="text-lg font-semibold mb-4">Experiencia :</h5>
 
                 <div>
+              
                   <div>
-                    <div v-if="imageSrc === null ? 'hidden' : ''"
-                      class="preview-box flex justify-center rounded-md shadow dark:shadow-gray-800 overflow-hidden bg-gray-50 dark:bg-slate-800 text-slate-400 p-2 text-center small w-auto max-h-60">
-                      Supports JPG, PNG and MP4 videos. Max file size : 10MB.
-                    </div>
-                    <div v-else
-                      class="preview-box flex justify-center rounded-md shadow dark:shadow-gray-800 overflow-hidden bg-gray-50 dark:bg-slate-800 text-slate-400 p-2 text-center small w-auto max-h-60">
-                      <img class="preview-content" style="object-fit: scale-down;" :src="imageSrc" />
-                    </div>
-                    <input type="file" id="input-file" name="input-file" accept="image/*" @change="loadFile" hidden />
-                    <label
-                      class="btn-upload btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md mt-5 cursor-pointer cursor-pointer"
-                      for="input-file">Upload Image</label>
+                    <div class="flex mt-6">
+            <div class="text-slate-400 font-semibold min-w-[80px] text-center">
+              <img
+                src="@/assets/images/company/shree-logo.png"
+                class="size-16 mx-auto mb-2 block"
+                alt=""
+              />
+              2019-22
+            </div>
+
+            <div class="ms-4">
+              <h5 class="text-lg font-medium mb-0">Full Stack Developer</h5>
+              <span class="text-slate-400 company-university"
+                >Shreethemes - India</span
+              >
+              <p class="text-slate-400 mt-2 mb-0">
+                It seems that only fragments of the original text remain in the
+                Lorem Ipsum texts used today. One may speculate that over the
+                course of time certain letters were added or deleted at various
+                positions within the text.
+              </p>
+            </div>
+          </div>
+                    <div class="grid grid-cols-1 gap-4 mt-5">
+                <button  id="submit" name="send"
+                @click="showNuevaExperienciaModal=true"
+                      class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
+                      >Agregar Nueva Habilidad</button>
+
                   </div>
-                  <div>
-                    <div class="grid grid-cols-12 mt-6 gap-4">
-                      <div class="col-span-12">
-                        <label class="form-label font-medium">Job Title <span class="text-red-600">*</span></label>
-                        <input name="name" id="JobTitle" type="text"
-                          class="form-input border border-slate-100 dark:border-slate-800" placeholder="Title :" />
-                      </div>
-                      <!--end col-->
-
-                      <div class="col-span-12">
-                        <label class="form-label font-medium">Company Name
-                          <span class="text-red-600">*</span></label>
-                        <input name="name" id="CompanyName" type="text"
-                          class="form-input border border-slate-100 dark:border-slate-800" placeholder="Company :" />
-                      </div>
-                      <!--end col-->
-
-                      <div class="col-span-12">
-                        <label class="form-label font-medium">Year <span class="text-red-600">*</span></label>
-                        <input name="number" id="Year" type="number"
-                          class="form-input border border-slate-100 dark:border-slate-800" placeholder="Year :" />
-                      </div>
-                      <!--end col-->
-
-                      <div class="col-span-12">
-                        <label class="form-label font-medium">
-                          Description :
-                        </label>
-                        <textarea name="comments" id="Description"
-                          class="form-input border border-slate-100 dark:border-slate-800 textarea"
-                          placeholder="Description :"></textarea>
-                      </div>
-                      <!--end col-->
-                    </div>
                   </div>
 
                   <div class="grid grid-cols-2 gap-4 mt-5">
-                <input  id="submit" name="send"
+                <button  id="submit" name="send"
                 @click="paginaFormulario=2"
                       class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                      value="Atrás" />
+                      >Atrás</button>
 
-                <input  id="submit" name="send"
+                <button  id="submit" name="send"
                 @click="paginaFormulario=4"
                       class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      value="Siguiente" />
+                      >Siguiente</button>
         </div>
                 </div>
               </div>
@@ -394,15 +399,15 @@
               <!--end col-->
             </div>
             <div class="grid grid-cols-2 gap-4 mt-5">
-                <input  id="submit" name="send"
+                <button  id="submit" name="send"
                 @click="paginaFormulario=3"
                       class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                      value="Atrás" />
+                     >Atrás</button>
 
-                <input  id="submit" name="send"
+                <button  id="submit" name="send"
                 @click="paginaFormulario=5"
                       class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      value="Siguiente" />
+                     >Siguiente</button>
         </div>
             <!--end row-->
           </div>
@@ -509,15 +514,15 @@
             </div>
 
             <div class="grid grid-cols-2 gap-4 mt-5">
-                <input  id="submit" name="send"
+                <button  id="submit" name="send"
                 @click="paginaFormulario=4"
                       class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                      value="Atrás" />
+                      >Atrás</button>
 
-                <input  id="submit" name="send"
+                <button  id="submit" name="send"
                 @click="paginaFormulario=6"
                       class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      value="Siguiente" />
+                      >Siguiente</button>
         </div>
           </div>
         </div>
@@ -688,6 +693,97 @@
     </div>
     <!--fin de edicion de profie-->
   </section>
+
+  <div id="myModalExperiencia" class="modal" v-if="showNuevaExperienciaModal">
+    <div class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+      <span class="close" @click="showNuevaExperienciaModal=false">&times;</span>
+      
+      <div class="grid grid-cols-1 gap-4">
+              <div>
+                <h5 class="text-lg font-semibold mb-4">Experiencia :</h5>
+
+                <div>
+              
+                  <div>
+                    <div class="grid grid-cols-12 mt-6 gap-4">
+                      <div class="col-span-12">
+                        <label class="form-label font-medium">Job Title <span class="text-red-600">*</span></label>
+                        <input name="name" id="JobTitle" type="text"
+                          class="form-input border border-slate-100 dark:border-slate-800" placeholder="Title :" />
+                      </div>
+                      <!--end col-->
+
+                      <div class="col-span-12">
+                        <label class="form-label font-medium">Company Name
+                          <span class="text-red-600">*</span></label>
+                        <input name="name" id="CompanyName" type="text"
+                          class="form-input border border-slate-100 dark:border-slate-800" placeholder="Company :" />
+                      </div>
+                      <!--end col-->
+
+                      <div class="col-span-12">
+                        <label class="form-label font-medium">Year <span class="text-red-600">*</span></label>
+                        <input name="number" id="Year" type="number"
+                          class="form-input border border-slate-100 dark:border-slate-800" placeholder="Year :" />
+                      </div>
+                      <!--end col-->
+
+                      <div class="col-span-12">
+                        <label class="form-label font-medium">
+                          Description :
+                        </label>
+                        <textarea name="comments" id="Description"
+                          class="form-input border border-slate-100 dark:border-slate-800 textarea"
+                          placeholder="Description :"></textarea>
+                      </div>
+                      <!--end col-->
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 gap-4 mt-5">
+                <button  id="submit" name="send"
+                @click="agregarNuevaExperiencia(nuevaHabilidad)"
+                      class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+                      >Agregar</button>
+
+                  </div>
+
+        
+                </div>
+              </div>
+            </div>
+          </div>
+  </div>
+
+  <div id="myModal" class="modal" v-if="showNuevaHabilidadModal">
+  <div class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+    <span class="close" @click="showNuevaHabilidadModal=false">&times;</span>
+    <div class="grid grid-cols-1 gap-4">
+      <div>
+        <h5 class="text-lg font-semibold mb-4">Nueva Habilidad :</h5>
+        <div>
+          <div class="grid grid-cols-1 gap-4">
+            <div class="">
+              <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                placeholder="Habilidad:" id="WordPress" name="number" required="" 
+                v-model="nuevaHabilidad"
+                />
+            </div>
+
+          </div>
+          <div class="grid grid-cols-1 gap-4 mt-5">
+                <button  id="submit" name="send"
+                @click="agregarHabilidad(nuevaHabilidad)"
+                      class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+                      >Agregar</button>
+
+                  </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- End Hero -->
 
   <switcher />
@@ -698,11 +794,13 @@ import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
 import switcher from "@/components/General/switcher.vue";
+import StarRatingComponent from "@/components/General/Extras/StartRatingComponent.vue";
 export default {
 
   components: {
 
     switcher,
+    StarRatingComponent,
   },
 
   mounted() {
@@ -746,7 +844,44 @@ export default {
             "fechaDeNacimiento": "2002-12-17",
             
             
-            "habilidades": "{\"habilidades\": \"todas\"}",
+            "habilidades":  [
+                {
+                  
+                  "habilidad": "Java",
+                  "nivel": 5,
+                  "principal":true
+                },
+                {
+                  
+                  "habilidad": "Python",
+                  "nivel": 4,
+                  "principal":true
+
+                },
+                {
+                  
+                  "habilidad": "C++",
+                  "nivel": 3,
+                  "principal":true
+
+                },
+                {
+                  
+                  "habilidad": "C#",
+                  "nivel": 2,
+                  "principal":false
+
+                },
+                {
+                  
+                  "habilidad": "JavaScript",
+                  "nivel": 1,
+                  "principal":false
+
+                },
+                
+              ],
+            
             
             
             "habilidadesSeleccionada": "{\"habilidades_seleccionadas\": \"todas\"}",
@@ -771,6 +906,11 @@ export default {
             "descripcion": "INGENIERIA EN SISTEMAS"
         }
       },
+
+
+      rating: 0,
+      showNuevaHabilidadModal:false,
+      showNuevaExperienciaModal:false,
      
       
 
@@ -790,6 +930,20 @@ export default {
     this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
   },
   methods: {
+    agregarHabilidad(habilidad){
+      this.estudianteDto.persona.habilidades.push({
+        habilidad:habilidad,
+        nivel:0,
+        principal:false
+      });
+      this.showNuevaHabilidadModal=false;
+    },
+
+    eliminarHabilidad(habilidad){
+      const index = this.estudianteDto.persona.habilidades.indexOf(habilidad);
+      this.estudianteDto.persona.habilidades.splice(index,1);
+    },
+
 
     validateInputYear(event) {
       const value = event.target.value;
@@ -850,4 +1004,56 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style  scoped>
+.modal {
+   /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  position: relative;
+  top: 30%;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  max-width: 600px; /* Max width */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+}
+
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 300px;
+    opacity: 1;
+  }
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+</style>
