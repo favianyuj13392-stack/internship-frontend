@@ -88,92 +88,105 @@
             <div>
               <div class="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 gap-4">
                 <div class="lg:col-span-6">
-                  <label class="form-label font-medium">First Name : <span class="text-red-600">*</span></label>
+                  <label class="form-label font-medium">Nombres : <span class="text-red-600">*</span></label>
                   <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    placeholder="First Name:" id="firstname" name="name" required="" />
+                    v-model="estudianteDto.persona.nombre"  
+                  placeholder="Nombres:" id="firstname" name="name" required="" />
+                </div>
+                <div class="lg:col-span-4">
+                  <label class="form-label font-medium">Ci :<span class="text-red-600">*</span></label>
+                  <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                  v-model="estudianteDto.persona.ci"  
+ 
+                  placeholder="Ci" name="address" required="" />
+                </div>
+
+
+                <div class="lg:col-span-6">
+                  <label class="form-label font-medium">Apellido Paterno : <span class="text-red-600">*</span></label>
+                  <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                  v-model="estudianteDto.persona.apellidoPaterno"  
+  
+                  placeholder="Apellido Paterno:" id="lastname" name="name" required="" />
                 </div>
 
                 <div class="lg:col-span-6">
-                  <label class="form-label font-medium">Last Name : <span class="text-red-600">*</span></label>
+                  <label class="form-label font-medium">Apellido  Materno : <span class="text-red-600">*</span></label>
                   <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    placeholder="Last Name:" id="lastname" name="name" required="" />
+                  v-model="estudianteDto.persona.apellidoMaterno"  
+  
+                  placeholder="Apellido Paterno:" id="lastname" name="name" required="" />
                 </div>
 
+
                 <div class="lg:col-span-6">
-                  <label class="form-label font-medium">Your Email : <span class="text-red-600">*</span></label>
+                  <label class="form-label font-medium">Email : <span class="text-red-600">*</span></label>
                   <input type="email" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    placeholder="Email" name="email" required="" />
+                  v-model="estudianteDto.correo"  
+  
+                  placeholder="Email" name="email" required="" />
                 </div>
 
                 <div class="lg:col-span-6">
-                  <label class="form-label font-medium" for="birthday">Date of Birth :</label>
+                  <label class="form-label font-medium" for="birthday">Fecha de Nacimiento :<span class="text-red-600">*</span></label>
                   <input type="date" id="birthday" name="birthday"
-                    class="form-input border border-slate-100 dark:border-slate-800 mt-2" />
+                  v-model="estudianteDto.persona.fechaDeNacimiento"  
+  
+                  class="form-input border border-slate-100 dark:border-slate-800 mt-2" />
                 </div>
 
                 <div class="lg:col-span-4">
-                  <label class="form-label font-medium">Your Address :</label>
-                  <input type="address" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    placeholder="Address" name="address" required="" />
+                  <label class="form-label font-medium">Número Celular :<span class="text-red-600">*</span></label>
+                  <input type="number" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                  v-model="estudianteDto.persona.telefono"  
+  
+                  placeholder="Número Celular" name="address" required="" />
                 </div>
 
                 <div class="lg:col-span-3">
-                  <label class="form-label font-medium">State :</label>
+                  <label class="form-label font-medium">Carrera :</label>
                   <select
+                  v-model="estudianteDto.idCarreras"
+
                     class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-2">
-                    <option value="NY">New York</option>
-                    <option value="MC">North Carolina</option>
-                    <option value="SC">South Carolina</option>
+                    <option value="1">Ing. en Sistemas</option>
+                    <option value="2">Psicopedagogía</option>
+                    <option value="3">Comunicación Social</option>
                   </select>
                 </div>
 
-                <div class="lg:col-span-3">
-                  <label class="form-label font-medium">Country :</label>
-                  <select
-                    class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-2">
-                    <option value="NY">USA</option>
-                    <option value="MC">UK</option>
-                    <option value="SC">India</option>
-                  </select>
-                </div>
 
-                <div class="lg:col-span-2">
-                  <label class="form-label font-medium">Postal Code :</label>
-                  <input type="number" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    placeholder="Postal Code" name="number" required="" />
-                </div>
 
                 <div class="lg:col-span-6">
-                  <label class="form-label font-medium">Mobile No. :</label>
-                  <input type="number" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    placeholder="Mobile No." name="number" required="" />
+                  <label class="form-label font-medium" for="birthday">Año de Ingreso a la Universidad :<span class="text-red-600">*</span></label>
+                  <input type="number" id="birthday" name="birthday"
+                  v-model="estudianteDto.persona.anioIngresoUniversidad"  
+                  @input="validateInputYear"
+                  class="form-input border border-slate-100 dark:border-slate-800 mt-2" />
                 </div>
 
-                <div class="lg:col-span-6">
-                  <label class="form-label font-medium">Occupation :</label>
-                  <select
-                    class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-2">
-                    <option value="WD">Web Designer</option>
-                    <option value="WD">Web Developer</option>
-                    <option value="UI">UI / UX Desinger</option>
-                  </select>
-                </div>
+                
+
+              <!--
 
                 <div class="lg:col-span-6">
-                  <label class="form-label font-medium" for="multiple_files">Upload Resume:</label>
+                  <label class="form-label font-medium" for="multiple_files">Subir Curriculum:</label>
                   <input
                     class="relative form-input border border-slate-100 dark:border-slate-800 file:h-10 file:-mx-3 file:-my-2 file:cursor-pointer file:rounded-none file:border-0 file:px-3 file:text-neutral-700 bg-clip-padding px-3 py-1.5 file:me-3 mt-2"
                     id="multiple_files" type="file" multiple />
                 </div>
+-->
+
               </div>
               <!--end grid-->
 
               <div class="grid grid-cols-1">
                 <div class="mt-5">
-                  <label class="form-label font-medium">Intro : </label>
+                  <label class="form-label font-medium">Descripción : <span class="text-red-600">*</span> </label>
                   <textarea name="comments" id="comments"
                     class="form-input border border-slate-100 dark:border-slate-800 mt-2 textarea"
-                    placeholder="Intro :"></textarea>
+                    v-model="estudianteDto.persona.descripcion"
+                    placeholder="Descripción :"></textarea>
                 </div>
               </div>
               <!--end row-->
@@ -748,10 +761,26 @@ export default {
             "fotoPerfil": "https://backend-sistemas.serverbb.online/api/v1/public/files/download/blob_20240520-221153808",
             "anioIngresoUniversidad": 2020,
             "descripcion": "slkdf sldklfjsald flskdfs dlfksdfjskdf sdfskdfjsldjk",
-            "habilidades": "{\"habilidades\": \"todas\"}",
-            "habilidadesSeleccionada": "{\"habilidades_seleccionadas\": \"todas\"}",
-            "experiencia": "{\"trabajo\": \"mucho\"}",
             "fechaDeNacimiento": "2002-12-17",
+            
+            
+            "habilidades": "{\"habilidades\": \"todas\"}",
+            
+            
+            "habilidadesSeleccionada": "{\"habilidades_seleccionadas\": \"todas\"}",
+            
+            
+            "experiencia": "{\"trabajo\": \"mucho\"}",
+
+
+
+
+            
+
+
+
+
+
             "redesSociales": "{\"facebook\": \"facebook.com\"}"
         },
         "carrera": {
@@ -765,12 +794,31 @@ export default {
 
     };
   },
+  watch:{
+    'estudianteDto.idCarreras'(newValue){
+     this.estudianteDto.carrera.idCarreras=newValue;
+    }
+  },
+
   beforeMount(){
     if(!this.$keycloak.authenticated){
       this.$router.push('/')
     }
+    this.estudianteDto.persona.anioIngresoUniversidad =2000; 
+    this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
   },
   methods: {
+
+    validateInputYear(event) {
+      const value = event.target.value;
+      // Limita la entrada a 4 dígitos numéricos
+      if (/^\d{0,4}$/.test(value)) {
+        this.estudianteDto.persona.anioIngresoUniversidad = value;
+      } else {
+        event.target.value = this.estudianteDto.persona.anioIngresoUniversida;
+      }
+    },
+  
 
 
     //detener video
