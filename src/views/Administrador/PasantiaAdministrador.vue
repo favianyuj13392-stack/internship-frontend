@@ -185,7 +185,7 @@
 
               <div class="flex justify-between items-center mt-3">
                 <router-link
-                  to="/empresas/detalle"
+                  to="/administrador/pasantia/detalle"
                   class="btn btn-link hover:text-cyan-600 after:bg-cyan-600 duration-500 ease-in-out"
                   >Ver pasantia <i class="uil uil-arrow-right"></i
                 ></router-link>
