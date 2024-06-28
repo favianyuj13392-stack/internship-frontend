@@ -133,7 +133,7 @@ const router = createRouter({
 
     //completado de registro
     {
-      path: "/fihish/register-estudiante",
+      path: "/finish/register-estudiante",
       name: "FinishRegisterEstudiante",
       component: FinishRegisterEstudiante,
     }
