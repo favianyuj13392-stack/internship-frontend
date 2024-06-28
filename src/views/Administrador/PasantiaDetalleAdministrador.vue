@@ -201,6 +201,8 @@
           >
             Pasantea aprobados en la pasantia
           </h3>
+          <span>Pasantes aprobados: 2</span>
+          <span>Pasantes pendientes: 10</span>
         </div>
         <div
           class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
@@ -230,11 +232,11 @@
                 ><i class="fas fa-envelope pr-1"></i> {{ item.country }}</span
               >
               <span
-                class="block font-semibold text-cyan-600"
+                class="block font-semibold text-green-600"
                 v-if="item.jobs == 'Aprobado'"
                 >{{ item.jobs }}</span
               >
-              <span class="block font-semibold text-red-600" v-else>{{
+              <span class="block font-semibold text-yellow-600" v-else>{{
                 item.jobs
               }}</span>
             </div>
@@ -319,7 +321,7 @@ export default {
           name: "Linkedin",
           country: "India",
           desc: "Digital Marketing Solutions for Tomorrow",
-          jobs: "Rechazado",
+          jobs: "Pendiente",
         },
         {
           id: 4,
@@ -335,7 +337,7 @@ export default {
           name: "Linkedin",
           country: "India",
           desc: "Digital Marketing Solutions for Tomorrow",
-          jobs: "6 Jobs",
+          jobs: "Pendiente",
         },
         {
           id: 5,
@@ -351,7 +353,7 @@ export default {
           name: "Linkedin",
           country: "India",
           desc: "Digital Marketing Solutions for Tomorrow",
-          jobs: "6 Jobs",
+          jobs: "Pendiente",
         },
         {
           id: 6,
