@@ -76,7 +76,13 @@
     <!--inicio de profie-->
     <div class="container mt-16">
       <div class="grid lg:grid-cols-12 grid-cols-1 gap-[30px]">
-        <div class="lg:col-span-12">
+        
+        
+        
+        
+        
+        
+        <div v-if="paginaFormulario==1" class="lg:col-span-12">
           <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
             <h5 class="text-lg font-semibold mb-4">Personal Detail :</h5>
             <div>
@@ -171,21 +177,31 @@
                 </div>
               </div>
               <!--end row-->
+              <div class="grid grid-cols-2 gap-4 mt-5">
+                <input  id="submit" name="send"
+                @click="this.$keycloak.logout()"
+                      class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+                      value="Cancelar" />
 
-              <input type="submit" id="submit" name="send"
-                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md mt-5 cursor-pointer"
-                value="Save Changes" />
+                <input  id="submit" name="send"
+                @click="paginaFormulario=2"
+                      class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+                      value="Siguiente" />
+        </div>
+              
+             
             </div>
             <!--end form-->
           </div>
         </div>
 
-        <div class="lg:col-span-6">
+        <div class="lg:col-span-12">
+          <div v-if="paginaFormulario==2" class="lg:col-span-6">
           <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
             <div class="grid grid-cols-1 gap-4">
               <div>
                 <h5 class="text-lg font-semibold mb-4">Skills :</h5>
-                <form>
+                <div>
                   <div class="grid grid-cols-1 gap-4">
                     <div class="">
                       <label class="form-label font-medium" for="WordPress">WordPress</label>
@@ -224,16 +240,25 @@
                     </div>
                   </div>
 
-                  <input type="submit" id="submit" name="send"
-                    class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md mt-5 cursor-pointer"
-                    value="Save Changes" />
-                </form>
+                  
+        <div class="grid grid-cols-2 gap-4 mt-5">
+                <input  id="submit" name="send"
+                @click="paginaFormulario=1"
+                      class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+                      value="Atrás" />
+
+                <input  id="submit" name="send"
+                @click="paginaFormulario=3"
+                      class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+                      value="Siguiente" />
+        </div>
+      </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="lg:col-span-6">
+        <div v-if="paginaFormulario==3" class="lg:col-span-6">
           <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
             <div class="grid grid-cols-1 gap-4">
               <div>
@@ -254,7 +279,7 @@
                       class="btn-upload btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md mt-5 cursor-pointer cursor-pointer"
                       for="input-file">Upload Image</label>
                   </div>
-                  <form>
+                  <div>
                     <div class="grid grid-cols-12 mt-6 gap-4">
                       <div class="col-span-12">
                         <label class="form-label font-medium">Job Title <span class="text-red-600">*</span></label>
@@ -288,24 +313,39 @@
                       </div>
                       <!--end col-->
                     </div>
-                  </form>
+                  </div>
 
-                  <input type="submit" id="submit" name="send"
-                    class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md mt-5 cursor-pointer"
-                    value="Save Changes" />
+                  <div class="grid grid-cols-2 gap-4 mt-5">
+                <input  id="submit" name="send"
+                @click="paginaFormulario=2"
+                      class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+                      value="Atrás" />
+
+                <input  id="submit" name="send"
+                @click="paginaFormulario=4"
+                      class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+                      value="Siguiente" />
+        </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="lg:col-span-12">
+
+        </div>
+               
+
+        
+
+
+        <div v-if="paginaFormulario==4" class="lg:col-span-12">
           <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
             <div class="grid lg:grid-cols-2 grid-cols-1 gap-4">
               <div>
                 <h5 class="text-lg font-semibold mb-4">Contact Info :</h5>
 
-                <form>
+                <div>
                   <div class="grid grid-cols-1 gap-4">
                     <div>
                       <label class="form-label font-medium">Phone No. :</label>
@@ -325,13 +365,13 @@
                     class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md mt-5 cursor-pointer">
                     Add
                   </button>
-                </form>
+                </div>
               </div>
               <!--end col-->
 
               <div>
                 <h5 class="text-lg font-semibold mb-4">Change password :</h5>
-                <form>
+                <div>
                   <div class="grid grid-cols-1 gap-4">
                     <div>
                       <label class="form-label font-medium">Old password :</label>
@@ -353,19 +393,27 @@
                   </div>
                   <!--end grid-->
 
-                  <button
-                    class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md mt-5 cursor-pointer">
-                    Save password
-                  </button>
-                </form>
+                 
+      </div>
               </div>
               <!--end col-->
             </div>
+            <div class="grid grid-cols-2 gap-4 mt-5">
+                <input  id="submit" name="send"
+                @click="paginaFormulario=3"
+                      class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+                      value="Atrás" />
+
+                <input  id="submit" name="send"
+                @click="paginaFormulario=5"
+                      class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+                      value="Siguiente" />
+        </div>
             <!--end row-->
           </div>
         </div>
 
-        <div class="lg:col-span-12">
+        <div v-if="paginaFormulario==5" class="lg:col-span-12">
           <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
             <h5 class="text-lg font-semibold mb-4">Social Media :</h5>
 
@@ -465,13 +513,17 @@
               </div>
             </div>
 
-            <div class="md:flex">
-              <div class="md:w-1/3">
-                <input type="submit" id="submit" name="send"
-                  class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md mt-5 cursor-pointer"
-                  value="Save Changes" />
-              </div>
-            </div>
+            <div class="grid grid-cols-2 gap-4 mt-5">
+                <input  id="submit" name="send"
+                @click="paginaFormulario=4"
+                      class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+                      value="Atrás" />
+
+                <input  id="submit" name="send"
+                @click="paginaFormulario=6"
+                      class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+                      value="Siguiente" />
+        </div>
           </div>
         </div>
 
@@ -611,6 +663,9 @@
 
           -->
 
+
+
+<!--
         <div class="lg:col-span-12">
           <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
             <h5 class="text-lg font-semibold mb-5 text-red-600">
@@ -626,6 +681,14 @@
               class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer">Delete</a>
           </div>
         </div>
+
+
+
+-->
+
+
+
+
       </div>
     </div>
     <!--fin de edicion de profie-->
@@ -661,6 +724,9 @@ export default {
       image: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       imageSrc2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       image2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
+
+
+      paginaFormulario:1,
 
 
       personaDto: {
@@ -711,6 +777,11 @@ export default {
       }
 
     };
+  },
+  beforeMount(){
+    if(!this.$keycloak.authenticated){
+      this.$router.push('/')
+    }
   },
   methods: {
 
