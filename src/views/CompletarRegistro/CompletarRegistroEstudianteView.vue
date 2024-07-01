@@ -200,8 +200,8 @@
                   <h5 class="text-lg font-semibold mb-4">Habilidades :</h5>
                   <div>
                     <div class="grid grid-cols-1 gap-4">
-                      <div class="grid grid-cols-3 gap-4 mt-5 pt-3"
-                        v-for="habilidad in estudianteDto.persona.habilidades" :id="habilidad.habilidad">
+                      <div class="grid sm:grid-cols-3 gap-4 mt-5 pt-3"
+                        v-for="habilidad in estudianteDto.persona.habilidades.habilidades" id="contenedor-habilidad">
                         <label class="form-label font-medium" for="WordPress">{{ habilidad.habilidad }}</label>
 
                         <StarRatingComponent name="rating" v-model="habilidad.nivel" :disabled="false">
@@ -257,7 +257,7 @@
                   <div>
                   
                     <div>
-                      <div class="grid grid-cols-3 gap-4 mt-5 pt-3" v-for="experiencia in this.estudianteDto.persona.experiencia"
+                      <div class="grid sm:grid-cols-3 gap-4 mt-5 pt-3" v-for="experiencia in this.estudianteDto.persona.experiencia.experiencia"
                         :id="experiencia.titulo">
                        
                         <div class="text-slate-400 font-semibold min-w-[80px] text-center">
@@ -498,7 +498,7 @@
               <button id="submit" name="send" @click="paginaFormulario = 3"
                 class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer">Atrás</button>
 
-              <button id="submit" name="send" @click="paginaFormulario = 5"
+              <button id="submit" name="send" @click="registrarEstudiante()"
                 class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer">Siguiente</button>
             </div>
           </div>
@@ -770,7 +770,15 @@ import "vue3-toastify/dist/index.css";
 
 import switcher from "@/components/General/switcher.vue";
 import StarRatingComponent from "@/components/General/Extras/StartRatingComponent.vue";
+import {useEstudiantesStore} from "@/stores/Estudiantes/estudiantesStore.js";
+import Swal from 'sweetalert2'
 export default {
+  setup(){
+    const estudianteStore = useEstudiantesStore();
+    return {
+      estudianteStore
+    }
+  },
 
   components: {
 
@@ -798,16 +806,21 @@ export default {
 
 
       estudianteDto: {
-        "idUsuarios": 10001,
+        "idUsuarios": null,
         "kc_UUID": "asdkasdja-sdajfsdbkfasd-32",
         "correo": "daniel.aldazosa@ucb.edu.bo",
         "fechaRegistro": "2024-06-28",
         "horaRegistro": "11:50:07",
         "idRoles": 1,
-        "idPersonas": 100001,
+        "idPersonas": null,
         "idCarreras": 1,
+
+        institucion:null,
+        cargo:null,
+
+        
         "persona": {
-          "idPersona": 100001,
+          "idPersona": null,
           "nombre": "Daniel Ignacio",
           "apellidoPaterno": "Aldazosa",
           "apellidoMaterno": "Miranda",
@@ -819,7 +832,10 @@ export default {
           "fechaDeNacimiento": "2002-12-17",
 
 
-          "habilidades": [
+          "habilidades": {
+            habilidades:
+[
+            
             {
 
               "habilidad": "Java",
@@ -856,39 +872,49 @@ export default {
             },
 
           ],
+          },
+            
+          
 
 
 
-          "habilidadesSeleccionada": "{\"habilidades_seleccionadas\": \"todas\"}",
+          habilidadesSeleccionada:{
+            habilidades_seleccionadas: []
+          },
 
 
-          "experiencia": [
+          experiencia: {
+            experiencia:[
             {
-              "idExperiencia": 1,
-              "titulo": "Desarrollador de Software",
-              "empresa": "Empresa 1",
-              "duracion": "2020-2021",
-              "descripcion": "Desarrollador de Software en la empresa 1"
+              idExperiencia: 1,
+              titulo: "Desarrollador de Software",
+              empresa: "Empresa 1",
+              duracion: "2020-2021",
+              descripcion: "Desarrollador de Software en la empresa 1"
             },
             {
-              "idExperiencia": 2,
-              "titulo": "Desarrollador de Software",
-              "empresa": "Empresa 2",
-              "duracion": "2021-2022",
-              "descripcion": "Desarrollador de Software en la empresa 2"
+              idExperiencia: 1,
+              titulo: "Desarrollador de Software",
+              empresa: "Empresa 1",
+              duracion: "2020-2021",
+              descripcion: "Desarrollador de Software en la empresa 1"
             },
             {
-              "idExperiencia": 3,
-              "titulo": "Desarrollador de Software",
-              "empresa": "Empresa 3",
-              "duracion": "2022-2023",
-              "descripcion": "Desarrollador de Software en la empresa 3"
-            }
-          ],
+              idExperiencia: 1,
+              titulo: "Desarrollador de Software",
+              empresa: "Empresa 1",
+              duracion: "2020-2021",
+              descripcion: "Desarrollador de Software en la empresa 1"
+            },
+          ]
+        
+      }
+        ,
 
 
 
             redesSociales:{
+             
               linkedin:{
                 url:"https://www.linkedin.com/in/daniel-aldazosa-miranda-0b0b3b1b4/"
               },
@@ -947,9 +973,50 @@ export default {
     this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
   },
   methods: {
+    async registrarEstudiante() {
+      let loader= this.$loading.show();
+      try {
+        this.estudianteDto.persona.habilidadesSeleccionada.habilidades_seleccionadas = JSON.stringify({
+          habilidades_seleccionadas: this.estudianteDto.persona.habilidades.habilidades.filter(habilidad => habilidad.principal).map(habilidad => habilidad.habilidad)
+        });
+        this.estudianteDto.persona.habilidades = JSON.stringify(this.estudianteDto.persona.habilidades);
+        this.estudianteDto.persona.experiencia = JSON.stringify(this.estudianteDto.persona.experiencia);
+        this.estudianteDto.persona.redesSociales = JSON.stringify(this.estudianteDto.persona.redesSociales);
+        this.estudianteDto.persona.habilidadesSeleccionada = JSON.stringify(this.estudianteDto.persona.habilidadesSeleccionada);
+
+
+        const response = await this.estudianteStore.postEstudiante(this.estudianteDto);
+        if(response == null){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Ocurrio un error al registrar el estudiante!',
+          })
+
+          this.$router.push('/');
+        }else{
+          await Swal.fire({
+            icon: 'success',
+            title: 'Estudiante registrado con exito!',
+            showConfirmButton: false,
+            timer: 1500
+          })  
+          this.$router.push('/');
+        }
+      } catch (error) {
+        console.log(error);
+      }finally{
+        loader.hide();
+      }
+      
+
+    },
+
+
+
     agregarNuevaExperiencia(experiencia) {
       console.log("duracion: "+experiencia.duracion)
-      this.estudianteDto.persona.experiencia.push({
+      this.estudianteDto.persona.experiencia.experiencia.push({
         titulo: experiencia.titulo,
         empresa: experiencia.empresa,
         duracion: experiencia.duracion,
@@ -967,14 +1034,14 @@ export default {
 
     eliminarExperiencia(experiencia) {
       const index = this.estudianteDto.persona.experiencia.indexOf(experiencia);
-      this.estudianteDto.persona.experiencia.splice(index, 1);
+      this.estudianteDto.persona.experiencia.experiencia.splice(index, 1);
     },
 
 
 
 
     agregarHabilidad(habilidad) {
-      this.estudianteDto.persona.habilidades.push({
+      this.estudianteDto.persona.habilidades.habilidades.push({
         habilidad: habilidad,
         nivel: 0,
         principal: false
@@ -984,8 +1051,8 @@ export default {
     },
 
     eliminarHabilidad(habilidad) {
-      const index = this.estudianteDto.persona.habilidades.indexOf(habilidad);
-      this.estudianteDto.persona.habilidades.splice(index, 1);
+      const index = this.estudianteDto.persona.habilidades.habilidades.indexOf(habilidad);
+      this.estudianteDto.persona.habilidades.habilidades.splice(index, 1);
     },
 
 
@@ -1049,6 +1116,10 @@ export default {
 </script>
 
 <style scoped>
+
+
+
+
 .modal {
   /* Hidden by default */
   position: fixed;
