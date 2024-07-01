@@ -1149,7 +1149,7 @@
                     name="profile-image"
                     type="file"
                     class="hidden"
-                    @change="loadFile"
+                    @change="handleFileUploadLogo"
                   />
                   <div>
                     <div
@@ -1728,6 +1728,85 @@ export default {
         "nombre empresa seleccionada: " + this.empresaSeleccionada.nombre
       );
       console.log("corr empresa seleccionada: " + this.empresaSeleccionada);
+    },
+    async handleFileUploadLogo(event) {
+        const file = event.target.files[0];
+      
+        if (file) {
+          //comprimir imagen si es mayor a 4mb 
+
+          console.log("tamaño imagen anterior "+file.size);
+
+          if (file.size > 4000000) {
+            this.comprimirYSubirImagen(file, 0.3);
+          } else if( file.size > 1000000){ 
+            this.comprimirYSubirImagen(file,0.5 );
+          } 
+          else {
+            this.isLoading = true;
+              const response = await this.filesStore.uploadFile(file);
+              this.isLoading = false;
+
+              if (response === false) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Error al subir la imagen, porfavor intenta de nuevo",
+                  });
+                
+              } else {
+                // Corrected code: use push() to add the new link to the array
+                this.logoElegido=this.filesStore.link;
+                this.objetoPeticion.linkFoto=this.filesStore.link;
+                console.log(this.objetoPeticion);
+
+                
+              }
+          }
+
+
+
+
+
+          
+
+
+          
+
+          
+        }
+      },
+      async comprimirYSubirImagen(file, cantidadCompresion){
+      new Compressor(file, {
+          quality: cantidadCompresion,
+          success: async  (compressedResult) => {
+            console.log("tamaño imagen comprimida "+compressedResult.size+ " con una compreison de "+cantidadCompresion);
+            this.isLoading = true;
+            const response = await this.filesStore.uploadFile(compressedResult);
+            this.isLoading = false;
+
+            if (response === false) {
+              Swal.fire({
+                  icon: "error",
+                  title: "Error",
+                  text: "Error al subir la imagen, porfavor intenta de nuevo",
+                });
+              
+            } else {
+              // Corrected code: use push() to add the new link to the array
+              this.logoElegido=this.filesStore.link;
+              this.objetoPeticion.linkFoto=this.filesStore.link;
+              console.log(this.objetoPeticion);
+
+              
+            }
+
+
+          },
+          error(err) {
+            console.log(err.message);
+          },
+        });
     },
   },
   computed: {
