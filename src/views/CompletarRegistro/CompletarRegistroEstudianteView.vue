@@ -65,7 +65,7 @@
               </div>
             </div>
             <div class="ms-4">
-              <h5 class="text-lg font-semibold">{{ estudianteDto.persona.nombre+' '+estudianteDto.persona.apellidoPaterno+' '+estudianteDto.persona.apellidoMaterno }}</h5>
+              <h5 class="text-lg font-semibold">{{ estudianteDto.persona.nombre + ''+estudianteDto.persona.apellidoPaterno+' '+estudianteDto.persona.apellidoMaterno }}</h5>
               <p class="text-slate-400">Estudiante</p>
             </div>
           </div>
@@ -76,13 +76,13 @@
     <!--inicio de profie-->
     <div class="container mt-16">
       <div class="grid lg:grid-cols-12 grid-cols-1 gap-[30px]">
-        
-        
-        
-        
-        
-        
-        <div v-if="paginaFormulario==1" class="lg:col-span-12">
+
+
+
+
+
+
+        <div v-if="paginaFormulario == 1" class="lg:col-span-12">
           <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
             <h5 class="text-lg font-semibold mb-4">Personal Detail :</h5>
             <div>
@@ -90,64 +90,53 @@
                 <div class="lg:col-span-6">
                   <label class="form-label font-medium">Nombres : <span class="text-red-600">*</span></label>
                   <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    v-model="estudianteDto.persona.nombre"  
-                  placeholder="Nombres:" id="firstname" name="name" required="" />
+                    v-model="estudianteDto.persona.nombre" placeholder="Nombres:" id="firstname" name="name"
+                    required="" />
                 </div>
                 <div class="lg:col-span-4">
                   <label class="form-label font-medium">Ci :<span class="text-red-600">*</span></label>
                   <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                  v-model="estudianteDto.persona.ci"  
- 
-                  placeholder="Ci" name="address" required="" />
+                    v-model="estudianteDto.persona.ci" placeholder="Ci" name="address" required="" />
                 </div>
 
 
                 <div class="lg:col-span-6">
                   <label class="form-label font-medium">Apellido Paterno : <span class="text-red-600">*</span></label>
                   <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                  v-model="estudianteDto.persona.apellidoPaterno"  
-  
-                  placeholder="Apellido Paterno:" id="lastname" name="name" required="" />
+                    v-model="estudianteDto.persona.apellidoPaterno" placeholder="Apellido Paterno:" id="lastname"
+                    name="name" required="" />
                 </div>
 
                 <div class="lg:col-span-6">
-                  <label class="form-label font-medium">Apellido  Materno : <span class="text-red-600">*</span></label>
+                  <label class="form-label font-medium">Apellido Materno : <span class="text-red-600">*</span></label>
                   <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                  v-model="estudianteDto.persona.apellidoMaterno"  
-  
-                  placeholder="Apellido Paterno:" id="lastname" name="name" required="" />
+                    v-model="estudianteDto.persona.apellidoMaterno" placeholder="Apellido Paterno:" id="lastname"
+                    name="name" required="" />
                 </div>
 
 
                 <div class="lg:col-span-6">
                   <label class="form-label font-medium">Email : <span class="text-red-600">*</span></label>
                   <input type="email" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                  v-model="estudianteDto.correo"  
-  
-                  placeholder="Email" name="email" required="" />
+                    v-model="estudianteDto.correo" placeholder="Email" name="email" required="" />
                 </div>
 
                 <div class="lg:col-span-6">
-                  <label class="form-label font-medium" for="birthday">Fecha de Nacimiento :<span class="text-red-600">*</span></label>
-                  <input type="date" id="birthday" name="birthday"
-                  v-model="estudianteDto.persona.fechaDeNacimiento"  
-  
-                  class="form-input border border-slate-100 dark:border-slate-800 mt-2" />
+                  <label class="form-label font-medium" for="birthday">Fecha de Nacimiento :<span
+                      class="text-red-600">*</span></label>
+                  <input type="date" id="birthday" name="birthday" v-model="estudianteDto.persona.fechaDeNacimiento"
+                    class="form-input border border-slate-100 dark:border-slate-800 mt-2" />
                 </div>
 
                 <div class="lg:col-span-4">
                   <label class="form-label font-medium">Número Celular :<span class="text-red-600">*</span></label>
                   <input type="number" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                  v-model="estudianteDto.persona.telefono"  
-  
-                  placeholder="Número Celular" name="address" required="" />
+                    v-model="estudianteDto.persona.telefono" placeholder="Número Celular" name="address" required="" />
                 </div>
 
                 <div class="lg:col-span-3">
                   <label class="form-label font-medium">Carrera :</label>
-                  <select
-                  v-model="estudianteDto.idCarreras"
-
+                  <select v-model="estudianteDto.idCarreras"
                     class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-2">
                     <option value="1">Ing. en Sistemas</option>
                     <option value="2">Psicopedagogía</option>
@@ -158,16 +147,16 @@
 
 
                 <div class="lg:col-span-6">
-                  <label class="form-label font-medium" for="birthday">Año de Ingreso a la Universidad :<span class="text-red-600">*</span></label>
+                  <label class="form-label font-medium" for="birthday">Año de Ingreso a la Universidad :<span
+                      class="text-red-600">*</span></label>
                   <input type="number" id="birthday" name="birthday"
-                  v-model="estudianteDto.persona.anioIngresoUniversidad"  
-                  @input="validateInputYear"
-                  class="form-input border border-slate-100 dark:border-slate-800 mt-2" />
+                    v-model="estudianteDto.persona.anioIngresoUniversidad" @input="validateInputYear"
+                    class="form-input border border-slate-100 dark:border-slate-800 mt-2" />
                 </div>
 
-                
 
-              <!--
+
+                <!--
 
                 <div class="lg:col-span-6">
                   <label class="form-label font-medium" for="multiple_files">Subir Curriculum:</label>
@@ -185,161 +174,159 @@
                   <label class="form-label font-medium">Descripción : <span class="text-red-600">*</span> </label>
                   <textarea name="comments" id="comments"
                     class="form-input border border-slate-100 dark:border-slate-800 mt-2 textarea"
-                    v-model="estudianteDto.persona.descripcion"
-                    placeholder="Descripción :"></textarea>
+                    v-model="estudianteDto.persona.descripcion" placeholder="Descripción :"></textarea>
                 </div>
               </div>
               <!--end row-->
               <div class="grid grid-cols-2 gap-4 mt-5">
-                <button  id="submit" name="send"
-                @click="this.$keycloak.logout()"
-                      class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                       >Cancelar</button>
+                <button id="submit" name="send" @click="this.$keycloak.logout()"
+                  class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer">Cancelar</button>
 
-                <button  id="submit" name="send"
-                @click="paginaFormulario=2"
-                      class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      >Siguiente</button>
-        </div>
-              
-             
+                <button id="submit" name="send" @click="paginaFormulario = 2"
+                  class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer">Siguiente</button>
+              </div>
+
+
             </div>
             <!--end form-->
           </div>
         </div>
 
         <div class="lg:col-span-12">
-          <div v-if="paginaFormulario==2" class="lg:col-span-6">
-          <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
-            <div class="grid grid-cols-1 gap-4">
-              <div>
-                <h5 class="text-lg font-semibold mb-4">Habilidades :</h5>
+          <div v-if="paginaFormulario == 2" class="lg:col-span-6">
+            <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+              <div class="grid grid-cols-1 gap-4">
                 <div>
-                  <div class="grid grid-cols-1 gap-4">
-                    <div class="grid grid-cols-3 gap-4 mt-5 pt-3" v-for="habilidad in estudianteDto.persona.habilidades" :id="habilidad.habilidad">
-                      <label class="form-label font-medium" for="WordPress">{{ habilidad.habilidad }}</label>
-  
-                        <StarRatingComponent name="rating" v-model="habilidad.nivel" :disabled="false" ></StarRatingComponent>
+                  <h5 class="text-lg font-semibold mb-4">Habilidades :</h5>
+                  <div>
+                    <div class="grid grid-cols-1 gap-4">
+                      <div class="grid grid-cols-3 gap-4 mt-5 pt-3"
+                        v-for="habilidad in estudianteDto.persona.habilidades" :id="habilidad.habilidad">
+                        <label class="form-label font-medium" for="WordPress">{{ habilidad.habilidad }}</label>
+
+                        <StarRatingComponent name="rating" v-model="habilidad.nivel" :disabled="false">
+                        </StarRatingComponent>
                         <div class="grid grid-cols-2 gap-4 mt-0">
-                          <button  id="submit" name="send"
-                          v-if="habilidad.principal==false"
-                          @click="habilidad.principal=true"
-                                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer"
-                               >Secundario</button>
+                          <button id="submit" name="send" v-if="habilidad.principal == false"
+                            @click="habilidad.principal = true"
+                            class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer">Secundario</button>
 
-                               <button  id="submit" name="send"
-                               v-if="habilidad.principal==true"
+                          <button id="submit" name="send" v-if="habilidad.principal == true"
+                            @click="habilidad.principal = false"
+                            class="btn border-yellow-600 bg-yellow-600 hover:bg-yellow-700 text-white text-sm p-0 rounded-md cursor-pointer">Principal</button>
 
-                          @click="habilidad.principal=false"
-                                class="btn border-yellow-600 bg-yellow-600 hover:bg-yellow-700 text-white text-sm p-0 rounded-md cursor-pointer"
-                               >Principal</button>
-
-                          <button  id="submit" name="send"
-                          @click="eliminarHabilidad(habilidad)"
-                                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                                >Eliminar</button>
+                          <button id="submit" name="send" @click="eliminarHabilidad(habilidad)"
+                            class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer">Eliminar</button>
 
                         </div>
-                            
+
+                      </div>
+
+
+
+
                     </div>
 
-              
-
-                    
-                  </div>
-
-                  <div class="grid grid-cols-1 gap-4 mt-5">
-                <button  id="submit" name="send"
-                @click="showNuevaHabilidadModal=true"
-                      class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
-                      >Agregar Nueva Habilidad</button>
-
-                  </div>
-
-                  
-        <div class="grid grid-cols-2 gap-4 mt-5">
-                <button  id="submit" name="send"
-                @click="paginaFormulario=1"
-                      class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                      >Atrás</button>
-
-                <button  id="submit" name="send"
-                @click="paginaFormulario=3"
-                      class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      >Siguiente</button>
-        </div>
-      </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div v-if="paginaFormulario==3" class="lg:col-span-6">
-          <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
-            <div class="grid grid-cols-1 gap-4">
-              <div>
-                <h5 class="text-lg font-semibold mb-4">Experiencia :</h5>
-
-                <div>
-              
-                  <div>
-                    <div class="flex mt-6">
-            <div class="text-slate-400 font-semibold min-w-[80px] text-center">
-              <img
-                src="@/assets/images/company/shree-logo.png"
-                class="size-16 mx-auto mb-2 block"
-                alt=""
-              />
-              2019-22
-            </div>
-
-            <div class="ms-4">
-              <h5 class="text-lg font-medium mb-0">Full Stack Developer</h5>
-              <span class="text-slate-400 company-university"
-                >Shreethemes - India</span
-              >
-              <p class="text-slate-400 mt-2 mb-0">
-                It seems that only fragments of the original text remain in the
-                Lorem Ipsum texts used today. One may speculate that over the
-                course of time certain letters were added or deleted at various
-                positions within the text.
-              </p>
-            </div>
-          </div>
                     <div class="grid grid-cols-1 gap-4 mt-5">
-                <button  id="submit" name="send"
-                @click="showNuevaExperienciaModal=true"
-                      class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
-                      >Agregar Nueva Habilidad</button>
+                      <button id="submit" name="send" @click="showNuevaHabilidadModal = true"
+                        class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer">Agregar
+                        Nueva Habilidad</button>
 
+                    </div>
+
+
+                    <div class="grid grid-cols-2 gap-4 mt-5">
+                      <button id="submit" name="send" @click="paginaFormulario = 1"
+                        class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer">Atrás</button>
+
+                      <button id="submit" name="send" @click="paginaFormulario = 3"
+                        class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer">Siguiente</button>
+                    </div>
                   </div>
-                  </div>
-
-                  <div class="grid grid-cols-2 gap-4 mt-5">
-                <button  id="submit" name="send"
-                @click="paginaFormulario=2"
-                      class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                      >Atrás</button>
-
-                <button  id="submit" name="send"
-                @click="paginaFormulario=4"
-                      class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      >Siguiente</button>
-        </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+
+          <div v-if="paginaFormulario == 3" class="lg:col-span-6">
+            <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+              <div class="grid grid-cols-1 gap-4">
+                <div>
+                  <h5 class="text-lg font-semibold mb-4">Experiencia :</h5>
+
+                  <div>
+                  
+                    <div>
+                      <div class="grid grid-cols-3 gap-4 mt-5 pt-3" v-for="experiencia in this.estudianteDto.persona.experiencia"
+                        :id="experiencia.titulo">
+                       
+                        <div class="text-slate-400 font-semibold min-w-[80px] text-center">
+                          <!-- Icono de Tailwind CSS -->
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto mb-2 block"
+                            viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M12.052 1.25H11.948C11.0495 1.24997 10.3003 1.24995 9.70552 1.32991C9.07773 1.41432 8.51093 1.59999 8.05546 2.05546C7.59999 2.51093 7.41432 3.07773 7.32991 3.70552C7.24995 4.3003 7.24997 5.04951 7.25 5.94799V6.02572C5.22882 6.09185 4.01511 6.32803 3.17157 7.17157C2 8.34315 2 10.2288 2 14C2 17.7712 2 19.6569 3.17157 20.8284C4.34315 22 6.22876 22 10 22H14C17.7712 22 19.6569 22 20.8284 20.8284C22 19.6569 22 17.7712 22 14C22 10.2288 22 8.34315 20.8284 7.17157C19.9849 6.32803 18.7712 6.09185 16.75 6.02572V5.94801C16.75 5.04954 16.7501 4.3003 16.6701 3.70552C16.5857 3.07773 16.4 2.51093 15.9445 2.05546C15.4891 1.59999 14.9223 1.41432 14.2945 1.32991C13.6997 1.24995 12.9505 1.24997 12.052 1.25ZM15.25 6.00189V6C15.25 5.03599 15.2484 4.38843 15.1835 3.9054C15.1214 3.44393 15.0142 3.24644 14.8839 3.11612C14.7536 2.9858 14.5561 2.87858 14.0946 2.81654C13.6116 2.7516 12.964 2.75 12 2.75C11.036 2.75 10.3884 2.7516 9.90539 2.81654C9.44393 2.87858 9.24644 2.9858 9.11612 3.11612C8.9858 3.24644 8.87858 3.44393 8.81654 3.9054C8.7516 4.38843 8.75 5.03599 8.75 6V6.00189C9.14203 6 9.55807 6 10 6H14C14.4419 6 14.858 6 15.25 6.00189ZM17 9C17 9.55229 16.5523 10 16 10C15.4477 10 15 9.55229 15 9C15 8.44772 15.4477 8 16 8C16.5523 8 17 8.44772 17 9ZM8 10C8.55228 10 9 9.55229 9 9C9 8.44772 8.55228 8 8 8C7.44772 8 7 8.44772 7 9C7 9.55229 7.44772 10 8 10Z"
+                              fill="#0891b2"></path>
+                          </svg>
+
+                          {{ experiencia.duracion }}
+                        </div>
+
+
+                        <div class="ms-4">
+                          <h5 class="text-lg font-medium mb-0">{{ experiencia.titulo }}</h5>
+                          <span class="text-slate-400 company-university">{{ experiencia.empresa }}</span>
+                          <p class="text-slate-400 mt-2 mb-0">
+                            {{ experiencia.descripcion }}
+                          </p>
+                        </div>
+
+
+                        <button id="submit" name="send" @click="eliminarExperiencia(experiencia)"
+                          class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer" style="max-height: 3rem;">Eliminar</button>
+
+
+
+
+
+
+
+                      </div>
+
+
+
+
+
+
+                      <div class="grid grid-cols-1 gap-4 mt-5">
+                        <button id="submit" name="send" @click="showNuevaExperienciaModal = true"
+                          class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer">Agregar
+                          Nueva Habilidad</button>
+
+                      </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mt-5">
+                      <button id="submit" name="send" @click="paginaFormulario = 2"
+                        class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer">Atrás</button>
+
+                      <button id="submit" name="send" @click="paginaFormulario = 4"
+                        class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer">Siguiente</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
 
         </div>
-               
-
-        
 
 
-        <div v-if="paginaFormulario==4" class="lg:col-span-12">
+
+
+<!--
+        <div v-if="paginaFormulario == 4" class="lg:col-span-12">
           <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
             <div class="grid lg:grid-cols-2 grid-cols-1 gap-4">
               <div>
@@ -359,7 +346,6 @@
                         class="form-input border border-slate-100 dark:border-slate-800 mt-2" placeholder="Url :" />
                     </div>
                   </div>
-                  <!--end grid-->
 
                   <button
                     class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md mt-5 cursor-pointer">
@@ -367,7 +353,6 @@
                   </button>
                 </div>
               </div>
-              <!--end col-->
 
               <div>
                 <h5 class="text-lg font-semibold mb-4">Change password :</h5>
@@ -391,51 +376,49 @@
                         placeholder="Re-type New password" required="" />
                     </div>
                   </div>
-                  <!--end grid-->
 
-                 
-      </div>
+
+                </div>
               </div>
-              <!--end col-->
             </div>
             <div class="grid grid-cols-2 gap-4 mt-5">
-                <button  id="submit" name="send"
-                @click="paginaFormulario=3"
-                      class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                     >Atrás</button>
+              <button id="submit" name="send" @click="paginaFormulario = 3"
+                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer">Atrás</button>
 
-                <button  id="submit" name="send"
-                @click="paginaFormulario=5"
-                      class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                     >Siguiente</button>
-        </div>
-            <!--end row-->
+              <button id="submit" name="send" @click="paginaFormulario = 5"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer">Siguiente</button>
+            </div>
           </div>
         </div>
 
-        <div v-if="paginaFormulario==5" class="lg:col-span-12">
-          <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
-            <h5 class="text-lg font-semibold mb-4">Social Media :</h5>
 
-            <div class="md:flex">
+      -->
+        <div v-if="paginaFormulario == 4" class="lg:col-span-12">
+          <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+            <h5 class="text-lg font-semibold mb-4">Redes Sociales :</h5>
+
+            <div class="md:flex ">
               <div class="md:w-1/3">
-                <span class="font-medium">Twitter</span>
+                <span class="font-medium">Linkedin</span>
               </div>
 
               <div class="md:w-2/3 mt-4 md:mt-0">
                 <form>
                   <div class="form-icon relative">
-                    <i data-feather="twitter" class="size-4 absolute top-5 start-4"></i>
+                    <i data-feather="linkedin" class="size-4 absolute top-5 start-4"></i>
                     <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2 ps-12"
-                      placeholder="Twitter Profile Name" id="twitter_name" name="name" required="" />
+                    v-model="estudianteDto.persona.redesSociales.linkedin.url"  
+                    placeholder="Linkedin Url" id="linkedin_name" name="name" required="" />
                   </div>
                 </form>
 
-                <p class="text-slate-400 mt-1">
-                  Add your Twitter username (e.g. jennyhot).
-                </p>
+                <p class="text-slate-400 mt-1">Agrega el link a tu perfil de Linkedin.</p>
               </div>
             </div>
+
+
+
+
 
             <div class="md:flex mt-8">
               <div class="md:w-1/3">
@@ -447,17 +430,45 @@
                   <div class="form-icon relative">
                     <i data-feather="facebook" class="size-4 absolute top-5 start-4"></i>
                     <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2 ps-12"
-                      placeholder="Facebook Profile Name" id="facebook_name" name="name" required="" />
+                    v-model="estudianteDto.persona.redesSociales.facebook.url"  
+  
+                    placeholder="Facebook Profile Name" id="facebook_name" name="name" required="" />
                   </div>
                 </form>
 
                 <p class="text-slate-400 mt-1">
-                  Add your Facebook username (e.g. jennyhot).
+                  Agrega el link a tu perfil de Facebook.
                 </p>
               </div>
             </div>
 
+
+
             <div class="md:flex mt-8">
+              <div class="md:w-1/3">
+                <span class="font-medium">X (Twitter)</span>
+              </div>
+
+              <div class="md:w-2/3 mt-4 md:mt-0">
+                <form>
+                  <div class="form-icon relative">
+                    <i data-feather="twitter" class="size-4 absolute top-5 start-4"></i>
+                    <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2 ps-12"
+                    v-model="estudianteDto.persona.redesSociales.twitter.url"  
+  
+                    placeholder="X (Twitter) Url " id="twitter_name" name="name" required="" />
+                  </div>
+                </form>
+
+                <p class="text-slate-400 mt-1">
+                  Agrega el link a tu perfil de X (Twitter).
+                                </p>
+              </div>
+            </div>
+
+            
+
+            <div class="md:flex mt-8 mb-8">
               <div class="md:w-1/3">
                 <span class="font-medium">Instagram</span>
               </div>
@@ -467,63 +478,29 @@
                   <div class="form-icon relative">
                     <i data-feather="instagram" class="size-4 absolute top-5 start-4"></i>
                     <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2 ps-12"
-                      placeholder="Instagram Profile Name" id="insta_name" name="name" required="" />
+                    v-model="estudianteDto.persona.redesSociales.instagram.url"  
+  
+                    placeholder="Instagram Url" id="insta_name" name="name" required="" />
                   </div>
                 </form>
 
                 <p class="text-slate-400 mt-1">
-                  Add your Instagram username (e.g. jennyhot).
-                </p>
+                  Agrega el link a tu perfil de Instagram.
+                                </p>
               </div>
             </div>
 
-            <div class="md:flex mt-8">
-              <div class="md:w-1/3">
-                <span class="font-medium">Linkedin</span>
-              </div>
+           
 
-              <div class="md:w-2/3 mt-4 md:mt-0">
-                <form>
-                  <div class="form-icon relative">
-                    <i data-feather="linkedin" class="size-4 absolute top-5 start-4"></i>
-                    <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2 ps-12"
-                      placeholder="Linkedin Profile Name" id="linkedin_name" name="name" required="" />
-                  </div>
-                </form>
-
-                <p class="text-slate-400 mt-1">Add your Linkedin username.</p>
-              </div>
-            </div>
-
-            <div class="md:flex mt-8">
-              <div class="md:w-1/3">
-                <span class="font-medium">Youtube</span>
-              </div>
-
-              <div class="md:w-2/3 mt-4 md:mt-0">
-                <form>
-                  <div class="form-icon relative">
-                    <i data-feather="youtube" class="size-4 absolute top-5 start-4"></i>
-                    <input type="url" class="form-input border border-slate-100 dark:border-slate-800 mt-2 ps-12"
-                      placeholder="Youtube url" id="you_url" name="url" required="" />
-                  </div>
-                </form>
-
-                <p class="text-slate-400 mt-1">Add your Youtube url.</p>
-              </div>
-            </div>
+            
 
             <div class="grid grid-cols-2 gap-4 mt-5">
-                <button  id="submit" name="send"
-                @click="paginaFormulario=4"
-                      class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                      >Atrás</button>
+              <button id="submit" name="send" @click="paginaFormulario = 3"
+                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer">Atrás</button>
 
-                <button  id="submit" name="send"
-                @click="paginaFormulario=6"
-                      class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      >Siguiente</button>
-        </div>
+              <button id="submit" name="send" @click="paginaFormulario = 5"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer">Siguiente</button>
+            </div>
           </div>
         </div>
 
@@ -665,7 +642,7 @@
 
 
 
-<!--
+        <!--
         <div class="lg:col-span-12">
           <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
             <h5 class="text-lg font-semibold mb-5 text-red-600">
@@ -696,94 +673,92 @@
 
   <div id="myModalExperiencia" class="modal" v-if="showNuevaExperienciaModal">
     <div class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
-      <span class="close" @click="showNuevaExperienciaModal=false">&times;</span>
-      
+      <span class="close" @click="showNuevaExperienciaModal = false">&times;</span>
+
       <div class="grid grid-cols-1 gap-4">
-              <div>
-                <h5 class="text-lg font-semibold mb-4">Experiencia :</h5>
+        <div>
+          <h5 class="text-lg font-semibold mb-4">Experiencia :</h5>
 
-                <div>
-              
-                  <div>
-                    <div class="grid grid-cols-12 mt-6 gap-4">
-                      <div class="col-span-12">
-                        <label class="form-label font-medium">Job Title <span class="text-red-600">*</span></label>
-                        <input name="name" id="JobTitle" type="text"
-                          class="form-input border border-slate-100 dark:border-slate-800" placeholder="Title :" />
-                      </div>
-                      <!--end col-->
+          <div>
 
-                      <div class="col-span-12">
-                        <label class="form-label font-medium">Company Name
-                          <span class="text-red-600">*</span></label>
-                        <input name="name" id="CompanyName" type="text"
-                          class="form-input border border-slate-100 dark:border-slate-800" placeholder="Company :" />
-                      </div>
-                      <!--end col-->
-
-                      <div class="col-span-12">
-                        <label class="form-label font-medium">Year <span class="text-red-600">*</span></label>
-                        <input name="number" id="Year" type="number"
-                          class="form-input border border-slate-100 dark:border-slate-800" placeholder="Year :" />
-                      </div>
-                      <!--end col-->
-
-                      <div class="col-span-12">
-                        <label class="form-label font-medium">
-                          Description :
-                        </label>
-                        <textarea name="comments" id="Description"
-                          class="form-input border border-slate-100 dark:border-slate-800 textarea"
-                          placeholder="Description :"></textarea>
-                      </div>
-                      <!--end col-->
-                    </div>
-                  </div>
-
-                  <div class="grid grid-cols-1 gap-4 mt-5">
-                <button  id="submit" name="send"
-                @click="agregarNuevaExperiencia(nuevaHabilidad)"
-                      class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      >Agregar</button>
-
-                  </div>
-
-        
+            <div>
+              <div class="grid grid-cols-12 mt-6 gap-4">
+                <div class="col-span-12">
+                  <label class="form-label font-medium">Título <span class="text-red-600">*</span></label>
+                  <input name="name" id="JobTitle" type="text"
+                  v-model="nuevaExperiencia.titulo"
+                    class="form-input border border-slate-100 dark:border-slate-800" placeholder="Título :" />
                 </div>
+                <!--end col-->
+
+                <div class="col-span-12">
+                  <label class="form-label font-medium">Nombre de la compañia
+                    <span class="text-red-600">*</span></label>
+                  <input name="name" id="CompanyName" type="text"
+                  v-model="nuevaExperiencia.empresa"
+                    class="form-input border border-slate-100 dark:border-slate-800" placeholder="Compañia :" />
+                </div>
+                <!--end col-->
+
+                <div class="col-span-12">
+                  <label class="form-label font-medium">Duración "(2020-2024)" <span class="text-red-600">*</span></label>
+                  <input name="number" id="Year" type="text"
+                  v-model="nuevaExperiencia.duracion"
+                    class="form-input border border-slate-100 dark:border-slate-800" placeholder="Duración :" />
+                </div>
+                <!--end col-->
+
+                <div class="col-span-12">
+                  <label class="form-label font-medium">
+                    Descripción :
+                  </label>
+                  <textarea name="comments" id="Description"
+                  v-model="nuevaExperiencia.descripcion"
+                    class="form-input border border-slate-100 dark:border-slate-800 textarea"
+                    placeholder="Descripción :"></textarea>
+                </div>
+                <!--end col-->
               </div>
             </div>
-          </div>
-  </div>
 
-  <div id="myModal" class="modal" v-if="showNuevaHabilidadModal">
-  <div class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
-    <span class="close" @click="showNuevaHabilidadModal=false">&times;</span>
-    <div class="grid grid-cols-1 gap-4">
-      <div>
-        <h5 class="text-lg font-semibold mb-4">Nueva Habilidad :</h5>
-        <div>
-          <div class="grid grid-cols-1 gap-4">
-            <div class="">
-              <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                placeholder="Habilidad:" id="WordPress" name="number" required="" 
-                v-model="nuevaHabilidad"
-                />
+            <div class="grid grid-cols-1 gap-4 mt-5">
+              <button id="submit" name="send" @click="agregarNuevaExperiencia(nuevaExperiencia)"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer">Agregar</button>
+
             </div>
 
+
           </div>
-          <div class="grid grid-cols-1 gap-4 mt-5">
-                <button  id="submit" name="send"
-                @click="agregarHabilidad(nuevaHabilidad)"
-                      class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      >Agregar</button>
-
-                  </div>
-
         </div>
       </div>
     </div>
   </div>
-</div>
+
+  <div id="myModal" class="modal" v-if="showNuevaHabilidadModal">
+    <div class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+      <span class="close" @click="showNuevaHabilidadModal = false">&times;</span>
+      <div class="grid grid-cols-1 gap-4">
+        <div>
+          <h5 class="text-lg font-semibold mb-4">Nueva Habilidad :</h5>
+          <div>
+            <div class="grid grid-cols-1 gap-4">
+              <div class="">
+                <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                  placeholder="Habilidad:" id="WordPress" name="number" required="" v-model="nuevaHabilidad" />
+              </div>
+
+            </div>
+            <div class="grid grid-cols-1 gap-4 mt-5">
+              <button id="submit" name="send" @click="agregarHabilidad(nuevaHabilidad)"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer">Agregar</button>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- End Hero -->
 
   <switcher />
@@ -819,7 +794,7 @@ export default {
       image2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
 
 
-      paginaFormulario:1,
+      paginaFormulario: 1,
 
 
       estudianteDto: {
@@ -832,116 +807,185 @@ export default {
         "idPersonas": 100001,
         "idCarreras": 1,
         "persona": {
-            "idPersona": 100001,
-            "nombre": "Daniel Ignacio",
-            "apellidoPaterno": "Aldazosa",
-            "apellidoMaterno": "Miranda",
-            "telefono": 60176430,
-            "ci": "6959943",
-            "fotoPerfil": "https://backend-sistemas.serverbb.online/api/v1/public/files/download/blob_20240520-221153808",
-            "anioIngresoUniversidad": 2020,
-            "descripcion": "slkdf sldklfjsald flskdfs dlfksdfjskdf sdfskdfjsldjk",
-            "fechaDeNacimiento": "2002-12-17",
-            
-            
-            "habilidades":  [
-                {
-                  
-                  "habilidad": "Java",
-                  "nivel": 5,
-                  "principal":true
-                },
-                {
-                  
-                  "habilidad": "Python",
-                  "nivel": 4,
-                  "principal":true
+          "idPersona": 100001,
+          "nombre": "Daniel Ignacio",
+          "apellidoPaterno": "Aldazosa",
+          "apellidoMaterno": "Miranda",
+          "telefono": 60176430,
+          "ci": "6959943",
+          "fotoPerfil": "https://backend-sistemas.serverbb.online/api/v1/public/files/download/blob_20240520-221153808",
+          "anioIngresoUniversidad": 2020,
+          "descripcion": "slkdf sldklfjsald flskdfs dlfksdfjskdf sdfskdfjsldjk",
+          "fechaDeNacimiento": "2002-12-17",
 
-                },
-                {
-                  
-                  "habilidad": "C++",
-                  "nivel": 3,
-                  "principal":true
 
-                },
-                {
-                  
-                  "habilidad": "C#",
-                  "nivel": 2,
-                  "principal":false
+          "habilidades": [
+            {
 
-                },
-                {
-                  
-                  "habilidad": "JavaScript",
-                  "nivel": 1,
-                  "principal":false
+              "habilidad": "Java",
+              "nivel": 5,
+              "principal": true
+            },
+            {
 
-                },
-                
-              ],
-            
-            
-            
-            "habilidadesSeleccionada": "{\"habilidades_seleccionadas\": \"todas\"}",
-            
-            
-            "experiencia": "{\"trabajo\": \"mucho\"}",
+              "habilidad": "Python",
+              "nivel": 4,
+              "principal": true
+
+            },
+            {
+
+              "habilidad": "C++",
+              "nivel": 3,
+              "principal": true
+
+            },
+            {
+
+              "habilidad": "C#",
+              "nivel": 2,
+              "principal": false
+
+            },
+            {
+
+              "habilidad": "JavaScript",
+              "nivel": 1,
+              "principal": false
+
+            },
+
+          ],
 
 
 
-
-            
-
+          "habilidadesSeleccionada": "{\"habilidades_seleccionadas\": \"todas\"}",
 
 
+          "experiencia": [
+            {
+              "idExperiencia": 1,
+              "titulo": "Desarrollador de Software",
+              "empresa": "Empresa 1",
+              "duracion": "2020-2021",
+              "descripcion": "Desarrollador de Software en la empresa 1"
+            },
+            {
+              "idExperiencia": 2,
+              "titulo": "Desarrollador de Software",
+              "empresa": "Empresa 2",
+              "duracion": "2021-2022",
+              "descripcion": "Desarrollador de Software en la empresa 2"
+            },
+            {
+              "idExperiencia": 3,
+              "titulo": "Desarrollador de Software",
+              "empresa": "Empresa 3",
+              "duracion": "2022-2023",
+              "descripcion": "Desarrollador de Software en la empresa 3"
+            }
+          ],
 
 
-            "redesSociales": "{\"facebook\": \"facebook.com\"}"
+
+            redesSociales:{
+              linkedin:{
+                url:"https://www.linkedin.com/in/daniel-aldazosa-miranda-0b0b3b1b4/"
+              },
+              facebook:{
+                url:"https://www.facebook.com/daniel.aldazosa"
+              },
+              twitter:{
+                url:"https://twitter.com/daniel_aldazosa"
+              },
+              instagram:{
+                url:"https://www.instagram.com/daniel_aldazosa/"
+              }
+            }
+
+
+
+
+
+
         },
         "carrera": {
-            "idCarreras": 1,
-            "nombre": "Ing. Sistemas",
-            "descripcion": "INGENIERIA EN SISTEMAS"
+          "idCarreras": 1,
+          "nombre": "Ing. Sistemas",
+          "descripcion": "INGENIERIA EN SISTEMAS"
         }
       },
 
 
       rating: 0,
-      showNuevaHabilidadModal:false,
-      showNuevaExperienciaModal:false,
-     
-      
+      showNuevaHabilidadModal: false,
+      showNuevaExperienciaModal: false,
+
+      nuevaHabilidad: "",
+      nuevaExperiencia: {
+        titulo: "",
+        empresa: "",
+        duracion: "",
+        descripcion: ""
+      }
+
+
 
     };
   },
-  watch:{
-    'estudianteDto.idCarreras'(newValue){
-     this.estudianteDto.carrera.idCarreras=newValue;
+  watch: {
+    'estudianteDto.idCarreras'(newValue) {
+      this.estudianteDto.carrera.idCarreras = newValue;
     }
   },
 
-  beforeMount(){
-    if(!this.$keycloak.authenticated){
+  beforeMount() {
+    if (!this.$keycloak.authenticated) {
       this.$router.push('/')
     }
-    this.estudianteDto.persona.anioIngresoUniversidad =2000; 
+    this.estudianteDto.persona.anioIngresoUniversidad = 2000;
     this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
   },
   methods: {
-    agregarHabilidad(habilidad){
-      this.estudianteDto.persona.habilidades.push({
-        habilidad:habilidad,
-        nivel:0,
-        principal:false
+    agregarNuevaExperiencia(experiencia) {
+      console.log("duracion: "+experiencia.duracion)
+      this.estudianteDto.persona.experiencia.push({
+        titulo: experiencia.titulo,
+        empresa: experiencia.empresa,
+        duracion: experiencia.duracion,
+        descripcion: experiencia.descripcion
       });
-      this.showNuevaHabilidadModal=false;
+      this.nuevaExperiencia= {
+        titulo: "",
+        empresa: "",
+        duracion: "",
+        descripcion: ""
+      }
+      this.showNuevaExperienciaModal = false;
+
     },
 
-    eliminarHabilidad(habilidad){
+    eliminarExperiencia(experiencia) {
+      const index = this.estudianteDto.persona.experiencia.indexOf(experiencia);
+      this.estudianteDto.persona.experiencia.splice(index, 1);
+    },
+
+
+
+
+    agregarHabilidad(habilidad) {
+      this.estudianteDto.persona.habilidades.push({
+        habilidad: habilidad,
+        nivel: 0,
+        principal: false
+      });
+      this.nuevaHabilidad = "";
+      this.showNuevaHabilidadModal = false;
+    },
+
+    eliminarHabilidad(habilidad) {
       const index = this.estudianteDto.persona.habilidades.indexOf(habilidad);
-      this.estudianteDto.persona.habilidades.splice(index,1);
+      this.estudianteDto.persona.habilidades.splice(index, 1);
     },
 
 
@@ -954,7 +998,7 @@ export default {
         event.target.value = this.estudianteDto.persona.anioIngresoUniversida;
       }
     },
-  
+
 
 
     //detener video
@@ -1004,18 +1048,25 @@ export default {
 };
 </script>
 
-<style  scoped>
+<style scoped>
 .modal {
-   /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
 }
 
 .modal-content {
@@ -1024,8 +1075,10 @@ export default {
   margin: auto;
   padding: 0;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-  max-width: 600px; /* Max width */
+  width: 80%;
+  /* Could be more or less, depending on screen size */
+  max-width: 600px;
+  /* Max width */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   animation-name: animatetop;
   animation-duration: 0.4s;
@@ -1036,6 +1089,7 @@ export default {
     top: -300px;
     opacity: 0;
   }
+
   to {
     top: 300px;
     opacity: 1;
@@ -1055,5 +1109,4 @@ export default {
   text-decoration: none;
   cursor: pointer;
 }
-
 </style>
