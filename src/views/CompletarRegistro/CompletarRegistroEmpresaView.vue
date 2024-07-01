@@ -1097,7 +1097,7 @@
               <div class="grid grid-cols-12 mt-6 gap-4">
                 <div class="col-span-12">
                   <label class="form-label font-medium"
-                    >Nombre <span class="text-red-600">*</span></label
+                    >Nombre: <span class="text-red-600">*</span></label
                   >
                   <input
                     name="name"
@@ -1105,19 +1105,8 @@
                     type="text"
                     v-model="nuevaEmpresa.nombre"
                     class="form-input border border-slate-100 dark:border-slate-800"
-                    placeholder="Título :"
+                    placeholder="Nombre :"
                   />
-                </div>
-                <!--end col-->
-                <div class="col-span-12">
-                  <label class="form-label font-medium"> Descripción : </label>
-                  <textarea
-                    name="comments"
-                    id="Description"
-                    v-model="nuevaEmpresa.descripcion"
-                    class="form-input border border-slate-100 dark:border-slate-800 textarea"
-                    placeholder="Descripción :"
-                  ></textarea>
                 </div>
                 <!--end col-->
 
@@ -1148,26 +1137,202 @@
                     class="form-input border border-slate-100 dark:border-slate-800"
                     placeholder="Correo :"
                   />
+                  <label class="form-label font-medium"
+                    >Logo de la empresa: <span class="text-red-600">*</span></label
+                  >
+                </div>
+               
+                <div class="justify-center">
+                   
+                  <input
+                    id="pro-img"
+                    name="profile-image"
+                    type="file"
+                    class="hidden"
+                    @change="loadFile"
+                  />
+                  <div>
+                    <div
+                      class="relative size-28 max-w-[112px] max-h-[112px] mx-auto"
+                    >
+                      <img
+                        :src="this.imageSrc"
+                        class="rounded-full shadow dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800"
+                        id="profile-image"
+                        alt=""
+                      />
+                      <label
+                        class="absolute inset-0 cursor-pointer"
+                        for="pro-img"
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+                <!--end col-->
+                <div class="col-span-12">
+                  <label class="form-label font-medium"> Descripción : </label>
+                  <textarea
+                    name="comments"
+                    id="Description"
+                    v-model="nuevaEmpresa.descripcion"
+                    class="form-input border border-slate-100 dark:border-slate-800 textarea"
+                    placeholder="Descripción :"
+                  ></textarea>
                 </div>
                 <!--end col-->
               </div>
             </div>
 
-            <div class="grid grid-cols-1 gap-4 mt-5">
-              <button
-                id="submit"
-                name="send"
-                @click="agregarNuevaExperiencia(nuevaExperiencia)"
-                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-              >
-                Agregar
-              </button>
-            </div>
+            <div class="grid grid-cols-2 gap-4 mt-5">
+                      <button
+                        id="submit"
+                        name="send"
+                        @click="showNuevaEmpresaModal = false"
+                        class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+                      >
+                        Cancelar
+                      </button>
+
+                      <button
+                        id="submit"
+                        name="send"
+                        @click="showNuevaEmpresaModal = true ,showNuevaEmpresaModal = false"
+                        class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+                      >
+                        Siguiente
+                      </button>
+                    </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div id="myModalCompany2" class="modal" v-if="showNuevaEmpresaModal2">
+    <div
+      class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
+    >
+      <span class="close" @click="showNuevaEmpresaModal2 = false">&times;</span>
+
+      <div class="grid grid-cols-1 gap-4">
+        <div>
+          <h5 class="text-lg font-semibold mb-4">Empresa :</h5>
+
+          <div>
+            <div>
+              <div class="grid grid-cols-12 mt-6 gap-4">
+                <div class="col-span-12">
+                  <label class="form-label font-medium"
+                    >Nombre: <span class="text-red-600">*</span></label
+                  >
+                  <input
+                    name="name"
+                    id="JobTitle"
+                    type="text"
+                    v-model="nuevaEmpresa.nombre"
+                    class="form-input border border-slate-100 dark:border-slate-800"
+                    placeholder="Nombre :"
+                  />
+                </div>
+                <!--end col-->
+
+                <div class="col-span-12">
+                  <label class="form-label font-medium"
+                    >Dirección de la empresa
+                    <span class="text-red-600">*</span></label
+                  >
+                  <input
+                    name="name"
+                    id="CompanyName"
+                    type="text"
+                    v-model="nuevaEmpresa.direccion"
+                    class="form-input border border-slate-100 dark:border-slate-800"
+                    placeholder="Dirección :"
+                  />
+                </div>
+                <!--end col-->
+
+                <div class="col-span-12">
+                  <label class="form-label font-medium"
+                    >correo <span class="text-red-600">*</span></label
+                  >
+                  <input
+                    name="email"
+                    type="text"
+                    v-model="nuevaEmpresa.correo"
+                    class="form-input border border-slate-100 dark:border-slate-800"
+                    placeholder="Correo :"
+                  />
+                  <label class="form-label font-medium"
+                    >Logo de la empresa: <span class="text-red-600">*</span></label
+                  >
+                </div>
+               
+                <div class="justify-center">
+                   
+                  <input
+                    id="pro-img"
+                    name="profile-image"
+                    type="file"
+                    class="hidden"
+                    @change="loadFile"
+                  />
+                  <div>
+                    <div
+                      class="relative size-28 max-w-[112px] max-h-[112px] mx-auto"
+                    >
+                      <img
+                        :src="this.imageSrc"
+                        class="rounded-full shadow dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800"
+                        id="profile-image"
+                        alt=""
+                      />
+                      <label
+                        class="absolute inset-0 cursor-pointer"
+                        for="pro-img"
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+                <!--end col-->
+                <div class="col-span-12">
+                  <label class="form-label font-medium"> Descripción : </label>
+                  <textarea
+                    name="comments"
+                    id="Description"
+                    v-model="nuevaEmpresa.descripcion"
+                    class="form-input border border-slate-100 dark:border-slate-800 textarea"
+                    placeholder="Descripción :"
+                  ></textarea>
+                </div>
+                <!--end col-->
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mt-5">
+                      <button
+                        id="submit"
+                        name="send"
+                        @click="showNuevaEmpresaModal = false"
+                        class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+                      >
+                        Cancerlar
+                      </button>
+
+                      <button
+                        id="submit"
+                        name="send"
+                        @click="paginaFormulario = 3 ,showNuevaEmpresaModal = false"
+                        class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+                      >
+                        Siguiente
+                      </button>
+                    </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- fin Segundo moda empresa -->
   <switcher />
 </template>
@@ -1332,6 +1497,8 @@ export default {
       showNuevaHabilidadModal: false,
       showNuevaExperienciaModal: false,
       showNuevaEmpresaModal: false,
+      showNuevaEmpresaModal2: false,
+      showNuevaEmpresaModal3: false,
       nuevaHabilidad: "",
       nuevaExperiencia: {
         titulo: "",
@@ -1596,7 +1763,7 @@ export default {
 
 .modal-content {
   position: relative;
-  top: 30%;
+  top: 20%;
   margin: auto;
   padding: 0;
   border: 1px solid #888;
