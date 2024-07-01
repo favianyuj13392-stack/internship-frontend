@@ -160,14 +160,17 @@ export default {
     try {
       await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
      const existencia = await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
-      if(this.$keycloak.tokenParsed.resource_access['internship-cliente'] == undefined){
+      if(this.$keycloak.tokenParsed.resource_access['internship-cliente'] == undefined && existencia==false){
         this.$router.push("/finish/register-empresa");
+        return;
       }
      if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("ESTUDIANTE")){
         this.$router.push("/finish/register-estudiante");
+        return;
      }
      else if(existencia==false){
         this.$router.push("/finish/register-empresa");
+        return;
      }
       loader.hide();
     } catch (error) {
