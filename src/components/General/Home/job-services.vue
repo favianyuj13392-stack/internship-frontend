@@ -26,7 +26,7 @@
           <div class="absolute bottom-0 p-4">
             <a
               href=""
-              class="text-lg font-semibold text-white hover:text-emerald-600 transition-all duration-500"
+              class="text-lg font-semibold text-white hover:text-cyan-600 transition-all duration-500"
               >{{ item.name }}</a
             >
           </div>
