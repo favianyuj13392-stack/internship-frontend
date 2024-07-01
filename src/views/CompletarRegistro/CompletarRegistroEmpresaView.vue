@@ -65,7 +65,7 @@
     </button>
   </div>
   <section class="relative lg:mt-24 mt-[74px] pb-16">
-    <div class="lg:container container-fluid">
+    <div v-if="paginaFormulario == 2" class="lg:container container-fluid">
       <div class="profile-banner relative text-transparent">
         <input
           id="pro-banner"
@@ -140,143 +140,219 @@
           <div
             class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
           >
-            <h5 class="text-lg font-semibold mb-4">Personal Detail :</h5>
-            <div>
-              <div
-                class="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 gap-4"
+            <div class="grid grid-cols-4 gap-4 mb-2">
+              <h5 class="col-span-3">Selecciona tu empresa:</h5>
+
+              <button
+                id="submit"
+                name="send"
+                @click="showNuevaEmpresaModal = true"
+                class="col-span-1 btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
               >
-                <div class="lg:col-span-6">
-                  <label class="form-label font-medium"
-                    >Nombres : <span class="text-red-600">*</span></label
-                  >
-                  <input
-                    type="text"
-                    class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    v-model="estudianteDto.persona.nombre"
-                    placeholder="Nombres:"
-                    id="firstname"
-                    name="name"
-                    required=""
-                  />
-                </div>
-                <div class="lg:col-span-4">
-                  <label class="form-label font-medium"
-                    >Ci :<span class="text-red-600">*</span></label
-                  >
-                  <input
-                    type="text"
-                    class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    v-model="estudianteDto.persona.ci"
-                    placeholder="Ci"
-                    name="address"
-                    required=""
-                  />
+                Agregar tu empresa
+              </button>
+            </div>
+
+            <div class="grid grid-cols-4 gap-4">
+              <h5 class="col-span-1">Buscar por nombre:</h5>
+              <input
+                type="text"
+                v-model="Busqueda"
+                class="col-span-3 bg-gray-100 p-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-600"
+              />
+            </div>
+            <div
+              class="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
+            >
+              <div
+                @click="seleccionarEmpresa(item)"
+                v-for="item in filteredDatas"
+                :key="item"
+                class="group px-3 py-10 rounded-full shadow dark:shadow-gray-700 hover:shadow-cyan-600/10 dark:hover:shadow-cyan-600/10 text-center bg-white dark:bg-slate-900 hover:bg-cyan-600/5 dark:hover:bg-cyan-600/5 transition duration-500"
+              >
+                <div
+                  class="size-16 bg-cyan-600/5 group-hover:bg-cyan-600 text-cyan-600 group-hover:text-white rounded-full text-2xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-700 transition duration-500 mx-auto"
+                >
+                  <img :src="item.logoEmpresa" class="rounded-full" alt="" />
                 </div>
 
-                <div class="lg:col-span-6">
-                  <label class="form-label font-medium"
-                    >Apellido Paterno :
-                    <span class="text-red-600">*</span></label
-                  >
-                  <input
-                    type="text"
-                    class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    v-model="estudianteDto.persona.apellidoPaterno"
-                    placeholder="Apellido Paterno:"
-                    id="lastname"
-                    name="name"
-                    required=""
-                  />
+                <div class="content mt-6">
+                  <a class="title text-lg font-semibold hover:text-cyan-600"
+                    >{{ item.nombre }}
+                  </a>
+                  <p class="text-slate-400 mt-3">{{ item.direccion }}</p>
                 </div>
+              </div>
+              <!--end row-->
+            </div>
+            <div class="grid grid-cols-2 gap-4 mt-5">
+              <button
+                id="submit"
+                name="send"
+                @click="this.$keycloak.logout()"
+                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+              >
+                Cancelar
+              </button>
 
-                <div class="lg:col-span-6">
-                  <label class="form-label font-medium"
-                    >Apellido Materno :
-                    <span class="text-red-600">*</span></label
-                  >
-                  <input
-                    type="text"
-                    class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    v-model="estudianteDto.persona.apellidoMaterno"
-                    placeholder="Apellido Paterno:"
-                    id="lastname"
-                    name="name"
-                    required=""
-                  />
-                </div>
+              <button
+                id="submit"
+                name="send"
+                @click="paginaFormulario = 2"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+              >
+                Siguiente
+              </button>
+            </div>
+            <!--end form-->
+          </div>
+        </div>
 
-                <div class="lg:col-span-6">
-                  <label class="form-label font-medium"
-                    >Email : <span class="text-red-600">*</span></label
-                  >
-                  <input
-                    type="email"
-                    class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    v-model="estudianteDto.correo"
-                    placeholder="Email"
-                    name="email"
-                    required=""
-                  />
-                </div>
+        <div class="lg:col-span-12">
+          <div v-if="paginaFormulario == 2" class="lg:col-span-6">
+            <div
+              class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
+            >
+              <h5 class="text-lg font-semibold mb-4">Personal Detail :</h5>
+              <div>
+                <div
+                  class="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 gap-4"
+                >
+                  <div class="lg:col-span-6">
+                    <label class="form-label font-medium"
+                      >Nombres : <span class="text-red-600">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                      v-model="estudianteDto.persona.nombre"
+                      placeholder="Nombres:"
+                      id="firstname"
+                      name="name"
+                      required=""
+                    />
+                  </div>
+                  <div class="lg:col-span-4">
+                    <label class="form-label font-medium"
+                      >Ci :<span class="text-red-600">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                      v-model="estudianteDto.persona.ci"
+                      placeholder="Ci"
+                      name="address"
+                      required=""
+                    />
+                  </div>
 
-                <div class="lg:col-span-6">
-                  <label class="form-label font-medium" for="birthday"
-                    >Fecha de Nacimiento :<span class="text-red-600"
-                      >*</span
-                    ></label
-                  >
-                  <input
-                    type="date"
-                    id="birthday"
-                    name="birthday"
-                    v-model="estudianteDto.persona.fechaDeNacimiento"
-                    class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                  />
-                </div>
+                  <div class="lg:col-span-6">
+                    <label class="form-label font-medium"
+                      >Apellido Paterno :
+                      <span class="text-red-600">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                      v-model="estudianteDto.persona.apellidoPaterno"
+                      placeholder="Apellido Paterno:"
+                      id="lastname"
+                      name="name"
+                      required=""
+                    />
+                  </div>
 
-                <div class="lg:col-span-4">
-                  <label class="form-label font-medium"
-                    >Número Celular :<span class="text-red-600">*</span></label
-                  >
-                  <input
-                    type="number"
-                    class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    v-model="estudianteDto.persona.telefono"
-                    placeholder="Número Celular"
-                    name="address"
-                    required=""
-                  />
-                </div>
+                  <div class="lg:col-span-6">
+                    <label class="form-label font-medium"
+                      >Apellido Materno :
+                      <span class="text-red-600">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                      v-model="estudianteDto.persona.apellidoMaterno"
+                      placeholder="Apellido Paterno:"
+                      id="lastname"
+                      name="name"
+                      required=""
+                    />
+                  </div>
 
-                <div class="lg:col-span-3">
-                  <label class="form-label font-medium">Carrera :</label>
-                  <select
-                    v-model="estudianteDto.idCarreras"
-                    class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-2"
-                  >
-                    <option value="1">Ing. en Sistemas</option>
-                    <option value="2">Psicopedagogía</option>
-                    <option value="3">Comunicación Social</option>
-                  </select>
-                </div>
+                  <div class="lg:col-span-6">
+                    <label class="form-label font-medium"
+                      >Email : <span class="text-red-600">*</span></label
+                    >
+                    <input
+                      type="email"
+                      class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                      v-model="estudianteDto.correo"
+                      placeholder="Email"
+                      name="email"
+                      required=""
+                    />
+                  </div>
 
-                <div class="lg:col-span-6">
-                  <label class="form-label font-medium" for="birthday"
-                    >Año de Ingreso a la Universidad :<span class="text-red-600"
-                      >*</span
-                    ></label
-                  >
-                  <input
-                    type="number"
-                    id="birthday"
-                    name="birthday"
-                    v-model="estudianteDto.persona.anioIngresoUniversidad"
-                    @input="validateInputYear"
-                    class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                  />
-                </div>
+                  <div class="lg:col-span-6">
+                    <label class="form-label font-medium" for="birthday"
+                      >Fecha de Nacimiento :<span class="text-red-600"
+                        >*</span
+                      ></label
+                    >
+                    <input
+                      type="date"
+                      id="birthday"
+                      name="birthday"
+                      v-model="estudianteDto.persona.fechaDeNacimiento"
+                      class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                    />
+                  </div>
 
-                <!--
+                  <div class="lg:col-span-4">
+                    <label class="form-label font-medium"
+                      >Número Celular :<span class="text-red-600"
+                        >*</span
+                      ></label
+                    >
+                    <input
+                      type="number"
+                      class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                      v-model="estudianteDto.persona.telefono"
+                      placeholder="Número Celular"
+                      name="address"
+                      required=""
+                    />
+                  </div>
+
+                  <div class="lg:col-span-3">
+                    <label class="form-label font-medium">Carrera :</label>
+                    <select
+                      v-model="estudianteDto.idCarreras"
+                      class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-2"
+                    >
+                      <option value="1">Ing. en Sistemas</option>
+                      <option value="2">Psicopedagogía</option>
+                      <option value="3">Comunicación Social</option>
+                    </select>
+                  </div>
+
+                  <div class="lg:col-span-6">
+                    <label class="form-label font-medium" for="birthday"
+                      >Año de Ingreso a la Universidad :<span
+                        class="text-red-600"
+                        >*</span
+                      ></label
+                    >
+                    <input
+                      type="number"
+                      id="birthday"
+                      name="birthday"
+                      v-model="estudianteDto.persona.anioIngresoUniversidad"
+                      @input="validateInputYear"
+                      class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                    />
+                  </div>
+
+                  <!--
   
                   <div class="lg:col-span-6">
                     <label class="form-label font-medium" for="multiple_files">Subir Curriculum:</label>
@@ -285,50 +361,27 @@
                       id="multiple_files" type="file" multiple />
                   </div>
   -->
-              </div>
-              <!--end grid-->
-
-              <div class="grid grid-cols-1">
-                <div class="mt-5">
-                  <label class="form-label font-medium"
-                    >Descripción : <span class="text-red-600">*</span>
-                  </label>
-                  <textarea
-                    name="comments"
-                    id="comments"
-                    class="form-input border border-slate-100 dark:border-slate-800 mt-2 textarea"
-                    v-model="estudianteDto.persona.descripcion"
-                    placeholder="Descripción :"
-                  ></textarea>
                 </div>
-              </div>
-              <!--end row-->
-              <div class="grid grid-cols-2 gap-4 mt-5">
-                <button
-                  id="submit"
-                  name="send"
-                  @click="this.$keycloak.logout()"
-                  class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                >
-                  Cancelar
-                </button>
+                <!--end grid-->
 
-                <button
-                  id="submit"
-                  name="send"
-                  @click="paginaFormulario = 2"
-                  class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                >
-                  Siguiente
-                </button>
+                <div class="grid grid-cols-1">
+                  <div class="mt-5">
+                    <label class="form-label font-medium"
+                      >Descripción : <span class="text-red-600">*</span>
+                    </label>
+                    <textarea
+                      name="comments"
+                      id="comments"
+                      class="form-input border border-slate-100 dark:border-slate-800 mt-2 textarea"
+                      v-model="estudianteDto.persona.descripcion"
+                      placeholder="Descripción :"
+                    ></textarea>
+                  </div>
+                </div>
+                <!--end row-->
               </div>
+              <!--end form-->
             </div>
-            <!--end form-->
-          </div>
-        </div>
-
-        <div class="lg:col-span-12">
-          <div v-if="paginaFormulario == 2" class="lg:col-span-6">
             <div
               class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
             >
@@ -1028,8 +1081,94 @@
       </div>
     </div>
   </div>
-  <!-- End Hero -->
+  <!-- Segundo moda empresa -->
+  <div id="myModalCompany" class="modal" v-if="showNuevaEmpresaModal">
+    <div
+      class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
+    >
+      <span class="close" @click="showNuevaEmpresaModal = false">&times;</span>
 
+      <div class="grid grid-cols-1 gap-4">
+        <div>
+          <h5 class="text-lg font-semibold mb-4">Empresa :</h5>
+
+          <div>
+            <div>
+              <div class="grid grid-cols-12 mt-6 gap-4">
+                <div class="col-span-12">
+                  <label class="form-label font-medium"
+                    >Nombre <span class="text-red-600">*</span></label
+                  >
+                  <input
+                    name="name"
+                    id="JobTitle"
+                    type="text"
+                    v-model="nuevaEmpresa.nombre"
+                    class="form-input border border-slate-100 dark:border-slate-800"
+                    placeholder="Título :"
+                  />
+                </div>
+                <!--end col-->
+                <div class="col-span-12">
+                  <label class="form-label font-medium"> Descripción : </label>
+                  <textarea
+                    name="comments"
+                    id="Description"
+                    v-model="nuevaEmpresa.descripcion"
+                    class="form-input border border-slate-100 dark:border-slate-800 textarea"
+                    placeholder="Descripción :"
+                  ></textarea>
+                </div>
+                <!--end col-->
+
+                <div class="col-span-12">
+                  <label class="form-label font-medium"
+                    >Dirección de la empresa
+                    <span class="text-red-600">*</span></label
+                  >
+                  <input
+                    name="name"
+                    id="CompanyName"
+                    type="text"
+                    v-model="nuevaEmpresa.direccion"
+                    class="form-input border border-slate-100 dark:border-slate-800"
+                    placeholder="Dirección :"
+                  />
+                </div>
+                <!--end col-->
+
+                <div class="col-span-12">
+                  <label class="form-label font-medium"
+                    >correo <span class="text-red-600">*</span></label
+                  >
+                  <input
+                    name="email"
+                    type="text"
+                    v-model="nuevaEmpresa.correo"
+                    class="form-input border border-slate-100 dark:border-slate-800"
+                    placeholder="Correo :"
+                  />
+                </div>
+                <!--end col-->
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 mt-5">
+              <button
+                id="submit"
+                name="send"
+                @click="agregarNuevaExperiencia(nuevaExperiencia)"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+              >
+                Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- fin Segundo moda empresa -->
   <switcher />
 </template>
 
@@ -1055,9 +1194,42 @@ export default {
       image: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       imageSrc2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       image2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
-
+      empresaSeleccionada: {
+        idInstituciones: "",
+        nombre: "",
+        descripcion: "",
+        direccion: "",
+        fotoInstitucion: "",
+        correo: "",
+        sectores: ["", ""],
+        logoEmpresa: "",
+        fotos: ["", ""],
+        redesSociales: {
+          facebook: "",
+          twitter: "",
+          instagram: "",
+        },
+        activo: true,
+      },
+      nuevaEmpresa: {
+        idInstituciones: "",
+        nombre: "",
+        descripcion: "",
+        direccion: "",
+        fotoInstitucion: "",
+        correo: "",
+        sectores: ["", ""],
+        logoEmpresa: "",
+        fotos: ["", ""],
+        redesSociales: {
+          facebook: "",
+          twitter: "",
+          instagram: "",
+        },
+        activo: true,
+      },
       paginaFormulario: 1,
-
+      Busqueda: "",
       estudianteDto: {
         idUsuarios: 10001,
         kc_UUID: "asdkasdja-sdajfsdbkfasd-32",
@@ -1159,7 +1331,7 @@ export default {
       rating: 0,
       showNuevaHabilidadModal: false,
       showNuevaExperienciaModal: false,
-
+      showNuevaEmpresaModal: false,
       nuevaHabilidad: "",
       nuevaExperiencia: {
         titulo: "",
@@ -1167,6 +1339,116 @@ export default {
         duracion: "",
         descripcion: "",
       },
+      datas: [
+        {
+          image:
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+          icon: "uil uil-gitlab",
+          title: "TIGO",
+          title2: "Development",
+          job: "74 Jobs",
+        },
+        {
+          image:
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+          icon: "uil uil-book-open",
+          title: "BISA",
+          title2: "Communication",
+          job: "20 Jobs",
+        },
+        {
+          image:
+            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
+          icon: "uil uil-chart-pie-alt",
+          title: "Project",
+          title2: "Management",
+          job: "35 Jobs",
+        },
+        {
+          image:
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+          icon: "uil uil-feedback",
+          title: "Customer",
+          title2: "Service",
+          job: "46 Jobs",
+        },
+        {
+          image:
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+          icon: "uil uil-presentation-line",
+          title: "Software",
+          title2: "Engineering",
+          job: "60 Jobs",
+        },
+      ],
+      instituciones: [
+        {
+          idInstituciones: 1,
+          nombre: "Universidad Católica Boliviana",
+          descripcion: "Institución educativa de prestigio en Bolivia.",
+          direccion: "Av. 6 de Agosto, La Paz",
+          fotoInstitucion:
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+          correo: "@ucb.edu.bo",
+          sectores: ["Educación", "Investigación"],
+          logoEmpresa:
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+          fotos: [
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+          ],
+          redesSociales: {
+            facebook: "https://facebook.com/ucb",
+            twitter: "https://twitter.com/ucb",
+            instagram: "https://instagram.com/ucb",
+          },
+          activo: true,
+        },
+        {
+          idInstituciones: 2,
+          nombre: "Universidad Mayor de San Andrés",
+          descripcion: "Institución educativa de prestigio en Bolivia.",
+          direccion: "Av. 6 de Agosto, La Paz",
+          fotoInstitucion:
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+          correo: "@ucb.edu.bo",
+          sectores: ["Educación", "Investigación"],
+          logoEmpresa:
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+          fotos: [
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+          ],
+          redesSociales: {
+            facebook: "https://facebook.com/ucb",
+            twitter: "https://twitter.com/ucb",
+            instagram: "https://instagram.com/ucb",
+          },
+          activo: true,
+        },
+        {
+          idInstituciones: 3,
+          nombre: "Universidad Mayor de San Andrés",
+          descripcion: "Institución educativa de prestigio en Bolivia.",
+          direccion: "Av. 6 de Agosto, La Paz",
+          fotoInstitucion:
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+          correo: "@ucb.edu.bo",
+          sectores: ["Educación", "Investigación"],
+          logoEmpresa:
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+          fotos: [
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
+          ],
+          redesSociales: {
+            facebook: "https://facebook.com/ucb",
+            twitter: "https://twitter.com/ucb",
+            instagram: "https://instagram.com/ucb",
+          },
+          activo: true,
+        },
+      ],
     };
   },
   watch: {
@@ -1271,6 +1553,21 @@ export default {
             });
           }
         });
+    },
+    seleccionarEmpresa(Empresa) {
+      this.paginaFormulario = 2;
+      this.empresaSeleccionada = JSON.parse(JSON.stringify(Empresa));
+      console.log(
+        "nombre empresa seleccionada: " + this.empresaSeleccionada.nombre
+      );
+      console.log("corr empresa seleccionada: " + this.empresaSeleccionada);
+    },
+  },
+  computed: {
+    filteredDatas() {
+      return this.instituciones.filter((item) =>
+        item.nombre.toLowerCase().includes(this.Busqueda.toLowerCase())
+      );
     },
   },
 };
