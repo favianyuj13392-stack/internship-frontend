@@ -160,6 +160,9 @@ export default {
     try {
       await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
      const existencia = await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
+      if(this.$keycloak.tokenParsed.resource_access['internship-cliente'] == undefined){
+        this.$router.push("/finish/register-empresa");
+      }
      if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("ESTUDIANTE")){
         this.$router.push("/finish/register-estudiante");
      }
