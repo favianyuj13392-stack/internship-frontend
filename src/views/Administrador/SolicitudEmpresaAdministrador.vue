@@ -179,7 +179,7 @@
           ></a>
           <router-link
             to="/administrador/empresa/solicitud/usuario"
-            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto"
+            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto mt-2"
             >Más información</router-link
           >
         </div>
@@ -211,16 +211,6 @@
       <popularjob />
       <company />
    -->
-  <section class="relative md:py-16 py-16">
-    <div class="container md:py-10 py-10">
-      <services />
-    </div>
-
-    <question />
-    <cta />
-    <company />
-    <explore />
-  </section>
 
   <switcher />
   <footers />
@@ -272,148 +262,74 @@ export default {
           image:
             "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
           day: "20th Feb 2023",
-          type: "Part Time",
-          job: "Marketing Director",
-          country: "USA",
+          type: "Full Time",
+          job: " NOMBRE EMPRESA",
+          country: "Miraflores",
           salary: "$4,000 - $4,500",
           class:
             "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
           icon: "uil uil-star",
+          correo: "@ucb.edu.bo",
+          nombre: "Nombre",
         },
         {
           id: 3,
           image:
             "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
           day: "20th Feb 2023",
-          type: "Remote",
-          job: "Application Developer",
-          country: "China",
+          type: "Full Time",
+          job: " NOMBRE EMPRESA",
+          country: "Miraflores",
           salary: "$4,000 - $4,500",
           class:
             "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
+          icon: "uil uil-star",
+          correo: "@ucb.edu.bo",
+          nombre: "Nombre",
         },
         {
           id: 4,
           image:
             "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
           day: "20th Feb 2023",
-          type: "WFH",
-          job: "Product Designer",
-          country: "Dubai",
+          type: "Full Time",
+          job: " NOMBRE EMPRESA",
+          country: "Miraflores",
           salary: "$4,000 - $4,500",
           class:
             "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
+          icon: "uil uil-star",
+          correo: "@ucb.edu.bo",
+          nombre: "Nombre",
         },
         {
           id: 5,
           image:
             "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
           day: "20th Feb 2023",
           type: "Full Time",
-          job: "C++ Developer",
-          country: "India",
+          job: " NOMBRE EMPRESA",
+          country: "Miraflores",
           salary: "$4,000 - $4,500",
           class:
             "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
           icon: "uil uil-star",
+          correo: "@ucb.edu.bo",
+          nombre: "Nombre",
         },
         {
-          id: 6,
           image:
             "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "Remote",
-          job: "Php Developer",
-          country: "Pakistan",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-        },
-        {
-          id: 7,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
           day: "20th Feb 2023",
           type: "Full Time",
-          job: "Web Designer",
-          country: "Australia",
+          job: " NOMBRE EMPRESA",
+          country: "Miraflores",
           salary: "$4,000 - $4,500",
           class:
             "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
           icon: "uil uil-star",
-        },
-        {
-          id: 8,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "Part Time",
-          job: "Marketing Director",
-          country: "USA",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-        },
-        {
-          id: 9,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "Remote",
-          job: "App Developer",
-          country: "China",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-        },
-        {
-          id: 10,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "WFH",
-          job: "Product Designer",
-          country: "Dubai",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-        },
-        {
-          id: 11,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "Full Time",
-          job: "C++ Developer",
-          country: "India",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-        },
-        {
-          id: 12,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "Remote",
-          job: "Php Developer",
-          country: "Pakistan",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
+          correo: "@ucb.edu.bo",
+          nombre: "Nombre",
         },
       ],
     };
