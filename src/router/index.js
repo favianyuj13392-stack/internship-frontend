@@ -24,6 +24,7 @@ import PasantiaAdministrador from "@/views/Administrador/PasantiaAdministrador.v
 import EmpresaAdministrador from "@/views/Administrador/EmpresaAdministrador.vue";
 import EmpresaDetalleAdministrador from "@/views/Administrador/EmpresaDetalleAdministrador.vue";
 import PasantiaDetalleAdministrador from "@/views/Administrador/PasantiaDetalleAdministrador.vue";
+import EmpresaSolicitudUsuarioAdministrador from "@/views/Administrador/EmpresaSolicitudUsuarioAdministrador.vue";
 //completar registro
 import FinishRegisterEstudiante from "@/views/CompletarRegistro/CompletarRegistroEstudianteView.vue";
 
@@ -131,6 +132,11 @@ const router = createRouter({
       path: "/administrador/pasantia/detalle",
       name: "PasantiaDetalleAdministrador",
       component: PasantiaDetalleAdministrador,
+    },
+    {
+      path: "/administrador/empresa/solicitud/usuario",
+      name: "EmpresaSolicitudUsuarioAdministrador",
+      component: EmpresaSolicitudUsuarioAdministrador,
     },
 
     //completado de registro

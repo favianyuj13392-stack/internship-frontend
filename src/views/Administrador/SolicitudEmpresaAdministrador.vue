@@ -178,7 +178,7 @@
             ><i data-feather="mail" class="size-4"></i
           ></a>
           <router-link
-            to="/administrador/empresa/detalle"
+            to="/administrador/empresa/solicitud/usuario"
             class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto"
             >Más información</router-link
           >
