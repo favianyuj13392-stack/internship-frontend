@@ -1277,7 +1277,7 @@
               <button
                 id="submit"
                 name="send"
-                @click="(showNuevaEmpresaModalForms = 3)"
+                @click="showNuevaEmpresaModalForms = 3"
                 class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
               >
                 Siguiente
@@ -1352,7 +1352,7 @@
               <button
                 id="submit"
                 name="send"
-                @click="(showNuevaEmpresaModalForms = 4)"
+                @click="showNuevaEmpresaModalForms = 4"
                 class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
               >
                 Siguiente
@@ -1750,11 +1750,11 @@ export default {
     removeArea(index) {
       this.selectedAreas.splice(index, 1);
     },
-    guardarNuevaEmpresa(){
+    guardarNuevaEmpresa() {
       console.log("guardar empresa");
-    console.log(this.selectedAreas);
-    console.log(this.nuevaEmpresa);
-    this.showNuevaEmpresaModal=false;
+      console.log(this.selectedAreas);
+      console.log(this.nuevaEmpresa);
+      this.showNuevaEmpresaModal = false;
     },
     agregarNuevaExperiencia(experiencia) {
       console.log("duracion: " + experiencia.duracion);
