@@ -1196,7 +1196,7 @@
                       <button
                         id="submit"
                         name="send"
-                        @click="showNuevaEmpresaModal = true ,showNuevaEmpresaModal = false"
+                        @click="showNuevaEmpresaModal2 = true ,showNuevaEmpresaModal = false"
                         class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
                       >
                         Siguiente
@@ -1215,7 +1215,7 @@
 
       <div class="grid grid-cols-1 gap-4">
         <div>
-          <h5 class="text-lg font-semibold mb-4">Empresa :</h5>
+          <h5 class="text-lg font-semibold mb-4">Areas :</h5>
 
           <div>
             <div>
