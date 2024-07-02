@@ -33,6 +33,20 @@ export const useEmpresasStore = defineStore({
                     console.log(error)
                 }
             },
+            async getEmpresaById(id) {
+                try {
+                    const response = await axios.get(RutaApi + '/institucion/' + id)
+                    console.log(response)
+                    if (response.data.code == '200') {
+                        return response.data.response
+                    } else {
+                        return null;
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            }
            
         },
+        
     })

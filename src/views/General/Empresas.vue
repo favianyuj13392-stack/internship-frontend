@@ -97,7 +97,7 @@
 
               <div class="ms-3">
                 <router-link
-                  to="/empresas/detalle"
+                  :to="{ name: 'empresas-detalle', params: { id: item.idInstituciones } }"
                   class="block text-[20px] font-semibold hover:text-cyan-600 transition-all duration-500"
                   >{{ item.nombre }}</router-link
                 >
@@ -125,7 +125,7 @@
           <div class="mt-1">
             <div class="mt-2 mb-2">
               <span class="text-slate-400 text-sm">
-                <span class="text-slate-900 dark:text-white font-semibold inline-block">10 pasantias disponibles</span>
+                <span class="text-slate-900 dark:text-white font-semibold inline-block">{{ item.pasantias.length }} pasantias disponibles</span>
                 de 40
               </span>
             </div>
