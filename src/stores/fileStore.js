@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 import RutaApi from '@/assets/rutaApi.js'
-import Cookies from 'js-cookie'
 
 export const useFilesStore = defineStore({
     id: 'files',
@@ -18,15 +17,12 @@ export const useFilesStore = defineStore({
                 formData.append('file', file);
                 console.log(file);
                 console.log(formData);
-                const id = this.$keycloak.idTokenParsed.sub;
-                    console.log(id)
-                const token1 =  this.$keycloak.token;
+           
                
         
                 const response = await axios.post(RutaApi + '/files/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        'Authorization': `Bearer ${token1}`
                     },
                     onUploadProgress: progressEvent => {
                         this.porcentajeCarga = Math.round((progressEvent.loaded * 100) / progressEvent.total);
