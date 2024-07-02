@@ -383,76 +383,7 @@
                 </div>
                 <!--end row-->
               </div>
-              <!--end form-->
-            </div>
-            <div
-              class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
-            >
-              <div class="grid grid-cols-1 gap-4">
-                <div>
-                  <h5 class="text-lg font-semibold mb-4">Habilidades :</h5>
-                  <div>
-                    <div class="grid grid-cols-1 gap-4">
-                      <div
-                        class="grid grid-cols-3 gap-4 mt-5 pt-3"
-                        v-for="habilidad in estudianteDto.persona.habilidades"
-                        :id="habilidad.habilidad"
-                      >
-                        <label class="form-label font-medium" for="WordPress">{{
-                          habilidad.habilidad
-                        }}</label>
-
-                        <StarRatingComponent
-                          name="rating"
-                          v-model="habilidad.nivel"
-                          :disabled="false"
-                        >
-                        </StarRatingComponent>
-                        <div class="grid grid-cols-2 gap-4 mt-0">
-                          <button
-                            id="submit"
-                            name="send"
-                            v-if="habilidad.principal == false"
-                            @click="habilidad.principal = true"
-                            class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer"
-                          >
-                            Secundario
-                          </button>
-
-                          <button
-                            id="submit"
-                            name="send"
-                            v-if="habilidad.principal == true"
-                            @click="habilidad.principal = false"
-                            class="btn border-yellow-600 bg-yellow-600 hover:bg-yellow-700 text-white text-sm p-0 rounded-md cursor-pointer"
-                          >
-                            Principal
-                          </button>
-
-                          <button
-                            id="submit"
-                            name="send"
-                            @click="eliminarHabilidad(habilidad)"
-                            class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                          >
-                            Eliminar
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 gap-4 mt-5">
-                      <button
-                        id="submit"
-                        name="send"
-                        @click="showNuevaHabilidadModal = true"
-                        class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
-                      >
-                        Agregar Nueva Habilidad
-                      </button>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4 mt-5">
+              <div class="grid grid-cols-2 gap-4 mt-5">
                       <button
                         id="submit"
                         name="send"
@@ -465,16 +396,15 @@
                       <button
                         id="submit"
                         name="send"
-                        @click="paginaFormulario = 3"
+                        @click="paginaFormulario = 5"
                         class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
                       >
-                        Siguiente
+                        Registrar
                       </button>
                     </div>
-                  </div>
-                </div>
-              </div>
+              <!--end form-->
             </div>
+          
           </div>
 
           <div v-if="paginaFormulario == 3" class="lg:col-span-6">
@@ -1807,6 +1737,7 @@ export default {
       console.log(this.selectedAreas);
       console.log(this.nuevaEmpresa);
       this.showNuevaEmpresaModal = false;
+      this.paginaFormulario = 2;
     },
     addFoto(event) {
       const file = event.target.files[0];
