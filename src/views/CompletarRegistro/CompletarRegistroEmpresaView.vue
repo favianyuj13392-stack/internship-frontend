@@ -1085,7 +1085,7 @@
                     name="profile-image"
                     type="file"
                     class="hidden"
-                    @change="handleFileUploadLogo"
+                    @change="handleFileUploadBannerPerfil"
                   />
                   <div>
                     <div
@@ -1230,7 +1230,7 @@
               name="profile-banner"
               type="file"
               class="hidden"
-              @change="loadFile2"
+              @change="handleFileUploadFotoGrande"
             />
             <div class="relative shrink-0">
               <img
@@ -1271,7 +1271,7 @@
               <div class="mt-4">
                 <input
                   type="file"
-                  @change="addFoto"
+                  @change="handleFileUploadFotosGeneral"
                   class="form-input border border-slate-100 dark:border-slate-800 w-full"
                 />
               </div>
@@ -1407,6 +1407,8 @@ import "vue3-toastify/dist/index.css";
 import switcher from "@/components/General/switcher.vue";
 import StarRatingComponent from "@/components/General/Extras/StartRatingComponent.vue";
 import {useInstitucionesStore} from "@/stores/Instituciones/InstitucionesPublicStore.js";
+import {useFilesStore} from "@/stores/fileStore.js";
+import Swal from "sweetalert2";
 
 export default {
   components: {
@@ -1699,6 +1701,7 @@ export default {
         },
       ],
       institucionesWithOnlyName: [],
+      filesStore: useFilesStore(),
     };
   },
   watch: {
@@ -1871,69 +1874,154 @@ export default {
       );
       console.log("corr empresa seleccionada: " + this.empresaSeleccionada);
     },
-    async handleFileUploadLogo(event) {
-      const file = event.target.files[0];
+    async handleFileUploadFotosGeneral(event) {
+        const file = event.target.files[0];
+        let auxLink="";
 
-      if (file) {
-        //comprimir imagen si es mayor a 4mb
+        if (file) {
+          //comprimir imagen si es mayor a 4mb 
 
-        console.log("tamaño imagen anterior " + file.size);
+          console.log("tamaño imagen anterior "+file.size);
+          if (file.size > 4000000) {
+            auxLink= await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+            console.log("tamaño imagen comprimida "+auxLink);
+            this.nuevaEmpresa.fotos.push(auxLink);
+          } else if( file.size > 1000000){ 
+            auxLink = await this.comprimirYSubirImagenBannerPerfil(file,0.5 );
+            console.log("tamaño imagen comprimida "+auxLink);
+            this.nuevaEmpresa.fotos.push(auxLink);
+          } 
+          else {
+              let loader= this.$loading.show();
+              const response = await this.filesStore.uploadFile(file);
+              loader.hide();
 
-        if (file.size > 4000000) {
-          this.comprimirYSubirImagen(file, 0.3);
-        } else if (file.size > 1000000) {
-          this.comprimirYSubirImagen(file, 0.5);
-        } else {
-          this.isLoading = true;
-          const response = await this.filesStore.uploadFile(file);
-          this.isLoading = false;
-
-          if (response === false) {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Error al subir la imagen, porfavor intenta de nuevo",
-            });
-          } else {
-            // Corrected code: use push() to add the new link to the array
-            this.logoElegido = this.filesStore.link;
-            this.objetoPeticion.linkFoto = this.filesStore.link;
-            console.log(this.objetoPeticion);
+              if (response === false) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Error al subir la imagen, porfavor intenta de nuevo",
+                  });
+                
+              } else {
+                // Corrected code: use push() to add the new link to the array
+                this.nuevaEmpresa.fotos.push(this.filesStore.link);
+              }
           }
         }
-      }
     },
-    async comprimirYSubirImagen(file, cantidadCompresion) {
-      new Compressor(file, {
-        quality: cantidadCompresion,
-        success: async (compressedResult) => {
-          console.log(
-            "tamaño imagen comprimida " +
-              compressedResult.size +
-              " con una compreison de " +
-              cantidadCompresion
-          );
-          this.isLoading = true;
-          const response = await this.filesStore.uploadFile(compressedResult);
-          this.isLoading = false;
+    async handleFileUploadFotoGrande(event) {
+        const file = event.target.files[0];
+        let auxLink="";
 
-          if (response === false) {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Error al subir la imagen, porfavor intenta de nuevo",
-            });
-          } else {
-            // Corrected code: use push() to add the new link to the array
-            this.logoElegido = this.filesStore.link;
-            this.objetoPeticion.linkFoto = this.filesStore.link;
-            console.log(this.objetoPeticion);
+        if (file) {
+          //comprimir imagen si es mayor a 4mb 
+
+          console.log("tamaño imagen anterior "+file.size);
+          if (file.size > 4000000) {
+            auxLink= await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+            console.log("tamaño imagen comprimida "+auxLink);
+            this.nuevaEmpresa.fotoInstitucion=auxLink;
+          } else if( file.size > 1000000){ 
+            auxLink = await this.comprimirYSubirImagenBannerPerfil(file,0.5 );
+            console.log("tamaño imagen comprimida "+auxLink);
+            this.nuevaEmpresa.fotoInstitucion=auxLink;
+          } 
+          else {
+              let loader= this.$loading.show();
+              const response = await this.filesStore.uploadFile(file);
+              loader.hide();
+
+              if (response === false) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Error al subir la imagen, porfavor intenta de nuevo",
+                  });
+                
+              } else {
+                // Corrected code: use push() to add the new link to the array
+                this.nuevaEmpresa.fotoInstitucion=this.filesStore.link;
+                
+                
+              }
           }
-        },
-        error(err) {
-          console.log(err.message);
-        },
-      });
+        }
+    },
+    async handleFileUploadBannerPerfil(event) {
+        const file = event.target.files[0];
+        let auxLink="";
+
+        if (file) {
+          //comprimir imagen si es mayor a 4mb 
+
+          console.log("tamaño imagen anterior "+file.size);
+          if (file.size > 4000000) {
+            auxLink= await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+            console.log("tamaño imagen comprimida "+auxLink);
+            this.nuevaEmpresa.logoEmpresa=auxLink;
+            this.imageSrc = auxLink;
+          } else if( file.size > 1000000){ 
+            auxLink = await this.comprimirYSubirImagenBannerPerfil(file,0.5 );
+            console.log("tamaño imagen comprimida "+auxLink);
+            this.nuevaEmpresa.logoEmpresa=auxLink;
+            this.imageSrc = auxLink;
+
+          } 
+          else {
+              let loader= this.$loading.show();
+              const response = await this.filesStore.uploadFile(file);
+              loader.hide();
+
+              if (response === false) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Error al subir la imagen, porfavor intenta de nuevo",
+                  });
+                
+              } else {
+                // Corrected code: use push() to add the new link to the array
+                this.nuevaEmpresa.logoEmpresa=this.filesStore.link;
+                
+                this.imageSrc = this.filesStore.link;
+                
+              }
+          }
+        }
+      },
+      async comprimirYSubirImagenBannerPerfil(file, cantidadCompresion){
+      new Compressor(file, {
+          quality: cantidadCompresion,
+          success: async  (compressedResult) => {
+            console.log("tamaño imagen comprimida "+compressedResult.size+ " con una compreison de "+cantidadCompresion);
+            let loader= this.$loading.show();
+            const response = await this.filesStore.uploadFile(compressedResult);
+            const aux= this.filesStore.link;
+            loader.hide();
+
+            if (response === false) {
+              Swal.fire({
+                  icon: "error",
+                  title: "Error",
+                  text: "Error al subir la imagen, porfavor intenta de nuevo",
+                });
+              
+            } else {
+              this.estudianteDto.persona.bannerPerfil=this.filesStore.link;
+                
+                this.imageSrc2 = this.filesStore.link;
+              
+
+              
+            }
+
+
+          },
+          error(err) {
+            console.log(err.message);
+          },
+        });
     },
   },
   computed: {
