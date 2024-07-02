@@ -1476,17 +1476,18 @@ import "vue3-toastify/dist/index.css";
 
 import switcher from "@/components/General/switcher.vue";
 import StarRatingComponent from "@/components/General/Extras/StartRatingComponent.vue";
+import {useInstitucionesStore} from "@/stores/Instituciones/InstitucionesPublicStore.js";
+
 export default {
   components: {
     switcher,
     StarRatingComponent,
   },
 
-  mounted() {
-    //reload images
-  },
+
   data() {
     return {
+      institucionesPublicStore: useInstitucionesStore(),
       isActive: false,
       imageSrc: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       image: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
@@ -1767,6 +1768,7 @@ export default {
           activo: true,
         },
       ],
+      institucionesWithOnlyName: [],
     };
   },
   watch: {
@@ -1782,7 +1784,15 @@ export default {
     this.estudianteDto.persona.anioIngresoUniversidad = 2000;
     this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
   },
+  mounted() {
+    this.getInstitucionesWithName();
+  },
   methods: {
+    async getInstitucionesWithName(){
+      this.institucionesWithOnlyName = await this.institucionesPublicStore.getAllInstitucionesWithOnlyName();
+      this.instituciones = this.institucionesWithOnlyName;
+      console.log("institucionesWithOnlyName",this.institucionesWithOnlyName);
+    },
     selectArea(area) {
       if (!this.selectedAreas.includes(area)) {
         this.selectedAreas.push(area);
