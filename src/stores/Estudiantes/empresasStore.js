@@ -1,0 +1,38 @@
+import { defineStore } from 'pinia'
+import axios from 'axios'
+import RutaApi from '@/assets/rutaApi.js'
+
+export const useEmpresasStore = defineStore({
+    
+        id: 'empresas',
+        state: () => ({
+        }),
+    
+        actions: {
+            async getEmpresas(pageValue,sizeValue,searchValue) {
+                try {                    //añade los params page, size
+
+                    const response = await axios.get(RutaApi + '/institucion',
+                        {
+                            params: {
+                                page: pageValue,
+                                size: sizeValue,
+                                search: searchValue
+                            }
+                        }
+                    )
+
+
+                    if (response.data.code == '200') {
+                        this.empresas = response.data.response
+                        return response.data.response
+                    } else {
+                        return null;
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+           
+        },
+    })
