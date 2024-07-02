@@ -146,7 +146,10 @@
               <button
                 id="submit"
                 name="send"
-                @click="showNuevaEmpresaModal = true"
+                @click="
+                  (showNuevaEmpresaModal = true),
+                    (showNuevaEmpresaModalForms = 1)
+                "
                 class="col-span-1 btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
               >
                 Agregar tu empresa
@@ -1088,7 +1091,10 @@
     >
       <span class="close" @click="showNuevaEmpresaModal = false">&times;</span>
 
-      <div class="grid grid-cols-1 gap-4">
+      <div
+        v-if="showNuevaEmpresaModalForms == 1"
+        class="grid grid-cols-1 gap-4"
+      >
         <div>
           <h5 class="text-lg font-semibold mb-4">Empresa :</h5>
 
@@ -1138,12 +1144,12 @@
                     placeholder="Correo :"
                   />
                   <label class="form-label font-medium"
-                    >Logo de la empresa: <span class="text-red-600">*</span></label
+                    >Logo de la empresa:
+                    <span class="text-red-600">*</span></label
                   >
                 </div>
-               
+
                 <div class="justify-center">
-                   
                   <input
                     id="pro-img"
                     name="profile-image"
@@ -1184,149 +1190,249 @@
             </div>
 
             <div class="grid grid-cols-2 gap-4 mt-5">
-                      <button
-                        id="submit"
-                        name="send"
-                        @click="showNuevaEmpresaModal = false"
-                        class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                      >
-                        Cancelar
-                      </button>
+              <button
+                id="submit"
+                name="send"
+                @click="showNuevaEmpresaModal = false"
+                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+              >
+                Cancelar
+              </button>
 
-                      <button
-                        id="submit"
-                        name="send"
-                        @click="showNuevaEmpresaModal2 = true ,showNuevaEmpresaModal = false"
-                        class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      >
-                        Siguiente
-                      </button>
-                    </div>
+              <button
+                id="submit"
+                name="send"
+                @click="showNuevaEmpresaModalForms = 2"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+              >
+                Siguiente
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div id="myModalCompany2" class="modal" v-if="showNuevaEmpresaModal2">
-    <div
-      class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
-    >
-      <span class="close" @click="showNuevaEmpresaModal2 = false">&times;</span>
-
-      <div class="grid grid-cols-1 gap-4">
+      <div
+        v-if="showNuevaEmpresaModalForms == 2"
+        class="grid grid-cols-1 gap-4"
+      >
         <div>
-          <h5 class="text-lg font-semibold mb-4">Areas :</h5>
+          <h5 class="text-lg font-semibold mb-4">
+            Selecciona las areas de la empresa :
+          </h5>
 
           <div>
             <div>
-              <div class="grid grid-cols-12 mt-6 gap-4">
-                <div class="col-span-12">
-                  <label class="form-label font-medium"
-                    >Nombre: <span class="text-red-600">*</span></label
+              <!-- Selección de áreas -->
+              <div class="mt-6">
+                <h5 class="text-lg font-semibold mb-4">Áreas seleccionadas:</h5>
+                <div class="flex flex-wrap gap-2">
+                  <div
+                    v-for="(area, index) in selectedAreas"
+                    :key="area"
+                    class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center"
                   >
-                  <input
-                    name="name"
-                    id="JobTitle"
-                    type="text"
-                    v-model="nuevaEmpresa.nombre"
-                    class="form-input border border-slate-100 dark:border-slate-800"
-                    placeholder="Nombre :"
-                  />
-                </div>
-                <!--end col-->
-
-                <div class="col-span-12">
-                  <label class="form-label font-medium"
-                    >Dirección de la empresa
-                    <span class="text-red-600">*</span></label
-                  >
-                  <input
-                    name="name"
-                    id="CompanyName"
-                    type="text"
-                    v-model="nuevaEmpresa.direccion"
-                    class="form-input border border-slate-100 dark:border-slate-800"
-                    placeholder="Dirección :"
-                  />
-                </div>
-                <!--end col-->
-
-                <div class="col-span-12">
-                  <label class="form-label font-medium"
-                    >correo <span class="text-red-600">*</span></label
-                  >
-                  <input
-                    name="email"
-                    type="text"
-                    v-model="nuevaEmpresa.correo"
-                    class="form-input border border-slate-100 dark:border-slate-800"
-                    placeholder="Correo :"
-                  />
-                  <label class="form-label font-medium"
-                    >Logo de la empresa: <span class="text-red-600">*</span></label
-                  >
-                </div>
-               
-                <div class="justify-center">
-                   
-                  <input
-                    id="pro-img"
-                    name="profile-image"
-                    type="file"
-                    class="hidden"
-                    @change="loadFile"
-                  />
-                  <div>
-                    <div
-                      class="relative size-28 max-w-[112px] max-h-[112px] mx-auto"
+                    {{ area }}
+                    <button
+                      @click="removeArea(index)"
+                      class="ml-2 bg-red-600 text-white px-2 py-1 rounded-md"
                     >
-                      <img
-                        :src="this.imageSrc"
-                        class="rounded-full shadow dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800"
-                        id="profile-image"
-                        alt=""
-                      />
-                      <label
-                        class="absolute inset-0 cursor-pointer"
-                        for="pro-img"
-                      ></label>
-                    </div>
+                      x
+                    </button>
                   </div>
                 </div>
-                <!--end col-->
-                <div class="col-span-12">
-                  <label class="form-label font-medium"> Descripción : </label>
-                  <textarea
-                    name="comments"
-                    id="Description"
-                    v-model="nuevaEmpresa.descripcion"
-                    class="form-input border border-slate-100 dark:border-slate-800 textarea"
-                    placeholder="Descripción :"
-                  ></textarea>
+
+                <div class="mt-4">
+                  <input
+                    type="text"
+                    v-model="searchQuery"
+                    class="form-input border border-slate-100 dark:border-slate-800 w-full"
+                    placeholder="Buscar áreas..."
+                  />
                 </div>
-                <!--end col-->
+
+                <div class="mt-4 grid grid-cols-2 gap-2">
+                  <div
+                    v-for="area in filteredAreas"
+                    :key="area"
+                    @click="selectArea(area)"
+                    class="cursor-pointer border border-slate-100 dark:border-slate-800 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                  >
+                    {{ area }}
+                  </div>
+                </div>
               </div>
+              <!--end col-->
             </div>
 
             <div class="grid grid-cols-2 gap-4 mt-5">
-                      <button
-                        id="submit"
-                        name="send"
-                        @click="showNuevaEmpresaModal = false"
-                        class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                      >
-                        Cancerlar
-                      </button>
+              <button
+                id="submit"
+                name="send"
+                @click="showNuevaEmpresaModalForms = 1"
+                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+              >
+                Atras
+              </button>
 
-                      <button
-                        id="submit"
-                        name="send"
-                        @click="paginaFormulario = 3 ,showNuevaEmpresaModal = false"
-                        class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      >
-                        Siguiente
-                      </button>
-                    </div>
+              <button
+                id="submit"
+                name="send"
+                @click="(showNuevaEmpresaModalForms = 3)"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+              >
+                Siguiente
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="showNuevaEmpresaModalForms == 3"
+        class="grid grid-cols-1 gap-4"
+      >
+        <div>
+          <h5 class="text-lg font-semibold mb-4">
+            Selecciona una foto de las instalaciones de la empresa :
+          </h5>
+
+          <div>
+            <div>
+              <!-- Selección de áreas -->
+              <div class="mt-6">
+                <h5 class="text-lg font-semibold mb-4">Áreas seleccionadas:</h5>
+                <div class="flex flex-wrap gap-2">
+                  <div
+                    v-for="(area, index) in selectedAreas"
+                    :key="area"
+                    class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center"
+                  >
+                    {{ area }}
+                    <button
+                      @click="removeArea(index)"
+                      class="ml-2 bg-red-600 text-white px-2 py-1 rounded-md"
+                    >
+                      x
+                    </button>
+                  </div>
+                </div>
+
+                <div class="mt-4">
+                  <input
+                    type="text"
+                    v-model="searchQuery"
+                    class="form-input border border-slate-100 dark:border-slate-800 w-full"
+                    placeholder="Buscar áreas..."
+                  />
+                </div>
+
+                <div class="mt-4 grid grid-cols-2 gap-2">
+                  <div
+                    v-for="area in filteredAreas"
+                    :key="area"
+                    @click="selectArea(area)"
+                    class="cursor-pointer border border-slate-100 dark:border-slate-800 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                  >
+                    {{ area }}
+                  </div>
+                </div>
+              </div>
+              <!--end col-->
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mt-5">
+              <button
+                id="submit"
+                name="send"
+                @click="showNuevaEmpresaModalForms = 2"
+                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+              >
+                Atras
+              </button>
+
+              <button
+                id="submit"
+                name="send"
+                @click="(showNuevaEmpresaModalForms = 4)"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+              >
+                Siguiente
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="showNuevaEmpresaModalForms == 4"
+        class="grid grid-cols-1 gap-4"
+      >
+        <div>
+          <h5 class="text-lg font-semibold mb-4">
+            Selecciona las tus redes sociales :
+          </h5>
+
+          <div>
+            <div>
+              <!-- Selección de áreas -->
+              <div class="mt-6">
+                <h5 class="text-lg font-semibold mb-4">Áreas seleccionadas:</h5>
+                <div class="flex flex-wrap gap-2">
+                  <div
+                    v-for="(area, index) in selectedAreas"
+                    :key="area"
+                    class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center"
+                  >
+                    {{ area }}
+                    <button
+                      @click="removeArea(index)"
+                      class="ml-2 bg-red-600 text-white px-2 py-1 rounded-md"
+                    >
+                      x
+                    </button>
+                  </div>
+                </div>
+
+                <div class="mt-4">
+                  <input
+                    type="text"
+                    v-model="searchQuery"
+                    class="form-input border border-slate-100 dark:border-slate-800 w-full"
+                    placeholder="Buscar áreas..."
+                  />
+                </div>
+
+                <div class="mt-4 grid grid-cols-2 gap-2">
+                  <div
+                    v-for="area in filteredAreas"
+                    :key="area"
+                    @click="selectArea(area)"
+                    class="cursor-pointer border border-slate-100 dark:border-slate-800 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                  >
+                    {{ area }}
+                  </div>
+                </div>
+              </div>
+              <!--end col-->
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mt-5">
+              <button
+                id="submit"
+                name="send"
+                @click="showNuevaEmpresaModalForms = 3"
+                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+              >
+                Atras
+              </button>
+
+              <button
+                id="submit"
+                name="send"
+                @click="guardarNuevaEmpresa()"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+              >
+                Confirmacion de empresa
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -1359,6 +1465,9 @@ export default {
       image: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       imageSrc2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       image2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
+      searchQuery: "",
+      selectedAreas: [],
+      allAreas: ["Área 1", "Área 2", "Área 3", "Área 4"], // Lista de todas las áreas disponibles
       empresaSeleccionada: {
         idInstituciones: "",
         nombre: "",
@@ -1499,6 +1608,7 @@ export default {
       showNuevaEmpresaModal: false,
       showNuevaEmpresaModal2: false,
       showNuevaEmpresaModal3: false,
+      showNuevaEmpresaModalForms: 0,
       nuevaHabilidad: "",
       nuevaExperiencia: {
         titulo: "",
@@ -1632,6 +1742,20 @@ export default {
     this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
   },
   methods: {
+    selectArea(area) {
+      if (!this.selectedAreas.includes(area)) {
+        this.selectedAreas.push(area);
+      }
+    },
+    removeArea(index) {
+      this.selectedAreas.splice(index, 1);
+    },
+    guardarNuevaEmpresa(){
+      console.log("guardar empresa");
+    console.log(this.selectedAreas);
+    console.log(this.nuevaEmpresa);
+    this.showNuevaEmpresaModal=false;
+    },
     agregarNuevaExperiencia(experiencia) {
       console.log("duracion: " + experiencia.duracion);
       this.estudianteDto.persona.experiencia.push({
@@ -1730,89 +1854,81 @@ export default {
       console.log("corr empresa seleccionada: " + this.empresaSeleccionada);
     },
     async handleFileUploadLogo(event) {
-        const file = event.target.files[0];
-      
-        if (file) {
-          //comprimir imagen si es mayor a 4mb 
+      const file = event.target.files[0];
 
-          console.log("tamaño imagen anterior "+file.size);
+      if (file) {
+        //comprimir imagen si es mayor a 4mb
 
-          if (file.size > 4000000) {
-            this.comprimirYSubirImagen(file, 0.3);
-          } else if( file.size > 1000000){ 
-            this.comprimirYSubirImagen(file,0.5 );
-          } 
-          else {
-            this.isLoading = true;
-              const response = await this.filesStore.uploadFile(file);
-              this.isLoading = false;
+        console.log("tamaño imagen anterior " + file.size);
 
-              if (response === false) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "Error al subir la imagen, porfavor intenta de nuevo",
-                  });
-                
-              } else {
-                // Corrected code: use push() to add the new link to the array
-                this.logoElegido=this.filesStore.link;
-                this.objetoPeticion.linkFoto=this.filesStore.link;
-                console.log(this.objetoPeticion);
+        if (file.size > 4000000) {
+          this.comprimirYSubirImagen(file, 0.3);
+        } else if (file.size > 1000000) {
+          this.comprimirYSubirImagen(file, 0.5);
+        } else {
+          this.isLoading = true;
+          const response = await this.filesStore.uploadFile(file);
+          this.isLoading = false;
 
-                
-              }
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            // Corrected code: use push() to add the new link to the array
+            this.logoElegido = this.filesStore.link;
+            this.objetoPeticion.linkFoto = this.filesStore.link;
+            console.log(this.objetoPeticion);
           }
-
-
-
-
-
-          
-
-
-          
-
-          
         }
-      },
-      async comprimirYSubirImagen(file, cantidadCompresion){
+      }
+    },
+    async comprimirYSubirImagen(file, cantidadCompresion) {
       new Compressor(file, {
-          quality: cantidadCompresion,
-          success: async  (compressedResult) => {
-            console.log("tamaño imagen comprimida "+compressedResult.size+ " con una compreison de "+cantidadCompresion);
-            this.isLoading = true;
-            const response = await this.filesStore.uploadFile(compressedResult);
-            this.isLoading = false;
+        quality: cantidadCompresion,
+        success: async (compressedResult) => {
+          console.log(
+            "tamaño imagen comprimida " +
+              compressedResult.size +
+              " con una compreison de " +
+              cantidadCompresion
+          );
+          this.isLoading = true;
+          const response = await this.filesStore.uploadFile(compressedResult);
+          this.isLoading = false;
 
-            if (response === false) {
-              Swal.fire({
-                  icon: "error",
-                  title: "Error",
-                  text: "Error al subir la imagen, porfavor intenta de nuevo",
-                });
-              
-            } else {
-              // Corrected code: use push() to add the new link to the array
-              this.logoElegido=this.filesStore.link;
-              this.objetoPeticion.linkFoto=this.filesStore.link;
-              console.log(this.objetoPeticion);
-
-              
-            }
-
-
-          },
-          error(err) {
-            console.log(err.message);
-          },
-        });
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            // Corrected code: use push() to add the new link to the array
+            this.logoElegido = this.filesStore.link;
+            this.objetoPeticion.linkFoto = this.filesStore.link;
+            console.log(this.objetoPeticion);
+          }
+        },
+        error(err) {
+          console.log(err.message);
+        },
+      });
     },
   },
   computed: {
     filteredDatas() {
       return this.instituciones.filter((item) =>
         item.nombre.toLowerCase().includes(this.Busqueda.toLowerCase())
+      );
+    },
+    filteredAreas() {
+      return this.allAreas.filter(
+        (area) =>
+          area.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
+          !this.selectedAreas.includes(area)
       );
     },
   },
