@@ -1294,49 +1294,57 @@
           <h5 class="text-lg font-semibold mb-4">
             Selecciona una foto de las instalaciones de la empresa :
           </h5>
+          <div class="profile-banner relative text-transparent">
+            <input
+              id="pro-banner"
+              name="profile-banner"
+              type="file"
+              class="hidden"
+              @change="loadFile2"
+            />
+            <div class="relative shrink-0">
+              <img
+                :src="this.nuevaEmpresa.fotoInstitucion"
+                class="h-64 w-full object-scale-down lg:rounded-xl shadow dark:shadow-gray-700"
+                id="profile-banner"
+                alt=""
+              />
+              <label
+                class="absolute inset-0 cursor-pointer"
+                for="pro-banner"
+              ></label>
+            </div>
+          </div>
 
           <div>
-            <div>
-              <!-- Selección de áreas -->
-              <div class="mt-6">
-                <h5 class="text-lg font-semibold mb-4">Áreas seleccionadas:</h5>
-                <div class="flex flex-wrap gap-2">
-                  <div
-                    v-for="(area, index) in selectedAreas"
-                    :key="area"
-                    class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center"
+            <!-- Selección de fotos -->
+            <div class="mt-6">
+              <h5 class="text-lg font-semibold mb-4">
+                Seleccione fotos extra:
+              </h5>
+              <div class="flex flex-wrap gap-2">
+                <div
+                  v-for="(foto, index) in nuevaEmpresa.fotos"
+                  :key="foto"
+                  class="relative"
+                >
+                  <img :src="foto" class="w-32 h-32 object-cover rounded-md" />
+                  <button
+                    @click="removeFoto(index)"
+                    class="absolute top-0 right-0 bg-red-600 text-white p-1 rounded-md"
                   >
-                    {{ area }}
-                    <button
-                      @click="removeArea(index)"
-                      class="ml-2 bg-red-600 text-white px-2 py-1 rounded-md"
-                    >
-                      x
-                    </button>
-                  </div>
-                </div>
-
-                <div class="mt-4">
-                  <input
-                    type="text"
-                    v-model="searchQuery"
-                    class="form-input border border-slate-100 dark:border-slate-800 w-full"
-                    placeholder="Buscar áreas..."
-                  />
-                </div>
-
-                <div class="mt-4 grid grid-cols-2 gap-2">
-                  <div
-                    v-for="area in filteredAreas"
-                    :key="area"
-                    @click="selectArea(area)"
-                    class="cursor-pointer border border-slate-100 dark:border-slate-800 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                  >
-                    {{ area }}
-                  </div>
+                    x
+                  </button>
                 </div>
               </div>
-              <!--end col-->
+
+              <div class="mt-4">
+                <input
+                  type="file"
+                  @change="addFoto"
+                  class="form-input border border-slate-100 dark:border-slate-800 w-full"
+                />
+              </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4 mt-5">
@@ -1367,51 +1375,70 @@
       >
         <div>
           <h5 class="text-lg font-semibold mb-4">
-            Selecciona las tus redes sociales :
+            Selecciona tus redes sociales :
           </h5>
 
           <div>
-            <div>
-              <!-- Selección de áreas -->
-              <div class="mt-6">
-                <h5 class="text-lg font-semibold mb-4">Áreas seleccionadas:</h5>
-                <div class="flex flex-wrap gap-2">
-                  <div
-                    v-for="(area, index) in selectedAreas"
-                    :key="area"
-                    class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center"
+            <!-- Redes sociales seleccionadas -->
+            <div class="mt-6">
+              <h5 class="text-lg font-semibold mb-4">
+                Redes sociales seleccionadas:
+              </h5>
+              <div class="flex flex-wrap gap-2">
+                <div
+                  v-for="(url, social) in Object.entries(
+                    nuevaEmpresa.redesSociales
+                  )"
+                  :key="social"
+                  class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center"
+                >
+                  {{ social }}: {{ url }}
+                  <button
+                    @click="removeRedSocial(social)"
+                    class="ml-2 bg-red-600 text-white px-2 py-1 rounded-md"
                   >
-                    {{ area }}
-                    <button
-                      @click="removeArea(index)"
-                      class="ml-2 bg-red-600 text-white px-2 py-1 rounded-md"
-                    >
-                      x
-                    </button>
-                  </div>
-                </div>
-
-                <div class="mt-4">
-                  <input
-                    type="text"
-                    v-model="searchQuery"
-                    class="form-input border border-slate-100 dark:border-slate-800 w-full"
-                    placeholder="Buscar áreas..."
-                  />
-                </div>
-
-                <div class="mt-4 grid grid-cols-2 gap-2">
-                  <div
-                    v-for="area in filteredAreas"
-                    :key="area"
-                    @click="selectArea(area)"
-                    class="cursor-pointer border border-slate-100 dark:border-slate-800 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                  >
-                    {{ area }}
-                  </div>
+                    x
+                  </button>
                 </div>
               </div>
-              <!--end col-->
+            </div>
+
+            <div class="mt-4 grid grid-cols-12 gap-2">
+              <div class="col-span-4">
+                <select
+                  v-model="selectedSocial"
+                  class="form-select border border-slate-100 dark:border-slate-800 w-full"
+                >
+                  <option value="" disabled selected>
+                    Seleccione una red social
+                  </option>
+                  <option
+                    v-for="social in availableSocials"
+                    :key="social"
+                    :value="social"
+                  >
+                    {{ social }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-span-6">
+                <input
+                  type="text"
+                  v-model="socialLink"
+                  class="form-input border border-slate-100 dark:border-slate-800 w-full"
+                  placeholder="Enlace de la red social"
+                />
+              </div>
+
+              <div class="col-span-2">
+                <button
+                  @click="addRedSocial"
+                  class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer w-full"
+                >
+                  +
+                </button>
+              </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4 mt-5">
@@ -1421,16 +1448,16 @@
                 @click="showNuevaEmpresaModalForms = 3"
                 class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
               >
-                Atras
+                Atrás
               </button>
 
               <button
                 id="submit"
                 name="send"
-                @click="guardarNuevaEmpresa()"
+                @click="guardarNuevaEmpresa"
                 class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
               >
-                Confirmacion de empresa
+                Confirmación de empresa
               </button>
             </div>
           </div>
@@ -1468,12 +1495,30 @@ export default {
       searchQuery: "",
       selectedAreas: [],
       allAreas: ["Área 1", "Área 2", "Área 3", "Área 4"], // Lista de todas las áreas disponibles
+      selectedSocial: "",
+      socialLink: "",
+      availableSocials: [
+        "Facebook",
+        "Twitter",
+        "Instagram",
+        "LinkedIn",
+        "YouTube",
+        "TikTok",
+      ],
+      allSocials: [
+        "Facebook",
+        "Twitter",
+        "Instagram",
+        "LinkedIn",
+        "YouTube",
+        "TikTok",
+      ],
       empresaSeleccionada: {
         idInstituciones: "",
         nombre: "",
         descripcion: "",
         direccion: "",
-        fotoInstitucion: "",
+        fotoInstitucion: "https://cdn-icons-png.flaticon.com/512/84/84099.pn",
         correo: "",
         sectores: ["", ""],
         logoEmpresa: "",
@@ -1490,16 +1535,12 @@ export default {
         nombre: "",
         descripcion: "",
         direccion: "",
-        fotoInstitucion: "",
+        fotoInstitucion: "https://cdn-icons-png.flaticon.com/512/84/84099.pn",
         correo: "",
-        sectores: ["", ""],
+        sectores: [],
         logoEmpresa: "",
-        fotos: ["", ""],
-        redesSociales: {
-          facebook: "",
-          twitter: "",
-          instagram: "",
-        },
+        fotos: [],
+        redesSociales: {},
         activo: true,
       },
       paginaFormulario: 1,
@@ -1745,6 +1786,7 @@ export default {
     selectArea(area) {
       if (!this.selectedAreas.includes(area)) {
         this.selectedAreas.push(area);
+        this.nuevaEmpresa.sectores.push(area);
       }
     },
     removeArea(index) {
@@ -1755,6 +1797,37 @@ export default {
       console.log(this.selectedAreas);
       console.log(this.nuevaEmpresa);
       this.showNuevaEmpresaModal = false;
+    },
+    addFoto(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.nuevaEmpresa.fotos.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    removeFoto(index) {
+      this.nuevaEmpresa.fotos.splice(index, 1);
+    },
+    addRedSocial() {
+      if (
+        this.selectedSocial &&
+        this.socialLink &&
+        !(this.selectedSocial.toLowerCase() in this.nuevaEmpresa.redesSociales)
+      ) {
+        this.nuevaEmpresa.redesSociales = {
+          ...this.nuevaEmpresa.redesSociales,
+          [this.selectedSocial.toLowerCase()]: this.socialLink,
+        };
+        this.selectedSocial = "";
+        this.socialLink = "";
+      }
+    },
+    removeRedSocial(social) {
+      const { [social]: _, ...rest } = this.nuevaEmpresa.redesSociales;
+      this.nuevaEmpresa.redesSociales = rest;
     },
     agregarNuevaExperiencia(experiencia) {
       console.log("duracion: " + experiencia.duracion);
@@ -1822,8 +1895,12 @@ export default {
       this.imageSrc = URL.createObjectURL(event.target.files[0]);
     },
     loadFile2(event) {
-      this.image2 = document.getElementById(event.target.name);
-      this.imageSrc2 = URL.createObjectURL(event.target.files[0]);
+      this.nuevaEmpresa.fotoInstitucion = document.getElementById(
+        event.target.name
+      );
+      this.nuevaEmpresa.fotoInstitucion = URL.createObjectURL(
+        event.target.files[0]
+      );
     },
     showAlert() {
       // Use sweetalert2
@@ -1929,6 +2006,11 @@ export default {
         (area) =>
           area.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
           !this.selectedAreas.includes(area)
+      );
+    },
+    availableSocials() {
+      return this.allSocials.filter(
+        (social) => !(social.toLowerCase() in this.nuevaEmpresa.redesSociales)
       );
     },
   },
