@@ -1,5 +1,6 @@
 <template>
   <section
+    v-if="paginaFormulario == 1"
     class="py-20 w-full table relative bg-[url('../../assets/images/hero/bg2.jpg')] bg-top bg-no-repeat bg-cover"
   >
     <div class="absolute inset-0 bg-slate-900/70"></div>
@@ -30,6 +31,86 @@
     <!--end container-->
   </section>
   <!--end section-->
+  <section
+    v-if="paginaFormulario == 2"
+    :style="{ backgroundImage: `url(${nuevaEmpresa.fotoInstitucion})` }"
+    class="relative table w-full py-40 bg-center bg-no-repeat bg-cover"
+  >
+    <div class="absolute inset-0 bg-cyan-900/60"></div>
+  </section>
+  <!--end section-->
+  <div class="relative">
+    <div
+      class="shape absolute start-0 end-0 sm:-bottom-px -bottom-[2px] overflow-hidden z-1 text-white dark:text-slate-900"
+    >
+      <svg
+        class="w-full h-auto"
+        viewBox="0 0 2880 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z"
+          fill="currentColor"
+        ></path>
+      </svg>
+    </div>
+  </div>
+  <!-- End Hero -->
+
+  <section
+    v-if="paginaFormulario == 2"
+    class="relative pb-16  mb:pb-6 sm:pb-10 -mt-16 z-1"
+  >
+    <div class="container">
+      <div class="grid grid-cols-1">
+        <div
+          class="md:flex justify-between items-center shadow dark:shadow-gray-700 rounded-md p-6 bg-white dark:bg-slate-900"
+        >
+          <div class="flex items-center">
+            <img
+              :src="this.nuevaEmpresa.logoEmpresa"
+              class="size-20  shadow dark:shadow-gray-700 rounded-md bg-slate-50 dark:bg-slate-800"
+              alt=""
+            />
+
+            <div class="ms-4">
+              <h5 class="text-xl font-bold">
+                {{ this.empresaSeleccionada.nombre }}
+              </h5>
+              <h6 class="text-base text-slate-400">
+                <i class="uil uil-map-marker"></i>
+                {{ this.empresaSeleccionada.direccion }}
+              </h6>
+              <h6 class="text-base text-slate-400">
+                <i class="uil uil-envelope align-middle" title="email"></i>
+                {{ this.empresaSeleccionada.correo }}
+              </h6>
+            </div>
+          
+          </div>
+          <div class="ms-4">
+              <h5 class="text-base">Redes Sociales de la empresa:</h5>
+              <div class="mt-0">
+                <a
+                  v-for="sector in empresaSeleccionada.redesSociales"
+                  :key="sector.id"
+                  href=""
+                >
+                <span class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
+     
+                    {{ sector }}
+                  </span>
+                </a>
+              </div>
+            </div>
+        
+        </div>
+      </div>
+      <!--end grid-->
+    </div>
+    <!--end container-->
+  </section>
   <!-- End -->
 
   <!-- iframe start  -->
@@ -37,15 +118,8 @@
     :class="isActive ? 'fixed' : 'hidden'"
     class="bg-black/[0.9] top-0 left-0 bottom-0 w-[100%] h-[100%] z-999"
   >
-    <div class="h-[100%] flex items-center justify-center">
-      <iframe
-        src="https://www.youtube.com/embed/S_CGed6E610?feature=oembed"
-        width="700"
-        height="500"
-        frameborder="0"
-      ></iframe>
-    </div>
-    <button class="text-slate-400 absolute top-[20px] right-[20px]">
+   
+    <button class="text-slate-400 absolute right-[20px]">
       <svg
         stroke="currentColor"
         fill="none"
@@ -64,30 +138,8 @@
       </svg>
     </button>
   </div>
-  <section class="relative lg:mt-24 mt-[74px] pb-16">
+  <section class="relative lg:mt-10 mt-[10px] pb-16">
     <div v-if="paginaFormulario == 2" class="lg:container container-fluid">
-      <div class="profile-banner relative text-transparent">
-        <input
-          id="pro-banner"
-          name="profile-banner"
-          type="file"
-          class="hidden"
-          @change="loadFile2"
-        />
-        <div class="relative shrink-0">
-          <img
-            :src="this.imageSrc2"
-            class="h-64 w-full object-scale-down lg:rounded-xl shadow dark:shadow-gray-700"
-            id="profile-banner"
-            alt=""
-          />
-          <label
-            class="absolute inset-0 cursor-pointer"
-            for="pro-banner"
-          ></label>
-        </div>
-      </div>
-
       <div class="md:flex mx-4 -mt-12">
         <div class="md:w-full">
           <div class="relative flex items-end">
@@ -97,14 +149,14 @@
                 name="profile-image"
                 type="file"
                 class="hidden"
-                @change="loadFile"
+                @change="handleFileUploadFotoPerfil"
               />
               <div>
                 <div
                   class="relative size-28 max-w-[112px] max-h-[112px] mx-auto"
                 >
                   <img
-                    :src="this.imageSrc"
+                    :src="this.imageSrc3"
                     class="rounded-full shadow dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800"
                     id="profile-image"
                     alt=""
@@ -384,27 +436,26 @@
                 <!--end row-->
               </div>
               <div class="grid grid-cols-2 gap-4 mt-5">
-                      <button
-                        id="submit"
-                        name="send"
-                        @click="paginaFormulario = 1"
-                        class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                      >
-                        Atrás
-                      </button>
+                <button
+                  id="submit"
+                  name="send"
+                  @click="paginaFormulario = 1"
+                  class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+                >
+                  Atrás
+                </button>
 
-                      <button
-                        id="submit"
-                        name="send"
-                        @click="paginaFormulario = 5"
-                        class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      >
-                        Registrar
-                      </button>
-                    </div>
+                <button
+                  id="submit"
+                  name="send"
+                  @click="paginaFormulario = 5"
+                  class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+                >
+                  Registrar
+                </button>
+              </div>
               <!--end form-->
             </div>
-          
           </div>
 
           <div v-if="paginaFormulario == 3" class="lg:col-span-6">
@@ -1406,8 +1457,8 @@ import "vue3-toastify/dist/index.css";
 
 import switcher from "@/components/General/switcher.vue";
 import StarRatingComponent from "@/components/General/Extras/StartRatingComponent.vue";
-import {useInstitucionesStore} from "@/stores/Instituciones/InstitucionesPublicStore.js";
-import {useFilesStore} from "@/stores/fileStore.js";
+import { useInstitucionesStore } from "@/stores/Instituciones/InstitucionesPublicStore.js";
+import { useFilesStore } from "@/stores/fileStore.js";
 import Swal from "sweetalert2";
 
 export default {
@@ -1416,7 +1467,6 @@ export default {
     StarRatingComponent,
   },
 
-
   data() {
     return {
       institucionesPublicStore: useInstitucionesStore(),
@@ -1424,6 +1474,7 @@ export default {
       imageSrc: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       image: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       imageSrc2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
+      imageSrc3: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       image2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       searchQuery: "",
       selectedAreas: [],
@@ -1453,13 +1504,13 @@ export default {
         direccion: "",
         fotoInstitucion: "https://cdn-icons-png.flaticon.com/512/84/84099.pn",
         correo: "",
-        sectores: ["", ""],
+        sectores: ["a", "b"],
         logoEmpresa: "",
         fotos: ["", ""],
         redesSociales: {
-          facebook: "",
-          twitter: "",
-          instagram: "",
+          facebook: "fa",
+          twitter: "tw",
+          instagram: "instagram",
         },
         activo: true,
       },
@@ -1721,10 +1772,11 @@ export default {
     this.getInstitucionesWithName();
   },
   methods: {
-    async getInstitucionesWithName(){
-      this.institucionesWithOnlyName = await this.institucionesPublicStore.getAllInstitucionesWithOnlyName();
+    async getInstitucionesWithName() {
+      this.institucionesWithOnlyName =
+        await this.institucionesPublicStore.getAllInstitucionesWithOnlyName();
       this.instituciones = this.institucionesWithOnlyName;
-      console.log("institucionesWithOnlyName",this.institucionesWithOnlyName);
+      console.log("institucionesWithOnlyName", this.institucionesWithOnlyName);
     },
     selectArea(area) {
       if (!this.selectedAreas.includes(area)) {
@@ -1741,6 +1793,8 @@ export default {
       console.log(this.nuevaEmpresa);
       this.showNuevaEmpresaModal = false;
       this.paginaFormulario = 2;
+      this.empresaSeleccionada = this.nuevaEmpresa;
+      console.log("nombre empresa seleccionada: " + this.empresaSeleccionada);
     },
     addFoto(event) {
       const file = event.target.files[0];
@@ -1868,160 +1922,193 @@ export default {
     },
     seleccionarEmpresa(Empresa) {
       this.paginaFormulario = 2;
-      this.empresaSeleccionada = JSON.parse(JSON.stringify(Empresa));
+      this.empresaSeleccionada = Empresa;
+      //copiar un objetio en otro sin json
+
       console.log(
         "nombre empresa seleccionada: " + this.empresaSeleccionada.nombre
+      );
+      console.log(
+        "descripcion empresa seleccionada: " +
+          this.empresaSeleccionada.idInstituciones
       );
       console.log("corr empresa seleccionada: " + this.empresaSeleccionada);
     },
     async handleFileUploadFotosGeneral(event) {
-        const file = event.target.files[0];
-        let auxLink="";
+      const file = event.target.files[0];
+      let auxLink = "";
 
-        if (file) {
-          //comprimir imagen si es mayor a 4mb 
+      if (file) {
+        //comprimir imagen si es mayor a 4mb
 
-          console.log("tamaño imagen anterior "+file.size);
-          if (file.size > 4000000) {
-            auxLink= await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
-            console.log("tamaño imagen comprimida "+auxLink);
-            this.nuevaEmpresa.fotos.push(auxLink);
-          } else if( file.size > 1000000){ 
-            auxLink = await this.comprimirYSubirImagenBannerPerfil(file,0.5 );
-            console.log("tamaño imagen comprimida "+auxLink);
-            this.nuevaEmpresa.fotos.push(auxLink);
-          } 
-          else {
-              let loader= this.$loading.show();
-              const response = await this.filesStore.uploadFile(file);
-              loader.hide();
+        console.log("tamaño imagen anterior " + file.size);
+        if (file.size > 4000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+          console.log("tamaño imagen comprimida " + auxLink);
+          this.nuevaEmpresa.fotos.push(auxLink);
+        } else if (file.size > 1000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
+          console.log("tamaño imagen comprimida " + auxLink);
+          this.nuevaEmpresa.fotos.push(auxLink);
+        } else {
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(file);
+          loader.hide();
 
-              if (response === false) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "Error al subir la imagen, porfavor intenta de nuevo",
-                  });
-                
-              } else {
-                // Corrected code: use push() to add the new link to the array
-                this.nuevaEmpresa.fotos.push(this.filesStore.link);
-              }
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            // Corrected code: use push() to add the new link to the array
+            this.nuevaEmpresa.fotos.push(this.filesStore.link);
           }
         }
+      }
+    },
+    async handleFileUploadFotoPerfil(event) {
+      const file = event.target.files[0];
+      let auxLink = "";
+
+      if (file) {
+        //comprimir imagen si es mayor a 4mb
+
+        console.log("tamaño imagen anterior " + file.size);
+        if (file.size > 4000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+          console.log("tamaño imagen comprimida " + auxLink);
+          //this.nuevaEmpresa.logoEmpresa = auxLink;
+          this.imageSrc3 = auxLink;
+        } else if (file.size > 1000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
+          console.log("tamaño imagen comprimida " + auxLink);
+          // this.nuevaEmpresa.logoEmpresa = auxLink;
+          this.imageSrc3 = auxLink;
+        } else {
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(file);
+          loader.hide();
+
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            // Corrected code: use push() to add the new link to the array
+            //this.nuevaEmpresa.logoEmpresa = this.filesStore.link;
+
+            this.imageSrc3 = this.filesStore.link;
+          }
+        }
+      }
     },
     async handleFileUploadFotoGrande(event) {
-        const file = event.target.files[0];
-        let auxLink="";
+      const file = event.target.files[0];
+      let auxLink = "";
 
-        if (file) {
-          //comprimir imagen si es mayor a 4mb 
+      if (file) {
+        //comprimir imagen si es mayor a 4mb
 
-          console.log("tamaño imagen anterior "+file.size);
-          if (file.size > 4000000) {
-            auxLink= await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
-            console.log("tamaño imagen comprimida "+auxLink);
-            this.nuevaEmpresa.fotoInstitucion=auxLink;
-          } else if( file.size > 1000000){ 
-            auxLink = await this.comprimirYSubirImagenBannerPerfil(file,0.5 );
-            console.log("tamaño imagen comprimida "+auxLink);
-            this.nuevaEmpresa.fotoInstitucion=auxLink;
-          } 
-          else {
-              let loader= this.$loading.show();
-              const response = await this.filesStore.uploadFile(file);
-              loader.hide();
+        console.log("tamaño imagen anterior " + file.size);
+        if (file.size > 4000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+          console.log("tamaño imagen comprimida " + auxLink);
+          this.nuevaEmpresa.fotoInstitucion = auxLink;
+        } else if (file.size > 1000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
+          console.log("tamaño imagen comprimida " + auxLink);
+          this.nuevaEmpresa.fotoInstitucion = auxLink;
+        } else {
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(file);
+          loader.hide();
 
-              if (response === false) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "Error al subir la imagen, porfavor intenta de nuevo",
-                  });
-                
-              } else {
-                // Corrected code: use push() to add the new link to the array
-                this.nuevaEmpresa.fotoInstitucion=this.filesStore.link;
-                
-                
-              }
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            // Corrected code: use push() to add the new link to the array
+            this.nuevaEmpresa.fotoInstitucion = this.filesStore.link;
           }
         }
+      }
     },
     async handleFileUploadBannerPerfil(event) {
-        const file = event.target.files[0];
-        let auxLink="";
+      const file = event.target.files[0];
+      let auxLink = "";
 
-        if (file) {
-          //comprimir imagen si es mayor a 4mb 
+      if (file) {
+        //comprimir imagen si es mayor a 4mb
 
-          console.log("tamaño imagen anterior "+file.size);
-          if (file.size > 4000000) {
-            auxLink= await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
-            console.log("tamaño imagen comprimida "+auxLink);
-            this.nuevaEmpresa.logoEmpresa=auxLink;
-            this.imageSrc = auxLink;
-          } else if( file.size > 1000000){ 
-            auxLink = await this.comprimirYSubirImagenBannerPerfil(file,0.5 );
-            console.log("tamaño imagen comprimida "+auxLink);
-            this.nuevaEmpresa.logoEmpresa=auxLink;
-            this.imageSrc = auxLink;
+        console.log("tamaño imagen anterior " + file.size);
+        if (file.size > 4000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+          console.log("tamaño imagen comprimida " + auxLink);
+          this.nuevaEmpresa.logoEmpresa = auxLink;
+          this.imageSrc = auxLink;
+        } else if (file.size > 1000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
+          console.log("tamaño imagen comprimida " + auxLink);
+          this.nuevaEmpresa.logoEmpresa = auxLink;
+          this.imageSrc = auxLink;
+        } else {
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(file);
+          loader.hide();
 
-          } 
-          else {
-              let loader= this.$loading.show();
-              const response = await this.filesStore.uploadFile(file);
-              loader.hide();
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            // Corrected code: use push() to add the new link to the array
+            this.nuevaEmpresa.logoEmpresa = this.filesStore.link;
 
-              if (response === false) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "Error al subir la imagen, porfavor intenta de nuevo",
-                  });
-                
-              } else {
-                // Corrected code: use push() to add the new link to the array
-                this.nuevaEmpresa.logoEmpresa=this.filesStore.link;
-                
-                this.imageSrc = this.filesStore.link;
-                
-              }
+            this.imageSrc = this.filesStore.link;
           }
         }
-      },
-      async comprimirYSubirImagenBannerPerfil(file, cantidadCompresion){
+      }
+    },
+    async comprimirYSubirImagenBannerPerfil(file, cantidadCompresion) {
       new Compressor(file, {
-          quality: cantidadCompresion,
-          success: async  (compressedResult) => {
-            console.log("tamaño imagen comprimida "+compressedResult.size+ " con una compreison de "+cantidadCompresion);
-            let loader= this.$loading.show();
-            const response = await this.filesStore.uploadFile(compressedResult);
-            const aux= this.filesStore.link;
-            loader.hide();
+        quality: cantidadCompresion,
+        success: async (compressedResult) => {
+          console.log(
+            "tamaño imagen comprimida " +
+              compressedResult.size +
+              " con una compreison de " +
+              cantidadCompresion
+          );
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(compressedResult);
+          const aux = this.filesStore.link;
+          loader.hide();
 
-            if (response === false) {
-              Swal.fire({
-                  icon: "error",
-                  title: "Error",
-                  text: "Error al subir la imagen, porfavor intenta de nuevo",
-                });
-              
-            } else {
-              this.estudianteDto.persona.bannerPerfil=this.filesStore.link;
-                
-                this.imageSrc2 = this.filesStore.link;
-              
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            this.estudianteDto.persona.bannerPerfil = this.filesStore.link;
 
-              
-            }
-
-
-          },
-          error(err) {
-            console.log(err.message);
-          },
-        });
+            this.imageSrc2 = this.filesStore.link;
+          }
+        },
+        error(err) {
+          console.log(err.message);
+        },
+      });
     },
   },
   computed: {
