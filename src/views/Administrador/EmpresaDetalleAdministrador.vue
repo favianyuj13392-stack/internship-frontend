@@ -541,6 +541,7 @@ import footers from "@/components/footer/footer.vue";
 import switcher from "@/components/General/switcher.vue";
 export default {
   props: {
+
     jobs: {
       type: Boolean,
       required: true,

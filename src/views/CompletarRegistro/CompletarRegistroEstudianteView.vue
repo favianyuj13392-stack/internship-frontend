@@ -42,9 +42,9 @@
   <section class="relative lg:mt-24 mt-[74px] pb-16">
     <div class="lg:container container-fluid">
       <div class="profile-banner relative text-transparent">
-        <input id="pro-banner" name="profile-banner" type="file" class="hidden" @change="loadFile2" />
+        <input id="pro-banner" name="profile-banner" type="file" class="hidden" @change="handleFileUploadBannerPerfil" />
         <div class="relative shrink-0">
-          <img :src="this.imageSrc2" class="h-64 w-full object-scale-down lg:rounded-xl shadow dark:shadow-gray-700"
+          <img :src="this.imageSrc2" class="h-64 w-full object-cover lg:rounded-xl shadow dark:shadow-gray-700"
             id="profile-banner" alt="" />
           <label class="absolute inset-0 cursor-pointer" for="pro-banner"></label>
         </div>
@@ -54,7 +54,7 @@
         <div class="md:w-full">
           <div class="relative flex items-end">
             <div class="profile-pic text-center">
-              <input id="pro-img" name="profile-image" type="file" class="hidden" @change="loadFile" />
+              <input id="pro-img" name="profile-image" type="file" class="hidden" @change="handleFileUploadFotoPerfil" />
               <div>
                 <div class="relative size-28 max-w-[112px] max-h-[112px] mx-auto">
                   <img :src="this.imageSrc"
@@ -499,7 +499,7 @@
                 class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer">Atrás</button>
 
               <button id="submit" name="send" @click="registrarEstudiante()"
-                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer">Siguiente</button>
+                class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer">Completar</button>
             </div>
           </div>
         </div>
@@ -771,12 +771,16 @@ import "vue3-toastify/dist/index.css";
 import switcher from "@/components/General/switcher.vue";
 import StarRatingComponent from "@/components/General/Extras/StartRatingComponent.vue";
 import {useEstudiantesStore} from "@/stores/Estudiantes/estudiantesStore.js";
+import {useFilesStore} from "@/stores/fileStore.js";
 import Swal from 'sweetalert2'
+import Compressor from 'compressorjs';
+
 export default {
   setup(){
     const estudianteStore = useEstudiantesStore();
+    const filesStore = useFilesStore();
     return {
-      estudianteStore
+      estudianteStore,filesStore
     }
   },
 
@@ -973,6 +977,184 @@ export default {
     this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
   },
   methods: {
+    async handleFileUploadFotoPerfil(event) {
+        const file = event.target.files[0];
+        let auxLink="";
+
+        if (file) {
+          //comprimir imagen si es mayor a 4mb 
+
+          console.log("tamaño imagen anterior "+file.size);
+          if (file.size > 4000000) {
+            auxLink= await this.comprimirYSubirImagenFotoPerfil(file, 0.3);
+            console.log("tamaño imagen comprimida "+auxLink);
+            this.estudianteDto.persona.fotoPerfil=auxLink;
+          } else if( file.size > 1000000){ 
+            auxLink = await this.comprimirYSubirImagenFotoPerfil(file,0.5 );
+            console.log("tamaño imagen comprimida "+auxLink);
+            this.estudianteDto.persona.fotoPerfil=auxLink;
+
+          } 
+          else {
+              let loader= this.$loading.show();
+              const response = await this.filesStore.uploadFile(file);
+              loader.hide();
+
+              if (response === false) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Error al subir la imagen, porfavor intenta de nuevo",
+                  });
+                
+              } else {
+                // Corrected code: use push() to add the new link to the array
+                this.estudianteDto.persona.fotoPerfil=this.filesStore.link;
+                
+                this.imageSrc = this.filesStore.link;
+                
+              }
+          }
+
+
+
+
+
+          
+
+
+          
+
+          
+        }
+      },
+      async comprimirYSubirImagenFotoPerfil(file, cantidadCompresion){
+      new Compressor(file, {
+          quality: cantidadCompresion,
+          success: async  (compressedResult) => {
+            console.log("tamaño imagen comprimida "+compressedResult.size+ " con una compreison de "+cantidadCompresion);
+            let loader= this.$loading.show();
+            const response = await this.filesStore.uploadFile(compressedResult);
+            loader.hide();
+
+            if (response === false) {
+              Swal.fire({
+                  icon: "error",
+                  title: "Error",
+                  text: "Error al subir la imagen, porfavor intenta de nuevo",
+                });
+              
+            } else {
+              this.estudianteDto.persona.fotoPerfil=this.filesStore.link;
+                
+                this.imageSrc = this.filesStore.link;
+              
+
+              
+            }
+
+
+          },
+          error(err) {
+            console.log(err.message);
+          },
+        });
+    },
+
+
+
+
+    async handleFileUploadBannerPerfil(event) {
+        const file = event.target.files[0];
+        let auxLink="";
+
+        if (file) {
+          //comprimir imagen si es mayor a 4mb 
+
+          console.log("tamaño imagen anterior "+file.size);
+          if (file.size > 4000000) {
+            auxLink= await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+            console.log("tamaño imagen comprimida "+auxLink);
+            this.estudianteDto.persona.bannerPerfil=auxLink;
+          } else if( file.size > 1000000){ 
+            auxLink = await this.comprimirYSubirImagenBannerPerfil(file,0.5 );
+            console.log("tamaño imagen comprimida "+auxLink);
+            this.estudianteDto.persona.bannerPerfil=auxLink;
+
+          } 
+          else {
+              let loader= this.$loading.show();
+              const response = await this.filesStore.uploadFile(file);
+              loader.hide();
+
+              if (response === false) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Error al subir la imagen, porfavor intenta de nuevo",
+                  });
+                
+              } else {
+                // Corrected code: use push() to add the new link to the array
+                this.estudianteDto.persona.bannerPerfil=this.filesStore.link;
+                
+                this.imageSrc2 = this.filesStore.link;
+                
+              }
+          }
+
+
+
+
+
+          
+
+
+          
+
+          
+        }
+      },
+      async comprimirYSubirImagenBannerPerfil(file, cantidadCompresion){
+      new Compressor(file, {
+          quality: cantidadCompresion,
+          success: async  (compressedResult) => {
+            console.log("tamaño imagen comprimida "+compressedResult.size+ " con una compreison de "+cantidadCompresion);
+            let loader= this.$loading.show();
+            const response = await this.filesStore.uploadFile(compressedResult);
+            const aux= this.filesStore.link;
+            loader.hide();
+
+            if (response === false) {
+              Swal.fire({
+                  icon: "error",
+                  title: "Error",
+                  text: "Error al subir la imagen, porfavor intenta de nuevo",
+                });
+              
+            } else {
+              this.estudianteDto.persona.bannerPerfil=this.filesStore.link;
+                
+                this.imageSrc2 = this.filesStore.link;
+              
+
+              
+            }
+
+
+          },
+          error(err) {
+            console.log(err.message);
+          },
+        });
+    },
+
+
+
+
+
+
+
     async registrarEstudiante() {
       let loader= this.$loading.show();
       try {

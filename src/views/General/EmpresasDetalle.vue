@@ -530,12 +530,17 @@
 <script>
 import navbar from "@/components/General/navbarGeneral.vue";
 import footers from "@/components/footer/footer.vue";
+import { useEmpresasStore } from "@/stores/Estudiantes/empresasStore.js";
 
 import switcher from "@/components/General/switcher.vue";
 export default {
+  setup() {
+    const empresasStore = useEmpresasStore();
+    return { empresasStore };
+  },
   props: {
-    jobs: {
-      type: Boolean,
+    id: {
+      type: String,
       required: true,
     },
   },
@@ -729,9 +734,20 @@ export default {
     footers,
     switcher,
   },
-  mounted() {
+  methods: {
+    async fetchEmpresa() {
+      let loader = this.$loading.show();
+      const response = await  this.empresasStore.getEmpresaById(this.id);
+      this.data = response.data;
+      console.log(response);
+      loader.hide();
+    },
+  },
+  async mounted() {
     this.id = this.$route.params.id;
-    this.data = this.datas.find((item) => item.id === parseInt(this.id));
+    await this.fetchEmpresa();
+
+    //this.data = this.datas.find((item) => item.id === parseInt(this.id));
   },
 };
 </script>

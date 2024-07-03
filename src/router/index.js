@@ -58,7 +58,7 @@ const router = createRouter({
       component: Empresas,
     },
     {
-      path: "/empresas/detalle",
+      path: "/empresas/:id/detalle",
       name: "empresas-detalle",
       component: EmpresasDetalle,
     },
@@ -115,9 +115,10 @@ const router = createRouter({
       component: SolicitudEmpresaAdministrador,
     },
     {
-      path: "/administrador/empresa/detalle",
+      path: "/administrador/empresa/:id/detalle",
       name: "EmpresaDetalleAdministrador",
       component: EmpresaDetalleAdministrador,
+      props: true,
     },
     {
       path: "/administrador/pasantia",
