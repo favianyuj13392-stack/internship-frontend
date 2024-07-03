@@ -60,7 +60,7 @@
 
   <section
     v-if="paginaFormulario == 2"
-    class="relative pb-16  mb:pb-6 sm:pb-10 -mt-16 z-1"
+    class="relative pb-16 mb:pb-6 sm:pb-10 -mt-16 z-1"
   >
     <div class="container">
       <div class="grid grid-cols-1">
@@ -70,7 +70,7 @@
           <div class="flex items-center">
             <img
               :src="this.nuevaEmpresa.logoEmpresa"
-              class="size-20  shadow dark:shadow-gray-700 rounded-md bg-slate-50 dark:bg-slate-800"
+              class="size-20 shadow dark:shadow-gray-700 rounded-md bg-slate-50 dark:bg-slate-800"
               alt=""
             />
 
@@ -87,24 +87,23 @@
                 {{ this.empresaSeleccionada.correo }}
               </h6>
             </div>
-          
           </div>
           <div class="ms-4">
-              <h5 class="text-base">Redes Sociales de la empresa:</h5>
-              <div class="mt-0">
-                <a
-                  v-for="sector in empresaSeleccionada.redesSociales"
-                  :key="sector.id"
-                  href=""
+            <h5 class="text-base">Redes Sociales de la empresa:</h5>
+            <div class="mt-0">
+              <a
+                v-for="sector in empresaSeleccionada.redesSociales"
+                :key="sector.id"
+                href=""
+              >
+                <span
+                  class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500"
                 >
-                <span class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
-     
-                    {{ sector }}
-                  </span>
-                </a>
-              </div>
+                  {{ sector }}
+                </span>
+              </a>
             </div>
-        
+          </div>
         </div>
       </div>
       <!--end grid-->
@@ -118,7 +117,6 @@
     :class="isActive ? 'fixed' : 'hidden'"
     class="bg-black/[0.9] top-0 left-0 bottom-0 w-[100%] h-[100%] z-999"
   >
-   
     <button class="text-slate-400 absolute right-[20px]">
       <svg
         stroke="currentColor"
@@ -280,7 +278,7 @@
                     <input
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      v-model="estudianteDto.persona.nombre"
+                      v-model="usuarioInstitucion.persona.nombre"
                       placeholder="Nombres:"
                       id="firstname"
                       name="name"
@@ -294,7 +292,7 @@
                     <input
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      v-model="estudianteDto.persona.ci"
+                      v-model="usuarioInstitucion.persona.ci"
                       placeholder="Ci"
                       name="address"
                       required=""
@@ -309,7 +307,7 @@
                     <input
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      v-model="estudianteDto.persona.apellidoPaterno"
+                      v-model="usuarioInstitucion.persona.apellidoPaterno"
                       placeholder="Apellido Paterno:"
                       id="lastname"
                       name="name"
@@ -325,7 +323,7 @@
                     <input
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      v-model="estudianteDto.persona.apellidoMaterno"
+                      v-model="usuarioInstitucion.persona.apellidoMaterno"
                       placeholder="Apellido Paterno:"
                       id="lastname"
                       name="name"
@@ -340,7 +338,7 @@
                     <input
                       type="email"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      v-model="estudianteDto.correo"
+                      v-model="usuarioInstitucion.correo"
                       placeholder="Email"
                       name="email"
                       required=""
@@ -357,7 +355,7 @@
                       type="date"
                       id="birthday"
                       name="birthday"
-                      v-model="estudianteDto.persona.fechaDeNacimiento"
+                      v-model="usuarioInstitucion.persona.fechaDeNacimiento"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
                     />
                   </div>
@@ -371,39 +369,25 @@
                     <input
                       type="number"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      v-model="estudianteDto.persona.telefono"
+                      v-model="usuarioInstitucion.persona.telefono"
                       placeholder="Número Celular"
                       name="address"
                       required=""
                     />
                   </div>
-
-                  <div class="lg:col-span-3">
-                    <label class="form-label font-medium">Carrera :</label>
-                    <select
-                      v-model="estudianteDto.idCarreras"
-                      class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-2"
-                    >
-                      <option value="1">Ing. en Sistemas</option>
-                      <option value="2">Psicopedagogía</option>
-                      <option value="3">Comunicación Social</option>
-                    </select>
-                  </div>
-
                   <div class="lg:col-span-6">
-                    <label class="form-label font-medium" for="birthday"
-                      >Año de Ingreso a la Universidad :<span
-                        class="text-red-600"
-                        >*</span
-                      ></label
+                    <label class="form-label font-medium"
+                      >Cargo en la empresa :
+                      <span class="text-red-600">*</span></label
                     >
                     <input
-                      type="number"
-                      id="birthday"
-                      name="birthday"
-                      v-model="estudianteDto.persona.anioIngresoUniversidad"
-                      @input="validateInputYear"
+                      type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                      v-model="usuarioInstitucion.cargo"
+                      placeholder="Apellido Paterno:"
+                      id="lastname"
+                      name="name"
+                      required=""
                     />
                   </div>
 
@@ -419,20 +403,6 @@
                 </div>
                 <!--end grid-->
 
-                <div class="grid grid-cols-1">
-                  <div class="mt-5">
-                    <label class="form-label font-medium"
-                      >Descripción : <span class="text-red-600">*</span>
-                    </label>
-                    <textarea
-                      name="comments"
-                      id="comments"
-                      class="form-input border border-slate-100 dark:border-slate-800 mt-2 textarea"
-                      v-model="estudianteDto.persona.descripcion"
-                      placeholder="Descripción :"
-                    ></textarea>
-                  </div>
-                </div>
                 <!--end row-->
               </div>
               <div class="grid grid-cols-2 gap-4 mt-5">
@@ -448,7 +418,7 @@
                 <button
                   id="submit"
                   name="send"
-                  @click="paginaFormulario = 5"
+                  @click="paginaFormulario = 5, registrarUsuarioInstitucion()"
                   class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
                 >
                   Registrar
@@ -1753,6 +1723,51 @@ export default {
       ],
       institucionesWithOnlyName: [],
       filesStore: useFilesStore(),
+      usuarioInstitucion: {
+        idUsuarios: null,
+        kc_UUID: "",
+        correo: "",
+        fechaRegistro: "",
+        horaRegistro: "",
+        idRoles: null,
+        idPersonas: null,
+        idCarreras: null,
+        institucion: {
+          idInstituciones: null,
+          nombre: "",
+          descripcion: "",
+          direccion: "",
+          fotoInstitucion: "",
+          correo: "",
+          sectores: [],
+          logoEmpresa: "",
+          fotos: [],
+          redesSociales: {
+            facebook: "",
+            twitter: "",
+            instagram: "",
+          },
+          activo: null,
+        },
+        cargo: "",
+        persona: {
+          idPersona: null,
+          nombre: "",
+          apellidoPaterno: "",
+          apellidoMaterno: "",
+          telefono: null,
+          ci: "",
+          fotoPerfil: "",
+          anioIngresoUniversidad: null,
+          descripcion: "",
+          fechaDeNacimiento: "",
+          habilidades: {},
+          habilidadesSeleccionada: {},
+          experiencia: {},
+          redesSociales: {},
+        },
+        carrera: null,
+      },
     };
   },
   watch: {
@@ -1772,6 +1787,15 @@ export default {
     this.getInstitucionesWithName();
   },
   methods: {
+    async registrarUsuarioInstitucion(){
+      console.log("usuarioInstitucion", this.usuarioInstitucion);
+      this.usuarioInstitucion.institucion=this.empresaSeleccionada;
+      try{
+        await this.institucionesPublicStore.registrarUsuarioInstitucion(this.usuarioInstitucion);
+      }catch(error){
+        console.log("error", error);
+      }
+    },
     async getInstitucionesWithName() {
       this.institucionesWithOnlyName =
         await this.institucionesPublicStore.getAllInstitucionesWithOnlyName();
@@ -1979,13 +2003,16 @@ export default {
         if (file.size > 4000000) {
           auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
           console.log("tamaño imagen comprimida " + auxLink);
-          //this.nuevaEmpresa.logoEmpresa = auxLink;
+          this.nuevaEmpresa.logoEmpresa = auxLink;
           this.imageSrc3 = auxLink;
+          this.usuarioInstitucion.persona.fotoPerfil = auxLink;
         } else if (file.size > 1000000) {
           auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
           console.log("tamaño imagen comprimida " + auxLink);
           // this.nuevaEmpresa.logoEmpresa = auxLink;
           this.imageSrc3 = auxLink;
+          this.usuarioInstitucion.persona.fotoPerfil = auxLink;
+       
         } else {
           let loader = this.$loading.show();
           const response = await this.filesStore.uploadFile(file);
@@ -2002,6 +2029,7 @@ export default {
             //this.nuevaEmpresa.logoEmpresa = this.filesStore.link;
 
             this.imageSrc3 = this.filesStore.link;
+            this.usuarioInstitucion.persona.fotoPerfil = this.filesStore.link;
           }
         }
       }

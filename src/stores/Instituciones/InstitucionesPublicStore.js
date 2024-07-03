@@ -17,6 +17,20 @@ export const useInstitucionesStore = defineStore({
             } catch (error) {
                 console.log(error)
             }
+        },
+        async postInstitucionesUsuario(usuarioInstitucion){
+            try{
+                const response = await axios.post(RutaApi + '/usuario', usuarioInstitucion)
+                if(response.data.code == '200'){
+                    return response.data.response
+                }else{
+                    return null;
+                }
+            }
+            catch(error){
+                console.log(error)
+            }
+
         }
     },
 });
