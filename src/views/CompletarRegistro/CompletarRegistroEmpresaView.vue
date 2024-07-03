@@ -1791,7 +1791,7 @@ export default {
       console.log("usuarioInstitucion", this.usuarioInstitucion);
       this.usuarioInstitucion.institucion=this.empresaSeleccionada;
       try{
-        await this.institucionesPublicStore.registrarUsuarioInstitucion(this.usuarioInstitucion);
+        await this.institucionesPublicStore.postInstitucionesUsuario(this.usuarioInstitucion);
       }catch(error){
         console.log("error", error);
       }
