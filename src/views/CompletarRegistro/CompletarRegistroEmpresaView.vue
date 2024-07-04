@@ -1966,19 +1966,23 @@ export default {
           }
         });
     },
-    seleccionarEmpresa(Empresa) {
+    async seleccionarEmpresa(Empresa) {
       this.paginaFormulario = 2;
-      this.empresaSeleccionada = Empresa;
-      //copiar un objetio en otro sin json
-
-      console.log(
-        "nombre empresa seleccionada: " + this.empresaSeleccionada.nombre
-      );
-      console.log(
-        "descripcion empresa seleccionada: " +
-          this.empresaSeleccionada.idInstituciones
-      );
-      console.log("corr empresa seleccionada: " + this.empresaSeleccionada);
+      const loader = this.$loading.show();
+      try{
+        
+        //Obtener la empresa seleccionada por id
+        Empresa = await this.institucionesPublicStore.obtenerEmpresaPorId(Empresa.idInstituciones);
+        //Quitar las pasantías de la empresa
+        Empresa.pasantias = [];
+        //Asignar la empresa seleccionada a la variable nuevaEmpresa
+        this.empresaSeleccionada = Empresa;
+        this.nuevaEmpresa = Empresa;
+      }catch(error){
+        console.log("error", error);
+      }finally{
+        loader.hide();
+      }
     },
     async handleFileUploadFotosGeneral(event) {
       const file = event.target.files[0];
