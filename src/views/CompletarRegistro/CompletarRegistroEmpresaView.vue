@@ -1,5 +1,6 @@
 <template>
   <section
+    v-if="paginaFormulario == 1"
     class="py-20 w-full table relative bg-[url('../../assets/images/hero/bg2.jpg')] bg-top bg-no-repeat bg-cover"
   >
     <div class="absolute inset-0 bg-slate-900/70"></div>
@@ -30,6 +31,85 @@
     <!--end container-->
   </section>
   <!--end section-->
+  <section
+    v-if="paginaFormulario == 2"
+    :style="{ backgroundImage: `url(${nuevaEmpresa.fotoInstitucion})` }"
+    class="relative table w-full py-40 bg-center bg-no-repeat bg-cover"
+  >
+    <div class="absolute inset-0 bg-cyan-900/60"></div>
+  </section>
+  <!--end section-->
+  <div class="relative">
+    <div
+      class="shape absolute start-0 end-0 sm:-bottom-px -bottom-[2px] overflow-hidden z-1 text-white dark:text-slate-900"
+    >
+      <svg
+        class="w-full h-auto"
+        viewBox="0 0 2880 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z"
+          fill="currentColor"
+        ></path>
+      </svg>
+    </div>
+  </div>
+  <!-- End Hero -->
+
+  <section
+    v-if="paginaFormulario == 2"
+    class="relative pb-16 mb:pb-6 sm:pb-10 -mt-16 z-1"
+  >
+    <div class="container">
+      <div class="grid grid-cols-1">
+        <div
+          class="md:flex justify-between items-center shadow dark:shadow-gray-700 rounded-md p-6 bg-white dark:bg-slate-900"
+        >
+          <div class="flex items-center">
+            <img
+              :src="this.nuevaEmpresa.logoEmpresa"
+              class="size-20 shadow dark:shadow-gray-700 rounded-md bg-slate-50 dark:bg-slate-800"
+              alt=""
+            />
+
+            <div class="ms-4">
+              <h5 class="text-xl font-bold">
+                {{ this.empresaSeleccionada.nombre }}
+              </h5>
+              <h6 class="text-base text-slate-400">
+                <i class="uil uil-map-marker"></i>
+                {{ this.empresaSeleccionada.direccion }}
+              </h6>
+              <h6 class="text-base text-slate-400">
+                <i class="uil uil-envelope align-middle" title="email"></i>
+                {{ this.empresaSeleccionada.correo }}
+              </h6>
+            </div>
+          </div>
+          <div class="ms-4">
+            <h5 class="text-base">Redes Sociales de la empresa:</h5>
+            <div class="mt-0">
+              <a
+                v-for="sector in empresaSeleccionada.redesSociales"
+                :key="sector.id"
+                href=""
+              >
+                <span
+                  class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500"
+                >
+                  {{ sector }}
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--end grid-->
+    </div>
+    <!--end container-->
+  </section>
   <!-- End -->
 
   <!-- iframe start  -->
@@ -37,15 +117,7 @@
     :class="isActive ? 'fixed' : 'hidden'"
     class="bg-black/[0.9] top-0 left-0 bottom-0 w-[100%] h-[100%] z-999"
   >
-    <div class="h-[100%] flex items-center justify-center">
-      <iframe
-        src="https://www.youtube.com/embed/S_CGed6E610?feature=oembed"
-        width="700"
-        height="500"
-        frameborder="0"
-      ></iframe>
-    </div>
-    <button class="text-slate-400 absolute top-[20px] right-[20px]">
+    <button class="text-slate-400 absolute right-[20px]">
       <svg
         stroke="currentColor"
         fill="none"
@@ -64,30 +136,8 @@
       </svg>
     </button>
   </div>
-  <section class="relative lg:mt-24 mt-[74px] pb-16">
+  <section class="relative lg:mt-10 mt-[10px] pb-16">
     <div v-if="paginaFormulario == 2" class="lg:container container-fluid">
-      <div class="profile-banner relative text-transparent">
-        <input
-          id="pro-banner"
-          name="profile-banner"
-          type="file"
-          class="hidden"
-          @change="loadFile2"
-        />
-        <div class="relative shrink-0">
-          <img
-            :src="this.imageSrc2"
-            class="h-64 w-full object-scale-down lg:rounded-xl shadow dark:shadow-gray-700"
-            id="profile-banner"
-            alt=""
-          />
-          <label
-            class="absolute inset-0 cursor-pointer"
-            for="pro-banner"
-          ></label>
-        </div>
-      </div>
-
       <div class="md:flex mx-4 -mt-12">
         <div class="md:w-full">
           <div class="relative flex items-end">
@@ -97,14 +147,14 @@
                 name="profile-image"
                 type="file"
                 class="hidden"
-                @change="loadFile"
+                @change="handleFileUploadFotoPerfil"
               />
               <div>
                 <div
                   class="relative size-28 max-w-[112px] max-h-[112px] mx-auto"
                 >
                   <img
-                    :src="this.imageSrc"
+                    :src="this.imageSrc3"
                     class="rounded-full shadow dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800"
                     id="profile-image"
                     alt=""
@@ -146,7 +196,10 @@
               <button
                 id="submit"
                 name="send"
-                @click="showNuevaEmpresaModal = true"
+                @click="
+                  (showNuevaEmpresaModal = true),
+                    (showNuevaEmpresaModalForms = 1)
+                "
                 class="col-span-1 btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
               >
                 Agregar tu empresa
@@ -225,7 +278,7 @@
                     <input
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      v-model="estudianteDto.persona.nombre"
+                      v-model="usuarioInstitucion.persona.nombre"
                       placeholder="Nombres:"
                       id="firstname"
                       name="name"
@@ -239,7 +292,7 @@
                     <input
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      v-model="estudianteDto.persona.ci"
+                      v-model="usuarioInstitucion.persona.ci"
                       placeholder="Ci"
                       name="address"
                       required=""
@@ -254,7 +307,7 @@
                     <input
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      v-model="estudianteDto.persona.apellidoPaterno"
+                      v-model="usuarioInstitucion.persona.apellidoPaterno"
                       placeholder="Apellido Paterno:"
                       id="lastname"
                       name="name"
@@ -270,7 +323,7 @@
                     <input
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      v-model="estudianteDto.persona.apellidoMaterno"
+                      v-model="usuarioInstitucion.persona.apellidoMaterno"
                       placeholder="Apellido Paterno:"
                       id="lastname"
                       name="name"
@@ -285,7 +338,7 @@
                     <input
                       type="email"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      v-model="estudianteDto.correo"
+                      v-model="usuarioInstitucion.correo"
                       placeholder="Email"
                       name="email"
                       required=""
@@ -302,7 +355,7 @@
                       type="date"
                       id="birthday"
                       name="birthday"
-                      v-model="estudianteDto.persona.fechaDeNacimiento"
+                      v-model="usuarioInstitucion.persona.fechaDeNacimiento"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
                     />
                   </div>
@@ -316,39 +369,25 @@
                     <input
                       type="number"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      v-model="estudianteDto.persona.telefono"
+                      v-model="usuarioInstitucion.persona.telefono"
                       placeholder="Número Celular"
                       name="address"
                       required=""
                     />
                   </div>
-
-                  <div class="lg:col-span-3">
-                    <label class="form-label font-medium">Carrera :</label>
-                    <select
-                      v-model="estudianteDto.idCarreras"
-                      class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-2"
-                    >
-                      <option value="1">Ing. en Sistemas</option>
-                      <option value="2">Psicopedagogía</option>
-                      <option value="3">Comunicación Social</option>
-                    </select>
-                  </div>
-
                   <div class="lg:col-span-6">
-                    <label class="form-label font-medium" for="birthday"
-                      >Año de Ingreso a la Universidad :<span
-                        class="text-red-600"
-                        >*</span
-                      ></label
+                    <label class="form-label font-medium"
+                      >Cargo en la empresa :
+                      <span class="text-red-600">*</span></label
                     >
                     <input
-                      type="number"
-                      id="birthday"
-                      name="birthday"
-                      v-model="estudianteDto.persona.anioIngresoUniversidad"
-                      @input="validateInputYear"
+                      type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                      v-model="usuarioInstitucion.cargo"
+                      placeholder="Apellido Paterno:"
+                      id="lastname"
+                      name="name"
+                      required=""
                     />
                   </div>
 
@@ -364,113 +403,28 @@
                 </div>
                 <!--end grid-->
 
-                <div class="grid grid-cols-1">
-                  <div class="mt-5">
-                    <label class="form-label font-medium"
-                      >Descripción : <span class="text-red-600">*</span>
-                    </label>
-                    <textarea
-                      name="comments"
-                      id="comments"
-                      class="form-input border border-slate-100 dark:border-slate-800 mt-2 textarea"
-                      v-model="estudianteDto.persona.descripcion"
-                      placeholder="Descripción :"
-                    ></textarea>
-                  </div>
-                </div>
                 <!--end row-->
               </div>
-              <!--end form-->
-            </div>
-            <div
-              class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
-            >
-              <div class="grid grid-cols-1 gap-4">
-                <div>
-                  <h5 class="text-lg font-semibold mb-4">Habilidades :</h5>
-                  <div>
-                    <div class="grid grid-cols-1 gap-4">
-                      <div
-                        class="grid grid-cols-3 gap-4 mt-5 pt-3"
-                        v-for="habilidad in estudianteDto.persona.habilidades"
-                        :id="habilidad.habilidad"
-                      >
-                        <label class="form-label font-medium" for="WordPress">{{
-                          habilidad.habilidad
-                        }}</label>
+              <div class="grid grid-cols-2 gap-4 mt-5">
+                <button
+                  id="submit"
+                  name="send"
+                  @click="paginaFormulario = 1"
+                  class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+                >
+                  Atrás
+                </button>
 
-                        <StarRatingComponent
-                          name="rating"
-                          v-model="habilidad.nivel"
-                          :disabled="false"
-                        >
-                        </StarRatingComponent>
-                        <div class="grid grid-cols-2 gap-4 mt-0">
-                          <button
-                            id="submit"
-                            name="send"
-                            v-if="habilidad.principal == false"
-                            @click="habilidad.principal = true"
-                            class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer"
-                          >
-                            Secundario
-                          </button>
-
-                          <button
-                            id="submit"
-                            name="send"
-                            v-if="habilidad.principal == true"
-                            @click="habilidad.principal = false"
-                            class="btn border-yellow-600 bg-yellow-600 hover:bg-yellow-700 text-white text-sm p-0 rounded-md cursor-pointer"
-                          >
-                            Principal
-                          </button>
-
-                          <button
-                            id="submit"
-                            name="send"
-                            @click="eliminarHabilidad(habilidad)"
-                            class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                          >
-                            Eliminar
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 gap-4 mt-5">
-                      <button
-                        id="submit"
-                        name="send"
-                        @click="showNuevaHabilidadModal = true"
-                        class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
-                      >
-                        Agregar Nueva Habilidad
-                      </button>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4 mt-5">
-                      <button
-                        id="submit"
-                        name="send"
-                        @click="paginaFormulario = 1"
-                        class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                      >
-                        Atrás
-                      </button>
-
-                      <button
-                        id="submit"
-                        name="send"
-                        @click="paginaFormulario = 3"
-                        class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      >
-                        Siguiente
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                <button
+                  id="submit"
+                  name="send"
+                  @click="paginaFormulario = 5, registrarUsuarioInstitucion()"
+                  class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+                >
+                  Registrar
+                </button>
               </div>
+              <!--end form-->
             </div>
           </div>
 
@@ -1088,7 +1042,10 @@
     >
       <span class="close" @click="showNuevaEmpresaModal = false">&times;</span>
 
-      <div class="grid grid-cols-1 gap-4">
+      <div
+        v-if="showNuevaEmpresaModalForms == 1"
+        class="grid grid-cols-1 gap-4"
+      >
         <div>
           <h5 class="text-lg font-semibold mb-4">Empresa :</h5>
 
@@ -1138,18 +1095,18 @@
                     placeholder="Correo :"
                   />
                   <label class="form-label font-medium"
-                    >Logo de la empresa: <span class="text-red-600">*</span></label
+                    >Logo de la empresa:
+                    <span class="text-red-600">*</span></label
                   >
                 </div>
-               
+
                 <div class="justify-center">
-                   
                   <input
                     id="pro-img"
                     name="profile-image"
                     type="file"
                     class="hidden"
-                    @change="handleFileUploadLogo"
+                    @change="handleFileUploadBannerPerfil"
                   />
                   <div>
                     <div
@@ -1184,149 +1141,276 @@
             </div>
 
             <div class="grid grid-cols-2 gap-4 mt-5">
-                      <button
-                        id="submit"
-                        name="send"
-                        @click="showNuevaEmpresaModal = false"
-                        class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                      >
-                        Cancelar
-                      </button>
+              <button
+                id="submit"
+                name="send"
+                @click="showNuevaEmpresaModal = false"
+                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+              >
+                Cancelar
+              </button>
 
-                      <button
-                        id="submit"
-                        name="send"
-                        @click="showNuevaEmpresaModal2 = true ,showNuevaEmpresaModal = false"
-                        class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      >
-                        Siguiente
-                      </button>
-                    </div>
+              <button
+                id="submit"
+                name="send"
+                @click="showNuevaEmpresaModalForms = 2"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+              >
+                Siguiente
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div id="myModalCompany2" class="modal" v-if="showNuevaEmpresaModal2">
-    <div
-      class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
-    >
-      <span class="close" @click="showNuevaEmpresaModal2 = false">&times;</span>
-
-      <div class="grid grid-cols-1 gap-4">
+      <div
+        v-if="showNuevaEmpresaModalForms == 2"
+        class="grid grid-cols-1 gap-4"
+      >
         <div>
-          <h5 class="text-lg font-semibold mb-4">Areas :</h5>
+          <h5 class="text-lg font-semibold mb-4">
+            Selecciona las areas de la empresa :
+          </h5>
 
           <div>
             <div>
-              <div class="grid grid-cols-12 mt-6 gap-4">
-                <div class="col-span-12">
-                  <label class="form-label font-medium"
-                    >Nombre: <span class="text-red-600">*</span></label
+              <!-- Selección de áreas -->
+              <div class="mt-6">
+                <h5 class="text-lg font-semibold mb-4">Áreas seleccionadas:</h5>
+                <div class="flex flex-wrap gap-2">
+                  <div
+                    v-for="(area, index) in selectedAreas"
+                    :key="area"
+                    class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center"
                   >
-                  <input
-                    name="name"
-                    id="JobTitle"
-                    type="text"
-                    v-model="nuevaEmpresa.nombre"
-                    class="form-input border border-slate-100 dark:border-slate-800"
-                    placeholder="Nombre :"
-                  />
-                </div>
-                <!--end col-->
-
-                <div class="col-span-12">
-                  <label class="form-label font-medium"
-                    >Dirección de la empresa
-                    <span class="text-red-600">*</span></label
-                  >
-                  <input
-                    name="name"
-                    id="CompanyName"
-                    type="text"
-                    v-model="nuevaEmpresa.direccion"
-                    class="form-input border border-slate-100 dark:border-slate-800"
-                    placeholder="Dirección :"
-                  />
-                </div>
-                <!--end col-->
-
-                <div class="col-span-12">
-                  <label class="form-label font-medium"
-                    >correo <span class="text-red-600">*</span></label
-                  >
-                  <input
-                    name="email"
-                    type="text"
-                    v-model="nuevaEmpresa.correo"
-                    class="form-input border border-slate-100 dark:border-slate-800"
-                    placeholder="Correo :"
-                  />
-                  <label class="form-label font-medium"
-                    >Logo de la empresa: <span class="text-red-600">*</span></label
-                  >
-                </div>
-               
-                <div class="justify-center">
-                   
-                  <input
-                    id="pro-img"
-                    name="profile-image"
-                    type="file"
-                    class="hidden"
-                    @change="loadFile"
-                  />
-                  <div>
-                    <div
-                      class="relative size-28 max-w-[112px] max-h-[112px] mx-auto"
+                    {{ area }}
+                    <button
+                      @click="removeArea(index)"
+                      class="ml-2 bg-red-600 text-white px-2 py-1 rounded-md"
                     >
-                      <img
-                        :src="this.imageSrc"
-                        class="rounded-full shadow dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800"
-                        id="profile-image"
-                        alt=""
-                      />
-                      <label
-                        class="absolute inset-0 cursor-pointer"
-                        for="pro-img"
-                      ></label>
-                    </div>
+                      x
+                    </button>
                   </div>
                 </div>
-                <!--end col-->
-                <div class="col-span-12">
-                  <label class="form-label font-medium"> Descripción : </label>
-                  <textarea
-                    name="comments"
-                    id="Description"
-                    v-model="nuevaEmpresa.descripcion"
-                    class="form-input border border-slate-100 dark:border-slate-800 textarea"
-                    placeholder="Descripción :"
-                  ></textarea>
+
+                <div class="mt-4">
+                  <input
+                    type="text"
+                    v-model="searchQuery"
+                    class="form-input border border-slate-100 dark:border-slate-800 w-full"
+                    placeholder="Buscar áreas..."
+                  />
                 </div>
-                <!--end col-->
+
+                <div class="mt-4 grid grid-cols-2 gap-2">
+                  <div
+                    v-for="area in filteredAreas"
+                    :key="area"
+                    @click="selectArea(area)"
+                    class="cursor-pointer border border-slate-100 dark:border-slate-800 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                  >
+                    {{ area }}
+                  </div>
+                </div>
+              </div>
+              <!--end col-->
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mt-5">
+              <button
+                id="submit"
+                name="send"
+                @click="showNuevaEmpresaModalForms = 1"
+                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+              >
+                Atras
+              </button>
+
+              <button
+                id="submit"
+                name="send"
+                @click="showNuevaEmpresaModalForms = 3"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+              >
+                Siguiente
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="showNuevaEmpresaModalForms == 3"
+        class="grid grid-cols-1 gap-4"
+      >
+        <div>
+          <h5 class="text-lg font-semibold mb-4">
+            Selecciona una foto de las instalaciones de la empresa :
+          </h5>
+          <div class="profile-banner relative text-transparent">
+            <input
+              id="pro-banner"
+              name="profile-banner"
+              type="file"
+              class="hidden"
+              @change="handleFileUploadFotoGrande"
+            />
+            <div class="relative shrink-0">
+              <img
+                :src="this.nuevaEmpresa.fotoInstitucion"
+                class="h-64 w-full object-scale-down lg:rounded-xl shadow dark:shadow-gray-700"
+                id="profile-banner"
+                alt=""
+              />
+              <label
+                class="absolute inset-0 cursor-pointer"
+                for="pro-banner"
+              ></label>
+            </div>
+          </div>
+
+          <div>
+            <!-- Selección de fotos -->
+            <div class="mt-6">
+              <h5 class="text-lg font-semibold mb-4">
+                Seleccione fotos extra:
+              </h5>
+              <div class="flex flex-wrap gap-2">
+                <div
+                  v-for="(foto, index) in nuevaEmpresa.fotos"
+                  :key="foto"
+                  class="relative"
+                >
+                  <img :src="foto" class="w-32 h-32 object-cover rounded-md" />
+                  <button
+                    @click="removeFoto(index)"
+                    class="absolute top-0 right-0 bg-red-600 text-white p-1 rounded-md"
+                  >
+                    x
+                  </button>
+                </div>
+              </div>
+
+              <div class="mt-4">
+                <input
+                  type="file"
+                  @change="handleFileUploadFotosGeneral"
+                  class="form-input border border-slate-100 dark:border-slate-800 w-full"
+                />
               </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4 mt-5">
-                      <button
-                        id="submit"
-                        name="send"
-                        @click="showNuevaEmpresaModal = false"
-                        class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                      >
-                        Cancerlar
-                      </button>
+              <button
+                id="submit"
+                name="send"
+                @click="showNuevaEmpresaModalForms = 2"
+                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+              >
+                Atras
+              </button>
 
-                      <button
-                        id="submit"
-                        name="send"
-                        @click="paginaFormulario = 3 ,showNuevaEmpresaModal = false"
-                        class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-                      >
-                        Siguiente
-                      </button>
-                    </div>
+              <button
+                id="submit"
+                name="send"
+                @click="showNuevaEmpresaModalForms = 4"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+              >
+                Siguiente
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="showNuevaEmpresaModalForms == 4"
+        class="grid grid-cols-1 gap-4"
+      >
+        <div>
+          <h5 class="text-lg font-semibold mb-4">
+            Selecciona tus redes sociales :
+          </h5>
+
+          <div>
+            <!-- Redes sociales seleccionadas -->
+            <div class="mt-6">
+              <h5 class="text-lg font-semibold mb-4">
+                Redes sociales seleccionadas:
+              </h5>
+              <div class="flex flex-wrap gap-2">
+                <div
+                  v-for="(url, social) in Object.entries(
+                    nuevaEmpresa.redesSociales
+                  )"
+                  :key="social"
+                  class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center"
+                >
+                  {{ social }}: {{ url }}
+                  <button
+                    @click="removeRedSocial(social)"
+                    class="ml-2 bg-red-600 text-white px-2 py-1 rounded-md"
+                  >
+                    x
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 grid grid-cols-12 gap-2">
+              <div class="col-span-4">
+                <select
+                  v-model="selectedSocial"
+                  class="form-select border border-slate-100 dark:border-slate-800 w-full"
+                >
+                  <option value="" disabled selected>
+                    Seleccione una red social
+                  </option>
+                  <option
+                    v-for="social in availableSocials"
+                    :key="social"
+                    :value="social"
+                  >
+                    {{ social }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-span-6">
+                <input
+                  type="text"
+                  v-model="socialLink"
+                  class="form-input border border-slate-100 dark:border-slate-800 w-full"
+                  placeholder="Enlace de la red social"
+                />
+              </div>
+
+              <div class="col-span-2">
+                <button
+                  @click="addRedSocial"
+                  class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer w-full"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mt-5">
+              <button
+                id="submit"
+                name="send"
+                @click="showNuevaEmpresaModalForms = 3"
+                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+              >
+                Atrás
+              </button>
+
+              <button
+                id="submit"
+                name="send"
+                @click="guardarNuevaEmpresa"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+              >
+                Confirmación de empresa
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -1343,36 +1427,60 @@ import "vue3-toastify/dist/index.css";
 
 import switcher from "@/components/General/switcher.vue";
 import StarRatingComponent from "@/components/General/Extras/StartRatingComponent.vue";
+import { useInstitucionesStore } from "@/stores/Instituciones/InstitucionesPublicStore.js";
+import { useFilesStore } from "@/stores/fileStore.js";
+import Swal from "sweetalert2";
+
 export default {
   components: {
     switcher,
     StarRatingComponent,
   },
 
-  mounted() {
-    //reload images
-  },
   data() {
     return {
+      institucionesPublicStore: useInstitucionesStore(),
       isActive: false,
       imageSrc: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       image: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       imageSrc2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
+      imageSrc3: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       image2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
+      searchQuery: "",
+      selectedAreas: [],
+      allAreas: ["Área 1", "Área 2", "Área 3", "Área 4"], // Lista de todas las áreas disponibles
+      selectedSocial: "",
+      socialLink: "",
+      availableSocials: [
+        "Facebook",
+        "Twitter",
+        "Instagram",
+        "LinkedIn",
+        "YouTube",
+        "TikTok",
+      ],
+      allSocials: [
+        "Facebook",
+        "Twitter",
+        "Instagram",
+        "LinkedIn",
+        "YouTube",
+        "TikTok",
+      ],
       empresaSeleccionada: {
         idInstituciones: "",
         nombre: "",
         descripcion: "",
         direccion: "",
-        fotoInstitucion: "",
+        fotoInstitucion: "https://cdn-icons-png.flaticon.com/512/84/84099.pn",
         correo: "",
-        sectores: ["", ""],
+        sectores: ["a", "b"],
         logoEmpresa: "",
         fotos: ["", ""],
         redesSociales: {
-          facebook: "",
-          twitter: "",
-          instagram: "",
+          facebook: "fa",
+          twitter: "tw",
+          instagram: "instagram",
         },
         activo: true,
       },
@@ -1381,16 +1489,12 @@ export default {
         nombre: "",
         descripcion: "",
         direccion: "",
-        fotoInstitucion: "",
+        fotoInstitucion: "https://cdn-icons-png.flaticon.com/512/84/84099.pn",
         correo: "",
-        sectores: ["", ""],
+        sectores: [],
         logoEmpresa: "",
-        fotos: ["", ""],
-        redesSociales: {
-          facebook: "",
-          twitter: "",
-          instagram: "",
-        },
+        fotos: [],
+        redesSociales: {},
         activo: true,
       },
       paginaFormulario: 1,
@@ -1499,6 +1603,7 @@ export default {
       showNuevaEmpresaModal: false,
       showNuevaEmpresaModal2: false,
       showNuevaEmpresaModal3: false,
+      showNuevaEmpresaModalForms: 0,
       nuevaHabilidad: "",
       nuevaExperiencia: {
         titulo: "",
@@ -1616,6 +1721,53 @@ export default {
           activo: true,
         },
       ],
+      institucionesWithOnlyName: [],
+      filesStore: useFilesStore(),
+      usuarioInstitucion: {
+        idUsuarios: null,
+        kc_UUID: "",
+        correo: "",
+        fechaRegistro: "",
+        horaRegistro: "",
+        idRoles: null,
+        idPersonas: null,
+        idCarreras: null,
+        institucion: {
+          idInstituciones: null,
+          nombre: "",
+          descripcion: "",
+          direccion: "",
+          fotoInstitucion: "",
+          correo: "",
+          sectores: [],
+          logoEmpresa: "",
+          fotos: [],
+          redesSociales: {
+            facebook: "",
+            twitter: "",
+            instagram: "",
+          },
+          activo: null,
+        },
+        cargo: "",
+        persona: {
+          idPersona: null,
+          nombre: "",
+          apellidoPaterno: "",
+          apellidoMaterno: "",
+          telefono: null,
+          ci: "",
+          fotoPerfil: "",
+          anioIngresoUniversidad: null,
+          descripcion: "",
+          fechaDeNacimiento: "",
+          habilidades: [],
+          habilidadesSeleccionada: [],
+          experiencia: [],
+          redesSociales: {},
+        },
+        carrera: null,
+      },
     };
   },
   watch: {
@@ -1631,7 +1783,96 @@ export default {
     this.estudianteDto.persona.anioIngresoUniversidad = 2000;
     this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
   },
+  mounted() {
+    this.getInstitucionesWithName();
+  },
   methods: {
+    async registrarUsuarioInstitucion(){
+      console.log("usuarioInstitucion", this.usuarioInstitucion);
+      this.usuarioInstitucion.kc_UUID=this.$keycloak.idTokenParsed.sub;
+      this.usuarioInstitucion.idUsuarios= null;
+      this.usuarioInstitucion.horaRegistro= new Date().toLocaleTimeString();
+      this.usuarioInstitucion.institucion=this.empresaSeleccionada;
+      let loader = this.$loading.show();
+      try{
+        const response = await this.institucionesPublicStore.registrarUsuarioInstitucion(this.usuarioInstitucion);
+        if(response){
+          Swal.fire({
+            title: "Usuario registrado correctamente",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }else{
+          Swal.fire({
+            title: "Error al registrar usuario",
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      }catch(error){
+        console.log("error", error);
+      }finally{
+        this.$router.push("/");  
+        loader.hide();
+      }
+    },
+    async getInstitucionesWithName() {
+      this.institucionesWithOnlyName =
+        await this.institucionesPublicStore.getAllInstitucionesWithOnlyName();
+      this.instituciones = this.institucionesWithOnlyName;
+      console.log("institucionesWithOnlyName", this.institucionesWithOnlyName);
+    },
+    selectArea(area) {
+      if (!this.selectedAreas.includes(area)) {
+        this.selectedAreas.push(area);
+        this.nuevaEmpresa.sectores.push(area);
+      }
+    },
+    removeArea(index) {
+      this.selectedAreas.splice(index, 1);
+    },
+    guardarNuevaEmpresa() {
+      console.log("guardar empresa");
+      console.log(this.selectedAreas);
+      console.log(this.nuevaEmpresa);
+      this.showNuevaEmpresaModal = false;
+      this.paginaFormulario = 2;
+      this.empresaSeleccionada = this.nuevaEmpresa;
+      console.log("nombre empresa seleccionada: " + this.empresaSeleccionada);
+    },
+    addFoto(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.nuevaEmpresa.fotos.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    removeFoto(index) {
+      this.nuevaEmpresa.fotos.splice(index, 1);
+    },
+    addRedSocial() {
+      if (
+        this.selectedSocial &&
+        this.socialLink &&
+        !(this.selectedSocial.toLowerCase() in this.nuevaEmpresa.redesSociales)
+      ) {
+        this.nuevaEmpresa.redesSociales = {
+          ...this.nuevaEmpresa.redesSociales,
+          [this.selectedSocial.toLowerCase()]: this.socialLink,
+        };
+        this.selectedSocial = "";
+        this.socialLink = "";
+      }
+    },
+    removeRedSocial(social) {
+      const { [social]: _, ...rest } = this.nuevaEmpresa.redesSociales;
+      this.nuevaEmpresa.redesSociales = rest;
+    },
     agregarNuevaExperiencia(experiencia) {
       console.log("duracion: " + experiencia.duracion);
       this.estudianteDto.persona.experiencia.push({
@@ -1698,8 +1939,12 @@ export default {
       this.imageSrc = URL.createObjectURL(event.target.files[0]);
     },
     loadFile2(event) {
-      this.image2 = document.getElementById(event.target.name);
-      this.imageSrc2 = URL.createObjectURL(event.target.files[0]);
+      this.nuevaEmpresa.fotoInstitucion = document.getElementById(
+        event.target.name
+      );
+      this.nuevaEmpresa.fotoInstitucion = URL.createObjectURL(
+        event.target.files[0]
+      );
     },
     showAlert() {
       // Use sweetalert2
@@ -1721,98 +1966,221 @@ export default {
           }
         });
     },
-    seleccionarEmpresa(Empresa) {
+    async seleccionarEmpresa(Empresa) {
       this.paginaFormulario = 2;
-      this.empresaSeleccionada = JSON.parse(JSON.stringify(Empresa));
-      console.log(
-        "nombre empresa seleccionada: " + this.empresaSeleccionada.nombre
-      );
-      console.log("corr empresa seleccionada: " + this.empresaSeleccionada);
+      const loader = this.$loading.show();
+      try{
+        
+        //Obtener la empresa seleccionada por id
+        Empresa = await this.institucionesPublicStore.obtenerEmpresaPorId(Empresa.idInstituciones);
+        //Quitar las pasantías de la empresa
+        Empresa.pasantias = [];
+        //Asignar la empresa seleccionada a la variable nuevaEmpresa
+        this.empresaSeleccionada = Empresa;
+        this.nuevaEmpresa = Empresa;
+      }catch(error){
+        console.log("error", error);
+      }finally{
+        loader.hide();
+      }
     },
-    async handleFileUploadLogo(event) {
-        const file = event.target.files[0];
-      
-        if (file) {
-          //comprimir imagen si es mayor a 4mb 
+    async handleFileUploadFotosGeneral(event) {
+      const file = event.target.files[0];
+      let auxLink = "";
 
-          console.log("tamaño imagen anterior "+file.size);
+      if (file) {
+        //comprimir imagen si es mayor a 4mb
 
-          if (file.size > 4000000) {
-            this.comprimirYSubirImagen(file, 0.3);
-          } else if( file.size > 1000000){ 
-            this.comprimirYSubirImagen(file,0.5 );
-          } 
-          else {
-            this.isLoading = true;
-              const response = await this.filesStore.uploadFile(file);
-              this.isLoading = false;
+        console.log("tamaño imagen anterior " + file.size);
+        if (file.size > 4000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+          console.log("tamaño imagen comprimida " + auxLink);
+          this.nuevaEmpresa.fotos.push(auxLink);
+        } else if (file.size > 1000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
+          console.log("tamaño imagen comprimida " + auxLink);
+          this.nuevaEmpresa.fotos.push(auxLink);
+        } else {
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(file);
+          loader.hide();
 
-              if (response === false) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "Error al subir la imagen, porfavor intenta de nuevo",
-                  });
-                
-              } else {
-                // Corrected code: use push() to add the new link to the array
-                this.logoElegido=this.filesStore.link;
-                this.objetoPeticion.linkFoto=this.filesStore.link;
-                console.log(this.objetoPeticion);
-
-                
-              }
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            // Corrected code: use push() to add the new link to the array
+            this.nuevaEmpresa.fotos.push(this.filesStore.link);
           }
-
-
-
-
-
-          
-
-
-          
-
-          
         }
-      },
-      async comprimirYSubirImagen(file, cantidadCompresion){
+      }
+    },
+    async handleFileUploadFotoPerfil(event) {
+      const file = event.target.files[0];
+      let auxLink = "";
+
+      if (file) {
+        //comprimir imagen si es mayor a 4mb
+
+        console.log("tamaño imagen anterior " + file.size);
+        if (file.size > 4000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+          console.log("tamaño imagen comprimida " + auxLink);
+          this.nuevaEmpresa.logoEmpresa = auxLink;
+          this.imageSrc3 = auxLink;
+          this.usuarioInstitucion.persona.fotoPerfil = auxLink;
+        } else if (file.size > 1000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
+          console.log("tamaño imagen comprimida " + auxLink);
+          // this.nuevaEmpresa.logoEmpresa = auxLink;
+          this.imageSrc3 = auxLink;
+          this.usuarioInstitucion.persona.fotoPerfil = auxLink;
+       
+        } else {
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(file);
+          loader.hide();
+
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            // Corrected code: use push() to add the new link to the array
+            //this.nuevaEmpresa.logoEmpresa = this.filesStore.link;
+
+            this.imageSrc3 = this.filesStore.link;
+            this.usuarioInstitucion.persona.fotoPerfil = this.filesStore.link;
+          }
+        }
+      }
+    },
+    async handleFileUploadFotoGrande(event) {
+      const file = event.target.files[0];
+      let auxLink = "";
+
+      if (file) {
+        //comprimir imagen si es mayor a 4mb
+
+        console.log("tamaño imagen anterior " + file.size);
+        if (file.size > 4000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+          console.log("tamaño imagen comprimida " + auxLink);
+          this.nuevaEmpresa.fotoInstitucion = auxLink;
+        } else if (file.size > 1000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
+          console.log("tamaño imagen comprimida " + auxLink);
+          this.nuevaEmpresa.fotoInstitucion = auxLink;
+        } else {
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(file);
+          loader.hide();
+
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            // Corrected code: use push() to add the new link to the array
+            this.nuevaEmpresa.fotoInstitucion = this.filesStore.link;
+          }
+        }
+      }
+    },
+    async handleFileUploadBannerPerfil(event) {
+      const file = event.target.files[0];
+      let auxLink = "";
+
+      if (file) {
+        //comprimir imagen si es mayor a 4mb
+
+        console.log("tamaño imagen anterior " + file.size);
+        if (file.size > 4000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+          console.log("tamaño imagen comprimida " + auxLink);
+          this.nuevaEmpresa.logoEmpresa = auxLink;
+          this.imageSrc = auxLink;
+        } else if (file.size > 1000000) {
+          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
+          console.log("tamaño imagen comprimida " + auxLink);
+          this.nuevaEmpresa.logoEmpresa = auxLink;
+          this.imageSrc = auxLink;
+        } else {
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(file);
+          loader.hide();
+
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            // Corrected code: use push() to add the new link to the array
+            this.nuevaEmpresa.logoEmpresa = this.filesStore.link;
+
+            this.imageSrc = this.filesStore.link;
+          }
+        }
+      }
+    },
+    async comprimirYSubirImagenBannerPerfil(file, cantidadCompresion) {
       new Compressor(file, {
-          quality: cantidadCompresion,
-          success: async  (compressedResult) => {
-            console.log("tamaño imagen comprimida "+compressedResult.size+ " con una compreison de "+cantidadCompresion);
-            this.isLoading = true;
-            const response = await this.filesStore.uploadFile(compressedResult);
-            this.isLoading = false;
+        quality: cantidadCompresion,
+        success: async (compressedResult) => {
+          console.log(
+            "tamaño imagen comprimida " +
+              compressedResult.size +
+              " con una compreison de " +
+              cantidadCompresion
+          );
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(compressedResult);
+          const aux = this.filesStore.link;
+          loader.hide();
 
-            if (response === false) {
-              Swal.fire({
-                  icon: "error",
-                  title: "Error",
-                  text: "Error al subir la imagen, porfavor intenta de nuevo",
-                });
-              
-            } else {
-              // Corrected code: use push() to add the new link to the array
-              this.logoElegido=this.filesStore.link;
-              this.objetoPeticion.linkFoto=this.filesStore.link;
-              console.log(this.objetoPeticion);
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            this.estudianteDto.persona.bannerPerfil = this.filesStore.link;
 
-              
-            }
-
-
-          },
-          error(err) {
-            console.log(err.message);
-          },
-        });
+            this.imageSrc2 = this.filesStore.link;
+          }
+        },
+        error(err) {
+          console.log(err.message);
+        },
+      });
     },
   },
   computed: {
     filteredDatas() {
       return this.instituciones.filter((item) =>
         item.nombre.toLowerCase().includes(this.Busqueda.toLowerCase())
+      );
+    },
+    filteredAreas() {
+      return this.allAreas.filter(
+        (area) =>
+          area.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
+          !this.selectedAreas.includes(area)
+      );
+    },
+    availableSocials() {
+      return this.allSocials.filter(
+        (social) => !(social.toLowerCase() in this.nuevaEmpresa.redesSociales)
       );
     },
   },
