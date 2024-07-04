@@ -1,11 +1,9 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import RutaApi from '@/assets/rutaApi.js'
-import { use } from 'vue/types/umd'
-
 
 export const usePasantiasAdminStore = defineStore({
-    id: 'pasantias',
+    id: 'pasantiasAdmin',
     state: () => ({
     }),
 
