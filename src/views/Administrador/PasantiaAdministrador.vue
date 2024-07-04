@@ -216,13 +216,17 @@
 
 <script>
 import navbar from "@/components/Administrador/navbarAdministrador.vue";
-
+import { usePasantiasStore } from '@/stores/Pasantias/pasantiasStore';
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import footers from "@/components/footer/footer.vue";
 
 import switcher from "@/components/General/switcher.vue";
 export default {
+  setup() {
+    const pasantiasStore = usePasantiasStore();
+    return { pasantiasStore };
+  },
   data() {
     return {
       options: [
@@ -605,6 +609,7 @@ export default {
     footers,
     switcher,
   },
+  
 };
 </script>
 
