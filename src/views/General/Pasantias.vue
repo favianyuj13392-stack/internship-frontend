@@ -192,7 +192,7 @@
                 </div>
 
                 <div class="flex items-center">
-                  <router-link to="/pasantias/detalle"
+                  <router-link :to="{ name: 'pasantias-detalle', params: { id: pasantia.idPasantias} }"
                     class="btn btn-icon rounded-full bg-cyan-600/5 group-hover:bg-cyan-600 border-cyan-600/10 text-cyan-600 group-hover:text-white ms-1"><i
                       class="uil uil-arrow-up-right"></i></router-link>
                 </div>
@@ -202,9 +202,9 @@
                 <router-link class="text-xl hover:text-cyan-600 font-semibold transition-all duration-500">
                   {{ pasantia.titulo }}
                 </router-link>
-                <p class="text-slate-400 mt-2">
+                <!-- <p class="text-slate-400 mt-2">
                   {{ pasantia.descripcion }}
-                </p>
+                </p> -->
 
                 <div class="mt-3">
                   <a v-for="area in pasantia.areas">
