@@ -125,12 +125,12 @@
           <div class="mt-1">
             <div class="mt-2 mb-2">
               <span class="text-slate-400 text-sm">
-                <span class="text-slate-900 dark:text-white font-semibold inline-block">{{ item.pasantias }} pasantias disponibles</span>
-                de 40
+                <span class="text-slate-900 dark:text-white font-semibold inline-block">{{ item.cantidadPasantias }} pasantias disponibles</span>
+                
               </span>
             </div>
             <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-[6px]">
-              <div class="bg-cyan-600 h-[6px] rounded-full" style="width: 55%"></div>
+              <div class="bg-cyan-600 h-[6px] rounded-full" style="width: 100%"></div>
             </div>
             <div class="mt-2">
               <h6 class="text-base font-medium">
@@ -200,6 +200,7 @@ import "vue-select/dist/vue-select.css";
 import footers from "@/components/footer/footer.vue";
 import switcher from "@/components/General/switcher.vue";
 import { useEmpresasStore } from "@/stores/Estudiantes/empresasStore.js";
+import Swal from "sweetalert2";
 
 export default {
   setup() {
@@ -245,6 +246,15 @@ export default {
         this.pageSize,
         this.searchValue
       );
+      if(response==null){
+        loader.hide();
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se pudo cargar las empresas",
+        });
+        return;
+      }
       this.empresas = response.content;
       this.totalPages = response.totalPages;
       
