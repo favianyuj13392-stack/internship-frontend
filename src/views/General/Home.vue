@@ -174,7 +174,7 @@ export default {
         this.$router.push("/finish/register-empresa");
         loader.hide();
         return;
-     }else if(existencia==false){
+     }else if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("ADMIN")){
         this.$router.push("/administrador/dashboard");
         loader.hide();
         return;
