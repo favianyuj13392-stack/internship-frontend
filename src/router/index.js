@@ -48,7 +48,7 @@ const router = createRouter({
       component: Pasantias,
     },
     {
-      path: "/pasantias/detalle",
+      path: "/pasantias/:id/detalle",
       name: "pasantias-detalle",
       component: PasantiasDetalle,
     },
