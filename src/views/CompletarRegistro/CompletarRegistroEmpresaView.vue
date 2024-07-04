@@ -1761,9 +1761,9 @@ export default {
           anioIngresoUniversidad: null,
           descripcion: "",
           fechaDeNacimiento: "",
-          habilidades: {},
-          habilidadesSeleccionada: {},
-          experiencia: {},
+          habilidades: [],
+          habilidadesSeleccionada: [],
+          experiencia: [],
           redesSociales: {},
         },
         carrera: null,
@@ -1789,11 +1789,33 @@ export default {
   methods: {
     async registrarUsuarioInstitucion(){
       console.log("usuarioInstitucion", this.usuarioInstitucion);
+      this.usuarioInstitucion.kc_UUID=this.$keycloak.idTokenParsed.sub;
+      this.usuarioInstitucion.idUsuarios= null;
+      this.usuarioInstitucion.horaRegistro= new Date().toLocaleTimeString();
       this.usuarioInstitucion.institucion=this.empresaSeleccionada;
+      let loader = this.$loading.show();
       try{
-        await this.institucionesPublicStore.postInstitucionesUsuario(this.usuarioInstitucion);
+        const response = await this.institucionesPublicStore.registrarUsuarioInstitucion(this.usuarioInstitucion);
+        if(response){
+          Swal.fire({
+            title: "Usuario registrado correctamente",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }else{
+          Swal.fire({
+            title: "Error al registrar usuario",
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
       }catch(error){
         console.log("error", error);
+      }finally{
+        this.$router.push("/");  
+        loader.hide();
       }
     },
     async getInstitucionesWithName() {

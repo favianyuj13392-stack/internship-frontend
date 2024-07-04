@@ -18,9 +18,10 @@ export const useInstitucionesStore = defineStore({
                 console.log(error)
             }
         },
-        async postInstitucionesUsuario(usuarioInstitucion){
+        async registrarUsuarioInstitucion(usuarioInstitucion){
             try{
-                const response = await axios.post(RutaApi + '/usuario', usuarioInstitucion)
+                const response = await axios.post(RutaApi + '/usuario/institucion', usuarioInstitucion)
+                console.log(response)
                 if(response.data.code == '200'){
                     return response.data.response
                 }else{
