@@ -466,7 +466,13 @@ import navbar from "@/components/General/navbarGeneral.vue";
 import footers from "@/components/footer/footer.vue";
 import switcher from "@/components/General/switcher.vue";
 import image from "@/assets/images/team/01.jpg";
+import{useEstudiantesStore} from "@/stores/Estudiantes/estudiantesStore";
+import Swal from "sweetalert2";
 export default {
+  setup() {
+    const estudiantesStore= useEstudiantesStore();
+    return {estudiantesStore};
+  },
   data() {
     return {
       id: "",
@@ -556,14 +562,46 @@ export default {
       ],
     };
   },
+
+  methods: {
+    async fetchUserByUUID() {
+      if(!this.$keycloak.authenticated){
+        this.$router.push("/");
+        return;
+      }
+
+      let loader = this.$loading.show();
+      const response = await this.estudiantesStore.fetchUserByUUID(this.$keycloak.idTokenParsed.sub);
+      if (response==null) {
+
+        loader.hide();
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No se pudo cargar la información del usuario",
+        });
+        this.$keycloak.logout();
+        this.$router.push("/");
+        return;
+      }
+      loader.hide();
+      this.data = response;
+      console.log(this.data);
+
+
+      
+    },
+  },
   components: {
     navbar,
     switcher,
     footers,
   },
   mounted() {
-    this.id = this.$route.params.id;
-    this.data = this.datas.find((item) => item.id === parseInt(this.id));
+    this.fetchUserByUUID();
+    
+    //this.id = this.$route.params.id;
+    //this.data = this.datas.find((item) => item.id === parseInt(this.id));
   },
 };
 </script>

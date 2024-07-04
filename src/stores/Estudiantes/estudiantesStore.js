@@ -24,5 +24,17 @@ export const useEstudiantesStore = defineStore({
                 console.log(error)
             }
         },
+        async fetchUserByUUID(id) {
+            try {
+                const response = await axios.get(RutaApi + '/estudiante/' + id)
+                if (response.data.code == '200') {
+                    return response.data.response
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
     },
 })
