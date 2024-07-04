@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import RutaApi from '@/assets/rutaApi.js'
+import RutaApi from '@/assets/rutaApi.js';
 
 export const useFilesStore = defineStore({
     id: 'files',
