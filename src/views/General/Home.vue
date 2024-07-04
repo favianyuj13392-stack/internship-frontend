@@ -170,8 +170,12 @@ export default {
         loader.hide();
         return;
      }
-     else if(existencia==false){
+     else if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("EMPRESA")){
         this.$router.push("/finish/register-empresa");
+        loader.hide();
+        return;
+     }else if(existencia==false){
+        this.$router.push("/administrador/dashboard");
         loader.hide();
         return;
      }
