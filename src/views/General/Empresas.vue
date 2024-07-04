@@ -125,7 +125,7 @@
           <div class="mt-1">
             <div class="mt-2 mb-2">
               <span class="text-slate-400 text-sm">
-                <span class="text-slate-900 dark:text-white font-semibold inline-block">{{ item.pasantias.length }} pasantias disponibles</span>
+                <span class="text-slate-900 dark:text-white font-semibold inline-block">{{ item.pasantias }} pasantias disponibles</span>
                 de 40
               </span>
             </div>
