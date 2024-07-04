@@ -24,5 +24,6 @@ export const useEstudiantesStore = defineStore({
                 console.log(error)
             }
         },
+        
     },
 })
