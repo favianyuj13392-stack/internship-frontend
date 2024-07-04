@@ -45,7 +45,22 @@ export const useEmpresasStore = defineStore({
                 } catch (error) {
                     console.log(error)
                 }
+            },
+
+
+            async getEmpresasRelacionadas(id) {
+                try {
+                    const response = await axios.get(RutaApi + '/institucion/' + id + '/relacionadas')
+                    if (response.data.code == '200') {
+                        return response.data.response
+                    } else {
+                        return null;
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
             }
+          
            
         },
         
