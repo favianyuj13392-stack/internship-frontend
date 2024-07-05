@@ -142,13 +142,13 @@
     <div class="container">
       <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px]">
         <div
-          v-for="item in datas"
+          v-for="item in data"
           :key="item"
           class="group relative overflow-hidden bg-white dark:bg-slate-900 rounded-md shadow dark:shadow-gray-700"
         >
           <div class="relative overflow-hidden h-40">
             <img
-              :src="item.image"
+              :src="item.institucion.logoEmpresa"
               class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-500"
               alt=""
             />
@@ -158,7 +158,7 @@
             <div class="absolute start-6 -top-4">
               <span
                 class="bg-cyan-600 text-white text-[12px] px-2.5 py-1 font-semibold rounded-full h-5"
-                >{{ item.name }}</span
+                >{{ item.titulo }}</span
               >
             </div>
 
@@ -205,6 +205,53 @@
       </div>
       <!--end grid-->
     </div>
+    <!--PAGINACIONNN-->
+    <div class="grid md:grid-cols-12 grid-cols-1 mt-8">
+      <div class="md:col-span-12 text-center">
+        <nav aria-label="Page navigation example">
+          <ul class="inline-flex items-center -space-x-px">
+            <li>
+              <button
+                @click="prevPage"
+                :disabled="currentPage === 0"
+                class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-s-3xl hover:text-white border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
+              >
+                <i
+                  class="uil uil-angle-left text-[20px] rtl:rotate-180 rtl:-mt-1"
+                ></i>
+              </button>
+            </li>
+            <li v-for="page in totalPages" :key="page">
+              <button
+                @click="goToPage(page - 1)"
+                :class="[
+                  'size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-cyan dark:bg-slate-900 border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600',
+                  {
+                    'z-10 bg-cyan-600 text-white border-cyan-600':
+                      page - 1 === currentPage,
+                  },
+                ]"
+              >
+                {{ page }}
+              </button>
+            </li>
+            <li>
+              <button
+                @click="nextPage"
+                :disabled="currentPage === totalPages - 1"
+                class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-e-3xl hover:text-white border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
+              >
+                <i
+                  class="uil uil-angle-right text-[20px] rtl:rotate-180 rtl:-mt-1"
+                ></i>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!--end col-->
+    </div>
+    <!--end grid-->
 
     <!--end container-->
 
@@ -216,13 +263,16 @@
 
 <script>
 import navbar from "@/components/Administrador/navbarAdministrador.vue";
-
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import footers from "@/components/footer/footer.vue";
-
+import { usePasantiasAdminStore } from "@/stores/Administradores/pasantiasAdminStore";
 import switcher from "@/components/General/switcher.vue";
 export default {
+  setup() {
+    const pasantiasStore = usePasantiasAdminStore();
+    return { pasantiasStore };
+  },
   data() {
     return {
       options: [
@@ -597,8 +647,61 @@ export default {
           company: "Google",
         },
       ],
+      pageSize: 12,
+      currentPage: 0,
+      searchValue: "",
+      totalPages: 0,
+      data: [],
+      kkuid: "",
+      active: true,
     };
   },
+  async mounted() {
+    await this.fetchPasantias();
+    console.log(this.data);
+  },
+  methods: {
+    attachIsHovered() {
+      this.data = this.data.map((pasantia) => {
+        return {
+          ...pasantia,
+          carrerasIsHovered: false,
+          beneficiosIsHovered: false,
+        };
+      });
+    },
+    async fetchPasantias() {
+      let loader = this.$loading.show();
+      const response = await this.pasantiasStore.getPasantias(
+        this.currentPage,
+        this.pageSize,
+        this.searchValue,
+        true,
+        this.$keycloak.idTokenParsed.sub
+      );
+      this.data = response.content;
+      this.totalPages = response.totalPages;
+      loader.hide();
+      this.attachIsHovered();
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages - 1) {
+        this.currentPage++;
+        this.fetchPasantias();
+      }
+    },
+    prevPage() {
+      if (this.currentPage > 0) {
+        this.currentPage--;
+        this.fetchPasantias();
+      }
+    },
+    goToPage(page) {
+      this.currentPage = page;
+      this.fetchPasantias();
+    },
+  },
+
   components: {
     navbar,
     vSelect,
