@@ -10,28 +10,28 @@
             class="md:flex items-center p-6 shadow dark:shadow-gray-700 rounded-md bg-white dark:bg-slate-900 mb-6"
           >
             <img
-              :src="data?.image ? data?.image : image"
+              :src="data.institucion.logoEmpresa"
               class="rounded-full size-28 p-4 bg-white dark:bg-slate-900 shadow dark:shadow-gray-700"
-              alt=""
+              alt="logo de la empresa"
             />
 
             <div class="md:ms-4 md:mt-0 mt-6">
               <h5 class="text-xl font-semibold">
-                {{ data?.job ? data?.job : "Back-End Developer" }}
+                {{ data.titulo}}
               </h5>
               <div class="mt-2">
                 <span class="text-slate-400 font-medium me-2 inline-block"
                   ><i
                     class="uil uil-building text-[18px] text-cyan-600 me-1"
                   ></i>
-                  {{ data?.name ? data?.name : "Lenovo pvt. ltd." }}</span
+                  {{ data.institucion.nombre}}</span
                 >
                 <span class="text-slate-400 font-medium me-2 inline-block"
                   ><i
                     class="uil uil-map-marker text-[18px] text-cyan-600 me-1"
                   ></i>
                   {{
-                    data?.country ? data?.country : "Beijing,    China"
+                    data.institucion.direccion
                   }}</span
                 >
               </div>
@@ -40,45 +40,27 @@
           <!--detallesssss-->
           <h5 class="text-lg font-semibold">Detalles de la pasantia:</h5>
 
-          <p class="text-slate-400 mt-4">
-            One disadvantage of Lorum Ipsum is that in Latin certain letters
-            appear more frequently than others - which creates a distinct visual
-            impression. Moreover, in Latin only words at the beginning of
-            sentences are capitalized.
-          </p>
-          <p class="text-slate-400 mt-4">
-            This means that Lorem Ipsum cannot accurately represent, for
-            example, German, in which all nouns are capitalized. Thus, Lorem
-            Ipsum has only limited suitability as a visual filler for German
-            texts. If the fill text is intended to illustrate the
-            characteristics of different typefaces.
-          </p>
-          <p class="text-slate-400 mt-4">
-            It sometimes makes sense to select texts containing the various
-            letters and symbols specific to the output language.
-          </p>
-
-          <h5 class="text-lg font-semibold mt-6">Areas:</h5>
-          <p class="text-slate-400 mt-4">
-            It sometimes makes sense to select texts containing the various
-            letters and symbols specific to the output language.
+          <p class="text-slate-400 mt-4" v-for="paragraph in parsedData">
+            {{ paragraph }}
           </p>
           <ul class="list-none">
-            <li v-for="item in datas1" :key="item" class="text-slate-400 mt-2">
-              <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
+            <li v-for="funcion in data.funciones" class="text-slate-400 mt-2">
+              <i class="uil uil-arrow-right text-cyan-600 me-1"></i>
+              {{ funcion }}
             </li>
           </ul>
 
           <h5 class="text-lg font-semibold mt-6">
             Requisistos necesarios y calificaciones:
           </h5>
-          <p class="text-slate-400 mt-4">
+          <!-- <p class="text-slate-400 mt-4">
             It sometimes makes sense to select texts containing the various
             letters and symbols specific to the output language.
-          </p>
+          </p> -->
           <ul class="list-none">
-            <li v-for="item in datas1" :key="item" class="text-slate-400 mt-2">
-              <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
+            <li v-for="requisito in data.requisitos" :key="item" class="text-slate-400 mt-2">
+              <i class="uil uil-arrow-right text-cyan-600 me-1"></i>
+              {{ requisito }}
             </li>
           </ul>
 
@@ -369,10 +351,25 @@ import navbar from "@/components/General/navbarGeneral.vue";
 import footers from "@/components/footer/footer.vue";
 
 import switcher from "@/components/General/switcher.vue";
+import { usePasantiasStore } from "@/stores/Pasantias/pasantiasStore";
+import Swal from "sweetalert2";
 export default {
+  setup(){
+    const pasantiasStore = usePasantiasStore();
+    return {pasantiasStore}
+  },
   data() {
     return {
-      data: "",
+      parsedData: [],
+      data: {
+        titulo: "",
+        funciones: [],
+        requisitos: [],
+        institucion: {
+          nombre: "",
+          logoEmpresa: "",
+        }
+      },
       id: "",
       image:
         "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
@@ -543,10 +540,51 @@ export default {
     footers,
     switcher,
   },
+  methods: {
+    async fetchPasantia() {
+      let loader = this.$loading.show();
+      try {
+        const response = await this.pasantiasStore.getPasantiaById(this.id);
+        this.data = response;
+        this.parsedData = this.data.descripcion.split("\n");
+        console.log(this.parsedData);
+        console.log(this.data);
+        if(this.data == null){
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No se encontro la pasantia",
+          });
+          this.$router.push("/pasantias");
+          return;
+        }
+      } catch (error) {
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "ERROR: " + error,
+        });
+
+      } finally {
+        loader.hide();
+      }
+    },
+    async fetchPasantiasRelacionadas() {
+      this.related = this.datas.filter((item) => item.id != this.id);
+    },
+  },
   mounted() {
     this.id = this.$route.params.id;
-    this.data = this.datas.find((item) => item.id === parseInt(this.id));
+    this.fetchPasantia();
+    this.fetchPasantiasRelacionadas();
   },
+  props: {
+    id: {
+      type: String,
+      required: true,
+    }
+  }
 };
 </script>
 

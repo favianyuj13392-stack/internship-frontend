@@ -29,6 +29,17 @@ export const usePasantiasStore = defineStore({
                 console.log(error)
             }
         },
-
+        async getPasantiaById(id) {
+                try {
+                    const response = await axios.get(RutaApi + '/pasantia/' + id)
+                    if (response.data.code == '200') {
+                        return response.data.response
+                    } else {
+                        return null;
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            }
     },
 })
