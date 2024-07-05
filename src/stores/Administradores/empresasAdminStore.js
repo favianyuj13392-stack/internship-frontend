@@ -36,7 +36,7 @@ export const useEmpresasAdminStore = defineStore({
         },
         async getEmpresaById(id,kkid) {
             try {
-                const response = await axios.get(RutaApi + '/admin/'+kkid+'/institucion/' + id)
+                const response = await axios.get(RutaApi + '/admin/'+kkid+'/instituciones/' + id)
                 console.log(response)
                 if (response.data.code == '200') {
                     return response.data.response

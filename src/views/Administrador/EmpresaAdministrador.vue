@@ -160,12 +160,13 @@
 
             <router-link
               class="title text-lg font-semibold hover:text-cyan-600 duration-500 ease-in-out"
+              :to="{ name: 'EmpresaDetalleAdministrador', params: { id: item.idInstituciones } }"
               >{{ item.nombre }}</router-link
             >
 
             <div class="flex justify-between items-center mt-3">
               <router-link
-                to="/administrador/empresa/detalle"
+                :to="{ name: 'EmpresaDetalleAdministrador', params: { id: item.idInstituciones } }"
                 class="btn btn-link hover:text-cyan-600 after:bg-cyan-600 duration-500 ease-in-out"
                 >Ver empresa <i class="uil uil-arrow-right"></i
               ></router-link>

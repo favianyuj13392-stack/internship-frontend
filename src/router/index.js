@@ -115,7 +115,7 @@ const router = createRouter({
       component: SolicitudEmpresaAdministrador,
     },
     {
-      path: "/administrador/empresa/detalle",
+      path: "/administrador/empresa/:id/detalle",
       name: "EmpresaDetalleAdministrador",
       component: EmpresaDetalleAdministrador,
     },

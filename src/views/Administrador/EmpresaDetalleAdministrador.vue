@@ -6,7 +6,8 @@
   />
   <!-- Start Hero -->
   <section
-    class="relative table w-full py-40 bg-[url('@/assets/images/hero/bg4.jpg')] bg-center bg-no-repeat bg-cover"
+    class="relative table w-full py-40 bg bg-center bg-no-repeat bg-cover"
+    :style="{ backgroundImage: `url(${data?.fotoInstitucion ? data.fotoInstitucion : image})` }"
   >
     <div class="absolute inset-0 bg-cyan-900/60"></div>
   </section>
@@ -38,18 +39,18 @@
         >
           <div class="flex items-center">
             <img
-              :src="data?.image ? data?.image : image"
+              :src="data?.logoEmpresa ? data?.logoEmpresa : logoEmpresa"
               class="size-20 p-3 shadow dark:shadow-gray-700 rounded-md bg-slate-50 dark:bg-slate-800"
               alt=""
             />
 
             <div class="ms-4">
               <h5 class="text-xl font-bold">
-                {{ data?.name ? data?.name : "Skype" }}
+                {{ data?.nombre ? data?.nombre : "Skype" }}
               </h5>
               <h6 class="text-base text-slate-400">
                 <i class="uil uil-map-marker"></i>
-                {{ data?.country ? data.country : "Canberra, Australia" }}
+                {{ data?.direccion ? data.direccion : "Canberra, Australia" }}
               </h6>
             </div>
           </div>
@@ -58,12 +59,7 @@
             <a
               href=""
               class="btn btn-sm bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md"
-              >Follow</a
-            >
-            <a
-              href=""
-              class="btn btn-sm bg-cyan-600/5 hover:bg-cyan-600 border-cyan-600/10 hover:border-cyan-600 text-cyan-600 hover:text-white rounded-md ms-1"
-              >See Jobs</a
+              >Ver Pasantías</a
             >
           </div>
         </div>
@@ -76,39 +72,24 @@
     <div class="container mt-12">
       <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
         <div class="lg:col-span-8 md:col-span-7">
-          <h5 class="text-xl font-semibold">Company Story</h5>
-          <p class="text-slate-400 mt-4">
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout. The point
-            of using Lorem Ipsum is that it has a more-or-less normal
-            distribution of letters, as opposed.
-          </p>
+          <h5 class="text-xl font-semibold">
+            Acerca de {{ data?.nombre ? data?.nombre : "Skype" }}
+          </h5>
           <p class="text-slate-400 mt-2">
-            Contrary to popular belief, Lorem Ipsum is not simply random text.
-            It has roots in a piece of classical Latin literature from 45 BC,
-            making it over 2000 years old. Richard McClintock, a Latin professor
-            at Hampden-Sydney College in Virginia, looked up one of the more
-            obscure Latin words, consectetur, from a Lorem Ipsum passage.
+            {{ data?.descripcion ? data?.descripcion : "Skype is a telecommunications application that specializes in providing video chat and voice calls between computers, tablets, mobile devices, the Xbox One console, and smartwatches over the Internet." }}
           </p>
 
           <div class="grid grid-cols-12 gap-6 mt-6">
             <div class="col-span-12">
               <img
-                src="@/assets/images/company/1.jpg"
+                :src="data?.fotoInstitucion ? data?.fotoInstitucion : fotoInstitucion"
                 class="rounded-md shadow dark:shadow-gray-700"
                 alt=""
               />
             </div>
-            <div class="col-span-6">
+            <div class="col-span-6" v-for="imagen in data?.fotos" v-bind:key="imagen">
               <img
-                src="@/assets/images/company/2.jpg"
-                class="rounded-md shadow dark:shadow-gray-700"
-                alt=""
-              />
-            </div>
-            <div class="col-span-6">
-              <img
-                src="@/assets/images/company/3.jpg"
+                :src="imagen"
                 class="rounded-md shadow dark:shadow-gray-700"
                 alt=""
               />
@@ -539,16 +520,40 @@ import navbar from "@/components/Administrador/navbarAdministrador.vue";
 import footers from "@/components/footer/footer.vue";
 
 import switcher from "@/components/General/switcher.vue";
+import { useEmpresasAdminStore } from "@/stores/Administradores/empresasAdminStore"; 
+import Swal from "sweetalert2";
 export default {
+  methods: {
+    async getEmpresaById(id) {
+      const loader = this.$loading.show();
+      try {
+        const empresa = await this.empresasStore.getEmpresaById(id, this.$keycloak.idTokenParsed.sub)
+        console.log(empresa);
+        if(empresa){
+          this.data = empresa;
+          return;
+        }
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No se pudo obtener la empresa",
+        });
+      } catch (error) {
+        console.log(error);
+      }finally{
+        loader.hide();
+      }
+    }
+  },
   props: {
-
-    jobs: {
-      type: Boolean,
+    id: {
+      type: String,
       required: true,
-    },
+    }
   },
   data() {
     return {
+      empresasStore: useEmpresasAdminStore(),
       data: "",
       id: "",
       image:
@@ -741,7 +746,7 @@ export default {
   },
   mounted() {
     this.id = this.$route.params.id;
-    this.data = this.datas.find((item) => item.id === parseInt(this.id));
+    this.getEmpresaById(this.id);  
   },
 };
 </script>
