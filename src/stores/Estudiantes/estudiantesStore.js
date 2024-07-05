@@ -24,6 +24,19 @@ export const useEstudiantesStore = defineStore({
                 console.log(error)
             }
         },
+        async updateEstudiante(estudiante, id) {
+            try{
+                const response = await axios.put(RutaApi + '/estudiante/'+id, estudiante.persona)
+                if(response.data.code == '200'){
+                    return response.data.response
+                }else{
+                    return null;
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
+        },
         async fetchUserByUUID(id) {
             try {
                 const response = await axios.get(RutaApi + '/estudiante/' + id)
