@@ -90,6 +90,9 @@
                         id="job-keyword"
                         class="form-input filter-input-box bg-gray-50 dark:bg-slate-800 border-0"
                         placeholder="Buscar empresa..."
+                        v-model="searchValue"
+                        @keyup.enter="searchEmpresas"
+
                       />
                     </div>
 
@@ -100,6 +103,7 @@
                       style="height: 60px"
                       class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white searchbtn submit-btn w-100"
                       value="Buscar"
+                      @click.prevent="searchEmpresas"
                     />
                   </div>
                   <!--end grid-->
@@ -130,7 +134,7 @@
       >
         <div class="relative overflow-hidden h-40">
           <img
-            :src="item.image"
+            :src="item.fotoInstitucion"
             class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-500"
             alt=""
           />
@@ -140,7 +144,7 @@
           <div class="absolute start-6 -top-4">
             <span
               class="bg-cyan-600 text-white text-[12px] px-2.5 py-1 font-semibold rounded-full h-5"
-              >{{ item.name }}</span
+              >{{ item.correo }}</span
             >
           </div>
 
@@ -148,21 +152,15 @@
             <div class="flex mb-4">
               <span class="text-slate-400 text-sm"
                 ><i
-                  class="uil uil-calendar-alt text-slate-900 dark:text-white me-2"
+                  class="uil uil-location-point text-slate-900 dark:text-white me-2"
                 ></i
-                >{{ item.date }}</span
-              >
-              <span class="text-slate-400 text-sm ms-3"
-                ><i
-                  class="uil uil-clock text-slate-900 dark:text-white me-2"
-                ></i
-                >{{ item.time }}</span
+                >{{ item.direccion }}</span
               >
             </div>
 
             <router-link
               class="title text-lg font-semibold hover:text-cyan-600 duration-500 ease-in-out"
-              >{{ item.title }}</router-link
+              >{{ item.nombre }}</router-link
             >
 
             <div class="flex justify-between items-center mt-3">
@@ -171,14 +169,6 @@
                 class="btn btn-link hover:text-cyan-600 after:bg-cyan-600 duration-500 ease-in-out"
                 >Ver empresa <i class="uil uil-arrow-right"></i
               ></router-link>
-              <span class="text-slate-400 text-sm"
-                >by
-                <a
-                  href=""
-                  class="text-slate-900 dark:text-white hover:text-cyan-600 dark:hover:text-cyan-600 font-medium"
-                  >{{ item.company }}</a
-                ></span
-              >
             </div>
           </div>
         </div>
@@ -194,66 +184,40 @@
       <nav aria-label="Page navigation example">
         <ul class="inline-flex items-center -space-x-px">
           <li>
-            <a
-              href="#"
+            <button
+              @click="prevPage"
+              :disabled="currentPage === 0"
               class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-s-3xl hover:text-white border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
             >
-              <i
-                class="uil uil-angle-left text-[20px] rtl:rotate-180 rtl:-mt-1"
-              ></i>
-            </a>
+              <i class="uil uil-angle-left text-[20px] rtl:rotate-180 rtl:-mt-1"></i>
+            </button>
           </li>
-          <li>
-            <a
-              href="#"
-              class="size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
-              >1</a
+          <li v-for="page in totalPages" :key="page">
+            <button
+              @click="goToPage(page-1)"
+              :class="[
+                'size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-cyan dark:bg-slate-900 border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600',
+                { 'z-10 bg-cyan-600 text-white border-cyan-600': page-1 === currentPage }
+              ]"
             >
+              {{ page }}
+            </button>
           </li>
           <li>
-            <a
-              href="#"
-              class="size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
-              >2</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              aria-current="page"
-              class="z-10 size-[40px] inline-flex justify-center items-center text-white bg-cyan-600 border border-cyan-600"
-              >3</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
-              >4</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
-              >5</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
+            <button
+              @click="nextPage"
+              :disabled="currentPage === totalPages - 1"
               class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-e-3xl hover:text-white border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
             >
-              <i
-                class="uil uil-angle-right text-[20px] rtl:rotate-180 rtl:-mt-1"
-              ></i>
-            </a>
+              <i class="uil uil-angle-right text-[20px] rtl:rotate-180 rtl:-mt-1"></i>
+            </button>
           </li>
         </ul>
       </nav>
     </div>
     <!--end col-->
   </div>
+  <!--end grid-->
   <!--FIN DE PAGINACION-->
   <!-- iframe end  -->
   <div class="md:my-16 my-16">
@@ -296,8 +260,12 @@ import question from "@/components/General/Home/job-questions.vue";
 import explore from "@/components/General/Home/explore-job.vue";
 import switcher from "@/components/General/switcher.vue";
 import footers from "@/components/footer/footer.vue";
+import { useEmpresasAdminStore } from "@/stores/Administradores/empresasAdminStore"; 
 
 export default {
+  mounted() {
+    this.fetchEmpresas();
+  },
   data() {
     return {
       isActive: false,
@@ -308,199 +276,12 @@ export default {
         "Administracion",
       ],
       selected: "Ingenieria de Sistemas",
-      datas: [
-        {
-          id: 1,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          day: "20th Feb 2023",
-          type: "Full Time",
-          job: "Web Designer",
-          country: "Australia",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 2,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-          day: "20th Feb 2023",
-          type: "Part Time",
-          job: "Marketing Director",
-          country: "USA",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 3,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "Remote",
-          job: "Application Developer",
-          country: "China",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 4,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "WFH",
-          job: "Product Designer",
-          country: "Dubai",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 5,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "Full Time",
-          job: "C++ Developer",
-          country: "India",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 6,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "Remote",
-          job: "Php Developer",
-          country: "Pakistan",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 7,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "Full Time",
-          job: "Web Designer",
-          country: "Australia",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-        },
-        {
-          id: 8,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "Part Time",
-          job: "Marketing Director",
-          country: "USA",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-        },
-        {
-          id: 9,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "Remote",
-          job: "App Developer",
-          country: "China",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-        },
-        {
-          id: 10,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "WFH",
-          job: "Product Designer",
-          country: "Dubai",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-        },
-        {
-          id: 11,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "Full Time",
-          job: "C++ Developer",
-          country: "India",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-        },
-        {
-          id: 12,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-
-          day: "20th Feb 2023",
-          type: "Remote",
-          job: "Php Developer",
-          country: "Pakistan",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-        },
-      ],
+      empresaStore: useEmpresasAdminStore(),
+      pageSize: 12,
+      currentPage: 0,
+      searchValue: "",
+      totalPages: 0,
+      datas:[]
     };
   },
   components: {
@@ -519,6 +300,51 @@ export default {
   methods: {
     toggle() {
       this.isActive = !this.isActive;
+    },
+    async fetchEmpresas() {
+      const loader = this.$loading.show();
+      try{
+        //getEmpresas(pageValue,sizeValue,searchValue, active, kkid)
+        const response = await this.empresaStore.getEmpresas(
+          this.currentPage,
+          this.pageSize,
+          this.searchValue,
+          true,
+          this.$keycloak.idTokenParsed.sub);
+        console.log(response);
+        if(response==null){
+          this.totalPages = 0;
+          this.datas = [];
+          return;
+        }
+        this.totalPages = response.totalPages;
+        this.datas = response.content;
+
+      }catch(error){
+        console.log(error);
+      }finally{
+        loader.hide();
+      }
+    },
+    searchEmpresas() {
+      this.currentPage = 0;
+      this.fetchEmpresas();
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages - 1) {
+        this.currentPage++;
+        this.fetchEmpresas();
+      }
+    },
+    prevPage() {
+      if (this.currentPage > 0) {
+        this.currentPage--;
+        this.fetchEmpresas();
+      }
+    },
+    goToPage(page) {
+      this.currentPage = page;
+      this.fetchEmpresas();
     },
   },
 };

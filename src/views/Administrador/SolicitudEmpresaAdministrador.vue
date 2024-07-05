@@ -90,6 +90,8 @@
                         id="job-keyword"
                         class="form-input filter-input-box bg-gray-50 dark:bg-slate-800 border-0"
                         placeholder="Buscar empresa..."
+                        v-model="searchValue"
+                        @keyup.enter="searchEmpresas"
                       />
                     </div>
 
@@ -100,6 +102,7 @@
                       style="height: 60px"
                       class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white searchbtn submit-btn w-100"
                       value="Buscar"
+                      @click.prevent="searchEmpresas"
                     />
                   </div>
                   <!--end grid-->
@@ -132,51 +135,32 @@
           <div
             class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md"
           >
-            <img :src="item.image" class="size-8" alt="" />
+            <img :src="item.fotoInstitucion" class="size-8" alt="" />
           </div>
           <router-link
             class="text-lg hover:text-cyan-600 font-semibold transition-all duration-500 ms-3 min-w-[180px]"
-            >{{ item.job }}</router-link
+            >{{ item.nombre }}</router-link
           >
         </div>
 
         <div class="md:block flex justify-between md:mt-0 mt-2 mr-1">
           <span class="text-slate-400"
-            ><i class="fas fa-user"></i> {{ item.nombre }}</span
+            ><i class="uil uil-map-marker"></i> {{ item.direccion }}</span
           >
           <span class="block font-semibold md:mt-1 mt-0">{{
             item.correo
           }}</span>
         </div>
-        <div class="md:block flex justify-between md:mt-0 mt-4">
-          <span class="block"
-            ><span
-              class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full"
-              >Fecha:</span
-            ></span
-          >
-          <span class="block text-slate-400 text-sm md:mt-1 mt-0"
-            ><i class="uil uil-clock"></i> {{ item.day }}</span
-          >
-        </div>
         <div class="md:block flex justify-between md:mt-0 mt-2">
-          <span class="text-slate-400"
-            ><i class="uil uil-map-marker"></i> {{ item.country }}</span
-          >
-          <span class="block"
-            ><span
-              class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full"
-              >{{ item.type }}</span
-            ></span
-          >
         </div>
 
         <div class="md:mt-0 mt-4">
           <a
             href=""
             class="btn btn-icon rounded-full bg-yellow-600/5 hover:bg-yellow-600 border-yellow-600/10 hover:border-yellow-600 text-yellow-600 hover:text-white md:relative absolute top-0 end-0 md:m-0 m-3"
-            ><i data-feather="mail" class="size-4"></i
-          ></a>
+            >
+            <i class="uil-fast-mail"></i>
+          </a>
           <router-link
             to="/administrador/empresa/solicitud/usuario"
             class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto mt-2"
@@ -187,6 +171,47 @@
       <!--end content-->
     </div>
   </div>
+    <!--PAGINACIONNN-->
+    <div class="grid md:grid-cols-12 grid-cols-1 mt-8">
+    <div class="md:col-span-12 text-center">
+      <nav aria-label="Page navigation example">
+        <ul class="inline-flex items-center -space-x-px">
+          <li>
+            <button
+              @click="prevPage"
+              :disabled="currentPage === 0"
+              class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-s-3xl hover:text-white border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
+            >
+              <i class="uil uil-angle-left text-[20px] rtl:rotate-180 rtl:-mt-1"></i>
+            </button>
+          </li>
+          <li v-for="page in totalPages" :key="page">
+            <button
+              @click="goToPage(page-1)"
+              :class="[
+                'size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-cyan dark:bg-slate-900 border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600',
+                { 'z-10 bg-cyan-600 text-white border-cyan-600': page-1 === currentPage }
+              ]"
+            >
+              {{ page }}
+            </button>
+          </li>
+          <li>
+            <button
+              @click="nextPage"
+              :disabled="currentPage === totalPages - 1"
+              class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-e-3xl hover:text-white border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
+            >
+              <i class="uil uil-angle-right text-[20px] rtl:rotate-180 rtl:-mt-1"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <!--end col-->
+  </div>
+  <!--end grid-->
+  <!--FIN DE PAGINACION-->
 
   <!-- iframe end  -->
   <div class="md:my-16 my-16">
@@ -229,8 +254,11 @@ import question from "@/components/General/Home/job-questions.vue";
 import explore from "@/components/General/Home/explore-job.vue";
 import switcher from "@/components/General/switcher.vue";
 import footers from "@/components/footer/footer.vue";
-
+import { useEmpresasAdminStore } from "@/stores/Administradores/empresasAdminStore"; 
 export default {
+  mounted() {
+    this.fetchEmpresas();
+  },
   data() {
     return {
       isActive: false,
@@ -241,6 +269,11 @@ export default {
         "Administracion",
       ],
       selected: "Ingenieria de Sistemas",
+      empresaStore: useEmpresasAdminStore(),
+      pageSize: 12,
+      currentPage: 0,
+      searchValue: "",
+      totalPages: 0,
       datas: [
         {
           id: 1,
@@ -350,6 +383,51 @@ export default {
   methods: {
     toggle() {
       this.isActive = !this.isActive;
+    },
+    async fetchEmpresas() {
+      const loader = this.$loading.show();
+      try{
+        //getEmpresas(pageValue,sizeValue,searchValue, active, kkid)
+        const response = await this.empresaStore.getEmpresas(
+          this.currentPage,
+          this.pageSize,
+          this.searchValue,
+          false,
+          this.$keycloak.idTokenParsed.sub);
+        console.log(response);
+        if(response==null){
+          this.totalPages = 0;
+          this.datas = [];
+          return;
+        }
+        this.totalPages = response.totalPages;
+        this.datas = response.content;
+
+      }catch(error){
+        console.log(error);
+      }finally{
+        loader.hide();
+      }
+    },
+    searchEmpresas() {
+      this.currentPage = 0;
+      this.fetchEmpresas();
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages - 1) {
+        this.currentPage++;
+        this.fetchEmpresas();
+      }
+    },
+    prevPage() {
+      if (this.currentPage > 0) {
+        this.currentPage--;
+        this.fetchEmpresas();
+      }
+    },
+    goToPage(page) {
+      this.currentPage = page;
+      this.fetchEmpresas();
     },
   },
 };

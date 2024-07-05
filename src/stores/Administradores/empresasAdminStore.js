@@ -12,7 +12,7 @@ export const useEmpresasAdminStore = defineStore({
         async getEmpresas(pageValue,sizeValue,searchValue, active, kkid) {
             try {                    //añade los params page, size
 
-                const response = await axios.get(RutaApi + '/admin/'+kkid+'/institucion',
+                const response = await axios.get(RutaApi + '/admin/'+kkid+'/instituciones',
                     {
                         params: {
                             page: pageValue,
