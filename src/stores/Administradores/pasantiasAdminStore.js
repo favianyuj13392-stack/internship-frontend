@@ -13,9 +13,9 @@ export const usePasantiasAdminStore = defineStore({
             try {
                 const response = await axios.get(RutaApi + '/admin/'+kkid+'/pasantia', {
                     params: {
-                        pagina: pagina,
+                        page: pagina,
                         tamanio: tamanio,
-                        terminoDeBusqueda: terminoDeBusqueda,
+                        search: terminoDeBusqueda,
                         active: active
                     }
                 })

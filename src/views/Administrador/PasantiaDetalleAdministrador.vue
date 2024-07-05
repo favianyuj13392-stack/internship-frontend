@@ -17,7 +17,7 @@
 
             <div class="md:ms-4 md:mt-0 mt-6">
               <h5 class="text-xl font-semibold">
-                {{ data?.job ? data?.job : "Back-End Developer" }}
+                {{ data.titulo}}
               </h5>
               <div class="mt-2">
                 <span class="text-slate-400 font-medium me-2 inline-block"
@@ -260,12 +260,17 @@
 import navbar from "@/components/Administrador/navbarAdministrador.vue";
 
 import footers from "@/components/footer/footer.vue";
-
+import { usePasantiasStore } from "@/stores/Pasantias/pasantiasStore";
 import switcher from "@/components/General/switcher.vue";
 export default {
+  setup(){
+    const pasantiasStore = usePasantiasStore();
+    return {pasantiasStore}
+  },
   data() {
     return {
-      activo: false,
+      parsedData: [],
+      activo: true,
       data: "",
       id: "",
       image:
@@ -488,10 +493,48 @@ export default {
     footers,
     switcher,
   },
+  methods: {
+    async fetchPasantia() {
+      let loader = this.$loading.show();
+      try {
+        const response = await this.pasantiasStore.getPasantiaById(this.id);
+        this.data = response;
+        this.parsedData = this.data.descripcion.split("\n");
+        console.log(this.parsedData);
+        console.log(this.data);
+        if(this.data == null){
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No se encontro la pasantia",
+          });
+          this.$router.push("/pasantias");
+          return;
+        }
+      } catch (error) {
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "ERROR: " + error,
+        });
+
+      } finally {
+        loader.hide();
+      }
+    },
+    
+  },
   mounted() {
     this.id = this.$route.params.id;
-    this.data = this.datas.find((item) => item.id === parseInt(this.id));
+    this.fetchPasantia();
   },
+  props: {
+    id: {
+      type: String,
+      required: true,
+    }
+  }
 };
 </script>
 

@@ -130,7 +130,7 @@ const router = createRouter({
       component: SolicitudPasantiaAdministrador,
     },
     {
-      path: "/administrador/pasantia/detalle",
+      path: "/administrador/pasantia/:id/detalle",
       name: "PasantiaDetalleAdministrador",
       component: PasantiaDetalleAdministrador,
     },
