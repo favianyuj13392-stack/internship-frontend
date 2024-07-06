@@ -40,7 +40,7 @@
           >
             <div class="flex items-center">
               <img
-                :src="data?.image ? data?.image : image"
+                :src="data?.logoEmpresa ? data?.logoEmpresa : image"
                 class="size-20 p-3 shadow dark:shadow-gray-700 rounded-md bg-slate-50 dark:bg-slate-800"
                 alt=""
               />
@@ -60,7 +60,7 @@
               <h5 class="text-xl font-semibold text-red-500" v-if="data.activo==false">
                 Sin Aprobar
               </h5>
-              <h5 class="text-xl font-semibold text-cyan-600 " v-else>
+              <h5 class="text-xl font-semibold text-cyan-600 " v-if="data.activo==true">
                 Aprobado
               </h5>
             </div>
@@ -114,95 +114,9 @@
             
             </div>
   
-            <h5 class="text-xl font-semibold mt-6">Pasantias disponibles:</h5>
+            <h5 class="text-xl font-semibold mt-6">Pasantias disponibles: <span class="text-cyan-600 font-large">{{ data.cantidadPasantias  }}</span></h5>
   
-            <div class="grid lg:grid-cols-2 grid-cols-1 gap-6 mt-6">
-              <div
-                class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800"
-              >
-                <div class="p-6">
-                  <a
-                    href=""
-                    class="title h5 text-lg font-semibold hover:text-cyan-600"
-                    >Software Engineering</a
-                  >
-                  <p class="text-slate-400 mt-2">
-                    <i class="uil uil-clock text-cyan-600"></i> Posted 3 Days ago
-                  </p>
-  
-                  <div class="flex justify-between items-center mt-4">
-                    <span
-                      class="bg-cyan-600/5 text-cyan-600 text-xs font-bold px-2.5 py-0.5 rounded h-5"
-                      >Full Time</span
-                    >
-  
-                    <p class="text-slate-400">
-                      <i class="uil uil-usd-circle text-cyan-600"></i> $950 -
-                      $1100/mo
-                    </p>
-                  </div>
-                </div>
-  
-                <div
-                  class="flex items-center p-6 border-t border-gray-100 dark:border-gray-700"
-                >
-                  <img
-                    src="@/assets/images/company/skype.png"
-                    class="size-12 shadow-md dark:shadow-gray-800 rounded-md p-2 bg-white dark:bg-slate-900"
-                    alt=""
-                  />
-  
-                  <div class="ms-3">
-                    <h6 class="mb-0 font-semibold text-base">Skype</h6>
-                    <span class="text-slate-400 text-sm">Australia</span>
-                  </div>
-                </div>
-              </div>
-              <!--end content-->
-  
-              <div
-                class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800"
-              >
-                <div class="p-6">
-                  <a
-                    href=""
-                    class="title h5 text-lg font-semibold hover:text-cyan-600"
-                    >Web Developer</a
-                  >
-                  <p class="text-slate-400 mt-2">
-                    <i class="uil uil-clock text-cyan-600"></i> Posted 3 Days ago
-                  </p>
-  
-                  <div class="flex justify-between items-center mt-4">
-                    <span
-                      class="bg-cyan-600/5 text-cyan-600 text-xs font-bold px-2.5 py-0.5 rounded h-5"
-                      >Remote</span
-                    >
-  
-                    <p class="text-slate-400">
-                      <i class="uil uil-usd-circle text-cyan-600"></i> $2500 -
-                      $2600/mo
-                    </p>
-                  </div>
-                </div>
-  
-                <div
-                  class="flex items-center p-6 border-t border-gray-100 dark:border-gray-700"
-                >
-                  <img
-                    src="@/assets/images/company/skype.png"
-                    class="size-12 shadow-md dark:shadow-gray-800 rounded-md p-2 bg-white dark:bg-slate-900"
-                    alt=""
-                  />
-  
-                  <div class="ms-3">
-                    <h6 class="mb-0 font-semibold text-base">Skype</h6>
-                    <span class="text-slate-400 text-sm">America</span>
-                  </div>
-                </div>
-              </div>
-              <!--end content-->
-            </div>
+           
   
            
           </div>
@@ -351,6 +265,10 @@ import Swal from "sweetalert2";
             linkedin: "",
             instagram: "",
           },
+          sectores: [],
+          cantidadPasantias: 0,
+          activo: false,
+
 
         },
         id: "",
