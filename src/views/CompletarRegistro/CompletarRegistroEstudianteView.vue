@@ -670,7 +670,94 @@
     </div>
     <!--fin de edicion de profie-->
   </section>
+  <div id="myModalExperiencia" class="modal" v-if="showNuevaExperienciaModal">
+    <div class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+      <span class="close" @click="showNuevaExperienciaModal = false">&times;</span>
 
+      <div class="grid grid-cols-1 gap-4">
+        <div>
+          <h5 class="text-lg font-semibold mb-4">Experiencia :</h5>
+
+          <div>
+
+            <div>
+              <div class="grid grid-cols-12 mt-6 gap-4">
+                <div class="col-span-12">
+                  <label class="form-label font-medium">Título <span class="text-red-600">*</span></label>
+                  <input name="name" id="JobTitle" type="text"
+                  v-model="nuevaExperiencia.titulo"
+                    class="form-input border border-slate-100 dark:border-slate-800" placeholder="Título :" />
+                </div>
+                <!--end col-->
+
+                <div class="col-span-12">
+                  <label class="form-label font-medium">Nombre de la compañia
+                    <span class="text-red-600">*</span></label>
+                  <input name="name" id="CompanyName" type="text"
+                  v-model="nuevaExperiencia.empresa"
+                    class="form-input border border-slate-100 dark:border-slate-800" placeholder="Compañia :" />
+                </div>
+                <!--end col-->
+
+                <div class="col-span-12">
+                  <label class="form-label font-medium">Duración "(2020-2024)" <span class="text-red-600">*</span></label>
+                  <input name="number" id="Year" type="text"
+                  v-model="nuevaExperiencia.duracion"
+                    class="form-input border border-slate-100 dark:border-slate-800" placeholder="Duración :" />
+                </div>
+                <!--end col-->
+
+                <div class="col-span-12">
+                  <label class="form-label font-medium">
+                    Descripción :
+                  </label>
+                  <textarea name="comments" id="Description"
+                  v-model="nuevaExperiencia.descripcion"
+                    class="form-input border border-slate-100 dark:border-slate-800 textarea"
+                    placeholder="Descripción :"></textarea>
+                </div>
+                <!--end col-->
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 mt-5">
+              <button id="submit" name="send" @click="agregarNuevaExperiencia(nuevaExperiencia)"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer">Agregar</button>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="myModal" class="modal" v-if="showNuevaHabilidadModal">
+    <div class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+      <span class="close" @click="showNuevaHabilidadModal = false">&times;</span>
+      <div class="grid grid-cols-1 gap-4">
+        <div>
+          <h5 class="text-lg font-semibold mb-4">Nueva Habilidad :</h5>
+          <div>
+            <div class="grid grid-cols-1 gap-4">
+              <div class="">
+                <input type="text" class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                  placeholder="Habilidad:" id="WordPress" name="number" required="" v-model="nuevaHabilidad" />
+              </div>
+
+            </div>
+            <div class="grid grid-cols-1 gap-4 mt-5">
+              <button id="submit" name="send" @click="agregarHabilidad(nuevaHabilidad)"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer">Agregar</button>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
  
   <!-- End Hero -->
 

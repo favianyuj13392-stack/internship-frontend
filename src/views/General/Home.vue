@@ -158,8 +158,8 @@ export default {
     }
     let loader = this.$loading.show( );
     try {
-      await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
      const existencia = await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
+     console.log(existencia);
       if(this.$keycloak.tokenParsed.resource_access['internship-cliente'] == undefined && existencia==false){
         this.$router.push("/finish/register-empresa");
         loader.hide();
@@ -170,12 +170,16 @@ export default {
         loader.hide();
         return;
      }
-     else if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("EMPRESA")){
+     else if(existencia==false ){
         this.$router.push("/finish/register-empresa");
         loader.hide();
         return;
      }else if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("ADMIN")){
         this.$router.push("/administrador/dashboard");
+        loader.hide();
+        return;
+     }else if(existencia==true && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("EMPRESA")){
+        this.$router.push("/empresa/administrador/informacion");
         loader.hide();
         return;
      }

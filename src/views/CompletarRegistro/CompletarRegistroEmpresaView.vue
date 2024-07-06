@@ -1430,6 +1430,7 @@ import StarRatingComponent from "@/components/General/Extras/StartRatingComponen
 import { useInstitucionesStore } from "@/stores/Instituciones/InstitucionesPublicStore.js";
 import { useFilesStore } from "@/stores/fileStore.js";
 import Swal from "sweetalert2";
+import Compressor from 'compressorjs';
 
 export default {
   components: {
@@ -1791,7 +1792,7 @@ export default {
       console.log("usuarioInstitucion", this.usuarioInstitucion);
       this.usuarioInstitucion.kc_UUID = this.$keycloak.idTokenParsed.sub;
       this.usuarioInstitucion.idUsuarios = null;
-      this.usuarioInstitucion.horaRegistro = new Date().toLocaleTimeString();
+      this.usuarioInstitucion.horaRegistro = '12:12:12'
       this.usuarioInstitucion.institucion = this.empresaSeleccionada;
       let loader = this.$loading.show();
       try {
