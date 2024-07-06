@@ -1106,7 +1106,7 @@
                     name="profile-image"
                     type="file"
                     class="hidden"
-                    @change="handleFileUploadBannerPerfil"
+                    @change="handleFileUploadLogoEmpresa"
                   />
                   <div>
                     <div
@@ -1998,13 +1998,15 @@ export default {
 
         console.log("tamaño imagen anterior " + file.size);
         if (file.size > 4000000) {
-          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+          auxLink = await this.comprimirYSubirImagenFotosGeneral(file, 0.3);
           console.log("tamaño imagen comprimida " + auxLink);
           this.nuevaEmpresa.fotos.push(auxLink);
+          return;
         } else if (file.size > 1000000) {
-          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
+          auxLink = await this.comprimirYSubirImagenFotosGeneral(file, 0.5);
           console.log("tamaño imagen comprimida " + auxLink);
           this.nuevaEmpresa.fotos.push(auxLink);
+          return;
         } else {
           let loader = this.$loading.show();
           const response = await this.filesStore.uploadFile(file);
@@ -2019,7 +2021,10 @@ export default {
           } else {
             // Corrected code: use push() to add the new link to the array
             this.nuevaEmpresa.fotos.push(this.filesStore.link);
+            console.log("fotos", this.nuevaEmpresa.fotos);
+
           }
+
         }
       }
     },
@@ -2033,16 +2038,10 @@ export default {
         console.log("tamaño imagen anterior " + file.size);
         if (file.size > 4000000) {
           auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
-          console.log("tamaño imagen comprimida " + auxLink);
-          this.nuevaEmpresa.logoEmpresa = auxLink;
-          this.imageSrc3 = auxLink;
-          this.usuarioInstitucion.persona.fotoPerfil = auxLink;
+         
         } else if (file.size > 1000000) {
           auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
-          console.log("tamaño imagen comprimida " + auxLink);
-          // this.nuevaEmpresa.logoEmpresa = auxLink;
-          this.imageSrc3 = auxLink;
-          this.usuarioInstitucion.persona.fotoPerfil = auxLink;
+          
         } else {
           let loader = this.$loading.show();
           const response = await this.filesStore.uploadFile(file);
@@ -2073,11 +2072,11 @@ export default {
 
         console.log("tamaño imagen anterior " + file.size);
         if (file.size > 4000000) {
-          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+          auxLink = await this.comprimirYSubirImagenFotoGrande(file, 0.3);
           console.log("tamaño imagen comprimida " + auxLink);
           this.nuevaEmpresa.fotoInstitucion = auxLink;
         } else if (file.size > 1000000) {
-          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
+          auxLink = await this.comprimirYSubirImagenFotoGrande(file, 0.5);
           console.log("tamaño imagen comprimida " + auxLink);
           this.nuevaEmpresa.fotoInstitucion = auxLink;
         } else {
@@ -2098,7 +2097,7 @@ export default {
         }
       }
     },
-    async handleFileUploadBannerPerfil(event) {
+    async handleFileUploadLogoEmpresa(event) {
       const file = event.target.files[0];
       let auxLink = "";
 
@@ -2107,12 +2106,12 @@ export default {
 
         console.log("tamaño imagen anterior " + file.size);
         if (file.size > 4000000) {
-          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+          auxLink = await this.comprimirYSubirImagenLogoEmpresa(file, 0.3);
           console.log("tamaño imagen comprimida " + auxLink);
           this.nuevaEmpresa.logoEmpresa = auxLink;
           this.imageSrc = auxLink;
         } else if (file.size > 1000000) {
-          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
+          auxLink = await this.comprimirYSubirImagenLogoEmpresa(file, 0.5);
           console.log("tamaño imagen comprimida " + auxLink);
           this.nuevaEmpresa.logoEmpresa = auxLink;
           this.imageSrc = auxLink;
@@ -2136,7 +2135,7 @@ export default {
         }
       }
     },
-    async comprimirYSubirImagenBannerPerfil(file, cantidadCompresion) {
+    async comprimirYSubirImagenLogoEmpresa(file, cantidadCompresion) {
       new Compressor(file, {
         quality: cantidadCompresion,
         success: async (compressedResult) => {
@@ -2158,9 +2157,9 @@ export default {
               text: "Error al subir la imagen, porfavor intenta de nuevo",
             });
           } else {
-            this.estudianteDto.persona.bannerPerfil = this.filesStore.link;
+            this.nuevaEmpresa.logoEmpresa = this.filesStore.link;
+            this.imageSrc = this.filesStore.link;
 
-            this.imageSrc2 = this.filesStore.link;
           }
         },
         error(err) {
@@ -2168,6 +2167,111 @@ export default {
         },
       });
     },
+
+    async comprimirYSubirImagenFotoGrande(file, cantidadCompresion) {
+      new Compressor(file, {
+        quality: cantidadCompresion,
+        success: async (compressedResult) => {
+          console.log(
+            "tamaño imagen comprimida " +
+              compressedResult.size +
+              " con una compreison de " +
+              cantidadCompresion
+          );
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(compressedResult);
+          const aux = this.filesStore.link;
+          loader.hide();
+
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            this.nuevaEmpresa.fotoInstitucion = this.filesStore.link;
+
+
+          }
+        },
+        error(err) {
+          console.log(err.message);
+        },
+      });
+    },
+
+    async comprimirYSubirImagenFotosGeneral(file, cantidadCompresion) {
+      new Compressor(file, {
+        quality: cantidadCompresion,
+        success: async (compressedResult) => {
+          console.log(
+            "tamaño imagen comprimida " +
+              compressedResult.size +
+              " con una compreison de " +
+              cantidadCompresion
+          );
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(compressedResult);
+          const aux = this.filesStore.link;
+          loader.hide();
+
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            this.nuevaEmpresa.fotos.push(this.filesStore.link);
+            this.nuevaEmpresa.fotos = this.nuevaEmpresa.fotos.filter(
+              (element) => element !== undefined
+            );
+
+
+          }
+        },
+        error(err) {
+          console.log(err.message);
+        },
+      });
+    },
+
+
+    async comprimirYSubirImagenFotoPerfil(file, cantidadCompresion) {
+      new Compressor(file, {
+        quality: cantidadCompresion,
+        success: async (compressedResult) => {
+          console.log(
+            "tamaño imagen comprimida " +
+              compressedResult.size +
+              " con una compreison de " +
+              cantidadCompresion
+          );
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(compressedResult);
+          const aux = this.filesStore.link;
+          loader.hide();
+
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            this.imageSrc3 = this.filesStore.link;
+            this.usuarioInstitucion.persona.fotoPerfil = this.filesStore.link;
+
+
+          }
+        },
+        error(err) {
+          console.log(err.message);
+        },
+      });
+    },
+
   },
   computed: {
     filteredDatas() {
