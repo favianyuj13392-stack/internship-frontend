@@ -6,8 +6,10 @@
     />
     <!-- Start Hero -->
     <section
-      class="relative table w-full py-40 bg-[url('@/assets/images/hero/bg4.jpg')] bg-center bg-no-repeat bg-cover"
-    >
+    class="relative table w-full py-40 bg-center bg-no-repeat bg-cover" 
+    :style="{ backgroundImage: `url(${data?.fotoInstitucion ? data.fotoInstitucion : '@/assets/images/1.jpg'})` }"
+
+  >
       <div class="absolute inset-0 bg-cyan-900/60"></div>
     </section>
     <!--end section-->
@@ -45,14 +47,24 @@
   
               <div class="ms-4">
                 <h5 class="text-xl font-bold">
-                  {{ data?.name ? data?.name : "Skype" }}
+                  {{ data?.nombre ? data?.nombre : "Skype" }}
                 </h5>
                 <h6 class="text-base text-slate-400">
                   <i class="uil uil-map-marker"></i>
-                  {{ data?.country ? data.country : "Canberra, Australia" }}
+                  {{ data?.direccion ? data.direccion : "Canberra, Australia" }}
                 </h6>
               </div>
+
             </div>
+            <div class="md:mt-0 mt-4">
+              <h5 class="text-xl font-semibold text-red-500" v-if="data.activo==false">
+                Sin Aprobar
+              </h5>
+              <h5 class="text-xl font-semibold text-cyan-600 " v-else>
+                Aprobado
+              </h5>
+            </div>
+             
   
             <div class="md:mt-0 mt-4">
               <a
@@ -63,7 +75,7 @@
               <a
                 href=""
                 class="btn btn-sm bg-cyan-600/5 hover:bg-cyan-600 border-cyan-600/10 hover:border-cyan-600 text-cyan-600 hover:text-white rounded-md ms-1"
-                >See Jobs</a
+                >Ver Pasantías</a
               >
             </div>
           </div>
@@ -76,43 +88,30 @@
       <div class="container mt-12">
         <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
           <div class="lg:col-span-8 md:col-span-7">
-            <h5 class="text-xl font-semibold">Company Story</h5>
+            <h5 class="text-xl font-semibold">A cerca de la compañia</h5>
             <p class="text-slate-400 mt-4">
-              It is a long established fact that a reader will be distracted by
-              the readable content of a page when looking at its layout. The point
-              of using Lorem Ipsum is that it has a more-or-less normal
-              distribution of letters, as opposed.
+              {{ data?.descripcion
+                ? data?.descripcion
+                : "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage." }}
             </p>
-            <p class="text-slate-400 mt-2">
-              Contrary to popular belief, Lorem Ipsum is not simply random text.
-              It has roots in a piece of classical Latin literature from 45 BC,
-              making it over 2000 years old. Richard McClintock, a Latin professor
-              at Hampden-Sydney College in Virginia, looked up one of the more
-              obscure Latin words, consectetur, from a Lorem Ipsum passage.
-            </p>
+            
   
             <div class="grid grid-cols-12 gap-6 mt-6">
-              <div class="col-span-12">
+              <div class="col-span-12" v-if="data.fotos.length<3">
                 <img
-                  src="@/assets/images/company/1.jpg"
+                  :src="data.fotoInstitucion"
                   class="rounded-md shadow dark:shadow-gray-700"
                   alt=""
                 />
               </div>
-              <div class="col-span-6">
+              <div class="col-span-6" v-for="foto in data.fotos">
                 <img
-                  src="@/assets/images/company/2.jpg"
+                  :src="foto"
                   class="rounded-md shadow dark:shadow-gray-700"
                   alt=""
                 />
               </div>
-              <div class="col-span-6">
-                <img
-                  src="@/assets/images/company/3.jpg"
-                  class="rounded-md shadow dark:shadow-gray-700"
-                  alt=""
-                />
-              </div>
+            
             </div>
   
             <h5 class="text-xl font-semibold mt-6">Pasantias disponibles:</h5>
@@ -210,137 +209,66 @@
           <!--end col-->
   
           <div class="lg:col-span-4 md:col-span-5">
-            <div
-              class="bg-slate-50 dark:bg-slate-800 rounded-md shadow dark:shadow-gray-700 p-6 sticky top-20"
-            >
-              <div class="w-full leading-[0] border-0">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d39206.002432144705!2d-95.4973981212445!3d29.709510002925988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c16de81f3ca5%3A0xf43e0b60ae539ac9!2sGerald+D.+Hines+Waterwall+Park!5e0!3m2!1sen!2sin!4v1566305861440!5m2!1sen!2sin"
+          <div
+            class="bg-slate-50 dark:bg-slate-800 rounded-md shadow dark:shadow-gray-700 p-6 sticky top-20"
+          >
+            <div class="w-full leading-[0] border-0">
+              <iframe
+                  :src="mapSrc"
                   style="border: 0"
                   class="w-full h-[350px] rounded-md shadow dark:shadow-gray-700"
                   allowfullscreen
                 ></iframe>
-              </div>
-  
-              <ul class="list-none mt-4">
-                <li class="flex justify-between mt-2">
-                  <span class="text-slate-400 font-medium">Founded:</span>
-                  <span class="font-medium">2003</span>
-                </li>
-  
-                <li class="flex justify-between mt-2">
-                  <span class="text-slate-400 font-medium">Founder:</span>
-                  <span class="font-medium">Niklas Zennström</span>
-                </li>
-  
-                <li class="flex justify-between mt-2">
-                  <span class="text-slate-400 font-medium">Headquarters:</span>
-                  <span class="font-medium">Luxembourg</span>
-                </li>
-  
-                <li class="flex justify-between mt-2">
-                  <span class="text-slate-400 font-medium"
-                    >Number of employees:</span
-                  >
-                  <span class="font-medium">788</span>
-                </li>
-  
-                <li class="flex justify-between mt-2">
-                  <span class="text-slate-400 font-medium">Website:</span>
-                  <span class="font-medium">https://skype.com</span>
-                </li>
-  
-                <li class="flex justify-between mt-2">
-                  <span class="text-slate-400 font-medium">Social:</span>
-  
-                  <ul class="list-none text-end space-x-0.5">
-                    <li class="inline">
-                      <a
-                        href="https://dribbble.com/shreethemes"
-                        target="_blank"
-                        class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
-                        ><i
-                          class="uil uil-dribbble align-middle"
-                          title="dribbble"
-                        ></i
-                      ></a>
-                    </li>
-                    <li class="inline">
-                      <a
-                        href="https://www.behance.net/shreethemes"
-                        target="_blank"
-                        class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
-                        ><i class="uil uil-behance" title="Behance"></i
-                      ></a>
-                    </li>
-                    <li class="inline">
-                      <a
-                        href="http://linkedin.com/company/shreethemes"
-                        target="_blank"
-                        class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
-                        ><i class="uil uil-linkedin" title="Linkedin"></i
-                      ></a>
-                    </li>
-                    <li class="inline">
-                      <a
-                        href="https://www.facebook.com/shreethemes"
-                        target="_blank"
-                        class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
-                        ><i
-                          class="uil uil-facebook-f align-middle"
-                          title="facebook"
-                        ></i
-                      ></a>
-                    </li>
-                    <li class="inline">
-                      <a
-                        href="https://www.instagram.com/shreethemes/"
-                        target="_blank"
-                        class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
-                        ><i
-                          class="uil uil-instagram align-middle"
-                          title="instagram"
-                        ></i
-                      ></a>
-                    </li>
-                    <li class="inline">
-                      <a
-                        href="https://twitter.com/shreethemes"
-                        target="_blank"
-                        class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
-                        ><i
-                          class="uil uil-twitter align-middle"
-                          title="twitter"
-                        ></i
-                      ></a>
-                    </li>
-                    <li class="inline">
-                      <a
-                        href="mailto:support@shreethemes.in"
-                        class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
-                        ><i
-                          class="uil uil-envelope align-middle"
-                          title="email"
-                        ></i
-                      ></a>
-                    </li>
-                  </ul>
-                  <!--end icon-->
-                </li>
-              </ul>
-  
+            </div>
+
+            <ul class="list-none mt-4">
+              <li class="flex justify-between mt-2">
+                <span class="text-slate-400 font-medium">Dirección:</span>
+                <span class="font-medium">{{ data.direccion }}</span>
+              </li>
+
              
 
+              <li class="flex justify-between mt-2">
+                <span class="text-slate-400 font-medium">Correo:</span>
+                <span class="font-medium">{{ this.data.correo }}</span>
+              </li>
 
+              <li class="flex justify-between mt-2">
+                <span class="text-slate-400 font-medium">Sectores:</span>
+                <div class="flex flex-wrap ml-16">
+                  <span class="font-medium" v-for="sector in this.data.sectores">{{ sector}}</span>
+                </div>
+              </li>
 
               
 
+              <li class="flex justify-between mt-2" v-if="this.data.redesSociales.web">
+                <span class="text-slate-400 font-medium">Website:</span>
+                <span class="font-medium">{{ this.data.redesSociales.web }}</span>
+              </li>
 
+              <li class="flex justify-between mt-2">
+                <span class="text-slate-400 font-medium">Social:</span>
 
+                <ul class="list-none text-end space-x-0.5">
+                  <li class="inline" v-for="(url, name) in data.redesSociales" :key="name">
+                    <a
+                      :href="url"
+                      target="_blank"
+                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
+                    >
+                      <i :class="`uil uil-${name}`" :title="name" class="align-middle"></i>
+                    </a>
+                  </li>
+                </ul>
+                <!--end icon-->
+              </li>
+            </ul>
 
-
-            </div>
+            
           </div>
+        </div>
           <!--end col-->
         </div>
   
@@ -362,6 +290,8 @@
   import footers from "@/components/footer/footer.vue";
 
 import switcher from "@/components/General/switcher.vue";
+import {useInstitucionesAdministracionStore} from "@/stores/Instituciones/InstitucionesAdministracionStore.js";
+import Swal from "sweetalert2";
   export default {
     props: {
       jobs: {
@@ -369,9 +299,60 @@ import switcher from "@/components/General/switcher.vue";
         required: true,
       },
     },
+    setup() {
+      const institucionesStore = useInstitucionesAdministracionStore();
+      return {institucionesStore};
+    },
+
+
+    methods: {
+      async fetchInstituciones() {
+        let loader = this.$loading.show();
+       const response =  await this.institucionesStore.fetchInstitucionByUUID(this.$keycloak.idTokenParsed.sub);
+        loader.hide();
+       console.log(response);
+       
+       if(response==null){
+        Swal.fire({
+          title: "Error",
+          text: "No se pudo cargar la informacion de la empresa",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+        //this.$keycloak.logout();
+        }
+        this.data = response;
+      },
+    },
+    computed: {
+    mapSrc() {
+      // Construir la URL del mapa de Google con la dirección
+      const direccionEncoded = encodeURIComponent(this.data.direccion);
+      return `https://www.google.com/maps/embed/v1/place?q=${direccionEncoded}&key=AIzaSyCoOVExrC3ADb7HXkXLyBZB3zyVqClHZ7w`;
+      // Reemplaza TU_API_KEY con tu propia clave de API de Google Maps
+    },
+  },
+
     data() {
       return {
-        data: "",
+        data: {
+          nombre: "",
+          descripcion: "",
+          direccion: "",
+          fotoInstitucion: "",
+          fotos: [
+            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
+          
+          ],
+          redesSociales: {
+            web: "",
+            facebook: "",
+            twitter: "",
+            linkedin: "",
+            instagram: "",
+          },
+
+        },
         id: "",
         image:
           "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
@@ -560,6 +541,9 @@ import switcher from "@/components/General/switcher.vue";
       switcher,
     },
     mounted() {
+      this.fetchInstituciones();
+
+
       this.id = this.$route.params.id;
       this.data = this.datas.find((item) => item.id === parseInt(this.id));
     },
