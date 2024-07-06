@@ -15,7 +15,7 @@
           class="lg:leading-normal leading-normal text-4xl lg:text-6xl mb-5 font-bold text-white"
         >
           INTERNSHIP <br />
-          by Universidad Catolica Boliviana
+          by Universidad Católica Boliviana
         </h4>
         <p class="text-white/50 text-lg max-w-xl mx-auto">
           Únete a nosotros en esta emocionante etapa de tu educación, donde el
@@ -81,7 +81,7 @@
             ><span class="text-white"
               >Tu primer paso en el mundo laboral por :</span
             >
-            Universidad Catolica Boliviana "San Pablo"</span
+            Universidad Católica Boliviana "San Pablo"</span
           >
         </div>
       </div>
