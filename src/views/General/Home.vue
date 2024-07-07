@@ -15,7 +15,7 @@
           class="lg:leading-normal leading-normal text-4xl lg:text-6xl mb-5 font-bold text-white"
         >
           INTERNSHIP <br />
-          by Universidad Catolica Boliviana
+          by Universidad Católica Boliviana
         </h4>
         <p class="text-white/50 text-lg max-w-xl mx-auto">
           Únete a nosotros en esta emocionante etapa de tu educación, donde el
@@ -81,7 +81,7 @@
             ><span class="text-white"
               >Tu primer paso en el mundo laboral por :</span
             >
-            Universidad Catolica Boliviana "San Pablo"</span
+            Universidad Católica Boliviana "San Pablo"</span
           >
         </div>
       </div>
@@ -158,8 +158,8 @@ export default {
     }
     let loader = this.$loading.show( );
     try {
-      await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
      const existencia = await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
+     console.log(existencia);
       if(this.$keycloak.tokenParsed.resource_access['internship-cliente'] == undefined && existencia==false){
         this.$router.push("/finish/register-empresa");
         loader.hide();
@@ -170,12 +170,16 @@ export default {
         loader.hide();
         return;
      }
-     else if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("EMPRESA")){
+     else if(existencia==false ){
         this.$router.push("/finish/register-empresa");
         loader.hide();
         return;
      }else if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("ADMIN")){
         this.$router.push("/administrador/dashboard");
+        loader.hide();
+        return;
+     }else if(existencia==true && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("EMPRESA")){
+        this.$router.push("/empresa/administrador/informacion");
         loader.hide();
         return;
      }

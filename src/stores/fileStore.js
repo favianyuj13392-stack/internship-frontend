@@ -8,7 +8,6 @@ export const useFilesStore = defineStore({
         fileData: [],
         porcentajeCarga: 0,
         link: '',
-        moderationLabels: [],
     }),
     actions: {
         async uploadFile(file) {
@@ -34,7 +33,6 @@ export const useFilesStore = defineStore({
         
                 if (response.status === 200) {
                     this.link = response.data.response.url;
-                    this.moderationLabels = response.data.response.moderationLabels;
                     return true;
                 } else {
                     console.error('La carga del archivo no fue exitosa. Estado:', response.status);

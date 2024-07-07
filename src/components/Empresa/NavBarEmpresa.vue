@@ -103,69 +103,80 @@
   
            
   
+            <div v-if="$keycloak.authenticated">
             <ul class="buy-button list-none mb-0">
-          <li class="dropdown inline-block relative ps-1">
-            <button
-              data-dropdown-toggle="dropdown"
-              class="dropdown-toggle items-center"
-              type="button"
-              ref="dropdownToggle"
-              @click="dropdownOpen = !dropdownOpen"
-            >
-              <span
-                class="btn btn-icon rounded-full bg-emerald-600 hover:bg-emerald-700 border-emerald-600 hover:border-emerald-700 text-white"
-                ><img
-                  src="../../assets/images/team/01.jpg"
-                  class="rounded-full"
-                  alt=""
-              /></span>
-            </button>
-            <!-- Dropdown menu -->
-            <div
-              class="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700"
-              v-show="dropdownOpen"
-            >
-              <ul class="py-2 text-start">
-                <li>
-                  <router-link
-                    to="/candidate-profile"
-                    class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-emerald-600 dark:hover:text-white"
-                    ><i data-feather="user" class="size-4 me-2"></i
-                    >Profile</router-link
+              <li class="dropdown inline-block relative ps-1">
+                <button
+                  data-dropdown-toggle="dropdown"
+                  class="dropdown-toggle items-center"
+                  type="button"
+                  ref="dropdownToggle"
+                  @click="dropdownOpen = !dropdownOpen"
+                >
+                  <span
+                    class="btn btn-icon rounded-full bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white"
                   >
-                </li>
-                <li>
-                  <router-link
-                    to="/candidate-profile-setting"
-                    class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-emerald-600 dark:hover:text-white"
-                    ><i data-feather="settings" class="size-4 me-2"></i
-                    >Settings</router-link
-                  >
-                </li>
-                <li
-                  class="border-t border-gray-100 dark:border-gray-800 my-2"
-                ></li>
-                <li>
-                  <router-link
-                    to="/lock-screen"
-                    class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-emerald-600 dark:hover:text-white"
-                    ><i data-feather="lock" class="size-4 me-2"></i
-                    >Lockscreen</router-link
-                  >
-                </li>
-                <li>
-                  <router-link
-                    to="/"
-                    class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-emerald-600 dark:hover:text-white"
-                    ><i data-feather="log-out" class="size-4 me-2"></i
-                    >Logout</router-link
-                  >
-                </li>
-              </ul>
-            </div>
-          </li>
-          <!--end dropdown-->
-        </ul>
+                    <img
+                      v-if="$keycloak.tokenParsed.picture"
+                      :src="$keycloak.tokenParsed.picture"
+                      class="rounded-full"
+                      alt=""
+                    />
+                    <img
+                      v-else
+                      src="@/assets/images/user-empty.png"
+                      class="rounded-full"
+                      alt=""
+                    />
+                  </span>
+                </button>
+                <!-- Dropdown menu -->
+                <div
+                  class="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700"
+                  v-show="dropdownOpen"
+                >
+                  <ul class="py-2 text-start">
+                    <li>
+                      <router-link
+                        to="/perfil/estudiante"
+                        class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
+                        ><i data-feather="user" class="size-4 me-2"></i
+                        >Perfil</router-link
+                      >
+                    </li>
+                    <li>
+                      <router-link
+                        to="/perfil/estudiante/editar"
+                        class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
+                        ><i data-feather="settings" class="size-4 me-2"></i
+                        >Configuraciones</router-link
+                      >
+                    </li>
+                    <li
+                      class="border-t border-gray-100 dark:border-gray-800 my-2"
+                    ></li>
+                    <li>
+                      <a
+                        @click="block()"
+                        class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
+                        ><i data-feather="lock" class="size-4 me-2"></i
+                        >Bloquear</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        @click="$keycloak.logout"
+                        class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
+                        ><i data-feather="log-out" class="size-4 me-2"></i
+                        >Salir</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <!--end dropdown-->
+            </ul>
+          </div>
           </ul>
           <!--end navigation menu-->
           
@@ -202,58 +213,103 @@
         required: true,
       },
     },
-    data() {
-      return {
-        toggle: false,
-        activeMenu: "",
-        menu: true,
-        menuOpen: "",
-        dropdownOpen: false,
-      };
+    computed: {
+    isLoading() {
+      return this.$keycloak.ready == false;
     },
-    created() {
-      this.activeMenu = window.location.pathname;
-      window.addEventListener("scroll", this.handleScroll);
+  },
+  data() {
+    return {
+      toggle: false,
+      activeMenu: "",
+      menu: true,
+      menuOpen: "",
+      dropdownOpen: false,
+      prueba: false,
+    };
+  },
+  created() {
+    this.activeMenu = window.location.pathname;
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  mounted() {
+    document.addEventListener("click", this.handleClickOutside);
+    feather.replace();
+    this.scrollToTop();
+
+    /*
+    let loader = this.$loading.show(
+      {
+
+      }
+    );
+                // simulate AJAX
+                setTimeout(() => {
+                    loader.hide()
+                }, 5000);*/
+  },
+  unmounted() {
+    window.removeEventListener("scroll", this.handleScroll);
+    document.removeEventListener("click", this.handleClickOutside);
+  },
+
+  methods: {
+    block() {
+      let loader = this.$loading.show({
+        container: this.fullPage ? null : this.$refs.formContainer,
+        canCancel: true,
+        onCancel: this.unlock(),
+        width: 2,
+        height: 2,
+        backgroundColor: "#000000",
+        opacity: 0.7,
+        lockScroll: true,
+      });
     },
-    mounted() {
-      document.addEventListener("click", this.handleClickOutside);
-      feather.replace();
-      this.scrollToTop();
+    unlock() {
+      let loader = this.$loading.show({
+        // Optional parameters
+        container: this.fullPage ? null : this.$refs.formContainer,
+      });
+
+      // simulate AJAX
+      loader.hide();
+      console.log("unlock");
     },
-    unmounted() {
-      window.removeEventListener("scroll", this.handleScroll);
-      document.removeEventListener("click", this.handleClickOutside);
+
+    handleLogout() {
+      this.$keycloak.logout({
+        redirectUri: window.location.origin,
+      });
     },
-  
-    methods: {
-      handler() {
-        this.toggle = !this.toggle;
-      },
-      submenu(item) {
-        this.menu = !this.menu;
-        this.menuOpen = item;
-      },
-      handleScroll() {
-        const navbar = document.getElementById("topnav");
-        if (
-          document.body.scrollTop >= 50 ||
-          document.documentElement.scrollTop >= 50
-        ) {
-          navbar.classList.add("nav-sticky");
-        } else {
-          navbar.classList.remove("nav-sticky");
-        }
-      },
-      handleClickOutside(event) {
-        if (!this.$refs.dropdownToggle.contains(event.target)) {
-          this.dropdownOpen = false;
-        }
-      },
-  
-      scrollToTop() {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      },
+    handler() {
+      this.toggle = !this.toggle;
     },
+    submenu(item) {
+      this.menu = !this.menu;
+      this.menuOpen = item;
+    },
+    handleScroll() {
+      const navbar = document.getElementById("topnav");
+      if (
+        document.body.scrollTop >= 50 ||
+        document.documentElement.scrollTop >= 50
+      ) {
+        navbar.classList.add("nav-sticky");
+      } else {
+        navbar.classList.remove("nav-sticky");
+      }
+    },
+    handleClickOutside(event) {
+      if (!this.$refs.dropdownToggle.contains(event.target)) {
+        this.dropdownOpen = false;
+      }
+    },
+
+    scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+  },
   };
   </script>
   
