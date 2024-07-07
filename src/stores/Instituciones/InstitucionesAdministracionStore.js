@@ -22,6 +22,19 @@ export const useInstitucionesAdministracionStore = defineStore({
                 console.log(error)
             }
         },
+
+        async fetchPasantiasInstitucionByUUID(id) {
+            try {
+                const response = await axios.get(RutaApi + '/institucion/usuario/' + id+'/pasantias')
+                if (response.data.code == '200') {
+                    return response.data.response
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
     
     },
 })

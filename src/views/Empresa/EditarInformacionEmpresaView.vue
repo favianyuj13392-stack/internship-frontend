@@ -218,6 +218,8 @@ import Swal from "sweetalert2";
       return {institucionesStore};
     },
 
+    
+
 
     methods: {
       async fetchInstituciones() {

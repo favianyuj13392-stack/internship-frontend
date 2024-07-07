@@ -197,7 +197,38 @@
   import footers from "@/components/footer/footer.vue";
 
 import switcher from "@/components/General/switcher.vue";
+import {useInstitucionesAdministracionStore} from "@/stores/Instituciones/InstitucionesAdministracionStore.js";
+import Swal from "sweetalert2";
   export default {
+    setup() {
+      const institucionesAdministracionStore = useInstitucionesAdministracionStore();
+      return {
+        institucionesAdministracionStore,
+      };
+    },
+
+    
+    methods: {
+      async fetchPasantias(){
+        let loader = this.$loading.show();
+        const response = await this.institucionesAdministracionStore.fetchPasantiasInstitucionByUUID(this.$keycloak.tokenParsed.sub);
+        loader.hide();
+        if(response==null){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No se pudo cargar las pasantías',
+          })
+
+        }
+        console.log(response);
+      },
+  
+      },
+      mounted() {
+        this.fetchPasantias();
+      },
+
     data() {
       return {
         datas: [
