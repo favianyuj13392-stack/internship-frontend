@@ -29,8 +29,75 @@ export const usePasantiasAdminStore = defineStore({
                 console.log(error)
             }
         },
+/**
+ @PutMapping("/pasantia/{idPasantias}/aceptar")
+    public ResponseEntity<ResponseDto<PasantiasDto>> aceptarPasantia(
+            @PathVariable String uuid,
+            @PathVariable Integer idPasantias
+    ) {
+        return handleRequest(() -> administradorBl.aceptarPasantia(idPasantias));
+    }
+ */
 
-       
-
+    async aceptarPasantia(idPasantias, kkid) {
+        try {
+            const response = await axios.put(RutaApi + '/admin/'+kkid+'/pasantia/'+idPasantias+'/aceptar')
+            if (response.data.code == '200') {
+                return response.data.response
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.log(error)
+        }
     },
+
+    /***
+     @GetMapping("/pasantia/{idPasantia}")
+    public ResponseEntity<ResponseDto<PasantiaConEmpresaYPostulantes>> getPasantia(
+            @PathVariable String uuid,
+            @PathVariable Integer idPasantia
+    ) {
+        return handleRequest(() -> pasantiaBl.obtenerPasantia(idPasantia));
+    }
+     */
+
+    async obtenerPasantiaPorId(idPasantia, kkid) {
+        try {
+            const response = await axios.get(RutaApi + '/admin/'+kkid+'/pasantia/'+idPasantia)
+            if (response.data.code == '200') {
+                return response.data.response
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    /**
+       @DeleteMapping("/pasantia/{idPasantias}/aceptar")
+    public ResponseEntity<ResponseDto<PasantiasDto>> rechazarPasantia(
+            @PathVariable String uuid,
+            @PathVariable Integer idPasantias
+    ) {
+        return handleRequest(() -> administradorBl.rechazarPasantia(idPasantias));
+    }
+
+
+     */
+    async rechazarPasantia(idPasantias, kkid) {
+        try {
+            const response = await axios.delete(RutaApi + '/admin/'+kkid+'/pasantia/'+idPasantias+'/aceptar')
+            if (response.data.code == '200') {
+                return response.data.response
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+  },
 })

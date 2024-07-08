@@ -131,11 +131,9 @@
         >
           <div class="flex justify-end mt-2 mr-2">
             <router-link
-            :to="{
-                  name: 'EmpresaDetalleAdministrador',
-                  params: { id: item.idInstituciones },
-                }"
-              class="btn btn-icon rounded-full bg-cyan-600/5 group-hover:bg-cyan-600 border-cyan-600/10 text-cyan-600 group-hover:text-white ms-1 ml-3"
+            :to="{ name: 'PasantiaDetalleAdministrador', params: { id: item.idPasantias } }"
+                   
+              class="btn btn-icon rounded-full bg-cyan-600/5 hover:bg-cyan-600 border-cyan-600/10 text-cyan-600 hover:text-white ms-1 ml-3"
               ><i class="uil uil-arrow-up-right"></i
             ></router-link>
           </div>
@@ -179,7 +177,7 @@
                   params: { id: item.idInstituciones },
                 }"
               >
-                <h6 class="mb-0 font-semibold text-base">
+                <h6 class="mb-0 font-semibold text-base hover:text-cyan-700">
                   {{ item.nombre }}
                 </h6></router-link
               >

@@ -10,75 +10,70 @@
             class="md:flex items-center p-6 shadow dark:shadow-gray-700 rounded-md bg-white dark:bg-slate-900 mb-6"
           >
             <img
-              :src="data?.image ? data?.image : image"
+              :src="this.instituto.logoEmpresa"
               class="rounded-full size-28 p-4 bg-white dark:bg-slate-900 shadow dark:shadow-gray-700"
-              alt=""
+              :alt="this.instituto.nombre"
             />
 
             <div class="md:ms-4 md:mt-0 mt-6">
               <h5 class="text-xl font-semibold">
-                {{ data.titulo}}
+                {{ this.pasantia.titulo }}
               </h5>
               <div class="mt-2">
                 <span class="text-slate-400 font-medium me-2 inline-block"
                   ><i
                     class="uil uil-building text-[18px] text-cyan-600 me-1"
-                  ></i>
-                  {{ data?.name ? data?.name : "Lenovo pvt. ltd." }}</span
-                >
+                  ></i
+                  >{{ this.instituto.nombre }}
+                </span>
                 <span class="text-slate-400 font-medium me-2 inline-block"
-                  ><i
-                    class="uil uil-map-marker text-[18px] text-cyan-600 me-1"
-                  ></i>
-                  {{
-                    data?.country ? data?.country : "Beijing,    China"
-                  }}</span
-                >
+                  ><i class="uil-fast-mail text-[18px] text-cyan-600 me-1"></i>
+                  {{ this.instituto.correo }}
+                </span>
               </div>
             </div>
           </div>
           <!--detallesssss-->
-          <h5 class="text-lg font-semibold">Detalles de la pasantia:</h5>
+          <h5 class="text-lg font-semibold">Descripción de la pasantia:</h5>
 
-          <p class="text-slate-400 mt-4">
-            One disadvantage of Lorum Ipsum is that in Latin certain letters
-            appear more frequently than others - which creates a distinct visual
-            impression. Moreover, in Latin only words at the beginning of
-            sentences are capitalized.
-          </p>
-          <p class="text-slate-400 mt-4">
-            This means that Lorem Ipsum cannot accurately represent, for
-            example, German, in which all nouns are capitalized. Thus, Lorem
-            Ipsum has only limited suitability as a visual filler for German
-            texts. If the fill text is intended to illustrate the
-            characteristics of different typefaces.
-          </p>
-          <p class="text-slate-400 mt-4">
-            It sometimes makes sense to select texts containing the various
-            letters and symbols specific to the output language.
+          <p class="text-slate-400 mt-4" v-for="paragraph in parsedData">
+            {{ paragraph }}
           </p>
 
           <h5 class="text-lg font-semibold mt-6">Areas:</h5>
-          <p class="text-slate-400 mt-4">
-            It sometimes makes sense to select texts containing the various
-            letters and symbols specific to the output language.
-          </p>
+
           <ul class="list-none">
-            <li v-for="item in datas1" :key="item" class="text-slate-400 mt-2">
+            <li
+              v-for="item in pasantia.areas"
+              :key="item"
+              class="text-slate-400 mt-2"
+            >
               <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
             </li>
           </ul>
 
-          <h5 class="text-lg font-semibold mt-6">
-            Requisistos necesarios y calificaciones:
-          </h5>
-          <p class="text-slate-400 mt-4">
-            It sometimes makes sense to select texts containing the various
-            letters and symbols specific to the output language.
-          </p>
+          <h5 class="text-lg font-semibold mt-6">Detalles de la pasantia:</h5>
+
           <ul class="list-none">
-            <li v-for="item in datas1" :key="item" class="text-slate-400 mt-2">
-              <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
+            <li
+              v-for="funcion in pasantia.funciones"
+              class="text-slate-400 mt-2"
+            >
+              <i class="uil uil-arrow-right text-cyan-600 me-1"></i>
+              {{ funcion }}
+            </li>
+          </ul>
+          <h5 class="text-lg font-semibold mt-6">
+            Requisistos de la pasantia:
+          </h5>
+          <ul class="list-none">
+            <li
+              v-for="requisito in pasantia.requisitos"
+              :key="item"
+              class="text-slate-400 mt-2"
+            >
+              <i class="uil uil-arrow-right text-cyan-600 me-1"></i>
+              {{ requisito }}
             </li>
           </ul>
         </div>
@@ -100,9 +95,20 @@
                   <i data-feather="user-check" class="size-5"></i>
 
                   <div class="ms-4">
-                    <p class="font-medium">Employee Type:</p>
+                    <p class="font-medium">Inicio de postulacion:</p>
                     <span class="text-purple-600 font-medium text-sm">{{
-                      data?.type ? data?.type : "Full Time"
+                      this.pasantia.fechaIngreso
+                    }}</span>
+                  </div>
+                </li>
+
+                <li class="flex items-center mt-3">
+                  <i data-feather="clock" class="size-5"></i>
+
+                  <div class="ms-4">
+                    <p class="font-medium">Cierre de pasantia:</p>
+                    <span class="text-purple-600 font-medium text-sm">{{
+                      this.pasantia.fechaCierre
                     }}</span>
                   </div>
                 </li>
@@ -111,21 +117,10 @@
                   <i data-feather="map-pin" class="size-5"></i>
 
                   <div class="ms-4">
-                    <p class="font-medium">Location:</p>
-                    <span class="text-purple-600 font-medium text-sm">{{
-                      data?.country ? data?.country : "Beijing, China"
-                    }}</span>
-                  </div>
-                </li>
-
-                <li class="flex items-center mt-3">
-                  <i data-feather="monitor" class="size-5"></i>
-
-                  <div class="ms-4">
-                    <p class="font-medium">Job Type:</p>
-                    <span class="text-purple-600 font-medium text-sm">{{
-                      data?.job ? data?.job : "Back-end Developer"
-                    }}</span>
+                    <p class="font-medium">Ubicación:</p>
+                    <span class="text-purple-600 font-medium text-sm">
+                      {{ this.instituto.direccion }}</span
+                    >
                   </div>
                 </li>
 
@@ -133,60 +128,38 @@
                   <i data-feather="briefcase" class="size-5"></i>
 
                   <div class="ms-4">
-                    <p class="font-medium">Experience:</p>
-                    <span class="text-purple-600 font-medium text-sm"
-                      >2+ years</span
-                    >
-                  </div>
-                </li>
-
-                <li class="flex items-center mt-3">
-                  <i data-feather="book" class="size-5"></i>
-
-                  <div class="ms-4">
-                    <p class="font-medium">Qualifications:</p>
-                    <span class="text-purple-600 font-medium text-sm">MCA</span>
-                  </div>
-                </li>
-
-                <li class="flex items-center mt-3">
-                  <i data-feather="dollar-sign" class="size-5"></i>
-
-                  <div class="ms-4">
-                    <p class="font-medium">Salary:</p>
-                    <span class="text-purple-600 font-medium text-sm"
-                      >$4000 - $4500</span
-                    >
-                  </div>
-                </li>
-
-                <li class="flex items-center mt-3">
-                  <i data-feather="clock" class="size-5"></i>
-
-                  <div class="ms-4">
-                    <p class="font-medium">Date posted:</p>
-                    <span class="text-purple-600 font-medium text-sm"
-                      >28th Feb, 2023</span
-                    >
+                    <p class="font-medium">Sectores:</p>
+                    <div v-for="item in instituto.sectores" :key="item">
+                      <i class="uil uil-arrow-right text-purple-600 me-1"></i>
+                      <span class="text-purple-600 font-medium text-sm">{{
+                        item
+                      }}</span>
+                    </div>
                   </div>
                 </li>
               </ul>
             </div>
-            <div class="p-4" v-if="activo">
-              <router-link
+            <div class="p-4" v-if="!activo">
+              <button
+                @click="aprobarPasantia()"
                 class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto"
-                >Aprobar</router-link
               >
-              <router-link
+                Aprobar
+              </button>
+              <button
+                @click="rechazarPasantia()"
                 class="btn rounded-md bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700 text-white md:ms-2 w-full md:w-auto"
-                >Rechazar</router-link
               >
+                Rechazar
+              </button>
             </div>
             <div class="p-4" v-else>
-              <router-link
+              <button
+                @click="observar()"
                 class="btn rounded-md bg-yellow-500 hover:bg-yellow-600 border-yellow-500 hover:border-yellow-600 text-white md:ms-2 w-full md:w-auto"
-                >Observacion</router-link
               >
+                Observacion
+              </button>
             </div>
           </div>
         </div>
@@ -194,57 +167,74 @@
 
         <!--end grid-->
       </div>
-      <div v-if="!activo">
-        <div class="grid grid-cols-1 mt-10 pb-2 text-center">
-          <h3
-            class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
-          >
-            Pasantea aprobados en la pasantia
-          </h3>
-          <span>Pasantes aprobados: 2</span>
-          <span>Pasantes pendientes: 10</span>
-        </div>
+      <div v-if="activo">
         <div
-          class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
+          v-if="this.postulantes"
+          class="grid grid-cols-1 mt-10 pb-2 text-center"
         >
+          <h3
+            class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold text-red-400"
+          >
+            No hay aún postulantes
+          </h3>
+        </div>
+
+        <div v-else>
+          <div class="grid grid-cols-1 mt-10 pb-2 text-center">
+            <h3
+              class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
+            >
+              Pasantea aprobados en la pasantia
+            </h3>
+            <span>Pasantes aprobados: 2</span>
+            <span>Pasantes pendientes: 10</span>
+          </div>
           <div
-            v-for="item in datas"
-            :key="item"
-            class="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6"
+            class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
           >
             <div
-              class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md relative -mt-12"
+              v-for="item in postulantes"
+              :key="item.idPersona"
+              class="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6"
             >
-              <img :src="item.image" class="size-8" alt="" />
-            </div>
-
-            <div class="mt-4">
-              <router-link class="text-lg hover:text-cyan-600 font-semibold">{{
-                item.name
-              }}</router-link>
-              <p class="text-slate-400 mt-2">{{ item.desc }}</p>
-            </div>
-
-            <div
-              class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between"
-            >
-              <span class="text-slate-400"
-                ><i class="fas fa-envelope pr-1"></i> {{ item.country }}</span
+              <div
+                class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md relative -mt-12"
               >
-              <span
-                class="block font-semibold text-green-600"
-                v-if="item.jobs == 'Aprobado'"
-                >{{ item.jobs }}</span
+                <img :src="item.fotoPerfil" class="size-8" :alt="item.nombre" />
+              </div>
+              <div class="mt-4">
+                <router-link class="text-lg hover:text-cyan-600 font-semibold">
+                  {{ item.nombre }} {{ item.apellidoPaterno }}
+                  {{ item.apellidoMaterno }}
+                </router-link>
+                <p class="text-slate-400 mt-2">{{ item.descripcion }}</p>
+              </div>
+              <div
+                class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between"
               >
-              <span class="block font-semibold text-yellow-600" v-else>{{
-                item.jobs
-              }}</span>
+                <span class="text-slate-400">
+                  <i class="fas fa-envelope pr-1"></i> {{ item.telefono }}
+                </span>
+                <span
+                  class="block font-semibold text-green-600"
+                  v-if="
+                    postulantesEstado.find(
+                      (e) => e.idUsuarios === item.idPersona
+                    )?.activo
+                  "
+                >
+                  Aprobado
+                </span>
+                <span class="block font-semibold text-yellow-600" v-else>
+                  Pendiente
+                </span>
+              </div>
             </div>
+            <!--end content-->
           </div>
-          <!--end content-->
         </div>
       </div>
-      <!--end grid-->
+      <!--end grid  activo -->
     </div>
     <!--end container-->
 
@@ -258,20 +248,26 @@
 
 <script>
 import navbar from "@/components/Administrador/navbarAdministrador.vue";
-
+import { usePasantiasAdminStore } from "@/stores/Administradores/pasantiasAdminStore";
 import footers from "@/components/footer/footer.vue";
 import { usePasantiasStore } from "@/stores/Pasantias/pasantiasStore";
 import switcher from "@/components/General/switcher.vue";
+import Swal from "sweetalert2";
+import { data } from "autoprefixer";
 export default {
-  setup(){
-    const pasantiasStore = usePasantiasStore();
-    return {pasantiasStore}
+  setup() {
+    const pasantiasStore = usePasantiasAdminStore();
+    return { pasantiasStore };
   },
   data() {
     return {
       parsedData: [],
-      activo: true,
+      activo: false,
       data: "",
+      postulantes: "",
+      instituto: "",
+      postulantesEstado: "",
+      pasantia: "",
       id: "",
       image:
         "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
@@ -494,15 +490,89 @@ export default {
     switcher,
   },
   methods: {
+    async rechazarPasantia() {
+      Swal.fire({
+        icon: "success",
+        title: "Pasantia rechazada",
+        text: "La pasantia fue rechazada con exito",
+      });
+      let loader = this.$loading.show();
+      try {
+        const response = await this.pasantiasStore.rechazarPasantia(
+          this.id,
+          this.$keycloak.idTokenParsed.sub
+        );
+        Swal.fire({
+          icon: "success",
+          title: "Pasantia rechazada",
+          text: "La pasantia fue rechazada con exito",
+        });
+        this.fetchPasantia();
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "ERROR: " + error,
+        });
+      } finally {
+        loader.hide();
+      }
+    },
+    observar() {
+      console.log("observar");
+      console.log(this.data);
+    },
+    async aprobarPasantia() {
+      Swal.fire({
+        icon: "success",
+        title: "Pasantia aprobada",
+        text: "La pasantia fue aprobada con exito",
+      });
+      let loader = this.$loading.show();
+      try {
+        const response = await this.pasantiasStore.aceptarPasantia(
+          this.id,
+          this.$keycloak.idTokenParsed.sub
+        );
+        Swal.fire({
+          icon: "success",
+          title: "Pasantia aprobada",
+          text: "La pasantia fue aprobada con exito",
+        });
+        this.fetchPasantia();
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "ERROR: " + error,
+        });
+      } finally {
+        loader.hide();
+      }
+      console.log(Numero);
+      console.log("si se aprobo deiece");
+    },
     async fetchPasantia() {
       let loader = this.$loading.show();
       try {
-        const response = await this.pasantiasStore.getPasantiaById(this.id);
+        const response = await this.pasantiasStore.obtenerPasantiaPorId(
+          this.id,
+          this.$keycloak.idTokenParsed.sub
+        );
+
         this.data = response;
-        this.parsedData = this.data.descripcion.split("\n");
+        console.log("respuestas " + this.data);
+        this.parsedData = this.data.pasantiasDto.descripcion.split("\n");
         console.log(this.parsedData);
         console.log(this.data);
-        if(this.data == null){
+        this.activo = this.data.estadoPasantia;
+        this.instituto = this.data.institucionesDto;
+        console.log(this.instituto);
+        this.pasantia = this.data.pasantiasDto;
+        console.log(this.pasantia);
+        this.postulantes = this.data.listaPostulantes;
+        this.postulantesEstado = this.data.aplicacionPasantiasDto;
+        if (this.data.pasantiasDto == null) {
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -512,18 +582,15 @@ export default {
           return;
         }
       } catch (error) {
-
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: "ERROR: " + error,
         });
-
       } finally {
         loader.hide();
       }
     },
-    
   },
   mounted() {
     this.id = this.$route.params.id;
@@ -533,8 +600,8 @@ export default {
     id: {
       type: String,
       required: true,
-    }
-  }
+    },
+  },
 };
 </script>
 
