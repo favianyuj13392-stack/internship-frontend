@@ -85,26 +85,8 @@
           </div>
         </div>
         <!-- End Mobile Toggle -->
-  
-        <!--Login button End-->
-  
-        <div id="navigation" :class="toggle === false ? 'none' : 'block'">
-          <!-- Navigation Menu-->
-          <ul class="navigation-menu" :class="lightNav">
-            <li :class="activeMenu === '/empresa/administrador/informacion' ? 'active' : ''">
-              <router-link to="/empresa/administrador/informacion" class="sub-menu-item">Empresa</router-link>
-            </li>
-  
-            <li :class="activeMenu === '/empresa/administrador/pasantias' ? 'active' : ''">
-              <router-link to="/empresa/administrador/pasantias" class="sub-menu-item"
-                >Pasantías</router-link
-              >
-            </li>
-  
-           
-  
-            <div v-if="$keycloak.authenticated">
-            <ul class="buy-button list-none mb-0">
+ 
+            <ul v-if="$keycloak.authenticated" class="buy-button list-none mb-0">
               <li class="dropdown inline-block relative ps-1">
                 <button
                   data-dropdown-toggle="dropdown"
@@ -176,7 +158,25 @@
               </li>
               <!--end dropdown-->
             </ul>
-          </div>
+       
+        <!--Login button End-->
+  
+        <div id="navigation" :class="toggle === false ? 'none' : 'block'">
+          <!-- Navigation Menu-->
+          <ul class="navigation-menu" :class="lightNav">
+            <li :class="activeMenu === '/empresa/administrador/informacion' ? 'active' : ''">
+              <router-link to="/empresa/administrador/informacion" class="sub-menu-item">Empresa</router-link>
+            </li>
+  
+            <li :class="activeMenu === '/empresa/administrador/pasantias' ? 'active' : ''">
+              <router-link to="/empresa/administrador/pasantias" class="sub-menu-item"
+                >Pasantías</router-link
+              >
+            </li>
+  
+           
+  
+          
           </ul>
           <!--end navigation menu-->
           

@@ -85,66 +85,9 @@
         </div>
       </div>
       <!-- End Mobile Toggle -->
-
-      <!--Login button End-->
-
-      <div id="navigation" :class="toggle === false ? 'none' : 'block'">
-        <!-- Navigation Menu-->
-        <ul class="navigation-menu" :class="lightNav">
-          <li
-            :class="activeMenu === '/administrador/dashboard' ? 'active' : ''"
-          >
-            <router-link to="/administrador/dashboard" class="sub-menu-item"
-              >Inicio</router-link
-            >
-          </li>
-
-      
-          <!-- Inicio de menu de empresas-->
-      
-         
-<!-- ARREGLANDO MENU
-         
-                   -->
-                   <li :class="['/administrador/empresa', '/administrador/dashboard', '/administrador/solicitud/empresa',  ].includes(activeMenu) ? 'active' : ''"
-                        class="has-submenu parent-menu-item"><span class="menu-arrow"></span>
-                        <router-link to="" @click="submenu(menuOpen === '/administrador/empresa' ? '' : '/administrador/empresa')">Empresas</router-link>
-                        <ul class="submenu"
-                            :class="['/administrador/empresa', '/', '/administrador/solicitud/empresa',  ].includes(menuOpen) ? 'open' : ''">
-                            <li :class="activeMenu === '/administrador/empresa' ? 'active' : ''"><router-link to="/administrador/empresa"
-                                    class="sub-menu-item ">Empresas</router-link></li>
-                            <li :class="activeMenu === '/administrador/solicitud/empresa' ? 'active' : ''"><router-link to="/administrador/solicitud/empresa"
-                                    class="sub-menu-item">Solicitudes Empresa</router-link></li>
-                         
-                        </ul>
-                    </li>
-                      <!-- fin de menu de empresas-->
-         
-                    <li :class="['/administrador/pasantia', '/administrador/dashboard', '/administrador/solicitud/pasantia',  ].includes(activeMenu) ? 'active' : ''"
-                        class="has-submenu parent-menu-item"><span class="menu-arrow"></span>
-                        <router-link to="" @click="submenu(menuOpen === '/administrador/pasantia' ? '' : '/administrador/pasantia')">Pasantias</router-link>
-                        <ul class="submenu"
-                            :class="['/administrador/pasantia', '/', '/administrador/solicitud/pasantia',  ].includes(menuOpen) ? 'open' : ''">
-                            <li :class="activeMenu === '/administrador/pasantia' ? 'active' : ''"><router-link to="/administrador/pasantia"
-                                    class="sub-menu-item">Pasantias</router-link></li>
-                            <li :class="activeMenu === '/administrador/solicitud/pasantia' ? 'active' : ''"><router-link to="/administrador/solicitud/pasantia"
-                                    class="sub-menu-item">Solicitudes de pasantias</router-link></li>
-                         
-                        </ul>
-                    </li>
-
-
-          <div
-            v-if="!$keycloak.authenticated && !isLoading"
-            @click="$keycloak.login"
-            class="jhessika"
-          >
-            <li :class="activeMenu === '/contact' ? 'active' : ''">
-              <router-link class="sub-menu-item">Iniciar Sesión</router-link>
-            </li>
-          </div>
-          <div v-if="$keycloak.authenticated">
-            <ul class="buy-button list-none mb-0">
+   
+          
+            <ul v-if="$keycloak.authenticated" class="buy-button list-none mb-0">
               <li class="dropdown inline-block relative ps-1">
                 <button
                   data-dropdown-toggle="dropdown"
@@ -217,9 +160,69 @@
                 </div>
               </li>
               <!--end dropdown-->
+              
             </ul>
+        
+      <!--Login button End-->
+
+      <div id="navigation" :class="toggle === false ? 'none' : 'block'">
+        <!-- Navigation Menu-->
+        <ul class="navigation-menu" :class="lightNav">
+          <li
+            :class="activeMenu === '/administrador/dashboard' ? 'active' : ''"
+          >
+            <router-link to="/administrador/dashboard" class="sub-menu-item"
+              >Inicio</router-link
+            >
+          </li>
+
+      
+          <!-- Inicio de menu de empresas-->
+      
+         
+<!-- ARREGLANDO MENU
+         
+                   -->
+                   <li :class="['/administrador/empresa', '/administrador/dashboard', '/administrador/solicitud/empresa',  ].includes(activeMenu) ? 'active' : ''"
+                        class="has-submenu parent-menu-item"><span class="menu-arrow"></span>
+                        <router-link to="" @click="submenu(menuOpen === '/administrador/empresa' ? '' : '/administrador/empresa')">Empresas</router-link>
+                        <ul class="submenu"
+                            :class="['/administrador/empresa', '/', '/administrador/solicitud/empresa',  ].includes(menuOpen) ? 'open' : ''">
+                            <li :class="activeMenu === '/administrador/empresa' ? 'active' : ''"><router-link to="/administrador/empresa"
+                                    class="sub-menu-item ">Empresas</router-link></li>
+                            <li :class="activeMenu === '/administrador/solicitud/empresa' ? 'active' : ''"><router-link to="/administrador/solicitud/empresa"
+                                    class="sub-menu-item">Solicitudes Empresa</router-link></li>
+                         
+                        </ul>
+                    </li>
+                      <!-- fin de menu de empresas-->
+         
+                    <li :class="['/administrador/pasantia', '/administrador/dashboard', '/administrador/solicitud/pasantia',  ].includes(activeMenu) ? 'active' : ''"
+                        class="has-submenu parent-menu-item"><span class="menu-arrow"></span>
+                        <router-link to="" @click="submenu(menuOpen === '/administrador/pasantia' ? '' : '/administrador/pasantia')">Pasantias</router-link>
+                        <ul class="submenu"
+                            :class="['/administrador/pasantia', '/', '/administrador/solicitud/pasantia',  ].includes(menuOpen) ? 'open' : ''">
+                            <li :class="activeMenu === '/administrador/pasantia' ? 'active' : ''"><router-link to="/administrador/pasantia"
+                                    class="sub-menu-item">Pasantias</router-link></li>
+                            <li :class="activeMenu === '/administrador/solicitud/pasantia' ? 'active' : ''"><router-link to="/administrador/solicitud/pasantia"
+                                    class="sub-menu-item">Solicitudes de pasantias</router-link></li>
+                         
+                        </ul>
+                    </li>
+
+
+          <div
+            v-if="!$keycloak.authenticated && !isLoading"
+            @click="$keycloak.login"
+            class="jhessika"
+          >
+            <li :class="activeMenu === '/contact' ? 'active' : ''">
+              <router-link class="sub-menu-item">Iniciar Sesión</router-link>
+            </li>
           </div>
+        
         </ul>
+        
 
         <!--end navigation menu-->
       </div>
