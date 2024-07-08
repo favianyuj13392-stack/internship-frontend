@@ -201,6 +201,9 @@ export default {
 
   data() {
     return {
+      institucion: {
+        nombre: "",
+      },
       filter: "Aprobados",
       datas: [{
         activo: true,
