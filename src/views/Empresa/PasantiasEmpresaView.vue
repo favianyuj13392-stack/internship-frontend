@@ -68,21 +68,20 @@
                     class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-full mb-2">
                     <img :src="item.institucion.logoEmpresa" class="size-8" alt="" />
                   </div>
-                  <router-link to="/empresa/administrador/pasantias/informacion/1"
+                  <a @click="goToPasantia(item. idPasantias)"
                     class="text-lg hover:text-cyan-600 font-semibold transition-all duration-500">{{ item.titulo
-                    }}</router-link>
+                    }}</a>
                 </div>
 
                 <div class="flex items-center">
-                  <router-link to="/empresa/administrador/pasantias/informacion/1"
+                  <a @click="goToPasantia(item. idPasantias)"
                     class="btn btn-icon rounded-full bg-cyan-600/5 group-hover:bg-cyan-600 border-cyan-600/10 text-cyan-600 group-hover:text-white ms-1"><i
-                      class="uil uil-arrow-up-right"></i></router-link>
+                      class="uil uil-arrow-up-right"></i></a>
                 </div>
               </div>
 
               <div class="mt-3">
-                <router-link class="text-xl hover:text-cyan-600 font-semibold transition-all duration-500">{{ item.job
-                  }}</router-link>
+             
                 <p class="text-slate-400 mt-2">
                   Fecha de Cierre: {{ item.fechaCierre }}
                 </p>
@@ -160,6 +159,11 @@ export default {
     filterPasantias(filter) {
       this.filter = filter;
     },
+
+    goToPasantia(id) {
+      this.$router.push('/empresa/administrador/pasantias/informacion/'+id);
+    },
+
     async fetchPasantias() {
       let loader = this.$loading.show();
       const response = await this.institucionesAdministracionStore.fetchPasantiasInstitucionByUUID(this.$keycloak.tokenParsed.sub);
