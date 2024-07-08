@@ -25,7 +25,7 @@ export const useInstitucionesAdministracionStore = defineStore({
 
         async fetchPasantiasInstitucionByUUID(id) {
             try {
-                const response = await axios.get(RutaApi + '/institucion/usuario/' + id+'/pasantias')
+                const response = await axios.get(RutaApi + '/pasantia/institucion/usuario/' + id)
                 if (response.data.code == '200') {
                     return response.data.response
                 } else {
