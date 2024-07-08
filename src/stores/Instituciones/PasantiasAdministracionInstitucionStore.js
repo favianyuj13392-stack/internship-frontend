@@ -11,9 +11,9 @@ export const usePasantiasAdministracionInstitucionStore = defineStore({
     }),
     
     actions: {
-        async fetchPasantiaInstitucionByUUID(id) {
+        async fetchPasantiaInstitucionByUUID(uuid,id) {
             try {
-                const response = await axios.get(RutaApi + '/pasantia/institucion/usuario/' + id)
+                const response = await axios.get(RutaApi + '/usuario/'+uuid+'/pasantia/' + id+'/detalle')
                 if (response.data.code == '200') {
                     return response.data.response
                 } else {
