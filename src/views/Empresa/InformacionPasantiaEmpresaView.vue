@@ -10,28 +10,29 @@
               class="md:flex items-center p-6 shadow dark:shadow-gray-700 rounded-md bg-white dark:bg-slate-900 mb-6"
             >
               <img
-                :src="data?.image ? data?.image : image"
+              
+                :src="data?.institucion.logoEmpresa ? data?.institucion.logoEmpresa : image"
                 class="rounded-full size-28 p-4 bg-white dark:bg-slate-900 shadow dark:shadow-gray-700"
                 alt=""
               />
   
               <div class="md:ms-4 md:mt-0 mt-6">
                 <h5 class="text-xl font-semibold">
-                  {{ data?.job ? data?.job : "Back-End Developer" }}
+                  {{ data?.pasantiasDto.titulo ? data?.pasantiasDto.titulo : "Back-End Developer" }}
                 </h5>
                 <div class="mt-2">
                   <span class="text-slate-400 font-medium me-2 inline-block"
                     ><i
                       class="uil uil-building text-[18px] text-cyan-600 me-1"
                     ></i>
-                    {{ data?.name ? data?.name : "Lenovo pvt. ltd." }}</span
+                    {{ data?.institucion.nombre ? data?.institucion.nombre : "Lenovo pvt. ltd." }}</span
                   >
                   <span class="text-slate-400 font-medium me-2 inline-block"
                     ><i
                       class="uil uil-map-marker text-[18px] text-cyan-600 me-1"
                     ></i>
                     {{
-                      data?.country ? data?.country : "Beijing,    China"
+                      data?.institucion.direccion ? data?.institucion.direccion : "Beijing,    China"
                     }}</span
                   >
                 </div>
@@ -41,30 +42,16 @@
             <h5 class="text-lg font-semibold">Detalles de la pasantia:</h5>
   
             <p class="text-slate-400 mt-4">
-              One disadvantage of Lorum Ipsum is that in Latin certain letters
-              appear more frequently than others - which creates a distinct visual
-              impression. Moreover, in Latin only words at the beginning of
-              sentences are capitalized.
+              {{ this.data.pasantiasDto.descripcion ? this.data.pasantiasDto.descripcion : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." }}
             </p>
-            <p class="text-slate-400 mt-4">
-              This means that Lorem Ipsum cannot accurately represent, for
-              example, German, in which all nouns are capitalized. Thus, Lorem
-              Ipsum has only limited suitability as a visual filler for German
-              texts. If the fill text is intended to illustrate the
-              characteristics of different typefaces.
-            </p>
-            <p class="text-slate-400 mt-4">
-              It sometimes makes sense to select texts containing the various
-              letters and symbols specific to the output language.
-            </p>
+            
   
-            <h5 class="text-lg font-semibold mt-6">Areas:</h5>
+            <h5 class="text-lg font-semibold mt-6">Áreas:</h5>
             <p class="text-slate-400 mt-4">
-              It sometimes makes sense to select texts containing the various
-              letters and symbols specific to the output language.
+              Áreas a las cuales esta dirigida la pasantía
             </p>
             <ul class="list-none">
-              <li v-for="item in datas1" :key="item" class="text-slate-400 mt-2">
+              <li v-for="item in this.data.pasantiasDto.areas" :key="item" class="text-slate-400 mt-2">
                 <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
               </li>
             </ul>
@@ -72,12 +59,32 @@
             <h5 class="text-lg font-semibold mt-6">
               Requisistos necesarios y calificaciones:
             </h5>
-            <p class="text-slate-400 mt-4">
-              It sometimes makes sense to select texts containing the various
-              letters and symbols specific to the output language.
-            </p>
+           
             <ul class="list-none">
-              <li v-for="item in datas1" :key="item" class="text-slate-400 mt-2">
+              <li v-for="item in this.data.pasantiasDto.requisitos" :key="item" class="text-slate-400 mt-2">
+                <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
+              </li>
+            </ul>
+
+
+
+            <h5 class="text-lg font-semibold mt-6">
+              Funciones:
+            </h5>
+           
+            <ul class="list-none">
+              <li v-for="item in this.data.pasantiasDto.funciones" :key="item" class="text-slate-400 mt-2">
+                <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
+              </li>
+            </ul>
+
+
+            <h5 class="text-lg font-semibold mt-6">
+              Beneficios:
+            </h5>
+           
+            <ul class="list-none">
+              <li v-for="item in this.data.pasantiasDto.beneficios" :key="item" class="text-slate-400 mt-2">
                 <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
               </li>
             </ul>
@@ -96,6 +103,11 @@
             <div
               class="shadow dark:shadow-gray-700 rounded-md bg-white dark:bg-slate-900 sticky top-20"
             >
+            <div class="p-6">
+                <h5 class="text-lg font-semibold text-cyan-600" v-if="this.data.activoPasantia==true">Aprobado</h5>
+                <h5 class="text-lg font-semibold text-red-600" v-if="this.data.activoPasantia==false">Sin Aprobar</h5>
+
+              </div>
               <div class="p-6">
                 <h5 class="text-lg font-semibold">Más información</h5>
               </div>
@@ -197,122 +209,59 @@
 
   
     <section class="relative md:py-24 py-16" >
-      <h3
-            class="md:text-3xl text-2xl md:leading-snug leading-normal font-semibold text-center mb-8 dark:text-slate-100 text-slate-900"
-          >Postulantes</h3>
+      <div v-if="this.data.activoPasantia">
+        <div v-if="this.data.postulantes" class="grid grid-cols-1 mt-10 pb-2 text-center">
+          <h3
+            class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold text-red-400"
+          >
+           No hay aún postulantes
+          </h3>
+         
+        </div>
 
-
-      <div class="container" >
-       
-
-        <div v-if="lists" class="container lg:mt-24 mt-16">
-        <div class="grid grid-cols-1 pb-8 text-center">
-            <h3 class="mb-4 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold">Related Candidates
-            </h3>
-
-            <p class="text-slate-400 dark:text-slate-300 max-w-xl mx-auto">Search all the open positions on the web. Get
-                your own personalized salary estimate. Read reviews on over 30000+ companies worldwide.</p>
-        </div><!--end grid-->
-
-        <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-[30px] mt-8">
-            <div v-for="item in datas.slice(0, 4)" :key="item"
-            class="group bg-white dark:bg-slate-900 relative overflow-hidden rounded-md shadow dark:shadow-gray-700 text-center p-6">
-            <img :src="item.image" class="size-20 rounded-full shadow dark:shadow-gray-700 mx-auto" alt="">
-
-            <div class="mt-2">
-                <router-link  class="hover:text-emerald-600 font-semibold text-lg">{{ item.name }}</router-link>
-                <p class="text-sm text-slate-400">{{ item.position }}</p>
-            </div>
-
-            <ul class="mt-2 list-none">
-                <li v-for="type in item.type" :key="type" class="inline me-1"><span
-                        class="bg-emerald-600/10 inline-block text-emerald-600 text-xs px-2.5 py-0.5 font-semibold rounded-full">{{ type }}</span>
-                </li>
-            </ul>
-
-            <div class="flex justify-between mt-2">
-                <div class="block">
-                    <span class="text-slate-400">Salery:</span>
-                    <span class="block text-sm font-semibold">{{ item.salary }}</span>
-                </div>
-                <div class="block">
-                    <span class="text-slate-400">Experience:</span>
-                    <span class="block text-sm font-semibold">{{ item.experience }}</span>
-                </div>
-            </div>
-
-            <div class="mt-3">
-                <router-link 
-                    class="btn btn-sm bg-emerald-600 hover:bg-emerald-700 border-emerald-600 dark:border-emerald-600 text-white rounded-md">Profile</router-link>
-                <a href=""
-                    class="btn btn-sm btn-icon bg-emerald-600/5 hover:bg-emerald-600 border-emerald-600/10 hover:border-emerald-600 text-emerald-600 hover:text-white rounded-full ms-1"><i
-                        class="uil uil-hipchat text-[20px]"></i></a>
-            </div>
-
-            <span
-                class="w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1"><i
-                    :class="item.class"></i></span>
-
-            <span class="absolute top-[10px] end-4">
-                <a href="javascript:void(0)"
-                    class="text-slate-100 dark:text-slate-700 focus:text-red-600 dark:focus:text-red-600 hover:text-red-600 dark:hover:text-red-600 text-2xl"><i
-                        class="mdi mdi-heart"></i></a>
-            </span>
-        </div><!--end content-->
-            
-        </div><!--end grid-->
-    </div><!--end container-->
-
-
-    <div v-else class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px]">
-        <div v-for="item in datas" :key="item"
-            class="group bg-white dark:bg-slate-900 relative overflow-hidden rounded-md shadow dark:shadow-gray-700 text-center p-6">
-            <img :src="item.image" class="size-20 rounded-full shadow dark:shadow-gray-700 mx-auto" alt="">
-
-            <div class="mt-2">
-                <router-link  class="hover:text-emerald-600 font-semibold text-lg">{{ item.name }}</router-link>
-                <p class="text-sm text-slate-400">{{ item.position }}</p>
-            </div>
-
-            <ul class="mt-2 list-none">
-                <li v-for="type in item.type" :key="type" class="inline me-1"><span
-                        class="bg-emerald-600/10 inline-block text-emerald-600 text-xs px-2.5 py-0.5 font-semibold rounded-full">{{ type }}</span>
-                </li>
-            </ul>
-
-            <div class="flex justify-between mt-2">
-                <div class="block">
-                    <span class="text-slate-400">Salery:</span>
-                    <span class="block text-sm font-semibold">{{ item.salary }}</span>
-                </div>
-                <div class="block">
-                    <span class="text-slate-400">Experience:</span>
-                    <span class="block text-sm font-semibold">{{ item.experience }}</span>
-                </div>
-            </div>
-
-            <div class="mt-3">
-                <router-link 
-                    class="btn btn-sm bg-emerald-600 hover:bg-emerald-700 border-emerald-600 dark:border-emerald-600 text-white rounded-md">Profile</router-link>
-                <a href=""
-                    class="btn btn-sm btn-icon bg-emerald-600/5 hover:bg-emerald-600 border-emerald-600/10 hover:border-emerald-600 text-emerald-600 hover:text-white rounded-full ms-1"><i
-                        class="uil uil-hipchat text-[20px]"></i></a>
-            </div>
-
-            <span
-                class="w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1"><i
-                    :class="item.class"></i></span>
-
-            <span class="absolute top-[10px] end-4">
-                <a href="javascript:void(0)"
-                    class="text-slate-100 dark:text-slate-700 focus:text-red-600 dark:focus:text-red-600 hover:text-red-600 dark:hover:text-red-600 text-2xl"><i
-                        class="mdi mdi-heart"></i></a>
-            </span>
-        </div><!--end content-->
-    </div><!--end grid-->
-
+        <div v-else>
+        <div class="grid grid-cols-1 mt-10 pb-2 text-center">
+          <h3
+            class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
+          >
+            Pasantea aprobados en la pasantia
+          </h3>
+          <span>Pasantes aprobados: 2</span>
+          <span>Pasantes pendientes: 10</span>
+        </div>
+        <div
+          class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
+        >
+        <div v-for="item in this.data.postulantes" :key="item.idPersona" class="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6">
+      <div class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md relative -mt-12">
+        <img :src="item.fotoPerfil" class="size-8" :alt="item.nombre" />
+      </div>
+      <div class="mt-4">
+        <router-link class="text-lg hover:text-cyan-600 font-semibold">
+          {{ item.nombre }} {{ item.apellidoPaterno }} {{ item.apellidoMaterno }}
+        </router-link>
+        <p class="text-slate-400 mt-2">{{ item.descripcion }}</p>
+      </div>
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between">
+        <span class="text-slate-400">
+          <i class="fas fa-envelope pr-1"></i> {{ item.telefono }}
+        </span>
+        <span class="block font-semibold text-green-600" v-if="postulantesEstado.find(e => e.idUsuarios === item.idPersona)?.activo">
+          Aprobado
+        </span>
+        <span class="block font-semibold text-yellow-600" v-else>
+          Pendiente
+        </span>
+      </div>
+    </div>
+          <!--end content-->
+        </div>
+      </div>
       </div>
     </section>
+
+
+    
 
     <!--end section-->
     <!-- End -->
@@ -326,7 +275,42 @@
   import footers from "@/components/footer/footer.vue";
 
 import switcher from "@/components/General/switcher.vue";
-  export default {
+  
+import {usePasantiasAdministracionInstitucionStore} from "@/stores/Instituciones/PasantiasAdministracionInstitucionStore.js";
+import Swal from "sweetalert2";
+export default {
+
+  setup() {
+    const pasantiasAdministracionInstitucionStore = usePasantiasAdministracionInstitucionStore();
+    return{
+      pasantiasAdministracionInstitucionStore
+    }
+  },
+
+
+  methods: {
+    async fetchPasantiaActual(){
+      let loader = this.$loading.show();
+      const response = await this.pasantiasAdministracionInstitucionStore.fetchPasantiaInstitucionByUUID(this.$keycloak.tokenParsed.sub, this.id);
+      if(response==null){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'No se pudo cargar la pasantia',
+        })
+        loader.hide();
+
+        this.$router.push('/');
+        return;
+
+      }
+      loader.hide();
+      console.log(response)
+      this.data = response;
+
+    }
+  },
+
 
 
 
@@ -342,7 +326,21 @@ import switcher from "@/components/General/switcher.vue";
 
     data() {
       return {
-        data: "",
+        data: {
+          pasantiasDto: {
+            titulo: "",
+            descripcion: "",
+            areas: [],
+            requisitos: [],
+            calificaciones: [],
+
+          },
+          institucion: {
+            nombre: "",
+            logoEmpresa: "",
+            direccion: "",
+          },
+        },
         id: "",
         image:
           "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
@@ -515,7 +513,8 @@ import switcher from "@/components/General/switcher.vue";
     },
     mounted() {
       this.id = this.$route.params.id;
-      this.data = this.datas.find((item) => item.id === parseInt(this.id));
+
+      this.fetchPasantiaActual();
     },
   };
   </script>
