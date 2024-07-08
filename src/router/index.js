@@ -135,7 +135,7 @@ const router = createRouter({
       component: PasantiaDetalleAdministrador,
     },
     {
-      path: "/administrador/empresa/solicitud/usuario",
+      path: "/administrador/empresa/:idEmpresa/solicitud/:idSolicitud/usuario/:idUsuario",
       name: "EmpresaSolicitudUsuarioAdministrador",
       component: EmpresaSolicitudUsuarioAdministrador,
     },
