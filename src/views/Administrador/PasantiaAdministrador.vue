@@ -82,7 +82,7 @@
               <form action="#">
                 <div class="registration-form text-dark text-start">
                   <div
-                    class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 lg:gap-0 gap-6"
+                    class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-0 gap-6"
                   >
                     <div class="filter-search-form relative filter-border">
                       <i class="uil uil-briefcase-alt icons"></i>
@@ -91,39 +91,20 @@
                         type="text"
                         id="job-keyword"
                         class="form-input filter-input-box bg-gray-50 dark:bg-slate-800 border-0"
-                        placeholder="Buscar pasantia"
+                        placeholder="Buscar pasantia..."
+                        v-model="searchValue"
+                        @keyup.enter="searchEmpresas"
                       />
-                    </div>
-
-                    <div
-                      class="filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800"
-                    >
-                      <i class="uil uil-map-marker icons"></i>
-                      <v-select
-                        :options="options"
-                        v-model="selected"
-                        class="ms-10"
-                      ></v-select>
-                    </div>
-
-                    <div
-                      class="filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800"
-                    >
-                      <i class="uil uil-briefcase-alt icons"></i>
-                      <v-select
-                        :options="options2"
-                        v-model="selected2"
-                        class="ms-10"
-                      ></v-select>
                     </div>
 
                     <input
                       type="submit"
                       id="search"
-                      name="Buscar"
+                      name="search"
                       style="height: 60px"
                       class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white searchbtn submit-btn w-100"
                       value="Buscar"
+                      @click.prevent="searchEmpresas"
                     />
                   </div>
                   <!--end grid-->
@@ -148,13 +129,13 @@
         >
           <div class="relative overflow-hidden h-40">
             <img
-              :src="item.institucion.logoEmpresa"
+              :src="item.logoEmpresa"
               class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-500"
               alt=""
             />
           </div>
 
-          <div class="relative p-6">
+          <div class="relative pt-6 pr-6 pl-6">
             <div class="absolute start-6 -top-4">
               <span
                 class="bg-cyan-600 text-white text-[12px] px-2.5 py-1 font-semibold rounded-full h-5"
@@ -165,38 +146,40 @@
             <div class="">
               <div class="flex mb-4">
                 <span class="text-slate-400 text-sm"
-                  ><i
-                    class="uil uil-calendar-alt text-slate-900 dark:text-white me-2"
-                  ></i
-                  >{{ item.date }}</span
+                  ><i class="uil uil-calendar-alt text-green-500 me-2"></i
+                  >{{ item.fechaIngreso }}</span
                 >
                 <span class="text-slate-400 text-sm ms-3"
-                  ><i
-                    class="uil uil-clock text-slate-900 dark:text-white me-2"
-                  ></i
-                  >{{ item.time }}</span
+                  ><i class="uil uil-schedule text-red-500 me-2"></i
+                  >{{ item.fechaCierre }}</span
                 >
               </div>
 
               <router-link
                 class="title text-lg font-semibold hover:text-cyan-600 duration-500 ease-in-out"
-                >{{ item.title }}</router-link
+                >{{ item.descripcion }}</router-link
               >
 
-              <div class="flex justify-between items-center mt-3">
-                <router-link
-                  to="/administrador/pasantia/detalle"
-                  class="btn btn-link hover:text-cyan-600 after:bg-cyan-600 duration-500 ease-in-out"
-                  >Ver pasantia <i class="uil uil-arrow-right"></i
-                ></router-link>
+              <div class="flex justify-end items-center m-3">
                 <span class="text-slate-400 text-sm"
                   >by
-                  <a
+                  to
+                  <router-link
+                  :to="{ name: 'EmpresaDetalleAdministrador', params: { id: item.idInstituciones } }"
                     href=""
                     class="text-slate-900 dark:text-white hover:text-cyan-600 dark:hover:text-cyan-600 font-medium"
-                    >{{ item.company }}</a
+                  >
+                    {{ item.nombre }}</router-link
                   ></span
                 >
+              </div>
+              <div class="m-2 flex justify-end">
+                <router-link
+                  :to="{ name: 'PasantiaDetalleAdministrador', params: { id: item.idPasantias } }"
+                  
+                  class="btn btn-link hover:text-cyan-600 after:bg-cyan-600 duration-500 ease-in-out text-sm"
+                  >Ver pasantia <i class="uil uil-arrow-right"></i
+                ></router-link>
               </div>
             </div>
           </div>
@@ -268,6 +251,7 @@ import "vue-select/dist/vue-select.css";
 import footers from "@/components/footer/footer.vue";
 import { usePasantiasAdminStore } from "@/stores/Administradores/pasantiasAdminStore";
 import switcher from "@/components/General/switcher.vue";
+
 export default {
   setup() {
     const pasantiasStore = usePasantiasAdminStore();
@@ -291,362 +275,6 @@ export default {
       selected: "Miraflores",
       options2: ["Facebook", "Freelancer", "Remote Work", "Office Work"],
       selected2: [],
-      datas: [
-        {
-          id: 1,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Facebook",
-          day: "2 days ago",
-          type: "Full Time",
-          job: "Web Designer / Developer",
-          country: "Australia",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-          name: "Nombre de Area",
-          date: "20th February, 2023",
-          time: "5 meses",
-          title: "Nombre de pasantia",
-          company: "Google",
-        },
-        {
-          id: 2,
-          image:
-            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
-          name: "Google",
-          day: "2 days ago",
-          type: "Part Time",
-          job: "Marketing Director",
-          country: "USA",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 3,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Android",
-          day: "2 days ago",
-          type: "Remote",
-          job: "Application Developer",
-          country: "China",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 4,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Lenovo",
-          day: "2 days ago",
-          type: "WFH",
-          job: "Senior Product Designer",
-          country: "Dubai",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 5,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Spotify",
-          day: "2 days ago",
-          type: "Full Time",
-          job: "C++ Developer",
-          country: "India",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 6,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Linkedin",
-          day: "2 days ago",
-          type: "Remote",
-          job: "Php Developer",
-          country: "Pakistan",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 7,
-          job: "Software Engineering",
-          day: "Posted 3 Days ago",
-          type: "Full Time",
-          salary: "$950 - $1100/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Circle CI Ltd.",
-          location: "Australia",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 8,
-          job: "Web Developer",
-          day: "Posted 3 Days ago",
-          type: "Remote",
-          salary: "$2500 - $2600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Skype Ltd.",
-          location: "America",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 9,
-          job: "UX/UI Designer",
-          day: "Posted 3 Days ago",
-          type: "Freelance",
-          salary: "$3500 - $3600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Snapchat Ltd.",
-          location: "Canada",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 10,
-          job: "Human Resource(HR)",
-          day: "Posted 3 Days ago",
-          type: "Part Time",
-          salary: "$2000 - $2500/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Shreethemes Ltd.",
-          location: "UK",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 11,
-          job: "Web Designer",
-          day: "Posted 3 Days ago",
-          type: "Full Time",
-          salary: "$1500 - $1600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Telegram Ltd.",
-          location: "China",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-        {
-          id: 12,
-          job: "Graphic Designer",
-          day: "Posted 3 Days ago",
-          type: "Part time",
-          salary: "$500 - $600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Whatsapp Ltd.",
-          location: "India",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-          name: "Arts",
-          date: "20th February, 2023",
-          time: "5 min read",
-          title: "11 Tips to Help You Get New Clients Through Cold Calling",
-          company: "Google",
-        },
-      ],
       pageSize: 12,
       currentPage: 0,
       searchValue: "",
@@ -656,33 +284,37 @@ export default {
       active: true,
     };
   },
-  async mounted() {
-    await this.fetchPasantias();
-    console.log(this.data);
+  mounted() {
+    this.fetchPasantias();
   },
   methods: {
-    attachIsHovered() {
-      this.data = this.data.map((pasantia) => {
-        return {
-          ...pasantia,
-          carrerasIsHovered: false,
-          beneficiosIsHovered: false,
-        };
-      });
+    toggle() {
+      this.isActive = !this.isActive;
     },
     async fetchPasantias() {
       let loader = this.$loading.show();
-      const response = await this.pasantiasStore.getPasantias(
-        this.currentPage,
-        this.pageSize,
-        this.searchValue,
-        true,
-        this.$keycloak.idTokenParsed.sub
-      );
-      this.data = response.content;
-      this.totalPages = response.totalPages;
-      loader.hide();
-      this.attachIsHovered();
+      try {
+        const response = await this.pasantiasStore.getPasantias(
+          this.currentPage,
+          this.pageSize,
+          this.searchValue,
+          true,
+          this.$keycloak.idTokenParsed.sub
+        );
+        console.log(response);
+        if (response == null) {
+          this.totalPages = 0;
+          this.data = [];
+          return;
+        }
+
+        this.data = response.content;
+        this.totalPages = response.totalPages;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        loader.hide();
+      }
     },
     nextPage() {
       if (this.currentPage < this.totalPages - 1) {
@@ -700,8 +332,11 @@ export default {
       this.currentPage = page;
       this.fetchPasantias();
     },
+    searchEmpresas() {
+      this.currentPage = 0;
+      this.fetchPasantias();
+    },
   },
-
   components: {
     navbar,
     vSelect,

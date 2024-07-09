@@ -12,7 +12,7 @@ export const useEmpresasAdminStore = defineStore({
         async getEmpresas(pageValue,sizeValue,searchValue, active, kkid) {
             try {                    //añade los params page, size
 
-                const response = await axios.get(RutaApi + '/admin/'+kkid+'/institucion',
+                const response = await axios.get(RutaApi + '/admin/'+kkid+'/instituciones',
                     {
                         params: {
                             page: pageValue,
@@ -34,9 +34,77 @@ export const useEmpresasAdminStore = defineStore({
                 console.log(error)
             }
         },
+        async getSolicitudesByIdEmpresa(id, kkid) {
+            try {
+                const response = await axios.get(RutaApi + '/admin/'+kkid+'/instituciones/' + id + '/usuarios/solicitudes')
+                console.log(response)
+                if (response.data.code == '200') {
+                    return response.data.response
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async getSolicitudes(search, kkid) {
+            try {
+                const response = await axios.get(RutaApi + '/admin/'+kkid+'/instituciones/usuarios/solicitudes',
+                    {
+                        params: {
+                            search: search
+                        }
+                    }
+                )
+                console.log(response)
+                if (response.data.code == '200') {
+                    return response.data.response
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async getAllInformation(idInstitucion,idSolicitud,idUsuario,kkid) {
+            try {
+                const response = await axios.get(RutaApi + '/admin/'+kkid+'/institucion/'+idInstitucion+'/solicitud/'+idSolicitud+'/usuario/'+idUsuario)
+                if (response.data.code == '200') {
+                    return response.data.response
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async aceptarSolicitud(idInstitucion,idSolicitud,idUsuario,kkid) {
+            try {
+                const response = await axios.put(RutaApi + '/admin/'+kkid+'/instituciones/'+idInstitucion+'/solicitud/'+idSolicitud+'/usuarios/'+idUsuario+'/aceptar')
+                if (response.data.code == '200') {
+                    return response.data.response
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async eliminarSolitud(idInstitucion,idSolicitud,idUsuario,kkid) {
+            try {
+                const response = await axios.delete(RutaApi + '/admin/'+kkid+'/instituciones/'+idInstitucion+'/solicitud/'+idSolicitud+'/usuarios/'+idUsuario+'/aceptar')
+                if (response.data.code == '200') {
+                    return response.data.response
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        },
         async getEmpresaById(id,kkid) {
             try {
-                const response = await axios.get(RutaApi + '/admin/'+kkid+'/institucion/' + id)
+                const response = await axios.get(RutaApi + '/admin/'+kkid+'/instituciones/' + id)
                 console.log(response)
                 if (response.data.code == '200') {
                     return response.data.response

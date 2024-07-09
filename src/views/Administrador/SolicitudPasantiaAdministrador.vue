@@ -82,7 +82,7 @@
               <form action="#">
                 <div class="registration-form text-dark text-start">
                   <div
-                    class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 lg:gap-0 gap-6"
+                    class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-0 gap-6"
                   >
                     <div class="filter-search-form relative filter-border">
                       <i class="uil uil-briefcase-alt icons"></i>
@@ -91,39 +91,20 @@
                         type="text"
                         id="job-keyword"
                         class="form-input filter-input-box bg-gray-50 dark:bg-slate-800 border-0"
-                        placeholder="Buscar pasantia"
+                        placeholder="Buscar pasantia..."
+                        v-model="searchValue"
+                        @keyup.enter="searchEmpresas"
                       />
-                    </div>
-
-                    <div
-                      class="filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800"
-                    >
-                      <i class="uil uil-map-marker icons"></i>
-                      <v-select
-                        :options="options"
-                        v-model="selected"
-                        class="ms-10"
-                      ></v-select>
-                    </div>
-
-                    <div
-                      class="filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800"
-                    >
-                      <i class="uil uil-briefcase-alt icons"></i>
-                      <v-select
-                        :options="options2"
-                        v-model="selected2"
-                        class="ms-10"
-                      ></v-select>
                     </div>
 
                     <input
                       type="submit"
                       id="search"
-                      name="Buscar"
+                      name="search"
                       style="height: 60px"
                       class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white searchbtn submit-btn w-100"
                       value="Buscar"
+                      @click.prevent="searchEmpresas"
                     />
                   </div>
                   <!--end grid-->
@@ -144,33 +125,38 @@
         class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
       >
         <div
-          v-for="item in datas"
+          v-for="item in data"
           :key="item"
           class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-500"
         >
-          <div class="p-6">
+          <div class="flex justify-end mt-2 mr-2">
             <router-link
-              class="title h5 text-lg font-semibold hover:text-cyan-600"
-              >{{ item.name }}</router-link
-            >
-            <router-link
-              to="/administrador/pasantia/detalle"
-              class="btn btn-icon rounded-full bg-cyan-600/5 group-hover:bg-cyan-600 border-cyan-600/10 text-cyan-600 group-hover:text-white ms-1 ml-3"
+            :to="{ name: 'PasantiaDetalleAdministrador', params: { id: item.idPasantias } }"
+                   
+              class="btn btn-icon rounded-full bg-cyan-600/5 hover:bg-cyan-600 border-cyan-600/10 text-cyan-600 hover:text-white ms-1 ml-3"
               ><i class="uil uil-arrow-up-right"></i
             ></router-link>
+          </div>
+          <div class="p-2">
+            <router-link
+              class="title h5 text-lg font-semibold hover:text-cyan-600"
+              >{{ item.titulo }}</router-link
+            >
+
             <p class="text-slate-400 mt-2">
-              <i class="uil uil-clock text-cyan-600"></i> {{ item.day }}
+              <i class="uil uil-clock text-cyan-600"></i>
+              {{ item.fechaIngreso }}
             </p>
 
             <div class="flex justify-between items-center mt-4">
               <span
                 class="bg-cyan-600/5 text-cyan-600 text-xs font-bold px-2.5 py-0.5 rounded h-5"
-                >{{ item.type }}</span
+                >{{ item.areas }}</span
               >
 
               <p class="text-slate-400">
                 <i class="uil uil-usd-circle text-cyan-600"></i>
-                {{ item.salary }}
+                {{ item.beneficios }}
               </p>
             </div>
           </div>
@@ -179,24 +165,77 @@
             class="flex items-center p-6 border-t border-gray-100 dark:border-gray-700"
           >
             <img
-              :src="item.image"
+              :src="item.logoEmpresa"
               class="size-12 shadow-md dark:shadow-gray-800 rounded-md p-2 bg-white dark:bg-slate-900"
               alt=""
             />
 
             <div class="ms-3">
-              <router-link>
-                <h6 class="mb-0 font-semibold text-base">
-                  {{ item.company }}
+              <router-link
+                :to="{
+                  name: 'EmpresaDetalleAdministrador',
+                  params: { id: item.idInstituciones },
+                }"
+              >
+                <h6 class="mb-0 font-semibold text-base hover:text-cyan-700">
+                  {{ item.nombre }}
                 </h6></router-link
               >
-              <span class="text-slate-400 text-sm">{{ item.location }}</span>
+              <span class="text-slate-400 text-sm">
+                Hasta: {{ item.fechaCierre }}</span
+              >
             </div>
           </div>
         </div>
       </div>
     </div>
-
+    <!--PAGINACIONNN-->
+    <div class="grid md:grid-cols-12 grid-cols-1 mt-8">
+      <div class="md:col-span-12 text-center">
+        <nav aria-label="Page navigation example">
+          <ul class="inline-flex items-center -space-x-px">
+            <li>
+              <button
+                @click="prevPage"
+                :disabled="currentPage === 0"
+                class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-s-3xl hover:text-white border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
+              >
+                <i
+                  class="uil uil-angle-left text-[20px] rtl:rotate-180 rtl:-mt-1"
+                ></i>
+              </button>
+            </li>
+            <li v-for="page in totalPages" :key="page">
+              <button
+                @click="goToPage(page - 1)"
+                :class="[
+                  'size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-cyan dark:bg-slate-900 border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600',
+                  {
+                    'z-10 bg-cyan-600 text-white border-cyan-600':
+                      page - 1 === currentPage,
+                  },
+                ]"
+              >
+                {{ page }}
+              </button>
+            </li>
+            <li>
+              <button
+                @click="nextPage"
+                :disabled="currentPage === totalPages - 1"
+                class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-e-3xl hover:text-white border border-gray-100 dark:border-gray-800 hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600"
+              >
+                <i
+                  class="uil uil-angle-right text-[20px] rtl:rotate-180 rtl:-mt-1"
+                ></i>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!--end col-->
+    </div>
+    <!--end grid-->
     <!--end container-->
 
     <!--FIIINDE JOB-->
@@ -207,15 +246,19 @@
 
 <script>
 import navbar from "@/components/Administrador/navbarAdministrador.vue";
-
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import footers from "@/components/footer/footer.vue";
-
+import { usePasantiasAdminStore } from "@/stores/Administradores/pasantiasAdminStore";
 import switcher from "@/components/General/switcher.vue";
 export default {
+  setup() {
+    const pasantiasStore = usePasantiasAdminStore();
+    return { pasantiasStore };
+  },
   data() {
     return {
+      isActive: false,
       options: [
         "Miraflores",
         "Azerbaijan",
@@ -232,303 +275,68 @@ export default {
       selected: "Miraflores",
       options2: ["Facebook", "Freelancer", "Remote Work", "Office Work"],
       selected2: [],
-      datas: [
-        {
-          id: 1,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Facebook",
-          day: "2 days ago",
-          type: "Full Time",
-          job: "Web Designer / Developer",
-          country: "Australia",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
 
-          company: "Facebook Ltd.",
-          location: "Australia",
-        },
-        {
-          id: 2,
-          image:
-            "https://seeklogo.com/images/T/Tigo-logo-BDF99BD6CC-seeklogo.com.png",
-          name: "Google",
-          day: "2 days ago",
-          type: "Part Time",
-          job: "Marketing Director",
-          country: "USA",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-        },
-        {
-          id: 3,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Android",
-          day: "2 days ago",
-          type: "Remote",
-          job: "Application Developer",
-          country: "China",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-        },
-        {
-          id: 4,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Lenovo",
-          day: "2 days ago",
-          type: "WFH",
-          job: "Senior Product Designer",
-          country: "Dubai",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-        },
-        {
-          id: 5,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Spotify",
-          day: "2 days ago",
-          type: "Full Time",
-          job: "C++ Developer",
-          country: "India",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-        },
-        {
-          id: 6,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Linkedin",
-          day: "2 days ago",
-          type: "Remote",
-          job: "Php Developer",
-          country: "Pakistan",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-        },
-        {
-          id: 7,
-          job: "Software Engineering",
-          day: "Posted 3 Days ago",
-          type: "Full Time",
-          salary: "$950 - $1100/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Circle CI Ltd.",
-          location: "Australia",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-        },
-        {
-          id: 8,
-          job: "Web Developer",
-          day: "Posted 3 Days ago",
-          type: "Remote",
-          salary: "$2500 - $2600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Skype Ltd.",
-          location: "America",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-        },
-        {
-          id: 9,
-          job: "UX/UI Designer",
-          day: "Posted 3 Days ago",
-          type: "Freelance",
-          salary: "$3500 - $3600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Snapchat Ltd.",
-          location: "Canada",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-        },
-        {
-          id: 10,
-          job: "Human Resource(HR)",
-          day: "Posted 3 Days ago",
-          type: "Part Time",
-          salary: "$2000 - $2500/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Shreethemes Ltd.",
-          location: "UK",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-        },
-        {
-          id: 11,
-          job: "Web Designer",
-          day: "Posted 3 Days ago",
-          type: "Full Time",
-          salary: "$1500 - $1600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Telegram Ltd.",
-          location: "China",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-        },
-        {
-          id: 12,
-          job: "Graphic Designer",
-          day: "Posted 3 Days ago",
-          type: "Part time",
-          salary: "$500 - $600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Whatsapp Ltd.",
-          location: "India",
-          language: [
-            "HTML",
-            "CSS",
-            "SASS",
-            "SCSS",
-            "Photoshop",
-            "Graphics",
-            "Bootstrap",
-          ],
-          salary: "$950 - $1100/mo",
-
-          company: "Facebook Ltd.",
-          location: "Australia",
-        },
-      ],
+      pageSize: 12,
+      currentPage: 0,
+      searchValue: "",
+      totalPages: 0,
+      data: [],
+      kkuid: "",
+      active: false,
     };
+  },
+  mounted() {
+    this.fetchPasantias();
+  },
+  methods: {
+    toggle() {
+      this.isActive = !this.isActive;
+    },
+    async fetchPasantias() {
+      let loader = this.$loading.show();
+      try {
+        const response = await this.pasantiasStore.getPasantias(
+          this.currentPage,
+          this.pageSize,
+          this.searchValue,
+          false,
+          this.$keycloak.idTokenParsed.sub
+        );
+        console.log(response);
+        if (response == null) {
+          this.totalPages = 0;
+          this.data = [];
+          return;
+        }
+
+        this.data = response.content;
+        this.totalPages = response.totalPages;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        loader.hide();
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages - 1) {
+        this.currentPage++;
+        this.fetchPasantias();
+      }
+    },
+    prevPage() {
+      if (this.currentPage > 0) {
+        this.currentPage--;
+        this.fetchPasantias();
+      }
+    },
+    goToPage(page) {
+      this.currentPage = page;
+      this.fetchPasantias();
+    },
+    searchEmpresas() {
+      this.currentPage = 0;
+      this.fetchPasantias();
+    },
   },
   components: {
     navbar,
