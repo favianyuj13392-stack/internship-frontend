@@ -216,8 +216,7 @@
               </div>
 
               <div class="ms-3">
-                <router-link
-                  to="/employer-detail"
+                <router-link 
                   class="block text-[16px] font-semibold hover:text-cyan-600 transition-all duration-500"
                   >{{ pasantia.institucion.nombre}}</router-link
                 >
@@ -226,10 +225,10 @@
           </div>
 
           <div class="mt-6">
-            <router-link
-              to="/job-detail-one"
+            <a
+              @click="this.$router.push({name: 'pasantias-detalle', params: {id: pasantia.idPasantias}})"
               class="text-lg hover:text-cyan-600 font-semibold transition-all duration-500"
-              >{{ pasantia.titulo }}</router-link
+              >{{ pasantia.titulo }}</a
             >
             <h6 class="text-base font-medium">
               <i class="uil uil-map-marker"></i> {{ pasantia.institucion.direccion }}
@@ -329,6 +328,17 @@ export default {
     footers,
     switcher,
   },
+  watch: {
+    '$route.params.id': {
+      handler(newId, oldId) {
+        if (newId !== oldId) {
+          this.asyncPasantias(newId);
+          window.scrollTo(0, 0);
+        }
+      },
+      immediate: true
+    }
+  },
   methods: {
     async fetchPasantia() {
       let loader = this.$loading.show();
@@ -382,6 +392,11 @@ export default {
         loader.hide();
       }
     },
+    async asyncPasantias(id){
+      this.id = id;
+      await this.fetchPasantia();
+      await this.fetchPasantiasRelacionadas();
+    }
   },
   mounted() {
     this.id = this.$route.params.id;
