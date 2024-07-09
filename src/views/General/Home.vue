@@ -165,6 +165,11 @@ export default {
         loader.hide();
         return;
       }
+      if(existencia==false){
+        this.$router.push("/finish/register-empresa");
+        loader.hide();
+        return;
+      }
      if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("ESTUDIANTE")){
         this.$router.push("/finish/register-estudiante");
         loader.hide();
