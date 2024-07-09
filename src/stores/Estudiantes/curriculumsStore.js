@@ -8,14 +8,15 @@ export const useCurriculumsStore = defineStore({
     }),
     actions:{
         async postCurriculum(data,uuid){
-            const formData = new FormData();
-            formData.append('file', data);
             try{
+                const formData = new FormData();
+                formData.append('file', data);
                 const response = await axios.post(RutaApi + '/estudiante/'+uuid+'/curriculum',formData,{
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     }
                 })
+                console.log(response)
                 if(response.data.code == '200'){
                     return response.data.response
                 }else{

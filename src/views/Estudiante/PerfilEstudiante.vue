@@ -395,7 +395,10 @@ export default {
   setup() {
     const estudiantesStore = useEstudiantesStore();
     const curriculumsStore = useCurriculumsStore();
-    return { estudiantesStore, curriculumsStore };
+    return {
+      estudiantesStore,
+      curriculumsStore,
+    };
   },
   data() {
     return {
@@ -493,27 +496,48 @@ export default {
       console.log(this.cv);
       loader.hide();
     },
-    handleFileUploadPDF(event) {
-      const file = event.target.files[0];
-      if (file) {
-        this.pdfFile = file;
-        this.showTitleModal = true; // Mostrar el modal para el título
+    async handleFileUploadPDF(event) {
+      const loader = this.$loading.show();
+      try{
+        const file = event.target.files[0];
+        if (file) {
+            this.pdfFile = file;
+            this.showTitleModal = true;
+        }
+      }catch(error){
+        console.log(error);
+      }finally{
+        loader.hide();
       }
     },
-    savePDF() {
-      if (this.pdfFile && this.pdfTitle) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.nuevaEmpresa.pdfs.push({
-            url: e.target.result,
-            title: this.pdfTitle,
-          });
-          this.pdfTitle = ""; // Limpiar el título
-          this.pdfFile = null; // Limpiar el archivo
-          this.showTitleModal = false; // Ocultar el modal de título
-        };
-        reader.readAsDataURL(this.pdfFile);
-      }
+    async savePDF() {
+      const loader = this.$loading.show();
+      console.log(this.pdfTitle);
+      console.log(this.pdfFile);
+        try{
+          if (this.pdfFile && this.pdfTitle) {
+          const response = await this.curriculumsStore.postCurriculum(this.pdfFile,this.$keycloak.idTokenParsed.sub);
+          console.log(response);
+            if (response == null) {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "No se pudo cargar el archivo PDF",
+              });
+              return;
+            }
+            
+            Swal.fire({
+              icon: "success",
+              title: "¡Éxito!",
+              text: "El archivo PDF se ha subido correctamente",
+            });
+          }
+        }catch(error){
+          console.log(error);
+        }finally{
+          loader.hide();
+        }
     },
     async removePDF(index) {
       console.log("numero de index"+index);
