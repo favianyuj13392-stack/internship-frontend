@@ -259,21 +259,36 @@
                 </ul>
                 <!--end icon-->
               </li>
-
-              <li
-                class="mt-3 w-full bg-white p-3 rounded-md shadow dark:shadow-gray-700 dark:bg-slate-900"
-              >
-                <div class="flex items-center mb-3">
-                  <i data-feather="file-text" class="size-8 text-slate-400"></i>
-                  <span class="font-medium ms-2">calvin-carlo-resume.pdf</span>
-                </div>
-
+              <li class="mt-3">
                 <a
                   @click="FormularioCV()"
                   class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md w-full"
-                  ><i class="uil uil-file-download-alt"></i> Download CV</a
+                  ><i class="uil uil-file-download-alt"></i> Agregar
+                  curriculums</a
                 >
               </li>
+              <div v-for="(curri, index) in cv" :key="index">
+                <li
+                  class="mt-3 w-full bg-white p-3 rounded-md shadow dark:shadow-gray-700 dark:bg-slate-900"
+                >
+                  <div class="flex items-center mb-3">
+                    <i
+                      data-feather="file-text"
+                      class="size-8 text-slate-400"
+                    ></i>
+
+                    <span class="font-medium ms-2">{{ curri.titulo }}</span>
+                  </div>
+
+                  <a
+                    :href="curri.pdfCurriculum"
+                    class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md w-full"
+                    download
+                  >
+                    <i class="uil uil-file-download-alt"></i> Descargar CV
+                  </a>
+                </li>
+              </div>
             </ul>
           </div>
         </div>
@@ -305,36 +320,33 @@
             <h5 class="text-lg font-semibold mb-4">PDFs Subidos:</h5>
             <div class="flex flex-wrap gap-2">
               <div
-                v-for="(pdf, index) in nuevaEmpresa.pdfs"
-                :key="pdf.url"
+                v-for="(pdf, index) in cv"
+                :key="pdf.pdfCurriculum"
                 class="relative w-32 h-40 border rounded-md p-2 flex flex-col items-center"
               >
                 <embed
-                  :src="pdf.url"
+                  :src="pdf.pdfCurriculum"
                   width="100%"
                   height="70%"
                   type="application/pdf"
                 />
-                <span class="text-sm mt-2">{{ pdf.title }}</span>
+                <span class="text-sm mt-2">{{ pdf.titulo }}</span>
                 <button
                   @click="removePDF(index)"
                   class="absolute top-0 right-0 bg-red-600 text-white p-1 rounded-md"
                 >
                   x
                 </button>
-
-              </div>     
+              </div>
             </div>
             <div class="flex gap-4 mt-5 justify-end">
-              
-
               <button
                 id="submit"
                 name="send"
                 @click="guardarNuevaEmpresa"
-                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer "
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
               >
-              Listo
+                Listo
               </button>
             </div>
           </div>
@@ -363,10 +375,7 @@
             Guardar
           </button>
         </div>
-   
       </div>
-
-   
     </div>
   </div>
   <footers />
@@ -381,15 +390,17 @@ import image from "@/assets/images/team/01.jpg";
 import { useEstudiantesStore } from "@/stores/Estudiantes/estudiantesStore";
 import Swal from "sweetalert2";
 import StarRatingComponent from "@/components/General/Extras/StartRatingComponent.vue";
-
+import { useCurriculumsStore } from "@/stores/Estudiantes/curriculumsStore";
 export default {
   setup() {
     const estudiantesStore = useEstudiantesStore();
-    return { estudiantesStore };
+    const curriculumsStore = useCurriculumsStore();
+    return { estudiantesStore, curriculumsStore };
   },
   data() {
     return {
       id: "",
+      cv: "",
       showTitleModal: false,
       pdfTitle: "",
       pdfFile: null,
@@ -470,35 +481,94 @@ export default {
         this.$router.push("/");
         return;
       }
-      loader.hide();
+
       this.data = response;
       console.log(this.data);
+
+      const response1 = await this.curriculumsStore.getCurriculum(
+        this.$keycloak.idTokenParsed.sub
+      );
+
+      this.cv = response1;
+      console.log(this.cv);
+      loader.hide();
     },
     handleFileUploadPDF(event) {
-            const file = event.target.files[0];
-            if (file) {
-                this.pdfFile = file;
-                this.showTitleModal = true; // Mostrar el modal para el título
-            }
-        },
-        savePDF() {
-            if (this.pdfFile && this.pdfTitle) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    this.nuevaEmpresa.pdfs.push({
-                        url: e.target.result,
-                        title: this.pdfTitle
-                    });
-                    this.pdfTitle = ''; // Limpiar el título
-                    this.pdfFile = null; // Limpiar el archivo
-                    this.showTitleModal = false; // Ocultar el modal de título
-                };
-                reader.readAsDataURL(this.pdfFile);
-            }
-        },
-        removePDF(index) {
-            this.nuevaEmpresa.pdfs.splice(index, 1);
-        }
+      const file = event.target.files[0];
+      if (file) {
+        this.pdfFile = file;
+        this.showTitleModal = true; // Mostrar el modal para el título
+      }
+    },
+    savePDF() {
+      if (this.pdfFile && this.pdfTitle) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.nuevaEmpresa.pdfs.push({
+            url: e.target.result,
+            title: this.pdfTitle,
+          });
+          this.pdfTitle = ""; // Limpiar el título
+          this.pdfFile = null; // Limpiar el archivo
+          this.showTitleModal = false; // Ocultar el modal de título
+        };
+        reader.readAsDataURL(this.pdfFile);
+      }
+    },
+    async removePDF(index) {
+      console.log("numero de index"+index);
+     
+      try {
+    const result = await Swal.fire({
+      title: "¿Estás seguro de eliminar este  Curriculum?",
+      text: "¡Se eliminará de manera permanente!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Sí, elimínala!",
+    });
+
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Eliminada!",
+        text: "Tu archivo ha sido eliminado.",
+        icon: "success",
+      });
+
+      
+    
+      try {
+       
+
+        const response = await this.curriculumsStore.deleteCurriculum(
+          this.$keycloak.idTokenParsed.sub,
+          index
+        );
+        Swal.fire({
+          icon: "success",
+          title: "Curriculum fue eliminiada",
+          text: "La Curriculum fue eliminada con éxito",
+        });
+       
+      } catch (error) {
+       
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "ERROR: " + error.message,
+        });
+      } 
+    }
+  } catch (error) {
+    console.error("Error mostrando el diálogo de confirmación:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "ERROR: " + error.message,
+    });
+  }
+    },
   },
   components: {
     navbar,

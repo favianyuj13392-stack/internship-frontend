@@ -24,6 +24,33 @@ export const useCurriculumsStore = defineStore({
             }catch(error){
                 console.log(error)
             }
+        },
+       
+
+        async getCurriculum(uuid){
+            try{
+                const response = await axios.get(RutaApi + '/estudiante/'+uuid+'/curruculum')
+                if(response.data.code == '200'){
+                    return response.data.response
+                }else{
+                    return null;
+                }
+            }catch(error){
+                console.log(error)
+            }
+        },
+        async deleteCurriculum(uuid, curriculumId){
+            try{
+                const response = await axios.delete(RutaApi + '/estudiante/'+uuid+'/curriculum/'+curriculumId)
+                if(response.data.code == '200'){
+                    return response.data.response
+                }else{
+                    return null;
+                }
+            }catch(error){
+                console.log(error)
+            }
         }
+
     }
 });
