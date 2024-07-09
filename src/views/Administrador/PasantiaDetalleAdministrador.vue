@@ -20,12 +20,15 @@
                 {{ this.pasantia.titulo }}
               </h5>
               <div class="mt-2">
+                <router-link :to="{ name: 'EmpresaDetalleAdministrador', params: { id: this.instituto.idInstituciones
+ } }"
+                >
                 <span class="text-slate-400 font-medium me-2 inline-block"
                   ><i
                     class="uil uil-building text-[18px] text-cyan-600 me-1"
                   ></i
                   >{{ this.instituto.nombre }}
-                </span>
+                </span></router-link>
                 <span class="text-slate-400 font-medium me-2 inline-block"
                   ><i class="uil-fast-mail text-[18px] text-cyan-600 me-1"></i>
                   {{ this.instituto.correo }}
@@ -169,7 +172,7 @@
       </div>
       <div v-if="activo">
         <div
-          v-if="this.postulantes"
+          v-if="this.postulantes.length ===0 || this.postulantesEstado.length ===0"
           class="grid grid-cols-1 mt-10 pb-2 text-center"
         >
           <h3
@@ -186,8 +189,8 @@
             >
               Pasantea aprobados en la pasantia
             </h3>
-            <span>Pasantes aprobados: 2</span>
-            <span>Pasantes pendientes: 10</span>
+            <span>Pasantes aprobados: {{aprobados}}</span>
+            <span>Pasantes pendientes: {{ pendientes }}</span>
           </div>
           <div
             class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
@@ -213,7 +216,7 @@
                 class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between"
               >
                 <span class="text-slate-400">
-                  <i class="fas fa-envelope pr-1"></i> {{ item.telefono }}
+                  <i class="fas fa-phone pr-1"></i> {{ item.telefono }}
                 </span>
                 <span
                   class="block font-semibold text-green-600"
@@ -253,7 +256,6 @@ import footers from "@/components/footer/footer.vue";
 import { usePasantiasStore } from "@/stores/Pasantias/pasantiasStore";
 import switcher from "@/components/General/switcher.vue";
 import Swal from "sweetalert2";
-import { data } from "autoprefixer";
 export default {
   setup() {
     const pasantiasStore = usePasantiasAdminStore();
@@ -491,36 +493,82 @@ export default {
   },
   methods: {
     async rechazarPasantia() {
+  try {
+    const result = await Swal.fire({
+      title: "¿Estás seguro de rechazar esta pasantía?",
+      text: "¡Se eliminará de manera permanente!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Sí, elimínala!",
+    });
+
+    if (result.isConfirmed) {
       Swal.fire({
+        title: "Eliminada!",
+        text: "Tu archivo ha sido eliminado.",
         icon: "success",
-        title: "Pasantia rechazada",
-        text: "La pasantia fue rechazada con exito",
       });
-      let loader = this.$loading.show();
+
+      let loader;
+      if (this.$loading && typeof this.$loading.show === 'function') {
+        loader = this.$loading.show();
+      } else {
+        console.error("El componente de carga no está disponible.");
+      }
+
       try {
+        if (!this.pasantiasStore || typeof this.pasantiasStore.rechazarPasantia !== 'function') {
+          throw new Error("pasantiasStore.rechazarPasantia no está definido o no es una función.");
+        }
+        if (!this.id) {
+          throw new Error("this.id no está definido.");
+        }
+        if (!this.$keycloak || !this.$keycloak.idTokenParsed || !this.$keycloak.idTokenParsed.sub) {
+          throw new Error("this.$keycloak.idTokenParsed.sub no está definido.");
+        }
+
         const response = await this.pasantiasStore.rechazarPasantia(
           this.id,
           this.$keycloak.idTokenParsed.sub
         );
         Swal.fire({
           icon: "success",
-          title: "Pasantia rechazada",
-          text: "La pasantia fue rechazada con exito",
+          title: "Pasantía rechazada",
+          text: "La pasantía fue rechazada con éxito",
         });
-        this.fetchPasantia();
+        this.$router.push("/administrador/solicitud/pasantia");
+       
       } catch (error) {
+        console.error("Error rechazando la pasantía:", error);
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "ERROR: " + error,
+          text: "ERROR: " + error.message,
         });
       } finally {
-        loader.hide();
+        if (loader && typeof loader.hide === 'function') {
+          loader.hide();
+        }
       }
-    },
+    }
+  } catch (error) {
+    console.error("Error mostrando el diálogo de confirmación:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "ERROR: " + error.message,
+    });
+  }
+}
+,
     observar() {
       console.log("observar");
       console.log(this.data);
+      console.log("--------------------");
+      console.log(this.postulantes);
+      console.log(this.postulantes.length);
     },
     async aprobarPasantia() {
       Swal.fire({
@@ -595,6 +643,17 @@ export default {
   mounted() {
     this.id = this.$route.params.id;
     this.fetchPasantia();
+    
+  },
+  computed: {
+    aprobados() {
+      return this.postulantes.filter(item =>
+        this.postulantesEstado.find(e => e.idUsuarios === item.idPersona)?.activo
+      ).length;
+    },
+    pendientes() {
+      return this.postulantes.length - this.aprobados;
+    }
   },
   props: {
     id: {
