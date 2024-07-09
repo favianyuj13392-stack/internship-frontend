@@ -34,6 +34,19 @@ export const useEmpresasAdminStore = defineStore({
                 console.log(error)
             }
         },
+        async getSolicitudesByIdEmpresa(id, kkid) {
+            try {
+                const response = await axios.get(RutaApi + '/admin/'+kkid+'/instituciones/' + id + '/usuarios/solicitudes')
+                console.log(response)
+                if (response.data.code == '200') {
+                    return response.data.response
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        },
         async getSolicitudes(search, kkid) {
             try {
                 const response = await axios.get(RutaApi + '/admin/'+kkid+'/instituciones/usuarios/solicitudes',
