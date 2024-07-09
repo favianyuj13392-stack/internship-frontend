@@ -90,6 +90,8 @@
                         id="job-keyword"
                         class="form-input filter-input-box bg-gray-50 dark:bg-slate-800 border-0"
                         placeholder="Buscar empresa..."
+                        v-model="searchValue"
+                        @keyup.enter="searchEmpresas"
                       />
                     </div>
 
@@ -100,6 +102,7 @@
                       style="height: 60px"
                       class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white searchbtn submit-btn w-100"
                       value="Buscar"
+                      @click.prevent="searchEmpresas"
                     />
                   </div>
                   <!--end grid-->
@@ -132,53 +135,59 @@
           <div
             class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md"
           >
-            <img :src="item.image" class="size-8" alt="" />
+            <img :src="item.logoEmpresa" class="size-8" alt="" />
           </div>
-          <router-link
+          <div
             class="text-lg hover:text-cyan-600 font-semibold transition-all duration-500 ms-3 min-w-[180px]"
-            >{{ item.job }}</router-link
+            >{{ item.nombreInstitucion  }}</div
           >
         </div>
 
         <div class="md:block flex justify-between md:mt-0 mt-2 mr-1">
+          <span class="block"
+            ><span
+              class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full"
+              >Empresa:
+              </span
+            ></span
+          >
           <span class="text-slate-400"
-            ><i class="fas fa-user"></i> {{ item.nombre }}</span
+            ><i class="uil uil-map-marker"></i> {{ item.direccion }}</span
           >
           <span class="block font-semibold md:mt-1 mt-0">{{
-            item.correo
+            item.correoInstitucion
           }}</span>
         </div>
         <div class="md:block flex justify-between md:mt-0 mt-4">
           <span class="block"
             ><span
               class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full"
-              >Fecha:</span
+              >Solicitante:</span
             ></span
           >
           <span class="block text-slate-400 text-sm md:mt-1 mt-0"
-            ><i class="uil uil-clock"></i> {{ item.day }}</span
+            ><i class="uil uil-user"></i>
+            {{ item.nombre }} {{ item.apellidoPaterno }}</span
+
+          >
+          <span class="block text-slate-400 text-sm md:mt-1 mt-0"
+            ><i class="uil uil-fast-mail"></i>
+             {{ item.correo }}
+             </span
           >
         </div>
         <div class="md:block flex justify-between md:mt-0 mt-2">
-          <span class="text-slate-400"
-            ><i class="uil uil-map-marker"></i> {{ item.country }}</span
-          >
-          <span class="block"
-            ><span
-              class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full"
-              >{{ item.type }}</span
-            ></span
-          >
         </div>
 
         <div class="md:mt-0 mt-4">
           <a
             href=""
             class="btn btn-icon rounded-full bg-yellow-600/5 hover:bg-yellow-600 border-yellow-600/10 hover:border-yellow-600 text-yellow-600 hover:text-white md:relative absolute top-0 end-0 md:m-0 m-3"
-            ><i data-feather="mail" class="size-4"></i
-          ></a>
-          <router-link
-            to="/administrador/empresa/solicitud/usuario"
+            >
+            <i class="uil-fast-mail"></i>
+          </a>
+          <router-link v-if="item.idUsuariosInstitucion"
+            :to="{ name: 'EmpresaSolicitudUsuarioAdministrador', params: {idEmpresa: item.idInstituciones, idSolicitud: item.idUsuariosInstitucion, idUsuario: item.idUsuarios}}"
             class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto mt-2"
             >Más información</router-link
           >
@@ -187,31 +196,10 @@
       <!--end content-->
     </div>
   </div>
-
   <!-- iframe end  -->
   <div class="md:my-16 my-16">
     <counter />
   </div>
-  <!--end section-->
-  <!--end section-->
-  <!-- Hero End
-  
-      <h1>hola</h1>
-      
-  
-  
-      <company />
-  
-  
-  
-    <div class="container md:py-10 py-10">
-        <services />
-      </div>
-  
-      <popularjob />
-      <company />
-   -->
-
   <switcher />
   <footers />
 </template>
@@ -229,8 +217,11 @@ import question from "@/components/General/Home/job-questions.vue";
 import explore from "@/components/General/Home/explore-job.vue";
 import switcher from "@/components/General/switcher.vue";
 import footers from "@/components/footer/footer.vue";
-
+import { useEmpresasAdminStore } from "@/stores/Administradores/empresasAdminStore"; 
 export default {
+  mounted() {
+    this.fetchEmpresas();
+  },
   data() {
     return {
       isActive: false,
@@ -241,97 +232,12 @@ export default {
         "Administracion",
       ],
       selected: "Ingenieria de Sistemas",
-      datas: [
-        {
-          id: 1,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-          day: "20th Feb 2023",
-          type: "Full Time",
-          job: " NOMBRE EMPRESA",
-          country: "Miraflores",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-          correo: "@ucb.edu.bo",
-          nombre: "Nombre",
-        },
-        {
-          id: 2,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-          day: "20th Feb 2023",
-          type: "Full Time",
-          job: " NOMBRE EMPRESA",
-          country: "Miraflores",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-          correo: "@ucb.edu.bo",
-          nombre: "Nombre",
-        },
-        {
-          id: 3,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-          day: "20th Feb 2023",
-          type: "Full Time",
-          job: " NOMBRE EMPRESA",
-          country: "Miraflores",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-          correo: "@ucb.edu.bo",
-          nombre: "Nombre",
-        },
-        {
-          id: 4,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-          day: "20th Feb 2023",
-          type: "Full Time",
-          job: " NOMBRE EMPRESA",
-          country: "Miraflores",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-          correo: "@ucb.edu.bo",
-          nombre: "Nombre",
-        },
-        {
-          id: 5,
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-          day: "20th Feb 2023",
-          type: "Full Time",
-          job: " NOMBRE EMPRESA",
-          country: "Miraflores",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-          correo: "@ucb.edu.bo",
-          nombre: "Nombre",
-        },
-        {
-          image:
-            "https://img.freepik.com/fotos-premium/adorable-bebe-leon-sonrisa-estilo-pixar-ojos-grandes_804788-4863.jpg",
-          day: "20th Feb 2023",
-          type: "Full Time",
-          job: " NOMBRE EMPRESA",
-          country: "Miraflores",
-          salary: "$4,000 - $4,500",
-          class:
-            "w-24 bg-yellow-400 text-white text-center absolute ltr:-rotate-45 rtl:rotate-45 -start-[30px] top-1",
-          icon: "uil uil-star",
-          correo: "@ucb.edu.bo",
-          nombre: "Nombre",
-        },
-      ],
+      empresaStore: useEmpresasAdminStore(),
+      pageSize: 12,
+      currentPage: 0,
+      searchValue: "",
+      totalPages: 0,
+      datas: [],
     };
   },
   components: {
@@ -351,6 +257,30 @@ export default {
     toggle() {
       this.isActive = !this.isActive;
     },
+    async fetchEmpresas() {
+      const loader = this.$loading.show();
+      try{
+        const response = await this.empresaStore.getSolicitudes(
+          this.searchValue,
+          this.$keycloak.idTokenParsed.sub);
+        console.log(response);
+        if(response==null){
+          this.datas = [];
+          return;
+        }
+        console.log(response);
+        this.datas = response;
+
+      }catch(error){
+        console.log(error);
+      }finally{
+        loader.hide();
+      }
+    },
+    searchEmpresas() {
+      this.currentPage = 0;
+      this.fetchEmpresas();
+    }
   },
 };
 </script>

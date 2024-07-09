@@ -15,6 +15,7 @@ import EditarPerfilEstudiante from "@/views/Estudiante/EditarPerfilEstudiante.vu
 import PasantiasEmpresaView from "@/views/Empresa/PasantiasEmpresaView.vue";
 import InformacionEmpresaView from "@/views/Empresa/EditarInformacionEmpresaView.vue";
 import InformacionPasantiaEmpresaView from "@/views/Empresa/InformacionPasantiaEmpresaView.vue";
+import CrearPasantiaEmpresaView from "@/views/Empresa/CrearPasantiaEmpresaView.vue";
 
 //administrador
 import DashboardAdministrador from "@/views/Administrador/DashboardAdministrador.vue";
@@ -97,6 +98,11 @@ const router = createRouter({
       component: InformacionPasantiaEmpresaView,
       props: true,
     },
+    {
+      path: '/empresa/administrador/pasantias/crear',
+      name: 'CrearPasantiaEmpresaView',
+      component: CrearPasantiaEmpresaView
+    },
 
     //administrador
     {
@@ -115,7 +121,7 @@ const router = createRouter({
       component: SolicitudEmpresaAdministrador,
     },
     {
-      path: "/administrador/empresa/detalle",
+      path: "/administrador/empresa/:id/detalle",
       name: "EmpresaDetalleAdministrador",
       component: EmpresaDetalleAdministrador,
     },
@@ -130,12 +136,12 @@ const router = createRouter({
       component: SolicitudPasantiaAdministrador,
     },
     {
-      path: "/administrador/pasantia/detalle",
+      path: "/administrador/pasantia/:id/detalle",
       name: "PasantiaDetalleAdministrador",
       component: PasantiaDetalleAdministrador,
     },
     {
-      path: "/administrador/empresa/solicitud/usuario",
+      path: "/administrador/empresa/:idEmpresa/solicitud/:idSolicitud/usuario/:idUsuario",
       name: "EmpresaSolicitudUsuarioAdministrador",
       component: EmpresaSolicitudUsuarioAdministrador,
     },

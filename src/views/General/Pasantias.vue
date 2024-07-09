@@ -192,8 +192,7 @@
                 </div>
 
                 <div class="flex items-center">
-                  <router-link :to="{ name: 'pasantias-detalle', params: { id: pasantia.idPasantias} }"
-                    class="btn btn-icon rounded-full bg-cyan-600/5 group-hover:bg-cyan-600 border-cyan-600/10 text-cyan-600 group-hover:text-white ms-1"><i
+                  <router-link :to="{ name: 'pasantias-detalle', params: { id: pasantia.idPasantias} }"   class="btn btn-icon rounded-full bg-cyan-600/5 group-hover:bg-cyan-600 border-cyan-600/10 text-cyan-600 group-hover:text-white ms-1"><i
                       class="uil uil-arrow-up-right"></i></router-link>
                 </div>
               </div>
@@ -215,18 +214,18 @@
                   </a>
                   <a v-for="(beneficio, index) in pasantia.beneficios">
                     <span v-if="index < 2"
-                      class="bg-purple-600/5 hover:bg-yellow-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{{
+                      class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{{
     beneficio }}</span>
                   </a>
                   <span v-if="pasantia.beneficios.length > 2" @mouseenter="pasantia.beneficiosIsHovered = true"
                     @mouseleave="pasantia.beneficiosIsHovered = false"
-                    class="bg-purple-600/5 hover:bg-yellow-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
+                    class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
                     ...
                   </span>
                       <a v-for="(beneficio, index) in pasantia.beneficios.slice(2)" :key="'extra-' + index"
                         v-show="pasantia.beneficiosIsHovered">
                         <span
-                          class="bg-purple-600/5 hover:bg-yellow-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
+                          class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
                           {{ beneficio }}
                         </span>
                       </a>

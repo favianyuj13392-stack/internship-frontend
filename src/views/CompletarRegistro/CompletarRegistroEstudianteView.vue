@@ -670,7 +670,6 @@
     </div>
     <!--fin de edicion de profie-->
   </section>
-
   <div id="myModalExperiencia" class="modal" v-if="showNuevaExperienciaModal">
     <div class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
       <span class="close" @click="showNuevaExperienciaModal = false">&times;</span>
@@ -759,6 +758,7 @@
       </div>
     </div>
   </div>
+ 
   <!-- End Hero -->
 
   <switcher />

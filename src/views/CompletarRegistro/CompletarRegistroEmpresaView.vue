@@ -169,14 +169,14 @@
             <div class="ms-4">
               <h5 class="text-lg font-semibold">
                 {{
-                  estudianteDto.persona.nombre +
-                  "" +
-                  estudianteDto.persona.apellidoPaterno +
+                  usuarioInstitucion.persona.nombre +
                   " " +
-                  estudianteDto.persona.apellidoMaterno
+                  usuarioInstitucion.persona.apellidoPaterno +
+                  " " +
+                  usuarioInstitucion.persona.apellidoMaterno
                 }}
               </h5>
-              <p class="text-slate-400">Estudiante</p>
+              <p class="text-slate-400">Usuario de la empresa</p>
             </div>
           </div>
         </div>
@@ -384,7 +384,7 @@
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
                       v-model="usuarioInstitucion.cargo"
-                      placeholder="Apellido Paterno:"
+                      placeholder="Cargo en la empresa :"
                       id="lastname"
                       name="name"
                       required=""
@@ -418,7 +418,7 @@
                 <button
                   id="submit"
                   name="send"
-                  @click="paginaFormulario = 5, registrarUsuarioInstitucion()"
+                  @click="(paginaFormulario = 5), registrarUsuarioInstitucion()"
                   class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
                 >
                   Registrar
@@ -1106,7 +1106,7 @@
                     name="profile-image"
                     type="file"
                     class="hidden"
-                    @change="handleFileUploadBannerPerfil"
+                    @change="handleFileUploadLogoEmpresa"
                   />
                   <div>
                     <div
@@ -1430,6 +1430,7 @@ import StarRatingComponent from "@/components/General/Extras/StartRatingComponen
 import { useInstitucionesStore } from "@/stores/Instituciones/InstitucionesPublicStore.js";
 import { useFilesStore } from "@/stores/fileStore.js";
 import Swal from "sweetalert2";
+import Compressor from 'compressorjs';
 
 export default {
   components: {
@@ -1787,23 +1788,26 @@ export default {
     this.getInstitucionesWithName();
   },
   methods: {
-    async registrarUsuarioInstitucion(){
+    async registrarUsuarioInstitucion() {
       console.log("usuarioInstitucion", this.usuarioInstitucion);
-      this.usuarioInstitucion.kc_UUID=this.$keycloak.idTokenParsed.sub;
-      this.usuarioInstitucion.idUsuarios= null;
-      this.usuarioInstitucion.horaRegistro= new Date().toLocaleTimeString();
-      this.usuarioInstitucion.institucion=this.empresaSeleccionada;
+      this.usuarioInstitucion.kc_UUID = this.$keycloak.idTokenParsed.sub;
+      this.usuarioInstitucion.idUsuarios = null;
+      this.usuarioInstitucion.horaRegistro = '12:12:12'
+      this.usuarioInstitucion.institucion = this.empresaSeleccionada;
       let loader = this.$loading.show();
-      try{
-        const response = await this.institucionesPublicStore.registrarUsuarioInstitucion(this.usuarioInstitucion);
-        if(response){
+      try {
+        const response =
+          await this.institucionesPublicStore.registrarUsuarioInstitucion(
+            this.usuarioInstitucion
+          );
+        if (response) {
           Swal.fire({
             title: "Usuario registrado correctamente",
             icon: "success",
             showConfirmButton: false,
             timer: 1500,
           });
-        }else{
+        } else {
           Swal.fire({
             title: "Error al registrar usuario",
             icon: "error",
@@ -1811,10 +1815,10 @@ export default {
             timer: 1500,
           });
         }
-      }catch(error){
+      } catch (error) {
         console.log("error", error);
-      }finally{
-        this.$router.push("/");  
+      } finally {
+        this.$router.push("/");
         loader.hide();
       }
     },
@@ -1969,18 +1973,19 @@ export default {
     async seleccionarEmpresa(Empresa) {
       this.paginaFormulario = 2;
       const loader = this.$loading.show();
-      try{
-        
+      try {
         //Obtener la empresa seleccionada por id
-        Empresa = await this.institucionesPublicStore.obtenerEmpresaPorId(Empresa.idInstituciones);
+        Empresa = await this.institucionesPublicStore.obtenerEmpresaPorId(
+          Empresa.idInstituciones
+        );
         //Quitar las pasantías de la empresa
         Empresa.pasantias = [];
         //Asignar la empresa seleccionada a la variable nuevaEmpresa
         this.empresaSeleccionada = Empresa;
         this.nuevaEmpresa = Empresa;
-      }catch(error){
+      } catch (error) {
         console.log("error", error);
-      }finally{
+      } finally {
         loader.hide();
       }
     },
@@ -1993,13 +1998,15 @@ export default {
 
         console.log("tamaño imagen anterior " + file.size);
         if (file.size > 4000000) {
-          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+          auxLink = await this.comprimirYSubirImagenFotosGeneral(file, 0.3);
           console.log("tamaño imagen comprimida " + auxLink);
           this.nuevaEmpresa.fotos.push(auxLink);
+          return;
         } else if (file.size > 1000000) {
-          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
+          auxLink = await this.comprimirYSubirImagenFotosGeneral(file, 0.5);
           console.log("tamaño imagen comprimida " + auxLink);
           this.nuevaEmpresa.fotos.push(auxLink);
+          return;
         } else {
           let loader = this.$loading.show();
           const response = await this.filesStore.uploadFile(file);
@@ -2014,7 +2021,10 @@ export default {
           } else {
             // Corrected code: use push() to add the new link to the array
             this.nuevaEmpresa.fotos.push(this.filesStore.link);
+            console.log("fotos", this.nuevaEmpresa.fotos);
+
           }
+
         }
       }
     },
@@ -2028,17 +2038,10 @@ export default {
         console.log("tamaño imagen anterior " + file.size);
         if (file.size > 4000000) {
           auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
-          console.log("tamaño imagen comprimida " + auxLink);
-          this.nuevaEmpresa.logoEmpresa = auxLink;
-          this.imageSrc3 = auxLink;
-          this.usuarioInstitucion.persona.fotoPerfil = auxLink;
+         
         } else if (file.size > 1000000) {
           auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
-          console.log("tamaño imagen comprimida " + auxLink);
-          // this.nuevaEmpresa.logoEmpresa = auxLink;
-          this.imageSrc3 = auxLink;
-          this.usuarioInstitucion.persona.fotoPerfil = auxLink;
-       
+          
         } else {
           let loader = this.$loading.show();
           const response = await this.filesStore.uploadFile(file);
@@ -2069,11 +2072,11 @@ export default {
 
         console.log("tamaño imagen anterior " + file.size);
         if (file.size > 4000000) {
-          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+          auxLink = await this.comprimirYSubirImagenFotoGrande(file, 0.3);
           console.log("tamaño imagen comprimida " + auxLink);
           this.nuevaEmpresa.fotoInstitucion = auxLink;
         } else if (file.size > 1000000) {
-          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
+          auxLink = await this.comprimirYSubirImagenFotoGrande(file, 0.5);
           console.log("tamaño imagen comprimida " + auxLink);
           this.nuevaEmpresa.fotoInstitucion = auxLink;
         } else {
@@ -2094,7 +2097,7 @@ export default {
         }
       }
     },
-    async handleFileUploadBannerPerfil(event) {
+    async handleFileUploadLogoEmpresa(event) {
       const file = event.target.files[0];
       let auxLink = "";
 
@@ -2103,12 +2106,12 @@ export default {
 
         console.log("tamaño imagen anterior " + file.size);
         if (file.size > 4000000) {
-          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
+          auxLink = await this.comprimirYSubirImagenLogoEmpresa(file, 0.3);
           console.log("tamaño imagen comprimida " + auxLink);
           this.nuevaEmpresa.logoEmpresa = auxLink;
           this.imageSrc = auxLink;
         } else if (file.size > 1000000) {
-          auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
+          auxLink = await this.comprimirYSubirImagenLogoEmpresa(file, 0.5);
           console.log("tamaño imagen comprimida " + auxLink);
           this.nuevaEmpresa.logoEmpresa = auxLink;
           this.imageSrc = auxLink;
@@ -2132,7 +2135,7 @@ export default {
         }
       }
     },
-    async comprimirYSubirImagenBannerPerfil(file, cantidadCompresion) {
+    async comprimirYSubirImagenLogoEmpresa(file, cantidadCompresion) {
       new Compressor(file, {
         quality: cantidadCompresion,
         success: async (compressedResult) => {
@@ -2154,9 +2157,9 @@ export default {
               text: "Error al subir la imagen, porfavor intenta de nuevo",
             });
           } else {
-            this.estudianteDto.persona.bannerPerfil = this.filesStore.link;
+            this.nuevaEmpresa.logoEmpresa = this.filesStore.link;
+            this.imageSrc = this.filesStore.link;
 
-            this.imageSrc2 = this.filesStore.link;
           }
         },
         error(err) {
@@ -2164,6 +2167,111 @@ export default {
         },
       });
     },
+
+    async comprimirYSubirImagenFotoGrande(file, cantidadCompresion) {
+      new Compressor(file, {
+        quality: cantidadCompresion,
+        success: async (compressedResult) => {
+          console.log(
+            "tamaño imagen comprimida " +
+              compressedResult.size +
+              " con una compreison de " +
+              cantidadCompresion
+          );
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(compressedResult);
+          const aux = this.filesStore.link;
+          loader.hide();
+
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            this.nuevaEmpresa.fotoInstitucion = this.filesStore.link;
+
+
+          }
+        },
+        error(err) {
+          console.log(err.message);
+        },
+      });
+    },
+
+    async comprimirYSubirImagenFotosGeneral(file, cantidadCompresion) {
+      new Compressor(file, {
+        quality: cantidadCompresion,
+        success: async (compressedResult) => {
+          console.log(
+            "tamaño imagen comprimida " +
+              compressedResult.size +
+              " con una compreison de " +
+              cantidadCompresion
+          );
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(compressedResult);
+          const aux = this.filesStore.link;
+          loader.hide();
+
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            this.nuevaEmpresa.fotos.push(this.filesStore.link);
+            this.nuevaEmpresa.fotos = this.nuevaEmpresa.fotos.filter(
+              (element) => element !== undefined
+            );
+
+
+          }
+        },
+        error(err) {
+          console.log(err.message);
+        },
+      });
+    },
+
+
+    async comprimirYSubirImagenFotoPerfil(file, cantidadCompresion) {
+      new Compressor(file, {
+        quality: cantidadCompresion,
+        success: async (compressedResult) => {
+          console.log(
+            "tamaño imagen comprimida " +
+              compressedResult.size +
+              " con una compreison de " +
+              cantidadCompresion
+          );
+          let loader = this.$loading.show();
+          const response = await this.filesStore.uploadFile(compressedResult);
+          const aux = this.filesStore.link;
+          loader.hide();
+
+          if (response === false) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error al subir la imagen, porfavor intenta de nuevo",
+            });
+          } else {
+            this.imageSrc3 = this.filesStore.link;
+            this.usuarioInstitucion.persona.fotoPerfil = this.filesStore.link;
+
+
+          }
+        },
+        error(err) {
+          console.log(err.message);
+        },
+      });
+    },
+
   },
   computed: {
     filteredDatas() {

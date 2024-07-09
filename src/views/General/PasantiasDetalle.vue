@@ -10,7 +10,7 @@
             class="md:flex items-center p-6 shadow dark:shadow-gray-700 rounded-md bg-white dark:bg-slate-900 mb-6"
           >
             <img
-              :src="data.institucion.logoEmpresa"
+              :src="data.institucion"
               class="rounded-full size-28 p-4 bg-white dark:bg-slate-900 shadow dark:shadow-gray-700"
               alt="logo de la empresa"
             />
@@ -347,7 +347,7 @@ export default {
         this.data = response;
         this.parsedData = this.data.descripcion.split("\n");
         console.log(this.parsedData);
-        console.log(this.data);
+        console.log("this.data"+this.data);
         if(this.data == null){
           Swal.fire({
             icon: "error",
@@ -368,6 +368,7 @@ export default {
       } finally {
         loader.hide();
       }
+      console.log("response "+response);
     },
     async fetchPasantiasRelacionadas() {
       let loader = this.$loading.show();

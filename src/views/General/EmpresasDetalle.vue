@@ -7,7 +7,7 @@
   <!-- Start Hero -->
   <section
     class="relative table w-full py-40 bg-center bg-no-repeat bg-cover" 
-    :style="{ backgroundImage: `url(${data?.fotoInstitucion ? data.fotoInstitucion : image})` }"
+    :style="{ backgroundImage: `url(${data?.fotoInstitucion ? data.fotoInstitucion : '@/assets/images/1.jpg'})` }"
 
   >
     <div class="absolute inset-0 bg-cyan-900/60"></div>
@@ -118,7 +118,7 @@
                   >{{item.titulo}}</a
                 >
                 <p class="text-slate-400 mt-2">
-                   {{ item.descripcion }}
+                   {{ item.descripcion.substring(0, 100)}}{{item.descripcion.length>100 ? "...":""}}
                 </p>
 
                 <div class="flex justify-between items-center mt-4">
@@ -346,6 +346,11 @@ export default {
       }
       console.log(response);
       this.data = response;
+      //if begins with https://example.com
+      if(this.data.fotoInstitucion.startsWith("https://example.com")){
+        this.data.fotoInstitucion = 'https://inascleaningservices.llc/wp-content/uploads/2024/03/white-corner-desk-scaled.jpg';
+       
+      }
       console.log(this.data);
     
       loader.hide();
