@@ -67,11 +67,7 @@
              
   
             <div class="md:mt-0 mt-4">
-              <a
-                href=""
-                class="btn btn-sm bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md"
-                >Editar</a
-              >
+              
               <router-link
                 to="/empresa/administrador/pasantias"
                 class="btn btn-sm bg-cyan-600/5 hover:bg-cyan-600 border-cyan-600/10 hover:border-cyan-600 text-cyan-600 hover:text-white rounded-md ms-1"

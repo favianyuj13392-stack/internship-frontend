@@ -29,7 +29,8 @@
   <section class="relative md:py-24 py-16">
     <div class="container">
       <button style="min-width: 100%; min-height: 3rem; margin-top: 0rem; margin-bottom: 2rem;"
-        class="btn btn-sm bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md">Crear
+      @click="$router.push('/empresa/administrador/pasantias/crear')"  
+      class="btn btn-sm bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md">Crear
         pasantía</button>
 
       <div class="grid md:grid-cols-12 grid-cols-1 mt-4 mb-8">
