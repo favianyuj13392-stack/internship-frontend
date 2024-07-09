@@ -87,9 +87,9 @@
                   <i data-feather="user-check" class="size-5"></i>
 
                   <div class="ms-4">
-                    <p class="font-medium">Employee Type:</p>
+                    <p class="font-medium">Descripcion de la empresa:</p>
                     <span class="text-purple-600 font-medium text-sm">{{
-                      data?.type ? data?.type : "Full Time"
+                      data.institucion.descripcion
                     }}</span>
                   </div>
                 </li>
@@ -98,9 +98,9 @@
                   <i data-feather="map-pin" class="size-5"></i>
 
                   <div class="ms-4">
-                    <p class="font-medium">Location:</p>
+                    <p class="font-medium">Ubicacion:</p>
                     <span class="text-purple-600 font-medium text-sm">{{
-                      data?.country ? data?.country : "Beijing, China"
+                      data.institucion.direccion
                     }}</span>
                   </div>
                 </li>
@@ -109,9 +109,9 @@
                   <i data-feather="monitor" class="size-5"></i>
 
                   <div class="ms-4">
-                    <p class="font-medium">Job Type:</p>
+                    <p class="font-medium">Correo Electronico:</p>
                     <span class="text-purple-600 font-medium text-sm">{{
-                      data?.job ? data?.job : "Back-end Developer"
+                      data.institucion.correo
                     }}</span>
                   </div>
                 </li>
@@ -120,14 +120,29 @@
                   <i data-feather="briefcase" class="size-5"></i>
 
                   <div class="ms-4">
-                    <p class="font-medium">Experience:</p>
-                    <span class="text-purple-600 font-medium text-sm"
-                      >2+ years</span
+                    <p class="font-medium">Sectores:</p>
+                    <p v-for="sector in data.institucion.sectores">
+                      <span class="text-purple-600 font-medium text-sm"
+                      >{{ sector }}</span
                     >
+                    </p>
                   </div>
                 </li>
 
                 <li class="flex items-center mt-3">
+                  <i data-feather="briefcase" class="size-5"></i>
+
+                  <div class="ms-4">
+                    <p class="font-medium">Redes Sociales:</p>
+                    <p v-for="redSocial in data.institucion.redesSociales">
+                      <span class="text-purple-600 font-medium text-sm"
+                      >{{ redSocial }}</span
+                    >
+                    </p>
+                  </div>
+                </li>
+
+                <!-- <li class="flex items-center mt-3">
                   <i data-feather="book" class="size-5"></i>
 
                   <div class="ms-4">
@@ -156,7 +171,7 @@
                       >28th Feb, 2023</span
                     >
                   </div>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -168,21 +183,9 @@
     <!--end container-->
 
     <div class="container lg:mt-24 mt-16">
-      <div v-if="related" class="grid grid-cols-1 pb-8 text-center">
-        <h3
-          class="mb-4 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
-        >
-          Related Vacancies
-        </h3>
-
-        <p class="text-slate-400 dark:text-slate-300 max-w-xl mx-auto">
-          Search all the open positions on the web. Get your own personalized
-          salary estimate. Read reviews on over 30000+ companies worldwide.
-        </p>
-      </div>
       <!--end grid-->
 
-      <div v-else class="grid grid-cols-1 pb-8 text-center">
+      <div class="grid grid-cols-1 pb-8 text-center">
         <h3
           class="mb-4 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
         >
@@ -196,12 +199,12 @@
       <!--end grid-->
 
       <div
-        v-if="jobs"
+        v-if="related"
         class="grid lg:grid-cols-3 md:grid-cols-2 mt-8 gap-[30px]"
       >
         <div
-          v-for="item in datas.slice(0, 3)"
-          :key="item"
+          v-for="pasantia in related"
+          :key="pasantia.idPasantias"
           class="group shadow dark:shadow-gray-700 p-6 rounded-md bg-white dark:bg-slate-900"
         >
           <div class="flex items-center justify-between">
@@ -209,115 +212,46 @@
               <div
                 class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md"
               >
-                <img :src="item.image" class="size-8" alt="" />
+                <img :src="pasantia.institucion.logoEmpresa" class="size-8" alt="logo empresa" />
               </div>
 
               <div class="ms-3">
-                <router-link
-                  to="/employer-detail"
+                <router-link 
                   class="block text-[16px] font-semibold hover:text-cyan-600 transition-all duration-500"
-                  >{{ item.name }}</router-link
+                  >{{ pasantia.institucion.nombre}}</router-link
                 >
-                <span class="block text-sm text-slate-400">{{ item.day }}</span>
               </div>
             </div>
-
-            <span
-              class="bg-cyan-600/10 group-hover:bg-cyan-600 inline-block text-cyan-600 group-hover:text-white text-xs px-2.5 py-0.5 font-semibold rounded-full transition-all duration-500"
-              >{{ item.type }}</span
-            >
           </div>
 
           <div class="mt-6">
-            <router-link
-              to="/job-detail-one"
+            <a
+              @click="this.$router.push({name: 'pasantias-detalle', params: {id: pasantia.idPasantias}})"
               class="text-lg hover:text-cyan-600 font-semibold transition-all duration-500"
-              >{{ item.job }}</router-link
+              >{{ pasantia.titulo }}</a
             >
             <h6 class="text-base font-medium">
-              <i class="uil uil-map-marker"></i> {{ item.country }}
+              <i class="uil uil-map-marker"></i> {{ pasantia.institucion.direccion }}
             </h6>
           </div>
 
           <div class="mt-6">
-            <div
+            <!-- <div
               class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-[6px]"
             >
               <div
                 class="bg-cyan-600 h-[6px] rounded-full"
                 style="width: 55%"
               ></div>
-            </div>
+            </div> -->
             <div class="mt-2">
-              <span class="text-slate-400 text-sm"
+              <p class="text-slate-400 dark:text-white font-semibold inline-block">Carreras:</p>
+              <p v-for="carrera in pasantia.carreras" class="text-slate-400"
                 ><span
                   class="text-slate-900 dark:text-white font-semibold inline-block"
-                  >{{ item.vacancy }}</span
+                  >{{carrera.nombre }}</span
                 >
-                {{ item.vacancy2 }}</span
-              >
-            </div>
-          </div>
-        </div>
-        <!--end content-->
-      </div>
-      <!--end grid-->
-
-      <div v-else class="grid lg:grid-cols-3 md:grid-cols-2 mt-8 gap-[30px]">
-        <div
-          v-for="item in datas"
-          :key="item"
-          class="group shadow dark:shadow-gray-700 p-6 rounded-md bg-white dark:bg-slate-900"
-        >
-          <div class="flex items-center justify-between">
-            <div class="flex items-center">
-              <div
-                class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md"
-              >
-                <img :src="item.image" class="size-8" alt="" />
-              </div>
-
-              <div class="ms-3">
-                <router-link
-                  class="block text-[16px] font-semibold hover:text-cyan-600 transition-all duration-500"
-                  >{{ item.name }}</router-link
-                >
-                <span class="block text-sm text-slate-400">{{ item.day }}</span>
-              </div>
-            </div>
-
-            <span
-              class="bg-cyan-600/10 group-hover:bg-cyan-600 inline-block text-cyan-600 group-hover:text-white text-xs px-2.5 py-0.5 font-semibold rounded-full transition-all duration-500"
-              >{{ item.type }}</span
-            >
-          </div>
-
-          <div class="mt-6">
-            <router-link
-              class="text-lg hover:text-cyan-600 font-semibold transition-all duration-500"
-              >{{ item.job }}</router-link
-            >
-            <h6 class="text-base font-medium">
-              <i class="uil uil-map-marker"></i> {{ item.country }}
-            </h6>
-          </div>
-
-          <div class="mt-6">
-            <div
-              class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-[6px]"
-            >
-              <div
-                class="bg-yellow-400 h-[6px] rounded-full"
-                style="width: 55%"
-              ></div>
-            </div>
-            <div class="mt-2">
-              <span class="text-slate-400 text-sm"
-                ><span
-                  class="text-slate-900 dark:text-white font-semibold inline-block"
-                  >{{ item.vacancy }}</span
-                >
-                {{ item.vacancy2 }}</span
+               </p
               >
             </div>
           </div>
@@ -368,177 +302,42 @@ export default {
         institucion: {
           nombre: "",
           logoEmpresa: "",
+          descripcion: "",
         }
       },
+      related: [
+        {
+          idPasantias: "",
+          titulo: "",
+          descripcion: "",
+          institucion: {
+            nombre: "",
+            logoEmpresa: "",
+            direccion: "",
+            sectores: [],
+          }
+        }
+      ],
       id: "",
       image:
         "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-
-      datas: [
-        {
-          id: 1,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Facebook",
-          day: "2 days ago",
-          type: "Full Time",
-          job: "Web Designer / Developer",
-          country: "Australia",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-        },
-        {
-          id: 2,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Google",
-          day: "2 days ago",
-          type: "Part Time",
-          job: "Marketing Director",
-          country: "USA",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-        },
-        {
-          id: 3,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Android",
-          day: "2 days ago",
-          type: "Remote",
-          job: "Application Developer",
-          country: "China",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-        },
-        {
-          id: 4,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Lenovo",
-          day: "2 days ago",
-          type: "WFH",
-          job: "Senior Product Designer",
-          country: "Dubai",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-        },
-        {
-          id: 5,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Spotify",
-          day: "2 days ago",
-          type: "Full Time",
-          job: "C++ Developer",
-          country: "India",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-        },
-        {
-          id: 6,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Linkedin",
-          day: "2 days ago",
-          type: "Remote",
-          job: "Php Developer",
-          country: "Pakistan",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-        },
-        {
-          id: 7,
-          job: "Software Engineering",
-          day: "Posted 3 Days ago",
-          type: "Full Time",
-          salary: "$950 - $1100/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Circle CI Ltd.",
-          location: "Australia",
-        },
-        {
-          id: 8,
-          job: "Web Developer",
-          day: "Posted 3 Days ago",
-          type: "Remote",
-          salary: "$2500 - $2600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Skype Ltd.",
-          location: "America",
-        },
-        {
-          id: 9,
-          job: "UX/UI Designer",
-          day: "Posted 3 Days ago",
-          type: "Freelance",
-          salary: "$3500 - $3600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Snapchat Ltd.",
-          location: "Canada",
-        },
-        {
-          id: 10,
-          job: "Human Resource(HR)",
-          day: "Posted 3 Days ago",
-          type: "Part Time",
-          salary: "$2000 - $2500/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Shreethemes Ltd.",
-          location: "UK",
-        },
-        {
-          id: 11,
-          job: "Web Designer",
-          day: "Posted 3 Days ago",
-          type: "Full Time",
-          salary: "$1500 - $1600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Telegram Ltd.",
-          location: "China",
-        },
-        {
-          id: 12,
-          job: "Graphic Designer",
-          day: "Posted 3 Days ago",
-          type: "Part time",
-          salary: "$500 - $600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Whatsapp Ltd.",
-          location: "India",
-        },
-      ],
-      datas1: [
-        "Participate in requirements analysis",
-        "Write clean, scalable code using C# and .NET frameworks",
-        "Test and deploy applications and systems",
-        "Revise, update, refactor and debug code",
-        "Improve existing software",
-        "Develop documentation throughout the software development life cycle (SDLC",
-        "Serve as an expert on applications and provide technical support",
-      ],
-      datas2: [
-        "Proven experience as a .NET Developer or Application Developer",
-        "good understanding of SQL and Relational Databases, specifically Microsoft SQL Server.",
-        "Experience designing, developing and creating RESTful web services and APIs",
-        "Basic know how of Agile process and practices",
-        "Good understanding of object-oriented programming.",
-        "Good understanding of concurrent programming.",
-        "Sound knowledge of            application architecture and design.",
-        "Excellent problem solving and analytical skills",
-      ],
     };
   },
   components: {
     navbar,
     footers,
     switcher,
+  },
+  watch: {
+    '$route.params.id': {
+      handler(newId, oldId) {
+        if (newId !== oldId) {
+          this.asyncPasantias(newId);
+          window.scrollTo(0, 0);
+        }
+      },
+      immediate: true
+    }
   },
   methods: {
     async fetchPasantia() {
@@ -572,8 +371,33 @@ export default {
       console.log("response "+response);
     },
     async fetchPasantiasRelacionadas() {
-      this.related = this.datas.filter((item) => item.id != this.id);
+      let loader = this.$loading.show();
+      try{
+        const response = await this.pasantiasStore.getPasantiaRelacionada(this.id);
+        this.related = response;
+        if(this.related == null){
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No se encontraron pasantias relacionadas",
+          });
+          return;
+        }
+      }catch(error){
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "ERROR: " + error,
+        });
+      }finally{
+        loader.hide();
+      }
     },
+    async asyncPasantias(id){
+      this.id = id;
+      await this.fetchPasantia();
+      await this.fetchPasantiasRelacionadas();
+    }
   },
   mounted() {
     this.id = this.$route.params.id;

@@ -40,6 +40,18 @@ export const usePasantiasStore = defineStore({
                 } catch (error) {
                     console.log(error)
                 }
+            },
+        async getPasantiaRelacionada(id){
+            try {
+                const response = await axios.get(RutaApi + '/pasantia/' + id + '/relacionadas')
+                if (response.data.code == '200') {
+                    return response.data.response
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.log(error)
             }
+        }
     },
 })
