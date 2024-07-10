@@ -99,7 +99,7 @@ const router = createRouter({
       props: true,
     },
     {
-      path: '/empresa/administrador/pasantias/crear',
+      path: '/empresa/:id/administrador/pasantias/crear',
       name: 'CrearPasantiaEmpresaView',
       component: CrearPasantiaEmpresaView
     },

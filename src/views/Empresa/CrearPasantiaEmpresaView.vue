@@ -109,8 +109,7 @@
 
                     <div class="mt-5">
                         <router-link to="/job-apply"
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto">Editar
-                            Pasantia</router-link>
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto">Guardar Pasantía</router-link>
                     </div>
                 </div>
                 <!--end col-->
@@ -612,7 +611,7 @@ export default {
         switcher,
     },
     mounted() {
-        //this.id = this.$route.params.id;
+        this.id = this.$route.params.id;
 
         //this.fetchPasantiaActual();
     },
