@@ -34,6 +34,14 @@
                         placeholder="Escribe aquí..." v-model="data.pasantiasDto.descripcion">
                     </textarea>
 
+                    <div class="flex items
+                    -center space-x-40 mt-6">
+                        <h5 class="text-lg font-semibold">Fecha de Cierre:</h5>
+                        <input type="date" class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-600 w-full p-2"
+                            v-model="data.pasantiasDto.fechaCierre" />
+                    </div>
+
+
 
                     <div class="flex items-center space-x-40 mt-6">
                         <h5 class="text-lg font-semibold">Áreas:</h5>
@@ -108,98 +116,74 @@
                     </ul>
 
                     <div class="mt-5">
-                        <router-link to="/job-apply"
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto">Guardar Pasantía</router-link>
+                        <a
+                        @click="guardarPasantia()"
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto">Guardar Pasantía</a>
                     </div>
                 </div>
                 <!--end col-->
 
-                <div class="lg:col-span-4 md:col-span-6">
-                    <div class="shadow dark:shadow-gray-700 rounded-md bg-white dark:bg-slate-900 sticky top-20">
-                        <div class="p-6">
-                            <h5 class="text-lg font-semibold text-cyan-600" v-if="this.data.activoPasantia == true">
-                                Aprobado</h5>
-                            <h5 class="text-lg font-semibold text-red-600" v-if="this.data.activoPasantia == false">Sin
-                                Aprobar</h5>
+                <div class="lg:col-span-4 md:col-span-5">
+          <div
+            class="bg-slate-50 dark:bg-slate-800 rounded-md shadow dark:shadow-gray-700 p-6 sticky top-20"
+          >
+            <div class="w-full leading-[0] border-0">
+              <iframe
+                  :src="mapSrc"
+                  style="border: 0"
+                  class="w-full h-[350px] rounded-md shadow dark:shadow-gray-700"
+                  allowfullscreen
+                ></iframe>
+            </div>
 
-                        </div>
-                        <div class="p-6">
-                            <h5 class="text-lg font-semibold">Más información</h5>
-                        </div>
-                        <div class="p-6 border-t border-slate-100 dark:border-t-gray-700">
-                            <ul class="list-none">
-                                <li class="flex items-center">
-                                    <i data-feather="user-check" class="size-5"></i>
+            <ul class="list-none mt-4">
+              <li class="flex justify-between mt-2">
+                <span class="text-slate-400 font-medium">Dirección:</span>
+                <span class="font-medium">{{ data.institucion.direccion }}</span>
+              </li>
 
-                                    <div class="ms-4">
-                                        <p class="font-medium">Employee Type:</p>
-                                        <span class="text-purple-600 font-medium text-sm">{{
-                                            data?.type ? data?.type : "Full Time"
-                                            }}</span>
-                                    </div>
-                                </li>
+             
 
-                                <li class="flex items-center mt-3">
-                                    <i data-feather="map-pin" class="size-5"></i>
+              <li class="flex justify-between mt-2">
+                <span class="text-slate-400 font-medium">Correo:</span>
+                <span class="font-medium">{{ this.data.institucion.correo }}</span>
+              </li>
 
-                                    <div class="ms-4">
-                                        <p class="font-medium">Location:</p>
-                                        <span class="text-purple-600 font-medium text-sm">{{
-                                            data?.country ? data?.country : "Beijing, China"
-                                            }}</span>
-                                    </div>
-                                </li>
-
-                                <li class="flex items-center mt-3">
-                                    <i data-feather="monitor" class="size-5"></i>
-
-                                    <div class="ms-4">
-                                        <p class="font-medium">Job Type:</p>
-                                        <span class="text-purple-600 font-medium text-sm">{{
-                                            data?.job ? data?.job : "Back-end Developer"
-                                            }}</span>
-                                    </div>
-                                </li>
-
-                                <li class="flex items-center mt-3">
-                                    <i data-feather="briefcase" class="size-5"></i>
-
-                                    <div class="ms-4">
-                                        <p class="font-medium">Experience:</p>
-                                        <span class="text-purple-600 font-medium text-sm">2+ years</span>
-                                    </div>
-                                </li>
-
-                                <li class="flex items-center mt-3">
-                                    <i data-feather="book" class="size-5"></i>
-
-                                    <div class="ms-4">
-                                        <p class="font-medium">Qualifications:</p>
-                                        <span class="text-purple-600 font-medium text-sm">MCA</span>
-                                    </div>
-                                </li>
-
-                                <li class="flex items-center mt-3">
-                                    <i data-feather="dollar-sign" class="size-5"></i>
-
-                                    <div class="ms-4">
-                                        <p class="font-medium">Salary:</p>
-                                        <span class="text-purple-600 font-medium text-sm">$4000 - $4500</span>
-                                    </div>
-                                </li>
-
-                                <li class="flex items-center mt-3">
-                                    <i data-feather="clock" class="size-5"></i>
-
-                                    <div class="ms-4">
-                                        <p class="font-medium">Date posted:</p>
-                                        <span class="text-purple-600 font-medium text-sm">28th Feb, 2023</span>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+              <li class="flex justify-between mt-2">
+                <span class="text-slate-400 font-medium">Sectores:</span>
+                <div class="flex flex-wrap ml-16">
+                  <span class="font-medium" v-for="sector in this.data.institucion.sectores">{{ sector}}</span>
                 </div>
+              </li>
+
+              
+
+              <li class="flex justify-between mt-2" v-if="this.data.institucion.redesSociales.web">
+                <span class="text-slate-400 font-medium">Website:</span>
+                <span class="font-medium">{{ this.data.institucion.redesSociales.web }}</span>
+              </li>
+
+              <li class="flex justify-between mt-2">
+                <span class="text-slate-400 font-medium">Social:</span>
+
+                <ul class="list-none text-end space-x-0.5">
+                  <li class="inline" v-for="(url, name) in data.institucion.redesSociales" :key="name">
+                    <a
+                      :href="url"
+                      target="_blank"
+                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
+                    >
+                      <i :class="`uil uil-${name}`" :title="name" class="align-middle"></i>
+                    </a>
+                  </li>
+                </ul>
+                <!--end icon-->
+              </li>
+            </ul>
+
+            
+          </div>
+        </div>
 
 
 
@@ -283,15 +267,27 @@ import footers from "@/components/footer/footer.vue";
 import switcher from "@/components/General/switcher.vue";
 
 import { usePasantiasAdministracionInstitucionStore } from "@/stores/Instituciones/PasantiasAdministracionInstitucionStore.js";
+import {useInstitucionesAdministracionStore} from "@/stores/Instituciones/InstitucionesAdministracionStore.js";
 import Swal from "sweetalert2";
 export default {
 
     setup() {
         const pasantiasAdministracionInstitucionStore = usePasantiasAdministracionInstitucionStore();
+        const institucionesAdministracionStore  = useInstitucionesAdministracionStore();
         return {
-            pasantiasAdministracionInstitucionStore
+            pasantiasAdministracionInstitucionStore,institucionesAdministracionStore
         }
     },
+
+
+    computed: {
+    mapSrc() {
+      // Construir la URL del mapa de Google con la dirección
+      const direccionEncoded = encodeURIComponent(this.data.institucion.direccion);
+      return `https://www.google.com/maps/embed/v1/place?q=${direccionEncoded}&key=AIzaSyCoOVExrC3ADb7HXkXLyBZB3zyVqClHZ7w`;
+      // Reemplaza TU_API_KEY con tu propia clave de API de Google Maps
+    },
+  },
 
 
     methods: {
@@ -404,6 +400,48 @@ export default {
             console.log(response)
             this.data = response;
 
+        },
+
+        async fetchInstitucion(){
+            let loader = this.$loading.show();
+            const response = await this.institucionesAdministracionStore.fetchInstitucionByUUID(this.$keycloak.tokenParsed.sub);
+            loader.hide();
+            if(response==null){
+                Swal.fire({
+                    title: "Error",
+                    text: "No se pudo cargar la informacion de la empresa",
+                    icon: "error",
+                    confirmButtonText: "Ok",
+                });
+                //this.$keycloak.logout();
+            }
+            this.data.institucion = response;
+        },
+
+
+
+        async guardarPasantia(){
+            let loader = this.$loading.show();
+            const idInstituciones = this.data.institucion.idInstituciones;
+            const pasantiaDto = this.data.pasantiasDto;
+            const response = await this.pasantiasAdministracionInstitucionStore.postPasantiaInstitucion(this.$keycloak.tokenParsed.sub, idInstituciones,pasantiaDto);
+            loader.hide();
+            if(response==null){
+                Swal.fire({
+                    title: "Error",
+                    text: "No se pudo guardar la pasantia",
+                    icon: "error",
+                    confirmButtonText: "Ok",
+                });
+                return;
+            }
+            Swal.fire({
+                title: "Guardado",
+                text: "Se guardo la pasantia",
+                icon: "success",
+                confirmButtonText: "Ok",
+            });
+            this.$router.push('/empresa/administrador/pasantias');
         }
     },
 
@@ -431,6 +469,7 @@ export default {
                     calificaciones: [],
                     funciones: [],
                     beneficios: [],
+                    fechaCierre: "",
 
 
                 },
@@ -438,6 +477,17 @@ export default {
                     nombre: "",
                     logoEmpresa: "",
                     direccion: "",
+                    correo: "",
+                    redesSociales: {
+                        web: "",
+                        facebook: "",
+                        twitter: "",
+                        linkedin: "",
+                        instagram: "",
+            
+                    },
+                    sectores: [],
+
                 },
             },
             id: "",
@@ -611,9 +661,10 @@ export default {
         switcher,
     },
     mounted() {
-        this.id = this.$route.params.id;
+        //this.id = this.$route.params.id;
 
         //this.fetchPasantiaActual();
+        this.fetchInstitucion();
     },
 };
 </script>
