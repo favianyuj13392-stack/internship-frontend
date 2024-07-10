@@ -271,15 +271,20 @@
                 <li
                   class="mt-3 w-full bg-white p-3 rounded-md shadow dark:shadow-gray-700 dark:bg-slate-900"
                 >
-                  <div class="flex items-center mb-3">
-                    <i
-                      data-feather="file-text"
-                      class="size-8 text-slate-400"
-                    ></i>
+                  <div class="relative">
+                    <button
+                      @click="removePDF(curri.idCurriculums)"
+                      class="absolute pr-2 pl-2 top-0 right-0 bg-red-600 text-white rounded-md"
+                    >
+                      x
+                    </button>
 
-                    <span class="font-medium ms-2">{{ curri.titulo }}</span>
+                    <div class="flex items-center mb-3">
+                      <i data-feather="file" class="size-8 text-slate-400"></i>
+
+                      <span class="font-medium ms-2">{{ curri.titulo }}</span>
+                    </div>
                   </div>
-
                   <a
                     :href="curri.pdfCurriculum"
                     class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md w-full"
@@ -313,42 +318,6 @@
               @change="handleFileUploadPDF"
               class="form-input border border-slate-100 dark:border-slate-800 w-full"
             />
-          </div>
-
-          <!-- Visualización de PDFs -->
-          <div class="mt-6">
-            <h5 class="text-lg font-semibold mb-4">PDFs Subidos:</h5>
-            <div class="flex flex-wrap gap-2">
-              <div
-                v-for="(pdf, index) in cv"
-                :key="pdf.pdfCurriculum"
-                class="relative w-32 h-40 border rounded-md p-2 flex flex-col items-center"
-              >
-                <embed
-                  :src="pdf.pdfCurriculum"
-                  width="100%"
-                  height="70%"
-                  type="application/pdf"
-                />
-                <span class="text-sm mt-2">{{ pdf.titulo }}</span>
-                <button
-                  @click="removePDF(index)"
-                  class="absolute top-0 right-0 bg-red-600 text-white p-1 rounded-md"
-                >
-                  x
-                </button>
-              </div>
-            </div>
-            <div class="flex gap-4 mt-5 justify-end">
-              <button
-                id="submit"
-                name="send"
-                @click="guardarNuevaEmpresa"
-                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-              >
-                Listo
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -498,100 +467,110 @@ export default {
     },
     async handleFileUploadPDF(event) {
       const loader = this.$loading.show();
-      try{
+      try {
         const file = event.target.files[0];
         if (file) {
-            this.pdfFile = file;
-            this.showTitleModal = true;
+          this.pdfFile = file;
+          this.showTitleModal = true;
         }
-      }catch(error){
+      } catch (error) {
         console.log(error);
-      }finally{
+      } finally {
         loader.hide();
       }
     },
     async savePDF() {
       const loader = this.$loading.show();
       console.log(this.pdfTitle);
-      console.log(this.pdfFile);
-        try{
-          if (this.pdfFile && this.pdfTitle) {
-          const response = await this.curriculumsStore.postCurriculum(this.pdfFile,this.$keycloak.idTokenParsed.sub);
+      console.log("yhio pedfFile"+this.pdfFile);
+      try {
+        if (this.pdfFile && this.pdfTitle) {
+          const response = await this.curriculumsStore.postCurriculum(
+            this.pdfFile,
+            this.$keycloak.idTokenParsed.sub
+          );
           console.log(response);
+          if (response == null) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No se pudo cargar el archivo PDF",
+            });
+            return;
+          }
+
+          Swal.fire({
+            icon: "success",
+            title: "¡Éxito!",
+            text: "El archivo PDF se ha subido correctamente",
+            timer: 2000,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        loader.hide();
+      }
+      this.showTitleModal = false;
+      this.showFormularioCV = false;
+
+      this.fetchUserByUUID();
+    },
+    async removePDF(index) {
+      console.log("numero de index" + index);
+      let loader = this.$loading.show();
+      try {
+        const result = await Swal.fire({
+          title: "¿Estás seguro de eliminar este  Curriculum?",
+          text: "¡Se eliminará de manera permanente!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "¡Sí, elimínala!",
+        });
+
+        if (result.isConfirmed) {
+          try {
+            const response = await this.curriculumsStore.deleteCurriculum(
+              this.$keycloak.idTokenParsed.sub,
+              index
+            );
             if (response == null) {
               Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "No se pudo cargar el archivo PDF",
+                text: "No se pudo eliminar el archivo",
               });
+              this.showFormularioCV=false;
+              this.showTitleModal=false;
               return;
+             
             }
-            
             Swal.fire({
+              title: "Eliminada!",
+              text: "Tu archivo ha sido eliminado.",
               icon: "success",
-              title: "¡Éxito!",
-              text: "El archivo PDF se ha subido correctamente",
+            });
+          } catch (error) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "ERROR: " + error.message,
             });
           }
-        }catch(error){
-          console.log(error);
-        }finally{
-          loader.hide();
         }
-    },
-    async removePDF(index) {
-      console.log("numero de index"+index);
-     
-      try {
-    const result = await Swal.fire({
-      title: "¿Estás seguro de eliminar este  Curriculum?",
-      text: "¡Se eliminará de manera permanente!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "¡Sí, elimínala!",
-    });
-
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: "Eliminada!",
-        text: "Tu archivo ha sido eliminado.",
-        icon: "success",
-      });
-
-      
-    
-      try {
-       
-
-        const response = await this.curriculumsStore.deleteCurriculum(
-          this.$keycloak.idTokenParsed.sub,
-          index
-        );
-        Swal.fire({
-          icon: "success",
-          title: "Curriculum fue eliminiada",
-          text: "La Curriculum fue eliminada con éxito",
-        });
-       
       } catch (error) {
-       
+        console.error("Error mostrando el diálogo de confirmación:", error);
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: "ERROR: " + error.message,
         });
-      } 
-    }
-  } catch (error) {
-    console.error("Error mostrando el diálogo de confirmación:", error);
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "ERROR: " + error.message,
-    });
-  }
+      } finally {
+        loader.hide();
+      }
+      this.fetchUserByUUID();
     },
   },
   components: {
