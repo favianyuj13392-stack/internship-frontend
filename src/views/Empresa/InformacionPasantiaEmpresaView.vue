@@ -91,7 +91,7 @@
   
             <div class="mt-5">
               <router-link
-                to="/job-apply"
+                :to="'/empresa/administrador/pasantias/'+this.id+'/editar'"
                 class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto"
                 >Editar Pasantia</router-link
               >
