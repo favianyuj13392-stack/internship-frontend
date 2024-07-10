@@ -22,6 +22,31 @@ export const usePasantiasAdministracionInstitucionStore = defineStore({
             } catch (error) {
                 console.log(error)
             }
+        },
+        async postPasantiaInstitucion(uuid,idInstitucion, data) {
+            try {
+                const response = await axios.post(RutaApi + '/usuario/'+uuid+'/institucion/'+idInstitucion+'/pasantia', data)
+                if (response.data.code == '200') {
+                    return response.data.response
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
+        async putPasantiaInstitucion(uuid,idInstitucion, idPasantia, data) {
+            try {
+                const response = await axios.put(RutaApi + '/usuario/'+uuid+'/institucion/'+idInstitucion+'/pasantia/'+idPasantia, data)
+                if (response.data.code == '200') {
+                    return response.data.response
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.log(error)
+            }
         }
     },
 

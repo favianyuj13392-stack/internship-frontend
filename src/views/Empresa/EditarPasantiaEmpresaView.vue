@@ -58,8 +58,8 @@
                     <ul class="list-none">
                         <li v-for="item in this.data.pasantiasDto.areas" :key="item" class="text-slate-400 mt-2">
                             <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
-                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2" @click="data.pasantiasDto.areas = data.pasantiasDto.areas.filter(e => e !== item)"></i>
 
+                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2" @click="data.pasantiasDto.areas = data.pasantiasDto.areas.filter(e => e !== item)"></i>
                         </li>
                     </ul>
 
@@ -99,6 +99,7 @@
                         <li v-for="item in this.data.pasantiasDto.funciones" :key="item" class="text-slate-400 mt-2">
                             <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
                             <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2" @click="data.pasantiasDto.funciones = data.pasantiasDto.funciones.filter(e => e !== item)"></i>
+
                         </li>
                     </ul>
 
@@ -122,8 +123,8 @@
 
                     <div class="mt-5">
                         <a
-                        @click="guardarPasantia()"
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto">Guardar Pasantía</a>
+                        @click="actualizarPasantia()"
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto">Actualizar Pasantía</a>
                     </div>
                 </div>
                 <!--end col-->
@@ -425,24 +426,25 @@ export default {
 
 
 
-        async guardarPasantia(){
+        async actualizarPasantia(){
             let loader = this.$loading.show();
+            const idPeticion = this.id;
             const idInstituciones = this.data.institucion.idInstituciones;
             const pasantiaDto = this.data.pasantiasDto;
-            const response = await this.pasantiasAdministracionInstitucionStore.postPasantiaInstitucion(this.$keycloak.tokenParsed.sub, idInstituciones,pasantiaDto);
+            const response = await this.pasantiasAdministracionInstitucionStore.putPasantiaInstitucion(this.$keycloak.tokenParsed.sub, idInstituciones,idPeticion,pasantiaDto);
             loader.hide();
             if(response==null){
                 Swal.fire({
                     title: "Error",
-                    text: "No se pudo guardar la pasantia",
+                    text: "No se pudo actualizar la pasantia",
                     icon: "error",
                     confirmButtonText: "Ok",
                 });
                 return;
             }
             Swal.fire({
-                title: "Guardado",
-                text: "Se guardo la pasantia",
+                title: "Actualizado",
+                text: "Se actualizó la pasantia",
                 icon: "success",
                 confirmButtonText: "Ok",
             });
@@ -666,9 +668,9 @@ export default {
         switcher,
     },
     mounted() {
-        //this.id = this.$route.params.id;
+        this.id = this.$route.params.id;
 
-        //this.fetchPasantiaActual();
+        this.fetchPasantiaActual();
         this.fetchInstitucion();
     },
 };
