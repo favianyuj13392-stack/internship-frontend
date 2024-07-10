@@ -58,6 +58,8 @@
                     <ul class="list-none">
                         <li v-for="item in this.data.pasantiasDto.areas" :key="item" class="text-slate-400 mt-2">
                             <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
+
+                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2" @click="data.pasantiasDto.areas = data.pasantiasDto.areas.filter(e => e !== item)"></i>
                         </li>
                     </ul>
 
@@ -77,6 +79,7 @@
                     <ul class="list-none">
                         <li v-for="item in this.data.pasantiasDto.requisitos" :key="item" class="text-slate-400 mt-2">
                             <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
+                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2" @click="data.pasantiasDto.requisitos = data.pasantiasDto.requisitos.filter(e => e !== item)"></i>
                         </li>
                     </ul>
 
@@ -95,6 +98,8 @@
                     <ul class="list-none">
                         <li v-for="item in this.data.pasantiasDto.funciones" :key="item" class="text-slate-400 mt-2">
                             <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
+                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2" @click="data.pasantiasDto.funciones = data.pasantiasDto.funciones.filter(e => e !== item)"></i>
+
                         </li>
                     </ul>
 
@@ -112,6 +117,7 @@
                     <ul class="list-none">
                         <li v-for="item in this.data.pasantiasDto.beneficios" :key="item" class="text-slate-400 mt-2">
                             <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
+                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2" @click="data.pasantiasDto.beneficios = data.pasantiasDto.beneficios.filter(e => e !== item)"></i>
                         </li>
                     </ul>
 
