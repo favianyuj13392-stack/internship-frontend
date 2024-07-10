@@ -85,44 +85,7 @@
         </div>
       </div>
       <!-- End Mobile Toggle -->
-
-      <!--Login button End-->
-
-      <div id="navigation" :class="toggle === false ? 'none' : 'block'">
-        <!-- Navigation Menu-->
-        <ul class="navigation-menu" :class="lightNav">
-          <li :class="activeMenu === '/' ? 'active' : ''">
-            <router-link to="/" class="sub-menu-item">Inicio</router-link>
-          </li>
-
-          <li :class="activeMenu === '/pasantias' ? 'active' : ''">
-            <router-link to="/pasantias" class="sub-menu-item"
-              >Pasantías</router-link
-            >
-          </li>
-
-          <li :class="activeMenu === '/empresas' ? 'active' : ''">
-            <router-link to="/empresas" class="sub-menu-item"
-              >Empresas</router-link
-            >
-          </li>
-
-          <li :class="activeMenu === '/contactanos' ? 'active' : ''">
-            <router-link to="/contactanos" class="sub-menu-item"
-              >Contactos</router-link
-            >
-          </li>
-
-          <div
-            v-if="!$keycloak.authenticated && !isLoading"
-            @click="$keycloak.login"
-            class="jhessika"
-          >
-            <li :class="activeMenu === '/contact' ? 'active' : ''">
-              <router-link class="sub-menu-item">Iniciar Sesión</router-link>
-            </li>
-          </div>
-          <div v-if="$keycloak.authenticated">
+      <ul v-if="$keycloak.authenticated">
             <ul class="buy-button list-none mb-0">
               <li class="dropdown inline-block relative ps-1">
                 <button
@@ -195,7 +158,44 @@
               </li>
               <!--end dropdown-->
             </ul>
+          </ul>
+      <!--Login button End-->
+
+      <div id="navigation" :class="toggle === false ? 'none' : 'block'">
+        <!-- Navigation Menu-->
+        <ul class="navigation-menu" :class="lightNav">
+          <li :class="activeMenu === '/' ? 'active' : ''">
+            <router-link to="/" class="sub-menu-item">Inicio</router-link>
+          </li>
+
+          <li :class="activeMenu === '/pasantias' ? 'active' : ''">
+            <router-link to="/pasantias" class="sub-menu-item"
+              >Pasantías</router-link
+            >
+          </li>
+
+          <li :class="activeMenu === '/empresas' ? 'active' : ''">
+            <router-link to="/empresas" class="sub-menu-item"
+              >Empresas</router-link
+            >
+          </li>
+
+          <li :class="activeMenu === '/contactanos' ? 'active' : ''">
+            <router-link to="/contactanos" class="sub-menu-item"
+              >Contactos</router-link
+            >
+          </li>
+
+          <div
+            v-if="!$keycloak.authenticated && !isLoading"
+            @click="$keycloak.login"
+            class="jhessika"
+          >
+            <li :class="activeMenu === '/contact' ? 'active' : ''">
+              <router-link class="sub-menu-item">Iniciar Sesión</router-link>
+            </li>
           </div>
+       
         </ul>
 
         <!--end navigation menu-->
