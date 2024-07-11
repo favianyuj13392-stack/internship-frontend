@@ -156,17 +156,18 @@
               </div>
 
               <router-link
+              :to="{ name: 'PasantiaDetalleAdministrador', params: { id: item.idPasantias } }"
+
                 class="title text-lg font-semibold hover:text-cyan-600 duration-500 ease-in-out"
-                >{{ item.descripcion }}</router-link
+                >{{ item.titulo }}</router-link
               >
 
               <div class="flex justify-end items-center m-3">
                 <span class="text-slate-400 text-sm"
-                  >by
-                  to
+                  >por
+                  
                   <router-link
                   :to="{ name: 'EmpresaDetalleAdministrador', params: { id: item.idInstituciones } }"
-                    href=""
                     class="text-slate-900 dark:text-white hover:text-cyan-600 dark:hover:text-cyan-600 font-medium"
                   >
                     {{ item.nombre }}</router-link
@@ -175,7 +176,7 @@
               </div>
               <div class="m-2 flex justify-end">
                 <router-link
-                  :to="{ name: 'PasantiaDetalleAdministrador', params: { id: item.idPasantias } }"
+                :to="{ name: 'PasantiaDetalleAdministrador', params: { id: item.idPasantias } }"
                   
                   class="btn btn-link hover:text-cyan-600 after:bg-cyan-600 duration-500 ease-in-out text-sm"
                   >Ver pasantia <i class="uil uil-arrow-right"></i
