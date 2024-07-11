@@ -10,7 +10,7 @@
             class="md:flex items-center p-6 shadow dark:shadow-gray-700 rounded-md bg-white dark:bg-slate-900 mb-6"
           >
             <img
-              :src="data.institucion"
+              :src="data.institucion.logoEmpresa"
               class="rounded-full size-28 p-4 bg-white dark:bg-slate-900 shadow dark:shadow-gray-700"
               alt="logo de la empresa"
             />
@@ -19,6 +19,7 @@
               <h5 class="text-xl font-semibold">
                 {{ data.titulo}}
               </h5>
+              
               <div class="mt-2">
                 <span class="text-slate-400 font-medium me-2 inline-block"
                   ><i
@@ -65,10 +66,10 @@
           </ul>
 
           <div class="mt-5">
-            <router-link
-              to="/job-apply"
+            <a
+              @click="aplicarPasantia()"
               class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto"
-              >Postula ahora</router-link
+              >Postula ahora</a
             >
           </div>
         </div>
@@ -89,8 +90,8 @@
                   <div class="ms-4">
                     <p class="font-medium">Descripcion de la empresa:</p>
                     <span class="text-purple-600 font-medium text-sm">{{
-                      data.institucion.descripcion
-                    }}</span>
+                      data.institucion.descripcion.slice(0, 120)
+                    }}...</span>
                   </div>
                 </li>
 
@@ -129,18 +130,27 @@
                   </div>
                 </li>
 
-                <li class="flex items-center mt-3">
-                  <i data-feather="briefcase" class="size-5"></i>
+              <li class="flex justify-between mt-6" v-if="this.data.institucion.redesSociales.web">
+                <span class="text-slate-400 font-medium">Website:</span>
+                <span class="font-medium">{{ this.data.institucion.redesSociales.web }}</span>
+              </li>
 
-                  <div class="ms-4">
-                    <p class="font-medium">Redes Sociales:</p>
-                    <p v-for="redSocial in data.institucion.redesSociales">
-                      <span class="text-purple-600 font-medium text-sm"
-                      >{{ redSocial }}</span
+              <li class="flex justify-between mt-6">
+                <span class="text-slate-400 font-medium">Social:</span>
+
+                <ul class="list-none text-end space-x-0.5">
+                  <li class="inline" v-for="(url, name) in data.institucion.redesSociales" :key="name">
+                    <a
+                      :href="url"
+                      target="_blank"
+                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
                     >
-                    </p>
-                  </div>
-                </li>
+                      <i :class="`uil uil-${name}`" :title="name" class="align-middle"></i>
+                    </a>
+                  </li>
+                </ul>
+                <!--end icon-->
+              </li>
 
                 <!-- <li class="flex items-center mt-3">
                   <i data-feather="book" class="size-5"></i>
@@ -273,6 +283,14 @@
     </div>
     <!--end container-->
   </section>
+  <postular-pasantia-modal 
+    
+      v-if="showAplicarPasantiaModal==true" 
+      @cancel="cerrarModalPasantia()" 
+      :pasantiaId="this.id"
+      
+      />
+
   <!--end section-->
   <!-- End -->
   <footers />
@@ -287,6 +305,7 @@ import footers from "@/components/footer/footer.vue";
 import switcher from "@/components/General/switcher.vue";
 import { usePasantiasStore } from "@/stores/Pasantias/pasantiasStore";
 import Swal from "sweetalert2";
+import PostularPasantiaModal from "@/components/General/PostularPasantiaModal.vue"; 
 export default {
   setup(){
     const pasantiasStore = usePasantiasStore();
@@ -295,6 +314,7 @@ export default {
   data() {
     return {
       parsedData: [],
+      showAplicarPasantiaModal: false,
       data: {
         titulo: "",
         funciones: [],
@@ -303,6 +323,15 @@ export default {
           nombre: "",
           logoEmpresa: "",
           descripcion: "",
+          direccion: "",
+          correo: "",
+          redesSociales: {
+            web: "",
+            facebook: "",
+            twitter: "",
+            linkedin: "",
+            instagram: "",
+          },
         }
       },
       related: [
@@ -327,6 +356,7 @@ export default {
     navbar,
     footers,
     switcher,
+    PostularPasantiaModal
   },
   watch: {
     '$route.params.id': {
@@ -340,6 +370,21 @@ export default {
     }
   },
   methods: {
+    aplicarPasantia() {
+      this.showAplicarPasantiaModal = true;
+      //block scroll
+      document.body.style.overflow = "hidden";
+    },
+
+    cerrarModalPasantia() {
+      this.showAplicarPasantiaModal = false;
+      //unlock scroll
+      document.body.style.overflow = "auto";
+    },
+
+
+
+
     async fetchPasantia() {
       let loader = this.$loading.show();
       try {
@@ -368,7 +413,7 @@ export default {
       } finally {
         loader.hide();
       }
-      console.log("response "+response);
+      console.log("response "+this.response);
     },
     async fetchPasantiasRelacionadas() {
       let loader = this.$loading.show();
