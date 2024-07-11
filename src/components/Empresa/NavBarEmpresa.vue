@@ -120,8 +120,9 @@
                   <ul class="py-2 text-start">
                     <li>
                       <router-link
-                        to="/perfil/estudiante"
+                        to="/empresa/administrador/perfil"
                         class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
+                        id="profile"
                         ><i data-feather="user" class="size-4 me-2"></i
                         >Perfil</router-link
                       >
@@ -235,6 +236,7 @@
   mounted() {
     document.addEventListener("click", this.handleClickOutside);
     feather.replace();
+    console.log(this.$keycloak.idTokenParsed.sub);
     this.scrollToTop();
 
     /*
