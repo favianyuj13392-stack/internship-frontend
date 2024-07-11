@@ -112,11 +112,9 @@
               v-for="item in data.pasantias"
               >
               <div class="p-6">
-                <a
-                  href=""
+                <router-link :to="{ name: 'pasantias-detalle', params: { id: item.idPasantias} }"
                   class="title h5 text-lg font-semibold hover:text-cyan-600"
-                  >{{item.titulo}}</a
-                >
+                  >{{item.titulo}}</router-link>
                 <p class="text-slate-400 mt-2">
                    {{ item.descripcion.substring(0, 100)}}{{item.descripcion.length>100 ? "...":""}}
                 </p>
