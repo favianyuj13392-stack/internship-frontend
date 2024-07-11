@@ -128,8 +128,33 @@ export const useEmpresasAdminStore = defineStore({
             } catch (error) {
                 console.log(error)
             }
+        },
+
+        async fetchUserByUUID(kkid){
+            try{
+                const response = await axios.get(RutaApi + '/institucion/usuario/'+kkid)
+                if(response.data.code == '200'){
+                    return response.data.response
+                }else{
+                    return null;
+                } 
+            }catch (error){
+                console.log(error)
+            }
+        },
+
+        async updateUsuarioEmpresa(usuario, kkid){
+            try{
+                const response = await axios.put(RutaApi + '/institucion/usuario/'+kkid, usuario)
+                if(response.data.code == '200'){
+                    return response.data.response
+                }else{
+                    return null;
+                } 
+            }catch (error){
+                console.log(error)
+            }
         }
-      
        
     },
     
