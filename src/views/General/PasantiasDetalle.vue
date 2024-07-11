@@ -19,6 +19,7 @@
               <h5 class="text-xl font-semibold">
                 {{ data.titulo}}
               </h5>
+              
               <div class="mt-2">
                 <span class="text-slate-400 font-medium me-2 inline-block"
                   ><i
@@ -65,10 +66,10 @@
           </ul>
 
           <div class="mt-5">
-            <router-link
-              to="/job-apply"
+            <a
+              @click="aplicarPasantia()"
               class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto"
-              >Postula ahora</router-link
+              >Postula ahora</a
             >
           </div>
         </div>
@@ -282,6 +283,8 @@
     </div>
     <!--end container-->
   </section>
+  <postular-pasantia-modal v-if="showAplicarPasantiaModal==true" @cancel="showAplicarPasantiaModal=false" />
+
   <!--end section-->
   <!-- End -->
   <footers />
@@ -296,6 +299,7 @@ import footers from "@/components/footer/footer.vue";
 import switcher from "@/components/General/switcher.vue";
 import { usePasantiasStore } from "@/stores/Pasantias/pasantiasStore";
 import Swal from "sweetalert2";
+import PostularPasantiaModal from "@/components/General/PostularPasantiaModal.vue"; 
 export default {
   setup(){
     const pasantiasStore = usePasantiasStore();
@@ -304,6 +308,7 @@ export default {
   data() {
     return {
       parsedData: [],
+      showAplicarPasantiaModal: false,
       data: {
         titulo: "",
         funciones: [],
@@ -345,6 +350,7 @@ export default {
     navbar,
     footers,
     switcher,
+    PostularPasantiaModal
   },
   watch: {
     '$route.params.id': {
@@ -358,6 +364,12 @@ export default {
     }
   },
   methods: {
+    async aplicarPasantia() {
+      this.showAplicarPasantiaModal = true;
+    },
+
+
+
     async fetchPasantia() {
       let loader = this.$loading.show();
       try {
