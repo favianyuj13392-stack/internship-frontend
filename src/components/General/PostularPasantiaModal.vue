@@ -64,11 +64,18 @@
   <script>
   import Swal from 'sweetalert2';
   import { useCurriculumsStore } from "@/stores/Estudiantes/curriculumsStore";
-
+  import {useAplicacionesStore} from "@/stores/Estudiantes/aplicacionesStore";
   export default {
     setup() {
       const curriculumsStore = useCurriculumsStore();
-      return { curriculumsStore };
+        const aplicacionesStore = useAplicacionesStore();
+      return { curriculumsStore, aplicacionesStore};
+    },
+    props: {
+      pasantiaId: {
+        type: Number,
+        required: true,
+      },
     },
     mounted() {
       this.getCurriculum();
@@ -111,7 +118,50 @@
                 });
                 return;
             }
-            //logica para aplicar a la pasantia
+            await Swal.fire({
+                title: '¿Estás seguro de aplicar a esta pasantía?',
+                text: 'Una vez aplicada no podrás deshacer esta acción',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, aplicar',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (!result.isConfirmed) {
+                    this.$emit('cancel');
+                    return;
+                }
+            });
+
+
+
+            let loader = this.$loading.show();
+            const response = await this.aplicacionesStore.postAplicacion(
+                this.$keycloak.idTokenParsed.sub,
+                this.pasantiaId,
+                this.cv[this.selectedCv].idCurriculums,
+            );
+            console.log(response);
+            loader.hide();
+            if (response.response == null ) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: response.errorMessage,
+                });
+                return;
+            }
+
+            Swal.fire({
+                icon: 'success',
+                title: '¡Aplicación exitosa!',
+                text: 'Tu aplicación ha sido enviada con éxito',
+            });
+            this.$emit('cancel');
+            return
+
+
         },
 
 

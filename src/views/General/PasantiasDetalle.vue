@@ -283,7 +283,13 @@
     </div>
     <!--end container-->
   </section>
-  <postular-pasantia-modal v-if="showAplicarPasantiaModal==true" @cancel="cerrarModalPasantia()" />
+  <postular-pasantia-modal 
+    
+      v-if="showAplicarPasantiaModal==true" 
+      @cancel="cerrarModalPasantia()" 
+      :pasantiaId="this.id"
+      
+      />
 
   <!--end section-->
   <!-- End -->
