@@ -1,7 +1,8 @@
 <template>
-    <div id="myModalCurriculum" class="modal">
+    <div id="myModalCurriculum"  class="modal" >
       <div
         class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
+        ref="myModalCurriculum"
       >
         <span class="close" @click="$emit('cancel')">&times;</span>
   
@@ -62,7 +63,16 @@
   
   <script>
   import Swal from 'sweetalert2';
+  import { useCurriculumsStore } from "@/stores/Estudiantes/curriculumsStore";
+
   export default {
+    setup() {
+      const curriculumsStore = useCurriculumsStore();
+      return { curriculumsStore };
+    },
+    mounted() {
+      this.getCurriculum();
+    },
     data() {
       return {
         showTitleModal: false,
@@ -76,64 +86,15 @@
             pdfCurriculum: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
             fechaCreacion: "2021-10-10",
           },
-          {
-            idCurriculums: 2,
-            titulo: "Curriculum 2",
-            pdfCurriculum: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-            fechaCreacion: "2021-10-10",
-          },
-            {
-                idCurriculums: 3,
-                titulo: "Curriculum 3",
-                pdfCurriculum: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-                fechaCreacion: "2021-10-10",
-            },
-            {
-                idCurriculums: 4,
-                titulo: "Curriculum 4",
-                pdfCurriculum: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-                fechaCreacion: "2021-10-10",
-            },
-            {
-                idCurriculums: 5,
-                titulo: "Curriculum 5",
-                pdfCurriculum: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-                fechaCreacion: "2021-10-10",
-            },
-            {
-                idCurriculums: 6,
-                titulo: "Curriculum 6",
-                pdfCurriculum: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-                fechaCreacion: "2021-10-10",
-            },
-            {
-                idCurriculums: 7,
-                titulo: "Curriculum 7",
-                pdfCurriculum: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-                fechaCreacion: "2021-10-10",
-            },
-            {
-                idCurriculums: 8,
-                titulo: "Curriculum 8",
-                pdfCurriculum: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-                fechaCreacion: "2021-10-10",
-            },
-            {
-                idCurriculums: 9,
-                titulo: "Curriculum 9",
-                pdfCurriculum: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-                fechaCreacion: "2021-10-10",
-            },
-            {
-                idCurriculums: 10,
-                titulo: "Curriculum 10",
-                pdfCurriculum: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-                fechaCreacion: "2021-10-10",
-            }
+          
         ],
       };
     },
     methods: {
+
+        downloadPDF(url){
+            window.open(url, '_blank');
+            },
 
         async aplicarPasantia() {
             if (this.selectedCv === null) {
@@ -146,6 +107,36 @@
             }
             //logica para aplicar a la pasantia
         },
+
+
+        async getCurriculum() {
+            let loader = this.$loading.show(
+                {
+                    isFullPage: false,
+                    container:  this.$refs.myModalCurriculum,
+                  
+
+                }
+            );
+            const response = await this.curriculumsStore.getCurriculum(
+                this.$keycloak.idTokenParsed.sub
+            );
+            if (response == null) {
+                loader.hide();
+                Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "No se pudo cargar la información del usuario",
+                });
+                this.$keycloak.logout();
+                this.$router.push("/");
+                return;
+            }
+
+            this.cv = response;
+            console.log(this.cv);
+            loader.hide();
+            },
         
 
       
