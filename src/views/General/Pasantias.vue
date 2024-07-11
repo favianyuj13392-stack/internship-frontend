@@ -198,7 +198,7 @@
               </div>
 
               <div class="mt-3">
-                <router-link class="text-xl hover:text-cyan-600 font-semibold transition-all duration-500">
+                <router-link :to="{ name: 'pasantias-detalle', params: { id: pasantia.idPasantias} }" class="text-xl hover:text-cyan-600 font-semibold transition-all duration-500">
                   {{ pasantia.titulo }}
                 </router-link>
                 <!-- <p class="text-slate-400 mt-2">
