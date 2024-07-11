@@ -180,6 +180,17 @@
 
                 }
             );
+            if (!this.$keycloak.authenticated) {
+                loader.hide();
+                 Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "No se pudo cargar la información del usuario",
+                });
+                this.$keycloak.logout();
+                this.$router.push("/");
+                return;
+            }
             const response = await this.curriculumsStore.getCurriculum(
                 this.$keycloak.idTokenParsed.sub
             );
