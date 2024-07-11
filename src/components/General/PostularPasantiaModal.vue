@@ -189,6 +189,17 @@
                 return;
             }
 
+            if (response.length == 0) {
+                loader.hide();
+                Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "No se encontraron curriculums, por favor carga en tu perfil uno para poder aplicar a la pasantía",
+                });
+                this.$emit('cancel');
+                return;
+            }
+
             this.cv = response;
             console.log(this.cv);
             loader.hide();
