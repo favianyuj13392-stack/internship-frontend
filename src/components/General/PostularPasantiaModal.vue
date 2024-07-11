@@ -11,7 +11,7 @@
             <h5 class="text-lg font-semibold mb-4">Selecciona un cv para aplicar a la Pasantía:</h5>
             <div class="mt-3">
                 <a
-                  @click="this.$router.push('/perfil/estudiante')"
+                  @click="goToModificar()"
                   class="btn bg-indigo-500 hover:bg-indigo-700 border-indigo-500 dark:border-indigo-500 text-white rounded-md w-full"
                   ><i class="uil uil-file-download-alt"></i> Modificar
                   curriculums</a
@@ -94,6 +94,12 @@
 
         downloadPDF(url){
             window.open(url, '_blank');
+            },
+
+            goToModificar() {
+                document.body.style.overflow = "auto";
+
+                this.$router.push("/perfil/estudiante");
             },
 
         async aplicarPasantia() {
