@@ -10,7 +10,7 @@
             class="md:flex items-center p-6 shadow dark:shadow-gray-700 rounded-md bg-white dark:bg-slate-900 mb-6"
           >
             <img
-              :src="data.institucion"
+              :src="data.institucion.logoEmpresa"
               class="rounded-full size-28 p-4 bg-white dark:bg-slate-900 shadow dark:shadow-gray-700"
               alt="logo de la empresa"
             />
@@ -89,8 +89,8 @@
                   <div class="ms-4">
                     <p class="font-medium">Descripcion de la empresa:</p>
                     <span class="text-purple-600 font-medium text-sm">{{
-                      data.institucion.descripcion
-                    }}</span>
+                      data.institucion.descripcion.slice(0, 120)
+                    }}...</span>
                   </div>
                 </li>
 
@@ -129,18 +129,27 @@
                   </div>
                 </li>
 
-                <li class="flex items-center mt-3">
-                  <i data-feather="briefcase" class="size-5"></i>
+              <li class="flex justify-between mt-6" v-if="this.data.institucion.redesSociales.web">
+                <span class="text-slate-400 font-medium">Website:</span>
+                <span class="font-medium">{{ this.data.institucion.redesSociales.web }}</span>
+              </li>
 
-                  <div class="ms-4">
-                    <p class="font-medium">Redes Sociales:</p>
-                    <p v-for="redSocial in data.institucion.redesSociales">
-                      <span class="text-purple-600 font-medium text-sm"
-                      >{{ redSocial }}</span
+              <li class="flex justify-between mt-6">
+                <span class="text-slate-400 font-medium">Social:</span>
+
+                <ul class="list-none text-end space-x-0.5">
+                  <li class="inline" v-for="(url, name) in data.institucion.redesSociales" :key="name">
+                    <a
+                      :href="url"
+                      target="_blank"
+                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
                     >
-                    </p>
-                  </div>
-                </li>
+                      <i :class="`uil uil-${name}`" :title="name" class="align-middle"></i>
+                    </a>
+                  </li>
+                </ul>
+                <!--end icon-->
+              </li>
 
                 <!-- <li class="flex items-center mt-3">
                   <i data-feather="book" class="size-5"></i>
@@ -303,6 +312,15 @@ export default {
           nombre: "",
           logoEmpresa: "",
           descripcion: "",
+          direccion: "",
+          correo: "",
+          redesSociales: {
+            web: "",
+            facebook: "",
+            twitter: "",
+            linkedin: "",
+            instagram: "",
+          },
         }
       },
       related: [
@@ -368,7 +386,7 @@ export default {
       } finally {
         loader.hide();
       }
-      console.log("response "+response);
+      console.log("response "+this.response);
     },
     async fetchPasantiasRelacionadas() {
       let loader = this.$loading.show();
