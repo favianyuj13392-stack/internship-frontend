@@ -189,7 +189,7 @@
   
     <section class="relative md:py-24 py-16" >
       <div v-if="this.data.activoPasantia">
-        <div v-if="this.data.postulantes" class="grid grid-cols-1 mt-10 pb-2 text-center">
+        <div v-if="this.data.postulantes.length<=0" class="grid grid-cols-1 mt-10 pb-2 text-center">
           <h3
             class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold text-red-400"
           >
@@ -315,7 +315,31 @@ export default {
 
     data() {
       return {
+        postulantesEstado: [
+          {
+            idUsuarios: 1,
+            activo: true,
+          },
+          {
+            idUsuarios: 2,
+            activo: false,
+          },
+        ],
         data: {
+          activoPasantia: true,
+
+          postulantes: [
+            {
+              idPersona: 1,
+              nombre: "Juan",
+              apellidoPaterno: "Perez",
+              apellidoMaterno: "Garcia",
+              fotoPerfil: "https://randomuser.me/api/port",
+              telefono: "123456789",
+              descripcion: "Estudiante de la carrera de Ingenieria de Sistemas",
+            },
+          ],
+
           pasantiasDto: {
             titulo: "",
             descripcion: "",
