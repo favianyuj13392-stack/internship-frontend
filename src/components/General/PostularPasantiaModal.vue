@@ -11,7 +11,7 @@
             <div class="mt-3">
                 <a
                   @click="this.$router.push('/perfil/estudiante')"
-                  class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md w-full"
+                  class="btn bg-indigo-500 hover:bg-indigo-700 border-indigo-500 dark:border-indigo-500 text-white rounded-md w-full"
                   ><i class="uil uil-file-download-alt"></i> Modificar
                   curriculums</a
                 >

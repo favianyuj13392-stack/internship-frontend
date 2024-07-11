@@ -283,7 +283,7 @@
     </div>
     <!--end container-->
   </section>
-  <postular-pasantia-modal v-if="showAplicarPasantiaModal==true" @cancel="showAplicarPasantiaModal=false" />
+  <postular-pasantia-modal v-if="showAplicarPasantiaModal==true" @cancel="cerrarModalPasantia()" />
 
   <!--end section-->
   <!-- End -->
@@ -364,9 +364,18 @@ export default {
     }
   },
   methods: {
-    async aplicarPasantia() {
+    aplicarPasantia() {
       this.showAplicarPasantiaModal = true;
+      //block scroll
+      document.body.style.overflow = "hidden";
     },
+
+    cerrarModalPasantia() {
+      this.showAplicarPasantiaModal = false;
+      //unlock scroll
+      document.body.style.overflow = "auto";
+    },
+
 
 
 
