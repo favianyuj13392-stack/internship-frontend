@@ -286,7 +286,7 @@
                     </div>
                   </div>
                   <a
-                    :href="curri.pdfCurriculum"
+                    @click="downloadPDF(curri.pdfCurriculum)"
                     class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md w-full"
                     download
                   >
@@ -329,11 +329,12 @@
         class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
       >
         <span class="close" @click="showTitleModal = false">&times;</span>
-        <h5 class="text-lg font-semibold mb-4">Ingrese el título del PDF</h5>
+        <h5 class="text-lg font-semibold mb-4">Título del PDF</h5>
         <input
           type="text"
           v-model="pdfTitle"
           placeholder="Título del PDF"
+          disabled
           class="form-input border border-slate-100 dark:border-slate-800 w-full"
         />
         <div class="mt-4">
@@ -465,6 +466,27 @@ export default {
       console.log(this.cv);
       loader.hide();
     },
+    async getCurriculum() {
+      let loader = this.$loading.show();
+      const response = await this.curriculumsStore.getCurriculum(
+        this.$keycloak.idTokenParsed.sub
+      );
+      if (response == null) {
+        loader.hide();
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No se pudo cargar la información del usuario",
+        });
+        this.$keycloak.logout();
+        this.$router.push("/");
+        return;
+      }
+
+      this.cv = response;
+      console.log(this.cv);
+      loader.hide();
+    },
     async handleFileUploadPDF(event) {
       const loader = this.$loading.show();
       try {
@@ -472,6 +494,8 @@ export default {
         if (file) {
           this.pdfFile = file;
           this.showTitleModal = true;
+          //Ponemos el nombre del archivo en el input
+          this.pdfTitle = file.name;
         }
       } catch (error) {
         console.log(error);
@@ -513,8 +537,10 @@ export default {
       }
       this.showTitleModal = false;
       this.showFormularioCV = false;
-
-      this.fetchUserByUUID();
+      this.getCurriculum();
+    },
+    downloadPDF(url){
+      window.open(url, '_blank');
     },
     async removePDF(index) {
       console.log("numero de index" + index);
@@ -570,7 +596,7 @@ export default {
       } finally {
         loader.hide();
       }
-      this.fetchUserByUUID();
+      this.getCurriculum();
     },
   },
   components: {
