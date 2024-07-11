@@ -563,15 +563,16 @@ export default {
               index
             );
             if (response == null) {
+              const errorMessage = this.curriculumsStore.errorMessageDeleteCurriculum;
+              console.error("Error eliminando el archivo PDF:", errorMessage);
               Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "No se pudo eliminar el archivo",
+                text: "ERROR: " + errorMessage,
               });
               this.showFormularioCV=false;
               this.showTitleModal=false;
               return;
-             
             }
             Swal.fire({
               title: "Eliminada!",
