@@ -49,7 +49,7 @@
 
             <div class="mt-10">
                 <a
-                  @click="this.$router.push('/perfil/estudiante')"
+                  @click="aplicarPasantia()"
                   class="btn bg-green-600 hover:bg-green-700 border-green-600 dark:border-green-600 text-white rounded-md w-full"
                   >Aplicar Pasantia</a
                 >
@@ -61,6 +61,7 @@
   </template>
   
   <script>
+  import Swal from 'sweetalert2';
   export default {
     data() {
       return {
@@ -133,22 +134,25 @@
       };
     },
     methods: {
-      handleFileUploadPDF(e) {
-        this.pdfFile = e.target.files[0];
-        this.showTitleModal = true;
-      },
-      savePDF() {
-        this.showFormularioCV = false;
-        this.showTitleModal = false;
-        this.pdfTitle = "";
-        this.pdfFile = null;
-      },
+
+        async aplicarPasantia() {
+            if (this.selectedCv === null) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Debes seleccionar un CV para aplicar a la pasantía',
+                });
+                return;
+            }
+            //logica para aplicar a la pasantia
+        },
+        
+
+      
       selectCv(index) {
         this.selectedCv = index;
       },
-      downloadPDF(pdfUrl) {
-        // lógica para descargar PDF
-      },
+      
     },
   };
   </script>
