@@ -17,7 +17,7 @@ export const useAplicacionesStore = defineStore({
 
                 const response = await axios.post(RutaApi + '/estudiante/'+uuid+'/pasantia/'+pasantiaId+'/curriculum/'+curriculumId)
                 if (response.data.code == '200') {
-                    return response.data.response
+                    return response.data
                 } else {
                     return response.data;
                 }

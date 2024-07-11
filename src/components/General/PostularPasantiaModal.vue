@@ -129,6 +129,8 @@
                 cancelButtonText: 'Cancelar',
             }).then((result) => {
                 if (!result.isConfirmed) {
+                    window.scrollTo(0, 0);
+
                     this.$emit('cancel');
                     return;
                 }
@@ -150,6 +152,8 @@
                     title: 'Oops...',
                     text: response.errorMessage,
                 });
+                window.scrollTo(0, 0);
+                this.$emit('cancel');
                 return;
             }
 
@@ -158,6 +162,8 @@
                 title: '¡Aplicación exitosa!',
                 text: 'Tu aplicación ha sido enviada con éxito',
             });
+            window.scrollTo(0, 0);
+
             this.$emit('cancel');
             return
 
@@ -196,6 +202,8 @@
                 title: "Oops...",
                 text: "No se encontraron curriculums, por favor carga en tu perfil uno para poder aplicar a la pasantía",
                 });
+                window.scrollTo(0, 0);
+
                 this.$emit('cancel');
                 return;
             }
