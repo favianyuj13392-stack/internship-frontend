@@ -18,6 +18,7 @@ import InformacionPasantiaEmpresaView from "@/views/Empresa/InformacionPasantiaE
 import CrearPasantiaEmpresaView from "@/views/Empresa/CrearPasantiaEmpresaView.vue";
 import EditarPasantiaEmpresaView from "@/views/Empresa/EditarPasantiaEmpresaView.vue";
 
+import PerfilUsuarioEmpresaView from "@/views/Empresa/PerfilUsuarioEmpresaView.vue";
 
 //administrador
 import DashboardAdministrador from "@/views/Administrador/DashboardAdministrador.vue";
@@ -110,6 +111,11 @@ const router = createRouter({
       name: 'EditarPasantiaEmpresaView',
       component: EditarPasantiaEmpresaView,
       props: true,
+    },
+    {
+      path: '/empresa/administrador/perfil',
+      name: 'PerfilEmpresaView',
+      component: PerfilUsuarioEmpresaView
     },
 
     //administrador
