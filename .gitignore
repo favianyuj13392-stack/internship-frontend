@@ -28,3 +28,6 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+#ignore RouteApi 
+src/assets/rutaApi.js

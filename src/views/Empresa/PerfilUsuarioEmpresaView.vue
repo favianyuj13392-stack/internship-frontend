@@ -141,7 +141,7 @@
   </template>
   
   <script>
-  import navbar from "@/components/General/navbarGeneral.vue";
+  import navbar from "@/components/Empresa/NavBarEmpresa.vue";
   import footers from "@/components/footer/footer.vue";
   import switcher from "@/components/General/switcher.vue";
   import { useEmpresasAdminStore } from "@/stores/Administradores/empresasAdminStore";
