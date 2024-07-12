@@ -187,7 +187,7 @@
             <h3
               class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
             >
-              Pasantea aprobados en la pasantia
+              Solicitudes de aplicación a la pasantía
             </h3>
             <span>Pasantes aprobados: {{aprobados}}</span>
             <span>Pasantes pendientes: {{ pendientes }}</span>
@@ -196,7 +196,7 @@
             class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
           >
             <div
-              v-for="item in postulantes"
+              v-for="(item,index) in postulantes"
               :key="item.idPersona"
               class="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6"
             >
@@ -206,10 +206,12 @@
                 <img :src="item.fotoPerfil" class="size-8" :alt="item.nombre" />
               </div>
               <div class="mt-4">
-                <router-link class="text-lg hover:text-cyan-600 font-semibold">
+                <div
+                @click="redirectTO(index)"
+                class="text-lg hover:text-cyan-600 font-semibold">
                   {{ item.nombre }} {{ item.apellidoPaterno }}
                   {{ item.apellidoMaterno }}
-                </router-link>
+                </div>
                 <p class="text-slate-400 mt-2">{{ item.descripcion }}</p>
               </div>
               <div
@@ -220,11 +222,7 @@
                 </span>
                 <span
                   class="block font-semibold text-green-600"
-                  v-if="
-                    postulantesEstado.find(
-                      (e) => e.idUsuarios === item.idPersona
-                    )?.activo
-                  "
+                  v-if="getEstado(index)"
                 >
                   Aprobado
                 </span>
@@ -274,216 +272,7 @@ export default {
       image:
         "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
 
-      datas: [
-        {
-          id: 1,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Facebook",
-          day: "2 days ago",
-          type: "Full Time",
-          job: "Web Designer / Developer",
-          country: "Australia",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          job: "6 Jobs",
-          location: "Rush",
-          title: "Digital Marketing Solutions for Tomorrow2",
-          name: "Juana Perez",
-          country: "@ucb.edu.bo",
-          desc: "Ingenieria de Sistemas",
-          jobs: "Aprobado",
-        },
-        {
-          id: 2,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Google",
-          day: "2 days ago",
-          type: "Part Time",
-          job: "Marketing Director",
-          country: "USA",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          name: "Linkedin",
-          country: "India",
-          desc: "Digital Marketing Solutions for Tomorrow",
-          jobs: "Aprobado",
-        },
-        {
-          id: 3,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Android",
-          day: "2 days ago",
-          type: "Remote",
-          job: "Application Developer",
-          country: "China",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          name: "Linkedin",
-          country: "India",
-          desc: "Digital Marketing Solutions for Tomorrow",
-          jobs: "Pendiente",
-        },
-        {
-          id: 4,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Lenovo",
-          day: "2 days ago",
-          type: "WFH",
-          job: "Senior Product Designer",
-          country: "Dubai",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          name: "Linkedin",
-          country: "India",
-          desc: "Digital Marketing Solutions for Tomorrow",
-          jobs: "Pendiente",
-        },
-        {
-          id: 5,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Spotify",
-          day: "2 days ago",
-          type: "Full Time",
-          job: "C++ Developer",
-          country: "India",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          name: "Linkedin",
-          country: "India",
-          desc: "Digital Marketing Solutions for Tomorrow",
-          jobs: "Pendiente",
-        },
-        {
-          id: 6,
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Linkedin",
-          day: "2 days ago",
-          type: "Remote",
-          job: "Php Developer",
-          country: "Pakistan",
-          vacancy: "21 applied",
-          vacancy2: "of 40 vacancy",
-          name: "Linkedin",
-          country: "India",
-          desc: "Digital Marketing Solutions for Tomorrow",
-          jobs: "6 Jobs",
-        },
-        {
-          id: 7,
-          job: "Software Engineering",
-          day: "Posted 3 Days ago",
-          type: "Full Time",
-          salary: "$950 - $1100/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Circle CI Ltd.",
-          location: "Australia",
-          name: "Linkedin",
-          country: "India",
-          desc: "Digital Marketing Solutions for Tomorrow",
-          jobs: "6 Jobs",
-        },
-        {
-          id: 8,
-          job: "Web Developer",
-          day: "Posted 3 Days ago",
-          type: "Remote",
-          salary: "$2500 - $2600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Skype Ltd.",
-          location: "America",
-          name: "Linkedin",
-          country: "India",
-          desc: "Digital Marketing Solutions for Tomorrow",
-          jobs: "6 Jobs",
-        },
-        {
-          id: 9,
-          job: "UX/UI Designer",
-          day: "Posted 3 Days ago",
-          type: "Freelance",
-          salary: "$3500 - $3600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Snapchat Ltd.",
-          location: "Canada",
-          name: "Linkedin",
-          country: "India",
-          desc: "Digital Marketing Solutions for Tomorrow",
-          jobs: "6 Jobs",
-        },
-        {
-          id: 10,
-          job: "Human Resource(HR)",
-          day: "Posted 3 Days ago",
-          type: "Part Time",
-          salary: "$2000 - $2500/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Shreethemes Ltd.",
-          location: "UK",
-          name: "Linkedin",
-          country: "India",
-          desc: "Digital Marketing Solutions for Tomorrow",
-          jobs: "6 Jobs",
-        },
-        {
-          id: 11,
-          job: "Web Designer",
-          day: "Posted 3 Days ago",
-          type: "Full Time",
-          salary: "$1500 - $1600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Telegram Ltd.",
-          location: "China",
-          name: "Linkedin",
-          country: "India",
-          desc: "Digital Marketing Solutions for Tomorrow",
-          jobs: "6 Jobs",
-        },
-        {
-          id: 12,
-          job: "Graphic Designer",
-          day: "Posted 3 Days ago",
-          type: "Part time",
-          salary: "$500 - $600/mo",
-          image:
-            "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
-          name: "Whatsapp Ltd.",
-          location: "India",
-          name: "Linkedin",
-          country: "India",
-          desc: "Digital Marketing Solutions for Tomorrow",
-          jobs: "6 Jobs",
-        },
-      ],
-      datas1: [
-        "Participate in requirements analysis",
-        "Write clean, scalable code using C# and .NET frameworks",
-        "Test and deploy applications and systems",
-        "Revise, update, refactor and debug code",
-        "Improve existing software",
-        "Develop documentation throughout the software development life cycle (SDLC",
-        "Serve as an expert on applications and provide technical support",
-      ],
-      datas2: [
-        "Proven experience as a .NET Developer or Application Developer",
-        "good understanding of SQL and Relational Databases, specifically Microsoft SQL Server.",
-        "Experience designing, developing and creating RESTful web services and APIs",
-        "Basic know how of Agile process and practices",
-        "Good understanding of object-oriented programming.",
-        "Good understanding of concurrent programming.",
-        "Sound knowledge of            application architecture and design.",
-        "Excellent problem solving and analytical skills",
-      ],
+      datas: [],
     };
   },
   components: {
@@ -491,7 +280,20 @@ export default {
     footers,
     switcher,
   },
-  methods: {
+  methods:{
+    redirectTO(index){
+      this.$router.push(
+        { name: 'PerfilEstudianteAdministrador', params: 
+          { 
+            idEstudiante: this.postulantes[index].idPersona, 
+            idSolicitud: this.postulantesEstado[index].idAplicacionPasantias
+          } 
+        }
+      );
+    },
+    getEstado(index) {
+      return this.postulantesEstado[index].activo;
+    },
     async rechazarPasantia() {
   try {
     const result = await Swal.fire({
@@ -564,11 +366,6 @@ export default {
 }
 ,
     observar() {
-      console.log("observar");
-      console.log(this.data);
-      console.log("--------------------");
-      console.log(this.postulantes);
-      console.log(this.postulantes.length);
     },
     async aprobarPasantia() {
       Swal.fire({
@@ -597,8 +394,6 @@ export default {
       } finally {
         loader.hide();
       }
-      console.log(Numero);
-      console.log("si se aprobo deiece");
     },
     async fetchPasantia() {
       let loader = this.$loading.show();
@@ -609,15 +404,10 @@ export default {
         );
 
         this.data = response;
-        console.log("respuestas " + this.data);
         this.parsedData = this.data.pasantiasDto.descripcion.split("\n");
-        console.log(this.parsedData);
-        console.log(this.data);
         this.activo = this.data.estadoPasantia;
         this.instituto = this.data.institucionesDto;
-        console.log(this.instituto);
         this.pasantia = this.data.pasantiasDto;
-        console.log(this.pasantia);
         this.postulantes = this.data.listaPostulantes;
         this.postulantesEstado = this.data.aplicacionPasantiasDto;
         if (this.data.pasantiasDto == null) {
@@ -647,12 +437,10 @@ export default {
   },
   computed: {
     aprobados() {
-      return this.postulantes.filter(item =>
-        this.postulantesEstado.find(e => e.idUsuarios === item.idPersona)?.activo
-      ).length;
+      return this.postulantesEstado.filter((e) => e.activo).length;      
     },
     pendientes() {
-      return this.postulantes.length - this.aprobados;
+      return this.postulantesEstado.filter((e) => !e.activo).length;
     }
   },
   props: {

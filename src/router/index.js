@@ -29,6 +29,7 @@ import EmpresaAdministrador from "@/views/Administrador/EmpresaAdministrador.vue
 import EmpresaDetalleAdministrador from "@/views/Administrador/EmpresaDetalleAdministrador.vue";
 import PasantiaDetalleAdministrador from "@/views/Administrador/PasantiaDetalleAdministrador.vue";
 import EmpresaSolicitudUsuarioAdministrador from "@/views/Administrador/EmpresaSolicitudUsuarioAdministrador.vue";
+import PerfilEstudianteAdministrador from "@/views/Administrador/PerfilEstudianteAdministrador.vue";
 //completar registro
 import FinishRegisterEstudiante from "@/views/CompletarRegistro/CompletarRegistroEstudianteView.vue";
 import FinishRegisterEmpresa from "@/views/CompletarRegistro/CompletarRegistroEmpresaView.vue";
@@ -158,6 +159,11 @@ const router = createRouter({
       path: "/administrador/empresa/:idEmpresa/solicitud/:idSolicitud/usuario/:idUsuario",
       name: "EmpresaSolicitudUsuarioAdministrador",
       component: EmpresaSolicitudUsuarioAdministrador,
+    },
+    {
+      path: "/administrador/estudiante/:idEstudiante/solicitud/:idSolicitud",
+      name: "PerfilEstudianteAdministrador",
+      component: PerfilEstudianteAdministrador,
     },
 
     //completado de registro
