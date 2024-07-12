@@ -378,7 +378,7 @@
 </template>
 
 <script>
-import navbar from "@/components/General/navbarGeneral.vue";
+import navbar from "@/components/Administrador/navbarAdministrador.vue";
 import footers from "@/components/footer/footer.vue";
 import switcher from "@/components/General/switcher.vue";
 import image from "@/assets/images/team/01.jpg";
