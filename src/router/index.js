@@ -10,14 +10,14 @@ import Contactanos from "../views/General/Contactanos.vue";
 //estudiante
 import PerfilEstudiante from "@/views/Estudiante/PerfilEstudiante.vue";
 import EditarPerfilEstudiante from "@/views/Estudiante/EditarPerfilEstudiante.vue";
-
+import SolicitudesEstudiante from "@/views/Estudiante/SolicitudesEstudiante.vue";
 //empresa
 import PasantiasEmpresaView from "@/views/Empresa/PasantiasEmpresaView.vue";
 import InformacionEmpresaView from "@/views/Empresa/EditarInformacionEmpresaView.vue";
 import InformacionPasantiaEmpresaView from "@/views/Empresa/InformacionPasantiaEmpresaView.vue";
 import CrearPasantiaEmpresaView from "@/views/Empresa/CrearPasantiaEmpresaView.vue";
 import EditarPasantiaEmpresaView from "@/views/Empresa/EditarPasantiaEmpresaView.vue";
-
+import PerfilEstudianteEmpresa from "@/views/Empresa/PerfilEstudianteEmpresa.vue";
 import PerfilUsuarioEmpresaView from "@/views/Empresa/PerfilUsuarioEmpresaView.vue";
 
 //administrador
@@ -84,6 +84,11 @@ const router = createRouter({
       name: "perfil-estudiante-editar",
       component: EditarPerfilEstudiante,
     },
+    {
+      path: "/estudiante/solicitudes",
+      name: "solicitudes-estudiante",
+      component: SolicitudesEstudiante,
+    },
 
     //empresa
     {
@@ -103,20 +108,26 @@ const router = createRouter({
       props: true,
     },
     {
-      path: '/empresa/administrador/pasantias/crear',
-      name: 'CrearPasantiaEmpresaView',
-      component: CrearPasantiaEmpresaView
+      path: "/empresa/administrador/pasantias/crear",
+      name: "CrearPasantiaEmpresaView",
+      component: CrearPasantiaEmpresaView,
     },
     {
-      path: '/empresa/administrador/pasantias/:id/editar',
-      name: 'EditarPasantiaEmpresaView',
+      path: "/empresa/administrador/pasantias/:id/editar",
+      name: "EditarPasantiaEmpresaView",
       component: EditarPasantiaEmpresaView,
       props: true,
     },
     {
-      path: '/empresa/administrador/perfil',
-      name: 'PerfilEmpresaView',
-      component: PerfilUsuarioEmpresaView
+      path: "/empresa/administrador/perfil",
+      name: "PerfilEmpresaView",
+      component: PerfilUsuarioEmpresaView,
+    },
+
+    {
+      path: "/empresa/estudiante/:idEstudiante/solicitud/:idSolicitud",
+      name: "PerfilEstudianteEmpresa",
+      component: PerfilEstudianteEmpresa,
     },
 
     //administrador
@@ -176,7 +187,7 @@ const router = createRouter({
       path: "/finish/register-empresa",
       name: "FinishRegisterEmpresa",
       component: FinishRegisterEmpresa,
-    }
+    },
   ],
 });
 

@@ -47,7 +47,19 @@ export const usePasantiasAdministracionInstitucionStore = defineStore({
             } catch (error) {
                 console.log(error)
             }
-        }
-    },
+        },
+       
+        async aceptarPasantia(uuid, idPasantia, idAplicacionPasantia, data) {
+            try {
+                const response = await axios.put(RutaApi + '/usuario/'+uuid+'/pasantia/'+idPasantia+'/aplicacion/'+idAplicacionPasantia+'/aceptar', data)
+                if (response.data.code == '200') {
+                    return response.data.response
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.log(error)
+            }
+    },}
 
 })

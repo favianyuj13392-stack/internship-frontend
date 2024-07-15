@@ -198,7 +198,7 @@
                 name="send"
                 @click="
                   (showNuevaEmpresaModal = true),
-                    (showNuevaEmpresaModalForms = 1)
+                    (showNuevaEmpresaModalForms = 10)
                 "
                 class="col-span-1 btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
               >
@@ -360,7 +360,7 @@
                     />
                   </div>
 
-                  <div class="lg:col-span-4">
+                  <div class="lg:col-span-6">
                     <label class="form-label font-medium"
                       >Número Celular :<span class="text-red-600"
                         >*</span
@@ -1041,7 +1041,58 @@
       class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
     >
       <span class="close" @click="showNuevaEmpresaModal = false">&times;</span>
+<div  v-if="showNuevaEmpresaModalForms == 10"
+        class="grid grid-cols-1 gap-4"
+      >
+      <div>
+  <h5 class="text-lg font-semibold mb-4">
+    ¿Tu empresa aún no está registrada?
+  </h5>
 
+  <div>
+    <div>
+      <!-- Selección de áreas -->
+      <div class="mt-6">
+        <h5 class="text-lg font-semibold mb-4">¿Qué necesitas para agregar tu empresa?</h5>
+        <div class="flex flex-wrap gap-2">
+          <span>Para poder registrar tu empresa, necesitarás la siguiente información:</span>
+        </div>
+
+        <div class="mt-4">
+          <ul class="list-disc list-inside">
+            <li><strong>Nombre de la empresa</strong></li>
+            <li><strong>Dirección de la empresa</strong></li>
+            <li><strong>Correo electrónico</strong></li>
+            <li><strong>Logo de la empresa</strong></li>
+            <li><strong>Descripción de la empresa</strong></li>
+            <li><strong>Áreas de la empresa</strong></li>
+            <li><strong>Foto de las instalaciones</strong> (para usar como banner en la portada)</li>
+            <li><strong>Fotos extra</strong> (opcionales para mostrar más de la empresa)</li>
+            <li><strong>Link de las redes sociales de la empresa</strong> (IG, FB, Twitter, TikTok, etc.)</li>
+          </ul>
+        </div>
+
+        <div class="mt-4 grid grid-cols-2 gap-2">
+          <!-- Opcional: aquí podrías añadir cualquier otro contenido o diseño adicional -->
+        </div>
+      </div>
+      <!--end col-->
+    </div>
+
+    <div class="flex gap-4 mt-5 justify-end">
+      <button
+        id="submit"
+        name="send"
+        @click="showNuevaEmpresaModalForms = 1"
+        class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
+      >
+        ¡Empezar ahora!
+      </button>
+    </div>
+  </div>
+</div>
+
+</div>
       <div
         v-if="showNuevaEmpresaModalForms == 1"
         class="grid grid-cols-1 gap-4"
@@ -1332,14 +1383,14 @@
           <div>
             <!-- Redes sociales seleccionadas -->
             <div class="mt-6">
-              <h5 class="text-lg font-semibold mb-4">
-                Redes sociales seleccionadas:
+              <h5  class="text-lg font-semibold mb-4">
+                Redes sociales agregadas:
               </h5>
               <div class="flex flex-wrap gap-2">
                 <div
-                  v-for="(url, social) in Object.entries(
+                  v-for="(url, social) in 
                     nuevaEmpresa.redesSociales
-                  )"
+                  "
                   :key="social"
                   class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center"
                 >

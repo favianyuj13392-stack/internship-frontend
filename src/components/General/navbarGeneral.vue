@@ -180,7 +180,12 @@
             >
           </li>
 
-          <li :class="activeMenu === '/contactanos' ? 'active' : ''">
+          <li v-if="$keycloak.authenticated" :class="activeMenu === '/estudiante/solicitudes' ? 'active' : ''">
+            <router-link to="/estudiante/solicitudes" class="sub-menu-item"
+              >Solicitudes</router-link
+            >
+          </li>
+          <li v-else="$keycloak.authenticated" :class="activeMenu === '/contactanos' ? 'active' : ''">
             <router-link to="/contactanos" class="sub-menu-item"
               >Contactos</router-link
             >
