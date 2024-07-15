@@ -139,6 +139,8 @@
           </div>
           <div class="p-2">
             <router-link
+            :to="{ name: 'PasantiaDetalleAdministrador', params: { id: item.idPasantias } }"
+
               class="title h5 text-lg font-semibold hover:text-cyan-600"
               >{{ item.titulo }}</router-link
             >
@@ -149,15 +151,14 @@
             </p>
 
             <div class="flex justify-between items-center mt-4">
+              
               <span
+                v-for="area in item.areas"
                 class="bg-cyan-600/5 text-cyan-600 text-xs font-bold px-2.5 py-0.5 rounded h-5"
-                >{{ item.areas }}</span
+                >{{ area }}</span
               >
 
-              <p class="text-slate-400">
-                <i class="uil uil-usd-circle text-cyan-600"></i>
-                {{ item.beneficios }}
-              </p>
+              
             </div>
           </div>
 

@@ -8,7 +8,7 @@
                 <form id="kc-form-login" class="${properties.kcFormClass!} onsubmit="login.disabled = true; return true;" action="${url.loginAction}" method="post">
                     <div class="form_header">
                         <a >
-                            <img src="${url.resourcesPath}/img/logo-dark.png" alt="logo" class="logo">
+                            <img src="${url.resourcesPath}/img/logo-dark.png" alt="logo" class="logo" height="100px">
                         </a>
                         <h5 class="form_header_title">
                         Iniciar sesión
