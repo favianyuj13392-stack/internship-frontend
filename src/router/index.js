@@ -11,6 +11,7 @@ import Contactanos from "../views/General/Contactanos.vue";
 import PerfilEstudiante from "@/views/Estudiante/PerfilEstudiante.vue";
 import EditarPerfilEstudiante from "@/views/Estudiante/EditarPerfilEstudiante.vue";
 import SolicitudesEstudiante from "@/views/Estudiante/SolicitudesEstudiante.vue";
+import PasantiaAplicadaEstudiante from "@/views/Estudiante/PasantiaAplicadaEstudiante.vue";
 //empresa
 import PasantiasEmpresaView from "@/views/Empresa/PasantiasEmpresaView.vue";
 import InformacionEmpresaView from "@/views/Empresa/EditarInformacionEmpresaView.vue";
@@ -88,6 +89,11 @@ const router = createRouter({
       path: "/estudiante/solicitudes",
       name: "solicitudes-estudiante",
       component: SolicitudesEstudiante,
+    },
+    {
+      path: "/estudiante/:id/aplicacion",
+      name: "PasantiaAplicadaEstudiante",
+      component: PasantiaAplicadaEstudiante,
     },
 
     //empresa

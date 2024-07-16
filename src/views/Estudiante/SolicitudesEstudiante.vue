@@ -132,158 +132,204 @@
   </section>
   <!--end section-->
   <!-- Start -->
-  <section class="relative bg-slate-50 dark:bg-slate-800 py-16 lg:mt-0 mt-0 mt-0">
+  <section
+    class="relative bg-slate-50 dark:bg-slate-800 py-16 lg:mt-0 mt-0 mt-0"
+  >
     <div class="container">
-      <div class="grid grid-cols-1 pb-8 text-center">
-        <h3
-          class="mb-0 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
-        >
-          Solicitudes aprobadas
-        </h3>
-      </div>
       <!--end grid-->
+      <div v-if="this.pasantiasAprobadas.length > 0">
+        <div class="grid grid-cols-1 pb-8 text-center">
+          <h3
+            class="mb-0 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
+          >
+            Solicitudes aprobadas
+          </h3>
+        </div>
 
-      <div
-        class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
-      >
         <div
-          v-for="item in datas"
-          :key="item"
-          class="group relative overflow-hidden bg-white dark:bg-slate-900 shadow hover:shadow-md dark:shadow-gray-700 dark:hover:shadow-gray-700 hover:-mt-2 rounded-md transition-all duration-500 h-fit"
+          class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
         >
-          <div class="p-6">
-            <div class="flex items-center">
-              <div
-                class="size-14 min-w-[56px] flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md"
-              >
-                <img :src="item.image" class="size-8" alt="" />
-              </div>
-
-              <div class="ms-3">
-                <router-link
-                  class="inline-block text-[16px] font-semibold hover:text-green-600 transition-all duration-500 me-1"
+          <div
+            v-for="item in this.pasantiasAprobadas"
+            :key="item"
+            class="group relative overflow-hidden bg-white dark:bg-slate-900 shadow hover:shadow-md dark:shadow-gray-700 dark:hover:shadow-gray-700 hover:-mt-2 rounded-md transition-all duration-500 h-full flex flex-col"
+          >
+            <div class="p-6 flex-grow">
+              <div class="flex items-center">
+                <div
+                  class="size-14 min-w-[56px] flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md"
                 >
-                  Empresa : {{ item.name }}</router-link
-                >
+                  <img
+                    :src="item.pasantiasDto.institucion.logoEmpresa"
+                    class="size-8"
+                    alt=""
+                  />
+                </div>
 
-                <div>
-                  <span
-                    class="bg-green-600/10 inline-block text-green-600 text-xs px-2.5 py-0.5 font-semibold rounded-full me-1"
-                    >{{ item.type }}</span
+                <div class="ms-3">
+                  <router-link
+                    :to="{
+                      name: 'empresas-detalle',
+                      params: {
+                        id: item.pasantiasDto.institucion.idInstituciones,
+                      },
+                    }"
+                    class="inline-block text-[16px] font-semibold hover:text-green-600 transition-all duration-500 me-1"
                   >
-                </div>
-              </div>
-            </div>
+                    {{ item.pasantiasDto.institucion.nombre }}</router-link
+                  >
 
-            <p class="text-slate-400 py-3">{{ item.title }}</p>
-
-            <div>
-              <span
-                v-for="language in item.language"
-                :key="language"
-                class="bg-slate-100 dark:bg-slate-800 inline-block text-slate-900 dark:text-slate-300 text-xs px-2.5 py-0.5 font-semibold rounded-full me-1"
-                >{{ language }}</span
-              >
-            </div>
-          </div>
-
-          <div
-            class="px-6 py-2 bg-slate-50 dark:bg-slate-800 lg:flex justify-between items-center"
-          >
-            <div class="lg:inline-block flex justify-between">
-              <span class="inline-block me-1 text-slate-400"
-                ><i
-                  class="uil uil-map-marker text-[18px] text-slate-900 dark:text-white me-1"
-                ></i
-                >{{ item.location }}</span
-              >
-            </div>
-
-            <router-link
-              to="/job-apply"
-              class="btn btn-sm rounded-md bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700 text-white md:ms-2 w-full lg:w-auto lg:mt-0 mt-4"
-              >Ver pasantia</router-link
-            >
-          </div>
-        </div>
-        <!--end content-->
-      </div>
-      <!--end grid-->
-      <div class="grid grid-cols-1 pb-8 text-center">
-        <h3
-          class="mt-10 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
-        >
-          Solicitudes pendientes
-        </h3>
-      </div>
-      <!--end grid-->
-
-      <div
-        class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
-      >
-        <div
-          v-for="item in datas"
-          :key="item"
-          class="group relative overflow-hidden bg-white dark:bg-slate-900 shadow hover:shadow-md dark:shadow-gray-700 dark:hover:shadow-gray-700 hover:-mt-2 rounded-md transition-all duration-500 h-fit"
-        >
-          <div class="p-6">
-            <div class="flex items-center">
-              <div
-                class="size-14 min-w-[56px] flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md"
-              >
-                <img :src="item.image" class="size-8" alt="" />
-              </div>
-
-              <div class="ms-3">
-                <router-link
-                  class="inline-block text-[16px] font-semibold hover:text-yellow-600 transition-all duration-500 me-1"
-                  >{{ item.name }}</router-link
-                >
-               
-                <div>
-                  <span
-                    class="bg-yellow-600/10 inline-block text-yellow-600 text-xs px-2.5 py-0.5 font-semibold rounded-full me-1"
-                    >{{ item.type }}</span
+                  <div>
+                    <span
+                      v-for="language in item.pasantiasDto.beneficios"
+                      :key="language"
+                      class="bg-green-600/10 inline-block text-green-600 text-xs px-2.5 py-0.5 font-semibold rounded-full me-1"
+                      >{{ language }}</span
                     >
+                  </div>
                 </div>
+              </div>
+
+              <p class="text-slate-400 py-3">{{ item.pasantiasDto.titulo }}</p>
+
+              <div>
+                <span
+                  v-for="language in item.language"
+                  :key="language"
+                  class="bg-slate-100 dark:bg-slate-800 inline-block text-slate-900 dark:text-slate-300 text-xs px-2.5 py-0.5 font-semibold rounded-full me-1"
+                  >{{ language }}</span
+                >
               </div>
             </div>
 
-            <p class="text-slate-400 py-3">{{ item.title }}</p>
-
-            <div>
-              <span
-                v-for="language in item.language"
-                :key="language"
-                class="bg-slate-100 dark:bg-slate-800 inline-block text-slate-900 dark:text-slate-300 text-xs px-2.5 py-0.5 font-semibold rounded-full me-1"
-                >{{ language }}</span
-              >
-            </div>
-          </div>
-
-          <div
-            class="px-6 py-2 bg-slate-50 dark:bg-slate-800 lg:flex justify-between items-center"
-          >
-            <div class="lg:inline-block flex justify-between">
-              
-              <span class="inline-block me-1 text-slate-400"
-                ><i
-                  class="uil uil-map-marker text-[18px] text-slate-900 dark:text-white me-1"
-                ></i
-                >{{ item.location }}</span
-              >
-            </div>
-
-            <router-link
-              to="/job-apply"
-              class="btn btn-sm rounded-md bg-yellow-600 hover:bg-yellow-700 border-yellow-600 hover:border-yellow-700 text-white md:ms-2 w-full lg:w-auto lg:mt-0 mt-4"
-              >Ver pasantia</router-link
+            <div
+              class="px-6 py-2 bg-slate-50 dark:bg-slate-800 lg:flex justify-between items-center mt-auto mb-2"
             >
-          </div>
+              <div class="lg:inline-block flex justify-between gap-[30px]">
+                <span class="inline-block me-1 text-slate-400">
+                  <i
+                    class="uil uil-map-marker text-[18px] text-slate-900 dark:text-white me-1"
+                  ></i>
+                  {{ item.pasantiasDto.institucion.direccion }}
+                </span>
+                <span class="inline-block me-1 text-slate-400">
+                  <i
+                    class="uil uil-calendar-alt text-[18px] text-slate-900 dark:text-white me-1"
+                  ></i>
+                  {{ item.fechaAplicacion }}
+                </span>
+              </div>
 
-         
+              <router-link
+                :to="{
+                  name: 'PasantiaAplicadaEstudiante',
+                  params: { id: item.idAplicacionPasantias },
+                }"
+                class="btn btn-sm rounded-md bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700 text-white md:ms-2 w-full lg:w-auto lg:mt-0 mt-4"
+                >Ver pasantia</router-link
+              >
+            </div>
+          </div>
+          <!--end content-->
         </div>
-        <!--end content-->
+      </div>
+
+      <!--end grid-->
+      <div v-if="this.pasantiasPendientes.length > 0">
+        <div class="grid grid-cols-1 pb-8 text-center">
+          <h3
+            class="mt-10 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
+          >
+            Solicitudes pendientes
+          </h3>
+        </div>
+        <!--end grid-->
+
+        <div
+          class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
+        >
+          <div
+            v-for="item in this.pasantiasPendientes"
+            :key="item"
+            class="group relative overflow-hidden bg-white dark:bg-slate-900 shadow hover:shadow-md dark:shadow-gray-700 dark:hover:shadow-gray-700 hover:-mt-2 rounded-md transition-all duration-500 h-full flex flex-col"
+          >
+            <div class="p-6 flex-grow">
+              <div class="flex items-center">
+                <div
+                  class="size-14 min-w-[56px] flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md"
+                >
+                  <img
+                    :src="item.pasantiasDto.institucion.logoEmpresa"
+                    class="size-8"
+                    alt=""
+                  />
+                </div>
+
+                <div class="ms-3">
+                  <router-link
+                    :to="{
+                      name: 'empresas-detalle',
+                      params: {
+                        id: item.pasantiasDto.institucion.idInstituciones,
+                      },
+                    }"
+                    class="inline-block text-[16px] font-semibold hover:text-yellow-600 transition-all duration-500 me-1"
+                    >{{ item.pasantiasDto.institucion.nombre }}</router-link
+                  >
+
+                  <div>
+                    <span
+                      v-for="language in item.pasantiasDto.beneficios"
+                      :key="language"
+                      class="bg-yellow-600/10 inline-block text-yellow-600 text-xs px-2.5 py-0.5 font-semibold rounded-full me-1"
+                      >{{ language }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <p class="text-slate-400 py-3">{{ item.pasantiasDto.titulo }}</p>
+
+              <div>
+                <span
+                  v-for="language in item.pasantiasDto.funciones"
+                  :key="language"
+                  class="bg-slate-100 dark:bg-slate-800 inline-block text-slate-900 dark:text-slate-300 text-xs px-2.5 py-0.5 font-semibold rounded-full me-1"
+                  >{{ language }}</span
+                >
+              </div>
+            </div>
+
+            <div
+              class="px-6 py-2 bg-slate-50 dark:bg-slate-800 lg:flex justify-between items-center mt-auto"
+            >
+              <div class="lg:inline-block flex justify-between gap-[30px]">
+                <span class="inline-block me-1 text-slate-400">
+                  <i
+                    class="uil uil-map-marker text-[18px] text-slate-900 dark:text-white me-1"
+                  ></i>
+                  {{ item.pasantiasDto.institucion.direccion }}
+                </span>
+                <span class="inline-block me-1 text-slate-400">
+                  <i
+                    class="uil uil-calendar-alt text-[18px] text-slate-900 dark:text-white me-1"
+                  ></i>
+                  {{ item.fechaAplicacion }}
+                </span>
+              </div>
+
+              <router-link
+                class="btn btn-sm rounded-md bg-yellow-600 hover:bg-yellow-700 border-yellow-600 hover:border-yellow-700 text-white md:ms-2 w-full lg:w-auto lg:mt-0 mt-4"
+                :to="{
+                  name: 'PasantiaAplicadaEstudiante',
+                  params: { id: item.idAplicacionPasantias },
+                }"
+                >Ver pasantia
+              </router-link>
+            </div>
+          </div>
+          <!--end content-->
+        </div>
       </div>
 
       <!--end grid-->
@@ -301,14 +347,45 @@ import navbar from "@/components/General/navbarGeneral.vue";
 import footers from "@/components/footer/footer.vue";
 import switcher from "@/components/General/switcher.vue";
 import Navbar from "@/components/navbar/navbar.vue";
+import { useAplicacionesStore } from "@/stores/Estudiantes/aplicacionesStore";
+import { data } from "autoprefixer";
 export default {
+  setup() {
+    const aplicacionesStore = useAplicacionesStore();
+    return { aplicacionesStore };
+  },
   components: {
     navbar,
     footers,
     switcher,
   },
+  async mounted() {
+    this.created();
+  },
+  methods: {
+    async created() {
+      let loader = this.$loading.show();
+      const response = await this.aplicacionesStore.getAplicacionesPasantias(
+        this.$keycloak.idTokenParsed.sub
+      );
+      this.data = response;
+      this.pasantiasAprobadas = this.data.filter((pasantia) => pasantia.activo);
+      this.pasantiasPendientes = this.data.filter(
+        (pasantia) => !pasantia.activo
+      );
+      console.log("Pasantías Aprobadas:", this.pasantiasAprobadas);
+      console.log("Pasantías Pendientes:", this.pasantiasPendientes);
+
+      console.log(this.data);
+      loader.hide();
+    },
+  },
+
   data() {
     return {
+      pasantiasAprobadas: [],
+      pasantiasPendientes: [],
+      idInstitucion: "",
       datas: [
         {
           id: 1,
@@ -431,6 +508,7 @@ export default {
           location: "Pakistan",
         },
       ],
+      data: [],
     };
   },
 };
