@@ -120,7 +120,7 @@
               <h5 class="text-lg font-semibold">
                 {{
                   estudianteDto.persona.nombre +
-                  "" +
+                  " " +
                   estudianteDto.persona.apellidoPaterno +
                   " " +
                   estudianteDto.persona.apellidoMaterno
@@ -142,7 +142,6 @@
           >
             <h5 class="text-lg font-semibold mb-4">Personal Detail :</h5>
             <div>
-              <h1>{{ estudianteDto }}</h1>
               <div
                 class="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 gap-4"
               >
@@ -159,6 +158,7 @@
                     id="firstname"
                     name="name"
                     required=""
+                    disabled
                   />
                 </div>
                 <div class="lg:col-span-4">
@@ -189,6 +189,8 @@
                     id="lastname"
                     name="name"
                     required=""
+                    disabled
+
                   />
                 </div>
 
@@ -206,6 +208,8 @@
                     id="lastname"
                     name="name"
                     required=""
+                    disabled
+
                   />
                 </div>
 
@@ -220,6 +224,8 @@
                     placeholder="Email"
                     name="email"
                     required=""
+                    disabled
+
                   />
                 </div>
 
@@ -1209,6 +1215,12 @@ export default {
     }
     this.estudianteDto.persona.anioIngresoUniversidad = 2000;
     this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
+    this.estudianteDto.persona.nombre = this.$keycloak.idTokenParsed.given_name;
+    //first word of the family name
+    this.estudianteDto.persona.apellidoPaterno = this.$keycloak.idTokenParsed.family_name.split(" ")[0];
+    //second word of the family name
+    this.estudianteDto.persona.apellidoMaterno = this.$keycloak.idTokenParsed.family_name.split(" ")[1];
+    this.estudianteDto.persona.correo = this.$keycloak.idTokenParsed.email;
   },
   methods: {
     updateField(field, value) {
