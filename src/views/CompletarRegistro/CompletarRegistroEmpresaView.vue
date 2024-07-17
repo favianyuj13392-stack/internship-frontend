@@ -1845,6 +1845,13 @@ export default {
     }
     this.estudianteDto.persona.anioIngresoUniversidad = 2000;
     this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
+    this.estudianteDto.persona.nombre = this.$keycloak.idTokenParsed.given_name;
+    //first word of the family name
+    //this.estudianteDto.persona.apellidoPaterno = this.$keycloak.idTokenParsed.family_name.split(" ")[0];
+    //second word of the family name
+    //this.estudianteDto.persona.apellidoMaterno = this.$keycloak.idTokenParsed.family_name.split(" ")[1];
+    this.estudianteDto.persona.correo = this.$keycloak.idTokenParsed.email;
+
   },
   mounted() {
     this.getInstitucionesWithName();
