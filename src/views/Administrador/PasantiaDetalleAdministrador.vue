@@ -39,7 +39,10 @@
           <!--detallesssss-->
           <h5 class="text-lg font-semibold">Descripción de la pasantia:</h5>
 
-          <p class="text-slate-400 mt-4" v-for="paragraph in parsedData">
+          <p class="text-slate-400 mt-4" v-for="paragraph in parsedData"
+        
+          :key="paragraph"
+          >
             {{ paragraph }}
           </p>
 
@@ -61,6 +64,7 @@
             <li
               v-for="funcion in pasantia.funciones"
               class="text-slate-400 mt-2"
+              :key="funcion"
             >
               <i class="uil uil-arrow-right text-cyan-600 me-1"></i>
               {{ funcion }}
@@ -72,11 +76,25 @@
           <ul class="list-none">
             <li
               v-for="requisito in pasantia.requisitos"
-              :key="item"
+              :key="requisito"
               class="text-slate-400 mt-2"
             >
               <i class="uil uil-arrow-right text-cyan-600 me-1"></i>
               {{ requisito }}
+            </li>
+          </ul>
+          <h5 class="text-lg font-semibold mt-6">
+            Beneficios de la pasantia:
+          </h5>
+          <ul class="list-none">
+            <li
+              v-for="beneficios
+              in pasantia.beneficios"
+              :key="beneficios"
+              class="text-slate-400 mt-2"
+            >
+              <i class="uil uil-arrow-right text-cyan-600 me-1"></i>
+              {{ beneficios }}
             </li>
           </ul>
         </div>
@@ -176,9 +194,16 @@
           class="grid grid-cols-1 mt-10 pb-2 text-center"
         >
           <h3
+          v-if="pasantia.sinAplicantes"
             class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold text-red-400"
           >
-            No hay aún postulantes
+            La pasantía fue terminada y catalogada como sin aplicantes aptos.
+          </h3>
+          <h3
+            class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold text-red-400"
+            v-else
+          >
+            No hay aún postulantes.
           </h3>
         </div>
 

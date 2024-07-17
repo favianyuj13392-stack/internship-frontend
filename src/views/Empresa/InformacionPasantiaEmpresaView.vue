@@ -136,7 +136,7 @@
               </li>
             </ul>
 
-            <div class="mt-5">
+            <div class="mt-5" v-if="!this.data.pasantiasDto.sinAplicantes">
               <router-link
                 :to="'/empresa/administrador/pasantias/' + this.id + '/editar'"
                 class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto"
@@ -151,19 +151,26 @@
                 v-if="this.data.postulantes.length <= 0"
                 class="grid grid-cols-1 mt-10 pb-2 text-center"
               >
-                <h3
-                  class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold text-red-400"
-                >
-                  No hay postulantes que esperen una respuesta
-                </h3>
-                <!--
-              Botón para terminar la pasantía sin aplicantes
-              -->
-                <div
-                  @click="terminarPasantia"
-                  class="btn rounded-md bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700 text-white md:ms-2 w-full md:w-auto mt-2"
-                  >Terminar Pasantia</div
-                >
+                <div v-if="data.pasantiasDto.sinAplicantes">
+                  <h3
+                    class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold text-red-400"
+                  >
+                    La pasantía fue terminada y catalogada como sin aplicantes
+                  </h3>
+                </div>
+                <div v-else>
+                  <h3
+                    class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold text-red-400"
+                  >
+                    No hay postulantes que esperen una respuesta
+                  </h3>
+                  <div
+                    @click="terminarPasantia"
+                    class="btn rounded-md bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700 text-white md:ms-2 w-full md:w-auto mt-2"
+                    >Terminar Pasantia</div
+                  >
+                </div>
+
               </div>
 
               <div v-else>
@@ -665,20 +672,31 @@ export default {
       window.open(url, '_blank');
     },
     async aceptarSolicitud(){
-      const loader = this.$loading.show();
+      const loader = this.$loading;
       try{
-        let comentarios = await Swal.fire({
-          title: 'Comentario',
-          input: 'text',
-          inputPlaceholder: 'Ingrese un comentario para el postulante',
+        const comentarios = await Swal.fire({
+          title: 'Comentarios',
+          input: 'textarea',
+          inputLabel: 'Comentarios',
+          inputPlaceholder: 'Ingrese los comentarios',
+          inputAttributes: {
+            'aria-label': 'Ingrese los comentarios'
+          },
           showCancelButton: true,
-          inputValidator: (value) => {
-            if (!value) {
-              return 'Debe ingresar un comentario';
+          confirmButtonText: 'Aceptar',
+          cancelButtonText: 'Cancelar',
+          showLoaderOnConfirm: true,
+          preConfirm: (comentarios) => {
+            if(!comentarios){
+              Swal.showValidationMessage('Los comentarios son requeridos');
             }
-          }
+          },
+          allowOutsideClick: () => !Swal.isLoading()
+
         });
         if(comentarios.isConfirmed){
+          loader.show();
+          
           const dataComment = {
             comentarios: comentarios.value
           };
@@ -763,7 +781,7 @@ export default {
       try{
         let confirmacion = await Swal.fire({
           title: '¿Está seguro de terminar la pasantía?',
-          text: "No podrá revertir esta acción",
+          text: "No podrá revertir esta acción y se catalogará como sin aplicantes",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#d33',
