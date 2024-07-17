@@ -326,7 +326,7 @@
                 <button
                   id="submit"
                   name="send"
-                  @click="paginaFormulario = 2"
+                  @click=" irAPaginaFormulario2()  "
                   class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
                 >
                   Siguiente
@@ -1086,7 +1086,7 @@ export default {
       estudianteDto: {
         idUsuarios: null,
         kc_UUID: "asdkasdja-sdajfsdbkfasd-32",
-        correo: "daniel.aldazosa@ucb.edu.bo",
+        correo: "",
         fechaRegistro: "2024-06-28",
         horaRegistro: "11:50:07",
         idRoles: 1,
@@ -1098,16 +1098,16 @@ export default {
 
         persona: {
           idPersona: null,
-          nombre: "Daniel Ignacio",
-          apellidoPaterno: "Aldazosa",
-          apellidoMaterno: "Miranda",
-          telefono: 60176430,
-          ci: "6959943",
+          nombre: "",
+          apellidoPaterno: "",
+          apellidoMaterno: "",
+          telefono: 0,
+          ci: "",
           fotoPerfil:
-            "https://backend-sistemas.serverbb.online/api/v1/public/files/download/blob_20240520-221153808",
-          anioIngresoUniversidad: 2020,
-          descripcion: "slkdf sldklfjsald flskdfs dlfksdfjskdf sdfskdfjsldjk",
-          fechaDeNacimiento: "2002-12-17",
+            "",
+          anioIngresoUniversidad: 0,
+          descripcion: "",
+          fechaDeNacimiento: "",
 
           habilidades: {
             habilidades: [
@@ -1213,16 +1213,82 @@ export default {
     if (!this.$keycloak.authenticated) {
       this.$router.push("/");
     }
-    this.estudianteDto.persona.anioIngresoUniversidad = 2000;
     this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
     this.estudianteDto.persona.nombre = this.$keycloak.idTokenParsed.given_name;
     //first word of the family name
     this.estudianteDto.persona.apellidoPaterno = this.$keycloak.idTokenParsed.family_name.split(" ")[0];
     //second word of the family name
     this.estudianteDto.persona.apellidoMaterno = this.$keycloak.idTokenParsed.family_name.split(" ")[1];
-    this.estudianteDto.persona.correo = this.$keycloak.tokenParsed.email;
+    this.estudianteDto.correo = this.$keycloak.tokenParsed.email;
   },
   methods: {
+    irAPaginaFormulario2() {
+      if(this.estudianteDto.persona.ci == null || this.estudianteDto.persona.ci == ""){
+        toast.error("Por favor ingrese su CI");
+        return;
+      }
+
+      if(this.estudianteDto.persona.fechaDeNacimiento == null || this.estudianteDto.persona.fechaDeNacimiento == ""){
+        toast.error("Por favor ingrese su fecha de nacimiento");
+        return;
+      }
+
+      if(this.estudianteDto.persona.anioIngresoUniversidad == null || this.estudianteDto.persona.anioIngresoUniversidad == "" || this.estudianteDto.persona.anioIngresoUniversidad == 0){
+        toast.error("Por favor ingrese su año de ingreso a la universidad");
+        return;
+      }
+
+      if(this.estudianteDto.persona.descripcion == null || this.estudianteDto.persona.descripcion == ""){
+        toast.error("Por favor ingrese una descripción");
+        return;
+      }
+
+      if(this.estudianteDto.persona.telefono == null || this.estudianteDto.persona.telefono == "" || this.estudianteDto.persona.telefono == 0){
+        toast.error("Por favor ingrese su número de teléfono");
+        return;
+      }
+      console.log(this.estudianteDto.persona.fotoPerfil);
+
+      if(this.estudianteDto.persona.fotoPerfil == null || this.estudianteDto.persona.fotoPerfil == "" || this.estudianteDto.persona.fotoPerfil == "https://cdn-icons-png.flaticon.com/512/84/84099.png"){
+        toast.error("Por favor suba una foto de perfil");
+        return;
+      }
+
+      if(this.estudianteDto.persona.bannerPerfil == null || this.estudianteDto.persona.bannerPerfil == ""){
+        toast.error("Por favor suba una foto de banner");
+        return;
+      }
+
+      //comprobar si la fecha de nacimiento es mayor a la fecha actual
+      let fechaNacimiento = new Date(this.estudianteDto.persona.fechaDeNacimiento);
+      let fechaActual = new Date();
+      if(fechaNacimiento > fechaActual){
+        toast.error("No puedes nacer en el futuro >:c payaso");
+        return;
+      }
+
+
+      //comprobar si el año de ingreso a la universidad es mayor a la fecha actual
+      let fechaIngreso = new Date(this.estudianteDto.persona.anioIngresoUniversidad);
+      if(fechaIngreso > fechaActual){
+        toast.error("No puedes ingresar a la universidad en el futuro >:c payaso");
+        return;
+      }
+
+      //comprobar si la persona tiene al menos 17 años
+      let fechaMinima = new Date();
+      fechaMinima.setFullYear(fechaMinima.getFullYear() - 17);
+      if(fechaNacimiento > fechaMinima){
+        toast.error("Debes tener al menos 17 años para registrarte");
+        return;
+      }
+
+
+
+      this.paginaFormulario = 2;
+    },
+
+
     updateField(field, value) {
       this.estudianteDto.persona[field] = value.toUpperCase();
     },
@@ -1364,6 +1430,10 @@ export default {
     },
 
     async registrarEstudiante() {
+  
+
+
+
       let loader = this.$loading.show();
       try {
         this.estudianteDto.persona.habilidadesSeleccionada.habilidades_seleccionadas =

@@ -18,7 +18,6 @@ pinia.use(({ store }) => {
   store.$keycloak = app.config.globalProperties.$keycloak
 })
 app.use(pinia)
-app.use(router)
 
 
 app.use(LoadingPlugin, {
@@ -71,7 +70,7 @@ try {
         app.config.globalProperties.$keycloak_loaded = true;
         
   
-        app.mount("#app");
+        // app.mount("#app");
         console.log("Keycloak is ready", keycloak);
 
         
@@ -82,9 +81,10 @@ try {
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
         redirectUri: window.location.origin,
-    });
-
-
+    }).then(authenticated  => {
+        app.use(router(keycloak));
+        app.mount("#app");
+    })
 
     
 

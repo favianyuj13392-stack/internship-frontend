@@ -35,166 +35,212 @@ import PerfilEstudianteAdministrador from "@/views/Administrador/PerfilEstudiant
 import FinishRegisterEstudiante from "@/views/CompletarRegistro/CompletarRegistroEstudianteView.vue";
 import FinishRegisterEmpresa from "@/views/CompletarRegistro/CompletarRegistroEmpresaView.vue";
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: "/1",
-      name: "HomeView",
-      component: HomeView,
-    },
-    {
-      path: "/",
-      name: "Home",
-      component: Home,
-    },
-    {
-      path: "/pasantias",
-      name: "Pasantias",
-      component: Pasantias,
-    },
-    {
-      path: "/pasantias/:id/detalle",
-      name: "pasantias-detalle",
-      component: PasantiasDetalle,
-    },
-    {
-      path: "/empresas",
-      name: "empresas",
-      component: Empresas,
-    },
-    {
-      path: "/empresas/:id/detalle",
-      name: "empresas-detalle",
-      component: EmpresasDetalle,
-    },
-    {
-      path: "/contactanos",
-      name: "contactanos",
-      component: Contactanos,
-    },
+const routes = [
+  {
+    path: "/",
+    name: "Home",
+    component: Home,
+  },
+  {
+    path: "/pasantias",
+    name: "Pasantias",
+    component: Pasantias,
+  },
+  {
+    path: "/pasantias/:id/detalle",
+    name: "pasantias-detalle",
+    component: PasantiasDetalle,
+    meta: { requiresAuth: true, roles: ['ESTUDIANTE'] }
+  },
+  {
+    path: "/empresas",
+    name: "empresas",
+    component: Empresas,
+  },
+  {
+    path: "/empresas/:id/detalle",
+    name: "empresas-detalle",
+    component: EmpresasDetalle,
+  },
+  {
+    path: "/contactanos",
+    name: "contactanos",
+    component: Contactanos,
+  },
 
-    //estudiante
-    {
-      path: "/perfil/estudiante",
-      name: "perfil-estudiante",
-      component: PerfilEstudiante,
-    },
-    {
-      path: "/perfil/estudiante/editar",
-      name: "perfil-estudiante-editar",
-      component: EditarPerfilEstudiante,
-    },
-    {
-      path: "/estudiante/solicitudes",
-      name: "solicitudes-estudiante",
-      component: SolicitudesEstudiante,
-    },
-    {
-      path: "/estudiante/:id/aplicacion",
-      name: "PasantiaAplicadaEstudiante",
-      component: PasantiaAplicadaEstudiante,
-    },
+  //estudiante
+  {
+    path: "/perfil/estudiante",
+    name: "perfil-estudiante",
+    component: PerfilEstudiante,
+    meta: { requiresAuth: true, roles: ['ESTUDIANTE'] }
+  },
+  {
+    path: "/perfil/estudiante/editar",
+    name: "perfil-estudiante-editar",
+    component: EditarPerfilEstudiante,
+    meta: { requiresAuth: true, roles: ['ESTUDIANTE'] }
+  },
+  {
+    path: "/estudiante/solicitudes",
+    name: "solicitudes-estudiante",
+    component: SolicitudesEstudiante,
+    meta: { requiresAuth: true, roles: ['ESTUDIANTE'] }
+  },
+  {
+    path: "/estudiante/:id/aplicacion",
+    name: "PasantiaAplicadaEstudiante",
+    component: PasantiaAplicadaEstudiante,
+    meta: { requiresAuth: true, roles: ['ESTUDIANTE'] }
+  },
 
-    //empresa
-    {
-      path: "/empresa/administrador/pasantias",
-      name: "PasantiasEmpresaView",
-      component: PasantiasEmpresaView,
-    },
-    {
-      path: "/empresa/administrador/informacion",
-      name: "InformacionEmpresaView",
-      component: InformacionEmpresaView,
-    },
-    {
-      path: "/empresa/administrador/pasantias/informacion/:id",
-      name: "InformacionPasantiaEmpresaView",
-      component: InformacionPasantiaEmpresaView,
-      props: true,
-    },
-    {
-      path: "/empresa/administrador/pasantias/crear",
-      name: "CrearPasantiaEmpresaView",
-      component: CrearPasantiaEmpresaView,
-    },
-    {
-      path: "/empresa/administrador/pasantias/:id/editar",
-      name: "EditarPasantiaEmpresaView",
-      component: EditarPasantiaEmpresaView,
-      props: true,
-    },
-    {
-      path: "/empresa/administrador/perfil",
-      name: "PerfilEmpresaView",
-      component: PerfilUsuarioEmpresaView,
-    },
+  //empresa
+  {
+    path: "/empresa/administrador/pasantias",
+    name: "PasantiasEmpresaView",
+    component: PasantiasEmpresaView,
+    meta: { requiresAuth: true, roles: ['EMPRESA'] }
+  },
+  {
+    path: "/empresa/administrador/informacion",
+    name: "InformacionEmpresaView",
+    component: InformacionEmpresaView,
+    meta: { requiresAuth: true, roles: ['EMPRESA'] }
+  },
+  //No proteger
+  {
+    path: "/empresa/administrador/pasantias/informacion/:id",
+    name: "InformacionPasantiaEmpresaView",
+    component: InformacionPasantiaEmpresaView,
+    props: true,
+  },
+  {
+    path: "/empresa/administrador/pasantias/crear",
+    name: "CrearPasantiaEmpresaView",
+    component: CrearPasantiaEmpresaView,
+    meta: { requiresAuth: true, roles: ['EMPRESA'] }
+  },
+  {
+    path: "/empresa/administrador/pasantias/:id/editar",
+    name: "EditarPasantiaEmpresaView",
+    component: EditarPasantiaEmpresaView,
+    props: true,
+    meta: { requiresAuth: true, roles: ['EMPRESA'] }
+  },
+  {
+    path: "/empresa/administrador/perfil",
+    name: "PerfilEmpresaView",
+    component: PerfilUsuarioEmpresaView,
+    meta: { requiresAuth: true, roles: ['EMPRESA'] }
+  },
 
-    {
-      path: "/empresa/estudiante/:idEstudiante/solicitud/:idSolicitud",
-      name: "PerfilEstudianteEmpresa",
-      component: PerfilEstudianteEmpresa,
-    },
+  {
+    path: "/empresa/estudiante/:idEstudiante/solicitud/:idSolicitud",
+    name: "PerfilEstudianteEmpresa",
+    component: PerfilEstudianteEmpresa,
+    meta: { requiresAuth: true, roles: ['EMPRESA'] }
+  },
 
-    //administrador
-    {
-      path: "/administrador/dashboard",
-      name: "DashboardAdministrador",
-      component: DashboardAdministrador,
-    },
-    {
-      path: "/administrador/empresa",
-      name: "EmpresaAdministrador",
-      component: EmpresaAdministrador,
-    },
-    {
-      path: "/administrador/solicitud/empresa",
-      name: "SolicitudEmpresaAdministrador",
-      component: SolicitudEmpresaAdministrador,
-    },
-    {
-      path: "/administrador/empresa/:id/detalle",
-      name: "EmpresaDetalleAdministrador",
-      component: EmpresaDetalleAdministrador,
-    },
-    {
-      path: "/administrador/pasantia",
-      name: "PasantiaAdministrador",
-      component: PasantiaAdministrador,
-    },
-    {
-      path: "/administrador/solicitud/pasantia",
-      name: "SolicitudPasantiaAdministrador",
-      component: SolicitudPasantiaAdministrador,
-    },
-    {
-      path: "/administrador/pasantia/:id/detalle",
-      name: "PasantiaDetalleAdministrador",
-      component: PasantiaDetalleAdministrador,
-    },
-    {
-      path: "/administrador/empresa/:idEmpresa/solicitud/:idSolicitud/usuario/:idUsuario",
-      name: "EmpresaSolicitudUsuarioAdministrador",
-      component: EmpresaSolicitudUsuarioAdministrador,
-    },
-    {
-      path: "/administrador/estudiante/:idEstudiante/solicitud/:idSolicitud",
-      name: "PerfilEstudianteAdministrador",
-      component: PerfilEstudianteAdministrador,
-    },
+  //administrador
+  {
+    path: "/administrador/dashboard",
+    name: "DashboardAdministrador",
+    component: DashboardAdministrador,
+    meta: { requiresAuth: true, roles: ['ADMIN'] }
+  },
+  {
+    path: "/administrador/empresa",
+    name: "EmpresaAdministrador",
+    component: EmpresaAdministrador,
+    meta: { requiresAuth: true, roles: ['ADMIN'] }
+  },
+  {
+    path: "/administrador/solicitud/empresa",
+    name: "SolicitudEmpresaAdministrador",
+    component: SolicitudEmpresaAdministrador,
+    meta: { requiresAuth: true, roles: ['ADMIN'] }
+  },
+  {
+    path: "/administrador/empresa/:id/detalle",
+    name: "EmpresaDetalleAdministrador",
+    component: EmpresaDetalleAdministrador,
+    meta: { requiresAuth: true, roles: ['ADMIN'] }
+  },
+  {
+    path: "/administrador/pasantia",
+    name: "PasantiaAdministrador",
+    component: PasantiaAdministrador,
+    meta: { requiresAuth: true, roles: ['ADMIN'] }
+  },
+  {
+    path: "/administrador/solicitud/pasantia",
+    name: "SolicitudPasantiaAdministrador",
+    component: SolicitudPasantiaAdministrador,
+    meta: { requiresAuth: true, roles: ['ADMIN'] }
+  },
+  {
+    path: "/administrador/pasantia/:id/detalle",
+    name: "PasantiaDetalleAdministrador",
+    component: PasantiaDetalleAdministrador,
+    meta: { requiresAuth: true, roles: ['ADMIN'] }
+  },
+  {
+    path: "/administrador/empresa/:idEmpresa/solicitud/:idSolicitud/usuario/:idUsuario",
+    name: "EmpresaSolicitudUsuarioAdministrador",
+    component: EmpresaSolicitudUsuarioAdministrador,
+    meta: { requiresAuth: true, roles: ['ADMIN'] }
+  },
+  {
+    path: "/administrador/estudiante/:idEstudiante/solicitud/:idSolicitud",
+    name: "PerfilEstudianteAdministrador",
+    component: PerfilEstudianteAdministrador,
+    meta: { requiresAuth: true, roles: ['ADMIN'] }
+  },
 
-    //completado de registro
-    {
-      path: "/finish/register-estudiante",
-      name: "FinishRegisterEstudiante",
-      component: FinishRegisterEstudiante,
-    },
-    {
-      path: "/finish/register-empresa",
-      name: "FinishRegisterEmpresa",
-      component: FinishRegisterEmpresa,
-    },
-  ],
-});
+  //completado de registro
+  {
+    path: "/finish/register-estudiante",
+    name: "FinishRegisterEstudiante",
+    component: FinishRegisterEstudiante,
+    meta: { requiresAuth: true, }
+  },
+  {
+    path: "/finish/register-empresa",
+    name: "FinishRegisterEmpresa",
+    component: FinishRegisterEmpresa,
+    meta: { requiresAuth: true, }
+  },
+];
+
+const router = (keycloak) => {
+  console.log('router ' + keycloak);
+  const vueRouter = createRouter({
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes,
+  });
+
+  vueRouter.beforeEach(async (to, from, next) => {
+    if (to.meta.requiresAuth) {
+      if (!keycloak.authenticated) {
+        keycloak.login({
+          redirectUri: window.location.origin + to.fullPath
+        })
+      }else{
+        const roles = to.meta.roles || [];
+        const hasRole = roles.length ? roles.some(role => keycloak.hasResourceRole(role)) : true;
+        
+        if(!hasRole){
+          return next('/');
+        }else{
+          return next();
+        }
+      }
+    }else{
+      return next();
+    }
+  });
+  return vueRouter;
+};
+
 
 export default router;
