@@ -1220,7 +1220,7 @@ export default {
     this.estudianteDto.persona.apellidoPaterno = this.$keycloak.idTokenParsed.family_name.split(" ")[0];
     //second word of the family name
     this.estudianteDto.persona.apellidoMaterno = this.$keycloak.idTokenParsed.family_name.split(" ")[1];
-    this.estudianteDto.persona.correo = this.$keycloak.idTokenParsed.email;
+    this.estudianteDto.persona.correo = this.$keycloak.tokenParsed.email;
   },
   methods: {
     updateField(field, value) {
