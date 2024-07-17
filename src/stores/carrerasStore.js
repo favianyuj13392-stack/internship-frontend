@@ -2,8 +2,8 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import RutaApi from '@/assets/rutaApi.js'
 
-export const useAuthStore = defineStore({
-    id: 'auth',
+export const useCarrerasStore = defineStore({
+    id: 'carreras',
     state: () => ({
         user: null,
         token: null,
