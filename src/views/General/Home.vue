@@ -166,10 +166,30 @@ export default {
         loader.hide();
         return;
       }
+
+      try{
+        if(existencia==true && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("EMPRESA")){
+        this.$router.push("/empresa/administrador/informacion");
+        loader.hide();
+        return;
+     }
+      }catch(error){
+        console.log(error);
+        //reload page
+        window.location.reload();
+        this.$keycloak
+      }
+      
+      
      if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("ESTUDIANTE")){
         this.$router.push("/finish/register-estudiante");
         loader.hide();
         return;
+
+
+
+
+
      }else if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("ADMIN")){
         this.$router.push("/administrador/dashboard");
         loader.hide();

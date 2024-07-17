@@ -42,40 +42,47 @@
                 </div>
 
                 <!-- <div>
-                  <label class="font-semibold">Categories</label>
+                  <label class="font-semibold">Area</label>
                   <select
-                    class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-1">
-                    <option value="WD">Web Designer</option>
-                    <option value="WD">Web Developer</option>
-                    <option value="UI">UI / UX Desinger</option>
+                    class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-1"
+                    v-model="selectedArea"
+                    >
+
+                   <option v-for="area in areas" :value="area">{{ area }}</option>
+
                   </select>
                 </div> -->
 
-                <!-- <div>
-                  <label class="font-semibold">Location</label>
-                  <select
-                    class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-1">
-                    <option value="NY">New York</option>
-                    <option value="MC">North Carolina</option>
-                    <option value="SC">South Carolina</option>
-                  </select>
-                </div> -->
+                <div>
+                  <label class="font-semibold">Carrera</label>
+                  <select class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-1"
+                    v-model="selectedCarrera">
 
-                <!-- <div>
-                  <label class="font-semibold">Job Types</label>
+                    <option value="" selected disabled>Seleccione una carrera</option>
+
+                    <option v-for="carrera in carreras" :value="carrera.idCarreras">{{ carrera.nombre }}</option>
+
+                    <option value="">
+                      Deseleccionar
+                    </option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="font-semibold">Areas</label>
                   <div class="block mt-2">
-                    <div class="flex justify-between">
+                    <div class="flex justify-between" v-for="area in areas">
                       <div class="inline-flex items-center mb-0">
                         <input
                           class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
-                          type="checkbox" value="" id="fulltime" />
-                        <label class="form-checkbox-label text-slate-400" for="fulltime">Full Time</label>
+                          type="checkbox" :value="area" :id="area" v-model="selectedAreas" />
+                        <label class="form-checkbox-label text-slate-400" :for="area">{{ area }}</label>
                       </div>
 
-                      <span
-                        class="bg-cyan-600/10 text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full h-5">3</span>
+                      <!-- <span
+                        class="bg-cyan-600/10 text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full h-5">3</span> -->
                     </div>
-                    <div class="flex justify-between">
+                    <!-- <div class="flex justify-between">
                       <div class="inline-flex items-center mb-0">
                         <input
                           class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
@@ -85,8 +92,8 @@
 
                       <span
                         class="bg-cyan-600/10 text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full h-5">7</span>
-                    </div>
-                    <div class="flex justify-between">
+                    </div> -->
+                    <!-- <div class="flex justify-between">
                       <div class="inline-flex items-center mb-0">
                         <input
                           class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
@@ -96,8 +103,8 @@
 
                       <span
                         class="bg-cyan-600/10 text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full h-5">4</span>
-                    </div>
-                    <div class="flex justify-between">
+                    </div> -->
+                    <!-- <div class="flex justify-between">
                       <div class="inline-flex items-center mb-0">
                         <input
                           class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
@@ -107,8 +114,8 @@
 
                       <span
                         class="bg-cyan-600/10 text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full h-5">6</span>
-                    </div>
-                    <div class="flex justify-between">
+                    </div> -->
+                    <!-- <div class="flex justify-between">
                       <div class="inline-flex items-center mb-0">
                         <input
                           class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
@@ -118,8 +125,8 @@
 
                       <span
                         class="bg-cyan-600/10 text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full h-5">7</span>
-                    </div>
-                    <div class="flex justify-between">
+                    </div> -->
+                    <!-- <div class="flex justify-between">
                       <div class="inline-flex items-center mb-0">
                         <input
                           class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-cyan-600 focus:border-cyan-300 focus:ring focus:ring-offset-0 focus:ring-cyan-200 focus:ring-opacity-50 me-2"
@@ -129,9 +136,9 @@
 
                       <span
                         class="bg-cyan-600/10 text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full h-5">44</span>
-                    </div>
+                    </div> -->
                   </div>
-                </div> -->
+                </div>
 
                 <!-- <div>
                   <label class="font-semibold">Salary</label>
@@ -166,8 +173,8 @@
                 <div>
                   <button type="button" @click="fetchPasantias"
                     class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white rounded-md w-full">
-                  Buscar
-                </button>
+                    Buscar
+                  </button>
                 </div>
               </div>
             </form>
@@ -178,6 +185,9 @@
         <!--TARTJETAZOOO-->
         <div class="lg:col-span-8 md:col-span-6">
           <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-[30px]">
+            <div v-if="data.length === 0" class="text-center">
+              <h1 class="text-2xl font-semibold text-slate-400">No se encontraron pasantias</h1>
+            </div>
             <div v-for="pasantia in data" :key="pasantia.idPasantias"
               class="group p-6 rounded-lg border border-cyan-600/20 dark:border-cyan-600/40 bg-white dark:bg-slate-900 hover:bg-cyan-600/[0.02] hover:dark:bg-cyan-600/5 hover:shadow-md hover:shadow-cyan-600/5 transition-all duration-500">
               <div class="flex justify-between items-start">
@@ -192,13 +202,15 @@
                 </div>
 
                 <div class="flex items-center">
-                  <router-link :to="{ name: 'pasantias-detalle', params: { id: pasantia.idPasantias} }"   class="btn btn-icon rounded-full bg-cyan-600/5 group-hover:bg-cyan-600 border-cyan-600/10 text-cyan-600 group-hover:text-white ms-1"><i
+                  <router-link :to="{ name: 'pasantias-detalle', params: { id: pasantia.idPasantias } }"
+                    class="btn btn-icon rounded-full bg-cyan-600/5 group-hover:bg-cyan-600 border-cyan-600/10 text-cyan-600 group-hover:text-white ms-1"><i
                       class="uil uil-arrow-up-right"></i></router-link>
                 </div>
               </div>
 
               <div class="mt-3">
-                <router-link :to="{ name: 'pasantias-detalle', params: { id: pasantia.idPasantias} }" class="text-xl hover:text-cyan-600 font-semibold transition-all duration-500">
+                <router-link :to="{ name: 'pasantias-detalle', params: { id: pasantia.idPasantias } }"
+                  class="text-xl hover:text-cyan-600 font-semibold transition-all duration-500">
                   {{ pasantia.titulo }}
                 </router-link>
                 <!-- <p class="text-slate-400 mt-2">
@@ -222,13 +234,13 @@
                     class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
                     ...
                   </span>
-                      <a v-for="(beneficio, index) in pasantia.beneficios.slice(2)" :key="'extra-' + index"
-                        v-show="pasantia.beneficiosIsHovered">
-                        <span
-                          class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
-                          {{ beneficio }}
-                        </span>
-                      </a>
+                  <a v-for="(beneficio, index) in pasantia.beneficios.slice(2)" :key="'extra-' + index"
+                    v-show="pasantia.beneficiosIsHovered">
+                    <span
+                      class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
+                      {{ beneficio }}
+                    </span>
+                  </a>
                   <a v-for="(carrera, index) in pasantia.carreras">
                     <span v-if="index < 2"
                       class="bg-cyan-600/5 hover:bg-cyan-600/20 dark:bg-cyan-600/10 hover:dark:bg-cyan-600/30 inline-block text-cyan-600 px-4 text-[14px] font-medium rounded-full mt-2 transition-all duration-500">
@@ -310,6 +322,8 @@ export default {
   },
   async mounted() {
     await this.fetchPasantias();
+    await this.fetchAreas();
+    await this.fetchCarreras();
   },
   methods: {
     concatList(area) {
@@ -324,12 +338,28 @@ export default {
         };
       });
     },
+    async fetchAreas() {
+      let loader = this.$loading.show();
+      const response = await this.pasantiasStore.getAreas();
+      this.areas = response;
+      loader.hide();
+    },
+    async fetchCarreras() {
+      let loader = this.$loading.show();
+      const response = await this.pasantiasStore.getCarreras();
+      this.carreras = response;
+      loader.hide();
+    },
     async fetchPasantias() {
       let loader = this.$loading.show();
+      console.log(this.selectedCarrera);
       const response = await this.pasantiasStore.getPasantias(
         this.currentPage,
         this.pageSize,
-        this.searchValue);
+        this.searchValue,
+        this.selectedAreas,
+        this.selectedCarrera
+      );
       this.data = response.content;
       this.totalPages = response.totalPages;
       loader.hide();
@@ -357,9 +387,13 @@ export default {
     return {
       pageSize: 12,
       currentPage: 0,
-      searchValue: "",
+      searchValue: null,
       totalPages: 0,
       data: [],
+      areas: [],
+      carreras: [],
+      selectedAreas: [],
+      selectedCarrera: null,
     };
   },
   components: {

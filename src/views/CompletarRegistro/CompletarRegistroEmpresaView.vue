@@ -198,7 +198,16 @@
                 name="send"
                 @click="
                   (showNuevaEmpresaModal = true),
-                    (showNuevaEmpresaModalForms = 10)
+                    (showNuevaEmpresaModalForms = 1),
+                    (nuevaEmpresa = {
+                      fotos: [],
+                      sectores: [],
+                      redesSociales: {},
+        activo: true, 
+                    }),
+                    (this.imageSrc='https://cdn-icons-png.flaticon.com/512/84/84099.png'),
+                    (this.imageSrc2='https://cdn-icons-png.flaticon.com/512/84/84099.png'),
+                    (this.imageSrc3='https://cdn-icons-png.flaticon.com/512/84/84099.png')
                 "
                 class="col-span-1 btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
               >
@@ -238,7 +247,7 @@
               </div>
               <!--end row-->
             </div>
-            <div class="grid grid-cols-2 gap-4 mt-5">
+            <div class="grid grid-cols-1 gap-4 mt-5">
               <button
                 id="submit"
                 name="send"
@@ -248,14 +257,7 @@
                 Cancelar
               </button>
 
-              <button
-                id="submit"
-                name="send"
-                @click="paginaFormulario = 2"
-                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-              >
-                Siguiente
-              </button>
+            
             </div>
             <!--end form-->
           </div>
@@ -266,7 +268,7 @@
             <div
               class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
             >
-              <h5 class="text-lg font-semibold mb-4">Personal Detail :</h5>
+              <h5 class="text-lg font-semibold mb-4">Detalles Personales :</h5>
               <div>
                 <div
                   class="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 gap-4"
@@ -283,6 +285,7 @@
                       id="firstname"
                       name="name"
                       required=""
+                      @input="toUpperCase($event)"
                     />
                   </div>
                   <div class="lg:col-span-4">
@@ -312,6 +315,8 @@
                       id="lastname"
                       name="name"
                       required=""
+                      @input="toUpperCase($event)"
+
                     />
                   </div>
 
@@ -328,6 +333,8 @@
                       id="lastname"
                       name="name"
                       required=""
+                      @input="toUpperCase($event)"
+
                     />
                   </div>
 
@@ -342,6 +349,8 @@
                       placeholder="Email"
                       name="email"
                       required=""
+                      @input="toLowerCaseMail($event)"
+
                     />
                   </div>
 
@@ -367,13 +376,15 @@
                       ></label
                     >
                     <input
-                      type="number"
-                      class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      v-model="usuarioInstitucion.persona.telefono"
-                      placeholder="Número Celular"
-                      name="address"
-                      required=""
-                    />
+      type="number"
+      class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+      v-model="usuarioInstitucion.persona.telefono"
+      placeholder="Número Celular"
+      name="address"
+      required=""
+      maxlength="8"
+      @input="limitInputLength"
+    />
                   </div>
                   <div class="lg:col-span-6">
                     <label class="form-label font-medium"
@@ -418,7 +429,7 @@
                 <button
                   id="submit"
                   name="send"
-                  @click="(paginaFormulario = 5), registrarUsuarioInstitucion()"
+                  @click=" registrarUsuarioInstitucion()"
                   class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
                 >
                   Registrar
@@ -1394,7 +1405,7 @@
                   :key="social"
                   class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center"
                 >
-                  {{ social }}: {{ url }}
+                  {{ url[0] }}: {{ url[1] }}
                   <button
                     @click="removeRedSocial(social)"
                     class="ml-2 bg-red-600 text-white px-2 py-1 rounded-md"
@@ -1839,12 +1850,89 @@ export default {
     this.getInstitucionesWithName();
   },
   methods: {
+    toUpperCase(event) {
+      event.target.value = event.target.value.toUpperCase();
+    },
+    toLowerCaseMail(event) {
+      event.target.value = event.target.value.toLowerCase();
+      if (event.target.value.includes(" ")) {
+        event.target.value = event.target.value.replace(" ", "");
+      }
+    
+    },
+    limitInputLength() {
+      const telefono = this.usuarioInstitucion.persona.telefono;
+      if (telefono.length > 8) {
+        this.usuarioInstitucion.persona.telefono = telefono.slice(0, 8);
+      }
+    },
+
+    validateEmail(email) {
+      const re = /\S+@\S+\.\S+/;
+      return re.test(email);
+    },
+
     async registrarUsuarioInstitucion() {
       console.log("usuarioInstitucion", this.usuarioInstitucion);
       this.usuarioInstitucion.kc_UUID = this.$keycloak.idTokenParsed.sub;
       this.usuarioInstitucion.idUsuarios = null;
       this.usuarioInstitucion.horaRegistro = '12:12:12'
       this.usuarioInstitucion.institucion = this.empresaSeleccionada;
+      //converir nombre , apellido paterno y apellido materno a mayusculas
+      this.usuarioInstitucion.persona.nombre = this.usuarioInstitucion.persona.nombre.toUpperCase();
+      this.usuarioInstitucion.persona.apellidoPaterno = this.usuarioInstitucion.persona.apellidoPaterno.toUpperCase();
+      this.usuarioInstitucion.persona.apellidoMaterno = this.usuarioInstitucion.persona.apellidoMaterno.toUpperCase();
+
+
+      //check the data before send
+      if (
+        this.usuarioInstitucion.persona.nombre == "" ||
+        this.usuarioInstitucion.persona.apellidoPaterno == "" ||
+        this.usuarioInstitucion.persona.apellidoMaterno == "" ||
+        this.usuarioInstitucion.persona.ci == "" ||
+        this.usuarioInstitucion.persona.telefono == "" ||
+        this.usuarioInstitucion.persona.fechaDeNacimiento == "" ||
+        this.usuarioInstitucion.cargo == "" 
+
+
+   
+      ) {
+        Swal.fire({
+          title: "Complete todos los campos, incluida la foto de perfil",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        return 0;
+      }
+
+      //check that the user has uploaded a profile photo
+      if (this.usuarioInstitucion.persona.fotoPerfil == "") {
+        Swal.fire({
+          title: "Suba una foto de perfil",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+
+      //check that the mail is valid
+      if (!this.validateEmail(this.usuarioInstitucion.correo)) {
+        Swal.fire({
+          title: "Correo no válido",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+
+
+      
+
+
       let loader = this.$loading.show();
       try {
         const response =
@@ -1852,14 +1940,14 @@ export default {
             this.usuarioInstitucion
           );
         if (response) {
-          Swal.fire({
+           Swal.fire({
             title: "Usuario registrado correctamente",
             icon: "success",
             showConfirmButton: false,
             timer: 1500,
           });
         } else {
-          Swal.fire({
+           Swal.fire({
             title: "Error al registrar usuario",
             icon: "error",
             showConfirmButton: false,
