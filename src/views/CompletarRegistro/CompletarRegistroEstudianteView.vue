@@ -264,9 +264,8 @@
                     v-model="estudianteDto.idCarreras"
                     class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-2"
                   >
-                    <option value="1">Ing. en Sistemas</option>
-                    <option value="2">Psicopedagogía</option>
-                    <option value="3">Comunicación Social</option>
+                    <option v-for="carrera in carreras" :value="carrera.idCarreras">{{ carrera.nombre }}</option>
+
                   </select>
                 </div>
 
@@ -1054,14 +1053,16 @@ import { useEstudiantesStore } from "@/stores/Estudiantes/estudiantesStore.js";
 import { useFilesStore } from "@/stores/fileStore.js";
 import Swal from "sweetalert2";
 import Compressor from "compressorjs";
-
+import {useCarrerasStore} from "@/stores/carrerasStore.js";
 export default {
   setup() {
     const estudianteStore = useEstudiantesStore();
     const filesStore = useFilesStore();
+    const carrerasStore = useCarrerasStore();
     return {
       estudianteStore,
       filesStore,
+      carrerasStore,
     };
   },
 
@@ -1071,7 +1072,7 @@ export default {
   },
 
   mounted() {
-    //reload images
+    this.fetchCarreras();
   },
   data() {
     return {
@@ -1193,6 +1194,7 @@ export default {
       rating: 0,
       showNuevaHabilidadModal: false,
       showNuevaExperienciaModal: false,
+      carreras: [],
 
       nuevaHabilidad: "",
       nuevaExperiencia: {
@@ -1222,6 +1224,26 @@ export default {
     this.estudianteDto.correo = this.$keycloak.tokenParsed.email;
   },
   methods: {
+    async fetchCarreras() {
+      let loader = this.$loading.show();
+      const response = await this.carrerasStore.getCarreras();
+      loader.hide();
+      if (response === null) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Error al cargar las carreras, porfavor intenta de nuevo",
+        });
+      }
+
+      console.log(response);
+
+      this.estudianteDto.idCarreras = response[0].idCarreras;
+
+      this.carreras = response;
+    },
+
+
     irAPaginaFormulario2() {
       if(this.estudianteDto.persona.ci == null || this.estudianteDto.persona.ci == ""){
         toast.error("Por favor ingrese su CI");
