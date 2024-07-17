@@ -34,6 +34,18 @@ export const useInstitucionesAdministracionStore = defineStore({
             } catch (error) {
                 console.log(error)
             }
+        },
+        async fetchAprobadosInstitucionByUUID(id) {
+            try {
+                const response = await axios.get(RutaApi + '/usuario/' + id + '/empresa/aprobado')
+                if (response.data.code == '200') {
+                    return response.data.response
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.log(error)
+            }
         }
     
     },

@@ -202,6 +202,8 @@
 import switcher from "@/components/General/switcher.vue";
 import {useInstitucionesAdministracionStore} from "@/stores/Instituciones/InstitucionesAdministracionStore.js";
 import Swal from "sweetalert2";
+import {h} from 'vue';
+
   export default {
     props: {
       jobs: {
@@ -218,9 +220,18 @@ import Swal from "sweetalert2";
 
 
     methods: {
+      onCancel() {
+        this.$router.push("/");
+
+        this.$keycloak.logout();
+        document.body.style.overflow = "auto";
+        return;
+
+      },
       async fetchInstituciones() {
         let loader = this.$loading.show();
        const response =  await this.institucionesStore.fetchInstitucionByUUID(this.$keycloak.idTokenParsed.sub);
+       const response2 = await this.institucionesStore.fetchAprobadosInstitucionByUUID(this.$keycloak.idTokenParsed.sub);
         loader.hide();
        console.log(response);
        
@@ -231,10 +242,47 @@ import Swal from "sweetalert2";
           icon: "error",
           confirmButtonText: "Ok",
         });
-        //this.$keycloak.logout();
+        this.$keycloak.logout();
         }
         this.data = response;
+        this.activo = response2;
+
+        if(this.activo==false){
+          let loader2 = this.$loading.show(
+            {
+              container: null,
+              canCancel: true,
+              onCancel: this.onCancel,
+              opacity: 1,
+            },
+            {
+              /*
+              default: `Tu usuario aún no ha sido aprobado. Debes contactarte con la U.S.E.I. de la UCB para que aprueben tu usuario. 
+              \n Si haces click se cerrará la sesión`,*/
+              default: h('div', {class: 'text-center'}, [
+                h('p', 'Tu usuario aún no ha sido aprobado. Debes contactarte con la U.S.E.I. de la UCB para que aprueben tu usuario.'),
+                h('p', 'Si haces click se cerrará la sesión')
+              ])
+            }
+          );
+          //block scroll
+          document.body.style.overflow = "hidden";
+
+          setTimeout(() => {
+            loader2.hide();
+            this.$router.push("/");
+            document.body.style.overflow = "auto";
+
+            this.$keycloak.logout();
+          }, 100000);
+
+
+         
+    }
       },
+
+    
+      
     },
     computed: {
     mapSrc() {
@@ -247,6 +295,7 @@ import Swal from "sweetalert2";
 
     data() {
       return {
+        activo: false,
         data: {
           nombre: "",
           descripcion: "",
