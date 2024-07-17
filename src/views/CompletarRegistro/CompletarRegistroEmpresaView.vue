@@ -1215,7 +1215,7 @@
               <button
                 id="submit"
                 name="send"
-                @click="showNuevaEmpresaModalForms = 2"
+                @click="formEmpresaPaso2();"
                 class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
               >
                 Siguiente
@@ -1290,7 +1290,7 @@
               <button
                 id="submit"
                 name="send"
-                @click="showNuevaEmpresaModalForms = 3"
+                @click="formEmpresaPaso3()"
                 class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
               >
                 Siguiente
@@ -1373,7 +1373,7 @@
               <button
                 id="submit"
                 name="send"
-                @click="showNuevaEmpresaModalForms = 4"
+                @click="formEmpresaPaso4()"
                 class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
               >
                 Siguiente
@@ -1850,6 +1850,86 @@ export default {
     this.getInstitucionesWithName();
   },
   methods: {
+    formEmpresaPaso4(){
+      if (this.nuevaEmpresa.fotoInstitucion == "" || this.nuevaEmpresa.fotoInstitucion == undefined) {
+        Swal.fire({
+          title: "Suba una foto de las instalaciones de la empresa",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+      if(this.nuevaEmpresa.fotos.length == 0){
+        Swal.fire({
+          title: "Suba al menos una foto extra",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+
+      this.showNuevaEmpresaModalForms = 4;
+
+    },
+
+    
+
+
+
+
+
+    formEmpresaPaso2() {
+      if (
+        this.nuevaEmpresa.nombre == "" ||
+        this.nuevaEmpresa.nombre == undefined ||
+
+        this.nuevaEmpresa.direccion == "" ||
+        this.nuevaEmpresa.direccion == undefined ||
+        this.nuevaEmpresa.correo == "" ||
+        this.nuevaEmpresa.correo == undefined ||
+        this.nuevaEmpresa.logoEmpresa == "" ||
+        this.nuevaEmpresa.logoEmpresa == undefined 
+      ) {
+        Swal.fire({
+          title: "Complete todos los campos",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+      //check that the mail is valid
+      if (!this.validateEmail(this.nuevaEmpresa.correo)) {
+        Swal.fire({
+          title: "Correo no válido",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+
+
+      this.showNuevaEmpresaModalForms = 2;
+    },
+
+
+    formEmpresaPaso3() {
+      if (this.selectedAreas.length == 0) {
+        Swal.fire({
+          title: "Seleccione al menos un área",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+      this.showNuevaEmpresaModalForms = 3;
+    },
+
+
     toUpperCase(event) {
       event.target.value = event.target.value.toUpperCase();
     },
@@ -1977,6 +2057,18 @@ export default {
       this.selectedAreas.splice(index, 1);
     },
     guardarNuevaEmpresa() {
+      console.log(this.nuevaEmpresa.redesSociales);
+      if(this.nuevaEmpresa.redesSociales.facebook == undefined & this.nuevaEmpresa.redesSociales.twitter == undefined & this.nuevaEmpresa.redesSociales.instagram == undefined & this.nuevaEmpresa.redesSociales.linkedin == undefined & this.nuevaEmpresa.redesSociales.youtube == undefined & this.nuevaEmpresa.redesSociales.tiktok == undefined ){
+        Swal.fire({
+          title: "Agregue al menos una red social",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+
+
       console.log("guardar empresa");
       console.log(this.selectedAreas);
       console.log(this.nuevaEmpresa);
