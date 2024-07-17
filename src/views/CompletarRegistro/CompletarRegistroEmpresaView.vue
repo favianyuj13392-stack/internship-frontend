@@ -198,7 +198,7 @@
                 name="send"
                 @click="
                   (showNuevaEmpresaModal = true),
-                    (showNuevaEmpresaModalForms = 1),
+                    (showNuevaEmpresaModalForms = 10),
                     (nuevaEmpresa = {
                       fotos: [],
                       sectores: [],
