@@ -154,22 +154,35 @@
                 <h3
                   class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold text-red-400"
                 >
-                  No hay aún postulantes
+                  No hay postulantes que esperen una respuesta
                 </h3>
+                <!--
+              Botón para terminar la pasantía sin aplicantes
+              -->
+                <div
+                  @click="terminarPasantia"
+                  class="btn rounded-md bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700 text-white md:ms-2 w-full md:w-auto mt-2"
+                  >Terminar Pasantia</div
+                >
               </div>
 
               <div v-else>
               
-                <div class="grid grid-cols-1 text-center">
+                <div class="grid grid-cols-1 text-center" v-if="this.isDataLoad">
                   <h3
                     class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
                   >
                     Postulantes a la pasantia
                   </h3>  
-                  <span>Pasantes aprobados: 3</span>
-                  <span>Pasantes pendientes: 0</span>
+                  <span>Pasantes aprobados: 
+                    {{ getPostulantesAprobados }}
+                  </span>
+                  <span>Pasantes pendientes: 
+                    {{ getPostulantesPendientes }}
+                  </span>
                 </div>
                 <div
+                  v-if="this.isDataLoad"
                   class="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 mt-8 gap-[30px]"
                 >
                  
@@ -177,89 +190,75 @@
 
 
                   <div
-      v-for="item in this.listaPostulantes"
-      :key="item"
-      class="group bg-white dark:bg-slate-900 relative overflow-hidden rounded-md shadow dark:shadow-gray-700 text-center p-6"
-    >
-      <img
-         :src="item.persona.fotoPerfil"
-        class="size-20 rounded-full shadow dark:shadow-gray-700 mx-auto"
-     :alt="item.persona.nombre"
-      />
+                  v-for="(item,index) in this.listaPostulantes"
+                  :key="item"
+                  class="group bg-white dark:bg-slate-900 relative overflow-hidden rounded-md shadow dark:shadow-gray-700 text-center p-6">
+                    <img
+                      :src="item.persona.fotoPerfil"
+                      class="size-20 rounded-full shadow dark:shadow-gray-700 mx-auto"
+                  :alt="item.persona.nombre"
+                    />
 
-      <div class="mt-2">
-        <router-link
-        @click="redirectTO(index)"
-         class="hover:text-cyan-600 font-semibold text-lg"
-          >  {{ item.persona.nombre }}
-                        {{ item.persona.apellidoPaterno }}
-                        {{ item.persona.apellidoMaterno }}</router-link
-        >
-        <p class="text-sm text-slate-400">{{ item.position }}</p>
-      </div>
-
-      <ul class="mt-2 list-none">
-        <li v-for="type in item.type" :key="type" class="inline me-1">
-          <span
-            class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full"
-            >{{ type }}</span
-          >
-        </li>
-      </ul>
-
-      <div class="flex justify-between mt-2">
-                <div class="block">
-                  <span class="text-slate-400">
-                        <i class="fas fa-phone pr-1"></i>
-                        {{ item.persona.telefono }}
-                      </span> </div>
-                <div class="block">
-                  <span
-                        class="block font-semibold text-cyan-600 text-sm"
-                        v-if="item.aplicacionPasantia.activo"
+                    <div class="mt-2">
+                      <div
+                      class="hover:text-cyan-600 font-semibold text-lg"
+                        >  {{ item.persona.nombre }}
+                                      {{ item.persona.apellidoPaterno }}
+                                      {{ item.persona.apellidoMaterno }}</div
                       >
-                        Aprobado
-                      </span>
-                      <span
-                        class="block font-semibold text-yellow-600 text-sm"
-                        v-else
+                      <p class="text-sm text-slate-400">{{ item.position }}</p>
+                    </div>
+
+                    <ul class="mt-2 list-none">
+                      <li v-for="type in item.type" :key="type" class="inline me-1">
+                        <span
+                          class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full"
+                          >{{ type }}</span
+                        >
+                      </li>
+                    </ul>
+                    <div class="flex justify-between mt-2">
+                      <div class="block">
+                        <span class="text-slate-400">
+                          <i class="fas fa-phone pr-1"></i>
+                          {{ item.persona.telefono }}
+                        </span> 
+                      </div>
+                      <div class="block">
+                        <span class="block font-semibold text-cyan-600 text-sm" v-if="item.aplicacionPasantia.activo">
+                          Aprobado
+                        </span>
+                        <span class="block font-semibold text-yellow-600 text-sm" v-else>
+                          Pendiente
+                        </span>
+                      </div>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                      <div class="block">
+                        <span class="text-slate-400">
+                          Fecha de postulacion:
+                          {{ item.aplicacionPasantia.fechaAplicacion }}
+                        </span> 
+                      </div>
+                    </div>
+                    <div class="flex justify-between mt-2" v-if="item.seleccionAplicante">
+                      <div class="block">
+                        <span class="text-slate-400">
+                          Fecha de aprobacion:
+                          {{ item.seleccionAplicante.fechaSeleccion }}
+                        </span> 
+                      </div>
+                    </div>
+
+                    <div class="mt-3">
+                      <button
+                        @click="mostrarInformacionPaante(index,1)"
+                        class="btn btn-sm bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md"
                       >
-                        Pendiente
-                      </span> </div>
-            </div>
-
-      <div class="mt-3">
-        <button
-        @click="mostrarInformacionPaante(item.persona.idPersona,2,item)"
-        
-        class="btn btn-sm bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md"
-          >Perfil</button
-        >
-        <button
-
-          @click="mostrarInformacionPaante(item.persona.idPersona,1,item)"
-                      
-          class="btn btn-sm btn-icon bg-cyan-600/5 hover:bg-cyan-600 border-cyan-600/10 hover:border-cyan-600 text-cyan-600 hover:text-white rounded-full ms-1"
-          ><i class="uil uil-eye text-[20px]"></i
-        ></button>
-      </div>
-     
-      <span class="w-24  text-white text-center absolute -start-[20px] top-2">
-        <a
-          href="javascript:void(0)"
-          class="text-slate-500 dark:text-slate-700 focus:text-red-600 dark:focus:text-red-600 hover:text-red-600 dark:hover:text-red-600 text-2xl"
-          ><i class="uil uil-trash-alt"></i
-        ></a>
-      </span>
-
-      <span class="absolute top-[10px] end-4">
-        <a
-          href="javascript:void(0)"
-          class="text-slate-100 dark:text-slate-700 focus:text-red-600 dark:focus:text-red-600 hover:text-red-600 dark:hover:text-red-600 text-2xl"
-          ><i class="mdi mdi-heart"></i
-        ></a>
-      </span>
-    </div>
+                        Perfil
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -313,8 +312,9 @@
                 <span class="text-slate-400 font-medium">Sectores:</span>
                 <div class="flex flex-wrap ml-16">
                   <span
-                    class="font-medium"
+                    class="font-medium bg-cyan-100 text-cyan-600 px-2 py-1 rounded-md mt-1"
                     v-for="sector in this.data.institucion.sectores"
+                    :key="sector"
                     >{{ sector }}</span
                   >
                 </div>
@@ -369,61 +369,200 @@
   <!-- Segundo moda empresa -->
   <div id="myModalCurriculum" class="modal" v-if="showFormularioCV">
     <!-- Modal para preview de curriculum -->
+    <!-- Modal -->
     <div class="modal" v-if="this.Modal == 1">
-  <div
-    class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
-  >
-    <span class="close" @click="showFormularioCV = false">&times;</span>
-    <h5 class="text-lg font-semibold mb-4">Fecha de postulacion:</h5>
-    <input
-      type="text"
-      v-model="this.pdfTitle"
-      placeholder="Título del PDF"
-      disabled
-      class="form-input border border-slate-100 dark:border-slate-800 w-full"
-    />
-    <div class="mt-4">
-      <iframe
-        :src="this.pdfUrl"
-        width="100%"
-        height="600px"
-        class="border border-slate-100 dark:border-slate-800 rounded-md"
-      ></iframe>
+      <div class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+        <span class="close" @click="showFormularioCV = false">&times;</span>
+
+        <!-- Encabezado del modal -->
+        <div class="relative flex items-end justify-between mb-6">
+          <div class="relative flex items-end">
+            <img
+              :src="personaInfo?.persona.fotoPerfil ? personaInfo?.persona.fotoPerfil : image"
+              class="size-28 rounded-full shadow dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800"
+              alt=""
+            />
+            <div class="ms-4">
+              <h5 class="text-lg font-semibold">
+                {{ personaInfo.persona.nombre + " " + personaInfo.persona.apellidoPaterno + " " + personaInfo.persona.apellidoMaterno }}
+              </h5>
+              <p class="text-slate-400">
+                Estudiante
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Detalles personales -->
+        <h5 class="text-lg font-semibold mb-4">Detalles Personales:</h5>
+        <ul class="list-none mt-4">
+          <li class="flex justify-between mt-3 items-center font-medium">
+            <span><i data-feather="mail" class="size-4 text-slate-400 me-3 inline"></i><span class="text-slate-400 me-3">Email :</span></span>
+            <span style="font-size: x-small">{{ personaInfo.usuario.correo }}</span>
+          </li>
+          <li class="flex justify-between mt-3 items-center font-medium">
+            <span><i data-feather="gift" class="size-4 text-slate-400 me-3 inline"></i><span class="text-slate-400 me-3">Ingreso a la Universidad :</span></span>
+            <span>{{ personaInfo.persona.anioIngresoUniversidad }}</span>
+          </li>
+          <li class="flex justify-between mt-3 items-center font-medium">
+            <span><i data-feather="home" class="size-4 text-slate-400 me-3 inline"></i><span class="text-slate-400 me-3">Teléfono :</span></span>
+            <span>{{ personaInfo.persona.telefono }}</span>
+          </li>
+          <li class="flex justify-between mt-3 items-center font-medium">
+            <span><i data-feather="map-pin" class="size-4 text-slate-400 me-3 inline"></i><span class="text-slate-400 me-3">Ci :</span></span>
+            <span>{{ personaInfo.persona.ci }}</span>
+          </li>
+          <li class="flex justify-between mt-3 items-center font-medium">
+            <span><i data-feather="globe" class="size-4 text-slate-400 me-3 inline"></i><span class="text-slate-400 me-3">Fecha Nacimiento :</span></span>
+            <span style="font-size: small">{{ personaInfo.persona.fechaDeNacimiento }}</span>
+          </li>
+          <li class="flex justify-between mt-2" v-if="this.personaInfo.persona.redesSociales.web">
+            <span class="text-slate-400 font-medium">Website:</span>
+            <span class="font-medium">{{ this.personaInfo.persona.redesSociales.web.url }}</span>
+          </li>
+          <li class="flex justify-between mt-2">
+            <span class="text-slate-400 font-medium">Social:</span>
+            <ul class="list-none text-end space-x-0.5">
+              <li class="inline" v-for="(url, name) in personaInfo.persona.redesSociales" :key="name">
+                <a :href="url.url" target="_blank"
+                  class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400">
+                  <i :class="`uil uil-${name}`" :title="name" class="align-middle"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- Habilidades-->
+        <h5 class="text-lg font-semibold mb-4">Skills:</h5>
+        <div class="grid grid-cols-1 gap-4" v-if="personaInfo.persona.habilidades">
+          <div
+            class="grid sm:grid-cols-3 gap-4 mt-5 pt-3"
+            v-for="habilidad in this.personaInfo.persona.habilidades.habilidades"
+            id="contenedor-habilidad"
+            :key="habilidad.idHabilidad"
+          >
+            <label class="form-label font-medium" for="WordPress">{{
+              habilidad.habilidad
+            }}</label>
+
+            <StarRatingComponent
+              name="rating"
+              v-model="habilidad.nivel"
+              :disabled="true"
+            >
+            </StarRatingComponent>
+            <div class="grid grid-cols-1 gap-4 mt-0">
+              <button
+                disabled
+                id="submit"
+                name="send"
+                v-if="habilidad.principal == false"
+                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer"
+              >
+                Secundario
+              </button>
+
+              <button
+                disabled
+                id="submit"
+                name="send"
+                v-if="habilidad.principal == true"
+                class="btn border-yellow-600 bg-yellow-600 hover:bg-yellow-700 text-white text-sm p-0 rounded-md cursor-pointer"
+              >
+                Principal
+              </button>
+            </div>
+          </div>
+        </div>
+        <!--Experiencia-->
+        <h5 class="text-lg font-semibold mb-4">Experiencia:</h5>
+        <div
+          class="grid sm:grid-cols-2 gap-4 mt-5 pt-3"
+          v-for="experiencia in this.personaInfo.persona.experiencia.experiencia"
+          :id="experiencia.titulo"
+          :key="experiencia.idExperiencia"
+        >
+          <div class="text-slate-400 font-semibold min-w-[80px] text-center">
+            <!-- Icono de Tailwind CSS -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-16 w-16 mx-auto mb-2 block"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12.052 1.25H11.948C11.0495 1.24997 10.3003 1.24995 9.70552 1.32991C9.07773 1.41432 8.51093 1.59999 8.05546 2.05546C7.59999 2.51093 7.41432 3.07773 7.32991 3.70552C7.24995 4.3003 7.24997 5.04951 7.25 5.94799V6.02572C5.22882 6.09185 4.01511 6.32803 3.17157 7.17157C2 8.34315 2 10.2288 2 14C2 17.7712 2 19.6569 3.17157 20.8284C4.34315 22 6.22876 22 10 22H14C17.7712 22 19.6569 22 20.8284 20.8284C22 19.6569 22 17.7712 22 14C22 10.2288 22 8.34315 20.8284 7.17157C19.9849 6.32803 18.7712 6.09185 16.75 6.02572V5.94801C16.75 5.04954 16.7501 4.3003 16.6701 3.70552C16.5857 3.07773 16.4 2.51093 15.9445 2.05546C15.4891 1.59999 14.9223 1.41432 14.2945 1.32991C13.6997 1.24995 12.9505 1.24997 12.052 1.25ZM15.25 6.00189V6C15.25 5.03599 15.2484 4.38843 15.1835 3.9054C15.1214 3.44393 15.0142 3.24644 14.8839 3.11612C14.7536 2.9858 14.5561 2.87858 14.0946 2.81654C13.6116 2.7516 12.964 2.75 12 2.75C11.036 2.75 10.3884 2.7516 9.90539 2.81654C9.44393 2.87858 9.24644 2.9858 9.11612 3.11612C8.9858 3.24644 8.87858 3.44393 8.81654 3.9054C8.7516 4.38843 8.75 5.03599 8.75 6V6.00189C9.14203 6 9.55807 6 10 6H14C14.4419 6 14.858 6 15.25 6.00189ZM17 9C17 9.55229 16.5523 10 16 10C15.4477 10 15 9.55229 15 9C15 8.44772 15.4477 8 16 8C16.5523 8 17 8.44772 17 9ZM8 10C8.55228 10 9 9.55229 9 9C9 8.44772 8.55228 8 8 8C7.44772 8 7 8.44772 7 9C7 9.55229 7.44772 10 8 10Z"
+                fill="#0891b2"
+              ></path>
+            </svg>
+
+            {{ experiencia.duracion }}
+          </div>
+
+          <div class="ms-4">
+            <h5 class="text-lg font-medium mb-0">{{ experiencia.titulo }}</h5>
+            <span class="text-slate-400 company-university">{{
+              experiencia.empresa
+            }}</span>
+            <p class="text-slate-400 mt-2 mb-0">
+              {{ experiencia.descripcion }}
+            </p>
+          </div>
+        </div>
+        <!-- Detalles de la solicitud -->
+        <div class="mt-4">
+          <h5 class="text-lg font-semibold">Detalles Solicitud:</h5>
+          <li class="flex justify-between mt-3 items-center font-medium">
+            <span><i data-feather="calendar" class="size-4 text-slate-400 me-3 inline"></i><span class="text-slate-400 me-3">Fecha:</span></span>
+            <span>{{ personaInfo.aplicacionPasantia.fechaAplicacion }}</span>
+          </li>
+          <li class="flex justify-between mt-3 items-center font-medium">
+            <span><i data-feather="check-circle" class="size-4 text-slate-400 me-3 inline"></i><span class="text-slate-400 me-3">Estado:</span></span>
+            <span>{{ personaInfo.aplicacionPasantia.activo == true ? "Aceptado" : "Pendiente" }}</span>
+          </li>
+          <li class="list-none mt-3 w-full bg-white p-3 rounded-md shadow dark:shadow-gray-700 dark:bg-slate-900">
+            <div class="flex items-center mb-3">
+              <span class="font-medium ms-2">CV de aplicación</span>
+            </div>
+            <a @click="downloadPDF(personaInfo.aplicacionPasantia.urlCurriculum)"
+              class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md w-full"
+              download>
+              <i class="uil uil-file-download-alt"></i> Descargar CV
+            </a>
+          </li>
+        </div>
+
+        <!-- Botones de aceptar y rechazar -->
+        <div class="flex justify-end mt-6" v-if="personaInfo.aplicacionPasantia.activo == false">
+          <button class="btn bg-green-600 hover:bg-green-700 text-white mr-2"
+            @click="aceptarSolicitud">
+            Aceptar
+          </button>
+          <button class="btn bg-red-600 hover:bg-red-700 text-white"
+            @click="rechazarSolicitud">
+            Rechazar
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
     <!-- Modal para perfil -->
     <div class="modal" v-if="this.Modal == 2">
-  <div
-    class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
-  >
-    <span class="close" @click="showFormularioCV=false">&times;</span>
-    <h5 class="text-lg font-semibold mb-4">Título del chiii</h5>
-    <input
-      type="text"
-      v-model="pdfTitle"
-      placeholder="Título del PDF"
-      disabled
-      class="form-input border border-slate-100 dark:border-slate-800 w-full"
-    />
-    <div class="mt-4">
-      <iframe
-        :src="webUrl"
-        width="100%"
-        height="600px"
-        class="border border-slate-100 dark:border-slate-800 rounded-md"
-      ></iframe>
+      <div class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+        <span class="close" @click="showFormularioCV=false">&times;</span>
+        <h5 class="text-lg font-semibold mb-4">
+          CV de {{ personaInfo.persona.nombre + " " + personaInfo.persona.apellidoPaterno + " " + personaInfo.persona.apellidoMaterno }}
+        </h5>
+        <div class="w-full leading-[0] border-0">
+          <iframe
+            :src="webUrl"
+            style="border: 0"
+            class="w-full h-[500px] rounded-md shadow dark:shadow-gray-700"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
     </div>
-    <div class="mt-4">
-      <button
-        @click="savePDF"
-        class="bg-blue-600 text-white p-2 rounded-md"
-      >
-        Guardar
-      </button>
-    </div>
-  </div>
-</div>
   </div>
   <!--end section-->
   <!-- End -->
@@ -439,6 +578,7 @@ import footers from "@/components/footer/footer.vue";
 import switcher from "@/components/General/switcher.vue";
 
 import { usePasantiasAdministracionInstitucionStore } from "@/stores/Instituciones/PasantiasAdministracionInstitucionStore.js";
+import loader from "sass-loader";
 import Swal from "sweetalert2";
 export default {
   setup() {
@@ -451,13 +591,21 @@ export default {
 
   computed: {
     mapSrc() {
-      // Construir la URL del mapa de Google con la dirección
       const direccionEncoded = encodeURIComponent(
         this.data.institucion.direccion
       );
       return `https://www.google.com/maps/embed/v1/place?q=${direccionEncoded}&key=AIzaSyCoOVExrC3ADb7HXkXLyBZB3zyVqClHZ7w`;
-      // Reemplaza TU_API_KEY con tu propia clave de API de Google Maps
     },
+    getPostulantesAprobados() {
+      return this.listaPostulantes.filter(
+        (postulante) => postulante.aplicacionPasantia.activo
+      ).length;
+    },
+    getPostulantesPendientes() {
+      return this.listaPostulantes.filter(
+        (postulante) => !postulante.aplicacionPasantia.activo
+      ).length;
+    }
   },
 
   methods: {
@@ -493,27 +641,165 @@ export default {
       console.log(this.data);
       console.log(this.data.postulantes);
       this.listaPostulantes = this.data.postulantes;
+      this.listaPostulantes = this.ordenarPostulantes();
+      this.isDataLoad = true;
+      this.personaInfo = {};
     },
-    mostrarInformacionPaante(id, numero,informacion){
-      this.Modal=numero;
-      this.showFormularioCV=true;
-      this.pdfUrl=informacion.aplicacionPasantia.urlCurriculum;
-      this.pdfTitle=informacion.aplicacionPasantia.fechaAplicacion;
-      this.idEstudiante=id;
-      this.idSolicitud=informacion.aplicacionPasantia.idSolicitud;
-      this.webUrl = `/empresa/estudiante/${idEstudiante}/solicitud/${idSolicitud}`;
-       
+    mostrarInformacionPaante(index, numero) {
+      this.personaInfo = this.listaPostulantes[index];
+      this.Modal = numero;
+      this.showFormularioCV = true;
+      this.webUrl = this.personaInfo.aplicacionPasantia.urlCurriculum;
     },
-    redirectTO(index){
-      this.$router.push(
-        { name: 'PerfilEstudianteEmpresa', params: 
-          { 
-            idEstudiante: this.postulantes[index].idPersona, 
-            idSolicitud: this.postulantesEstado[index].idAplicacionPasantias
-          } 
-        }
+    //Metodo para ordernar la lista de postulantes para que primero se muestren los pendientes y luego los aprobados
+    ordenarPostulantes(){
+      let postulantesPendientes = this.listaPostulantes.filter(
+        (postulante) => !postulante.aplicacionPasantia.activo
       );
+      let postulantesAprobados = this.listaPostulantes.filter(
+        (postulante) => postulante.aplicacionPasantia.activo
+      );
+      return postulantesPendientes.concat(postulantesAprobados);
     },
+    downloadPDF(url){
+      window.open(url, '_blank');
+    },
+    async aceptarSolicitud(){
+      const loader = this.$loading.show();
+      try{
+        let comentarios = await Swal.fire({
+          title: 'Comentario',
+          input: 'text',
+          inputPlaceholder: 'Ingrese un comentario para el postulante',
+          showCancelButton: true,
+          inputValidator: (value) => {
+            if (!value) {
+              return 'Debe ingresar un comentario';
+            }
+          }
+        });
+        if(comentarios.isConfirmed){
+          const dataComment = {
+            comentarios: comentarios.value
+          };
+          const response = await this.pasantiasAdministracionInstitucionStore.aceptarPasantia(
+            this.$keycloak.tokenParsed.sub,
+            this.id,
+            this.personaInfo.aplicacionPasantia.idAplicacionPasantias,
+            dataComment
+          );
+          loader.hide();
+          if(response){
+            Swal.fire({
+              icon: 'success',
+              title: 'Solicitud aceptada',
+              showConfirmButton: false,
+              timer: 1500
+            });
+            this.showFormularioCV = false;
+            this.fetchPasantiaActual();
+          }else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al aceptar la solicitud',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }
+        }
+      }catch(error){
+        console.log(error);
+      }finally{
+        loader.hide();
+      }
+    },
+    async rechazarSolicitud(){
+      const loader = this.$loading.show();
+      try{
+        let confirmacion = await Swal.fire({
+          title: '¿Está seguro de rechazar la solicitud?',
+          text: "No podrá revertir esta acción",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Sí, rechazar',
+          cancelButtonText: 'Cancelar'
+        });
+        if(confirmacion.isConfirmed){
+          const response = await this.pasantiasAdministracionInstitucionStore.rechazarPasantia(
+            this.$keycloak.tokenParsed.sub,
+            this.id,
+            this.personaInfo.aplicacionPasantia.idAplicacionPasantias
+          );
+          loader.hide();
+          if(response){
+            Swal.fire({
+              icon: 'success',
+              title: 'Solicitud rechazada',
+              showConfirmButton: false,
+              timer: 1500
+            });
+            
+            this.showFormularioCV = false;
+            this.fetchPasantiaActual();
+          }else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al rechazar la solicitud',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }
+        }
+      }catch(error){
+        console.log(error);
+      }finally{
+        loader.hide();
+      }
+    },
+    async terminarPasantia(){
+      const loader = this.$loading.show();
+      try{
+        let confirmacion = await Swal.fire({
+          title: '¿Está seguro de terminar la pasantía?',
+          text: "No podrá revertir esta acción",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Sí, terminar',
+          cancelButtonText: 'Cancelar'
+        });
+        if(confirmacion.isConfirmed){
+          const response = await this.pasantiasAdministracionInstitucionStore.terminarPasantia(
+            this.$keycloak.tokenParsed.sub,
+            this.id
+          );
+          loader.hide();
+          if(response){
+            Swal.fire({
+              icon: 'success',
+              title: 'Pasantía terminada',
+              showConfirmButton: false,
+              timer: 1500
+            });
+            this.$router.push("/empresa/administrador/pasantias");
+          }else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al terminar la pasantía',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }
+        }
+      }catch(error){
+        console.log(error);
+      }finally{
+        loader.hide();
+      }
+    }
   },
 
   props: {
@@ -530,8 +816,10 @@ export default {
       pdfUrl: "",
       pdfTitle: "",
       Modal: 0,
+      personaInfo:{},
       showFormularioCV:false,
       contenedor: false,
+      isDataLoad: false,
       postulantesEstado: [
         {
           idUsuarios: 1,
