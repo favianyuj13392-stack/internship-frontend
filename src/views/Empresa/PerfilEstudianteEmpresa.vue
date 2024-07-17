@@ -39,15 +39,14 @@
                   {{ data?.position ? data?.position : "Estudiante" }}
                 </p>
               </div>
-            </div>
-
-            <div class="">
               <router-link
                 to="/perfil/estudiante/editar"
-                class="btn btn-icon rounded-full bg-cyan-600/5 hover:bg-cyan-600 border-cyan-600/10 hover:border-cyan-600 text-cyan-600 hover:text-white"
-                ><i data-feather="settings" class="size-4"></i
+                class="btn ml-10 rounded-full w-30 bg-green-600/5 hover:bg-green-600 border-green-600/10 hover:border-green-600 text-green-600 hover:text-white"
+                >Aprobar<i data-feather="settings" class="size-4"></i
               ></router-link>
             </div>
+
+        
           </div>
         </div>
       </div>
@@ -56,7 +55,7 @@
   </section>
   <!-- End Hero -->
 
-  <section class="relative mt-12 md:pb-24 pb-16">
+  <section v-if="this.ventana==0" class="relative mt-12 md:pb-24 pb-16">
     <div class="container">
       <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
         <div class="lg:col-span-8 md:col-span-7">
@@ -259,38 +258,70 @@
                 </ul>
                 <!--end icon-->
               </li>
-              <li class="mt-3">
-                <a
-                  @click="FormularioCV()"
-                  class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md w-full"
-                  ><i class="uil uil-file-download-alt"></i> Agregar
-                  curriculums</a
-                >
-              </li>
-              <div v-for="(curri, index) in cv" :key="index">
+              <div >
+                <!-- Detalles de la solicitud -->
+              <h5 class="text-lg font-semibold">Detalles Solicitud:</h5>
+                 <!--
+                  Fecha de la solicitud y estado de la solicitud
+                 -->
+                <li class="flex justify-between mt-3 items-center font-medium">
+                  <span
+                    ><i
+                      data-feather="calendar"
+                      class="size-4 text-slate-400 me-3 inline"
+                    ></i
+                    ><span class="text-slate-400 me-3">Fecha:</span
+                    ></span
+                  >
+
+                  <span>{{ cv.fechaAplicacion }}</span>
+                </li>
+                <li class="flex justify-between mt-3 items-center font-medium">
+                  <span
+                    ><i
+                      data-feather="check-circle"
+                      class="size-4 text-slate-400 me-3 inline"
+                    ></i
+                    ><span class="text-slate-400 me-3">Estado:</span
+                    ></span
+                  >
+
+                  <span>
+                    {{
+                      cv.activo == true
+                        ? "Aceptado"
+                        : "Pendiente"
+                    }}
+                  </span>
+                </li>
+
+
+                <!-- Botón para descargar el CV -->
                 <li
                   class="mt-3 w-full bg-white p-3 rounded-md shadow dark:shadow-gray-700 dark:bg-slate-900"
                 >
                   <div class="relative">
-                    <button
-                      @click="removePDF(curri.idCurriculums)"
-                      class="absolute pr-2 pl-2 top-0 right-0 bg-red-600 text-white rounded-md"
-                    >
-                      x
-                    </button>
-
                     <div class="flex items-center mb-3">
                       <i data-feather="file" class="size-8 text-slate-400"></i>
+                      <span class="font-medium ms-2">
+                        CV de aplicación
+                      </span>
 
-                      <span class="font-medium ms-2">{{ curri.titulo }}</span>
                     </div>
                   </div>
                   <a
-                    @click="downloadPDF(curri.pdfCurriculum)"
+                    @click="downloadPDF(cv.urlCurriculum)"
                     class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md w-full"
                     download
                   >
                     <i class="uil uil-file-download-alt"></i> Descargar CV
+                  </a>
+                  <a
+                    @click="this.ventana = 1"
+                    class=" mt-3 btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md w-full"
+                    download
+                  >
+                    <i class="uil uil-file-download-alt"></i> Ver CV
                   </a>
                 </li>
               </div>
@@ -298,6 +329,18 @@
           </div>
         </div>
         <!--fin de profieee-->
+      </div>
+    </div>
+  </section>
+
+  <section v-if="this.ventana==1" class="relative mt-12 md:pb-24 pb-16">
+    <div class="container">
+      <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
+        <span class="close" @click="this.ventana = 0">&times;</span>
+
+        <div class="md:col-span-8 col-span-full">
+        <embed :src="cv.urlCurriculum" type="application/pdf" width="100%" height="600px" />
+      </div>
       </div>
     </div>
   </section>
@@ -353,33 +396,26 @@
 </template>
 
 <script>
-import navbar from "@/components/General/navbarGeneral.vue";
+import navbar from "@/components/Empresa/NavBarEmpresa.vue";
 import footers from "@/components/footer/footer.vue";
 import switcher from "@/components/General/switcher.vue";
 import image from "@/assets/images/team/01.jpg";
-import { useEstudiantesStore } from "@/stores/Estudiantes/estudiantesStore";
 import Swal from "sweetalert2";
 import StarRatingComponent from "@/components/General/Extras/StartRatingComponent.vue";
-import { useCurriculumsStore } from "@/stores/Estudiantes/curriculumsStore";
+import { useEstudiantesAdminStore } from "@/stores/Administradores/estudiantesAdminStore";
 export default {
   setup() {
-    const estudiantesStore = useEstudiantesStore();
-    const curriculumsStore = useCurriculumsStore();
+    const estudiantesStore = useEstudiantesAdminStore();
     return {
       estudiantesStore,
-      curriculumsStore,
     };
   },
   data() {
     return {
-      id: "",
+      ventana: 0,
+      idEstudiante: "",
+      idSolicitud: "",
       cv: "",
-      showTitleModal: false,
-      pdfTitle: "",
-      pdfFile: null,
-      nuevaEmpresa: {
-        pdfs: [],
-      },
       data: {
         persona: {
           nombre: "",
@@ -412,7 +448,6 @@ export default {
           },
         },
       },
-      image,
       datas: [
         {
           id: 1,
@@ -423,182 +458,39 @@ export default {
           email: "",
         },
       ],
-      showFormularioCV: false,
     };
   },
 
   methods: {
-    FormularioCV() {
-      this.showFormularioCV = true;
-      console.log("hola");
-      console.log(this.nuevaEmpresa.pdfs);
-    },
-    async fetchUserByUUID() {
-      if (!this.$keycloak.authenticated) {
-        this.$router.push("/");
-        return;
-      }
-
-      let loader = this.$loading.show();
-      const response = await this.estudiantesStore.fetchUserByUUID(
-        this.$keycloak.idTokenParsed.sub
-      );
-      if (response == null) {
-        loader.hide();
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "No se pudo cargar la información del usuario",
-        });
-        this.$keycloak.logout();
-        this.$router.push("/");
-        return;
-      }
-
-      this.data = response;
-      console.log(this.data);
-
-      const response1 = await this.curriculumsStore.getCurriculum(
-        this.$keycloak.idTokenParsed.sub
-      );
-
-      this.cv = response1;
-      console.log(this.cv);
-      loader.hide();
-    },
-    async getCurriculum() {
-      let loader = this.$loading.show();
-      const response = await this.curriculumsStore.getCurriculum(
-        this.$keycloak.idTokenParsed.sub
-      );
-      if (response == null) {
-        loader.hide();
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "No se pudo cargar la información del usuario",
-        });
-        this.$keycloak.logout();
-        this.$router.push("/");
-        return;
-      }
-
-      this.cv = response;
-      console.log(this.cv);
-      loader.hide();
-    },
-    async handleFileUploadPDF(event) {
-      const loader = this.$loading.show();
-      try {
-        const file = event.target.files[0];
-        if (file) {
-          this.pdfFile = file;
-          this.showTitleModal = true;
-          //Ponemos el nombre del archivo en el input
-          this.pdfTitle = file.name;
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        loader.hide();
-      }
-    },
-    async savePDF() {
-      const loader = this.$loading.show();
-      console.log(this.pdfTitle);
-      console.log("yhio pedfFile"+this.pdfFile);
-      try {
-        if (this.pdfFile && this.pdfTitle) {
-          const response = await this.curriculumsStore.postCurriculum(
-            this.pdfFile,
-            this.$keycloak.idTokenParsed.sub
-          );
-          console.log(response);
-          if (response == null) {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "No se pudo cargar el archivo PDF",
-            });
-            return;
-          }
-
-          Swal.fire({
-            icon: "success",
-            title: "¡Éxito!",
-            text: "El archivo PDF se ha subido correctamente",
-            timer: 2000,
-          });
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        loader.hide();
-      }
-      this.showTitleModal = false;
-      this.showFormularioCV = false;
-      this.getCurriculum();
-    },
     downloadPDF(url){
       window.open(url, '_blank');
     },
-    async removePDF(index) {
-      console.log("numero de index" + index);
+    async fetchUserByUUID() {
       let loader = this.$loading.show();
-      try {
-        const result = await Swal.fire({
-          title: "¿Estás seguro de eliminar este  Curriculum?",
-          text: "¡Se eliminará de manera permanente!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "¡Sí, elimínala!",
-        });
-
-        if (result.isConfirmed) {
-          try {
-            const response = await this.curriculumsStore.deleteCurriculum(
-              this.$keycloak.idTokenParsed.sub,
-              index
-            );
-            if (response == null) {
-              const errorMessage = this.curriculumsStore.errorMessageDeleteCurriculum;
-              console.error("Error eliminando el archivo PDF:", errorMessage);
-              Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "ERROR: " + errorMessage,
-              });
-              this.showFormularioCV=false;
-              this.showTitleModal=false;
-              return;
-            }
-            Swal.fire({
-              title: "Eliminada!",
-              text: "Tu archivo ha sido eliminado.",
-              icon: "success",
-            });
-          } catch (error) {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "ERROR: " + error.message,
-            });
-          }
-        }
-      } catch (error) {
-        console.error("Error mostrando el diálogo de confirmación:", error);
+      const response = await this.estudiantesStore.fetchUserByUUID(
+        this.$keycloak.idTokenParsed.sub,
+        this.idEstudiante
+      );
+      if (response == null) {
+        loader.hide();
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "ERROR: " + error.message,
+          text: "No se pudo cargar la información del estudiante",
         });
-      } finally {
-        loader.hide();
+        return;
       }
-      this.getCurriculum();
-    },
+      this.data = response;
+      console.log(this.data);
+      //Obtener la solicitud del estudiante
+      const response1 = await this.estudiantesStore.getSolicitudByIdSolitud(
+        this.$keycloak.idTokenParsed.sub,
+        this.idSolicitud
+      );
+      this.cv = response1;
+      console.log(this.cv);
+      loader.hide();
+    }
   },
   components: {
     navbar,
@@ -607,10 +499,9 @@ export default {
     StarRatingComponent,
   },
   mounted() {
+    this.idEstudiante = this.$route.params.idEstudiante;
+    this.idSolicitud = this.$route.params.idSolicitud;
     this.fetchUserByUUID();
-
-    //this.id = this.$route.params.id;
-    //this.data = this.datas.find((item) => item.id === parseInt(this.id));
   },
 };
 </script>

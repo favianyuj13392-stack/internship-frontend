@@ -5,6 +5,7 @@ import RutaApi from '@/assets/rutaApi.js'
 export const useCurriculumsStore = defineStore({
     id: 'curriculums',
     state: () => ({
+        errorMessageDeleteCurriculum: '',
     }),
     actions:{
         async postCurriculum(data,uuid){
@@ -46,6 +47,8 @@ export const useCurriculumsStore = defineStore({
                 if(response.data.code == '200'){
                     return response.data.response
                 }else{
+                    this.errorMessageDeleteCurriculum = response.data.errorMessage;
+                    console.log(this.errorMessageDeleteCurriculum)
                     return null;
                 }
             }catch(error){

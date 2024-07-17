@@ -10,14 +10,15 @@ import Contactanos from "../views/General/Contactanos.vue";
 //estudiante
 import PerfilEstudiante from "@/views/Estudiante/PerfilEstudiante.vue";
 import EditarPerfilEstudiante from "@/views/Estudiante/EditarPerfilEstudiante.vue";
-
+import SolicitudesEstudiante from "@/views/Estudiante/SolicitudesEstudiante.vue";
+import PasantiaAplicadaEstudiante from "@/views/Estudiante/PasantiaAplicadaEstudiante.vue";
 //empresa
 import PasantiasEmpresaView from "@/views/Empresa/PasantiasEmpresaView.vue";
 import InformacionEmpresaView from "@/views/Empresa/EditarInformacionEmpresaView.vue";
 import InformacionPasantiaEmpresaView from "@/views/Empresa/InformacionPasantiaEmpresaView.vue";
 import CrearPasantiaEmpresaView from "@/views/Empresa/CrearPasantiaEmpresaView.vue";
 import EditarPasantiaEmpresaView from "@/views/Empresa/EditarPasantiaEmpresaView.vue";
-
+import PerfilEstudianteEmpresa from "@/views/Empresa/PerfilEstudianteEmpresa.vue";
 import PerfilUsuarioEmpresaView from "@/views/Empresa/PerfilUsuarioEmpresaView.vue";
 
 //administrador
@@ -29,6 +30,7 @@ import EmpresaAdministrador from "@/views/Administrador/EmpresaAdministrador.vue
 import EmpresaDetalleAdministrador from "@/views/Administrador/EmpresaDetalleAdministrador.vue";
 import PasantiaDetalleAdministrador from "@/views/Administrador/PasantiaDetalleAdministrador.vue";
 import EmpresaSolicitudUsuarioAdministrador from "@/views/Administrador/EmpresaSolicitudUsuarioAdministrador.vue";
+import PerfilEstudianteAdministrador from "@/views/Administrador/PerfilEstudianteAdministrador.vue";
 //completar registro
 import FinishRegisterEstudiante from "@/views/CompletarRegistro/CompletarRegistroEstudianteView.vue";
 import FinishRegisterEmpresa from "@/views/CompletarRegistro/CompletarRegistroEmpresaView.vue";
@@ -83,6 +85,16 @@ const router = createRouter({
       name: "perfil-estudiante-editar",
       component: EditarPerfilEstudiante,
     },
+    {
+      path: "/estudiante/solicitudes",
+      name: "solicitudes-estudiante",
+      component: SolicitudesEstudiante,
+    },
+    {
+      path: "/estudiante/:id/aplicacion",
+      name: "PasantiaAplicadaEstudiante",
+      component: PasantiaAplicadaEstudiante,
+    },
 
     //empresa
     {
@@ -102,20 +114,26 @@ const router = createRouter({
       props: true,
     },
     {
-      path: '/empresa/administrador/pasantias/crear',
-      name: 'CrearPasantiaEmpresaView',
-      component: CrearPasantiaEmpresaView
+      path: "/empresa/administrador/pasantias/crear",
+      name: "CrearPasantiaEmpresaView",
+      component: CrearPasantiaEmpresaView,
     },
     {
-      path: '/empresa/administrador/pasantias/:id/editar',
-      name: 'EditarPasantiaEmpresaView',
+      path: "/empresa/administrador/pasantias/:id/editar",
+      name: "EditarPasantiaEmpresaView",
       component: EditarPasantiaEmpresaView,
       props: true,
     },
     {
-      path: '/empresa/administrador/perfil',
-      name: 'PerfilEmpresaView',
-      component: PerfilUsuarioEmpresaView
+      path: "/empresa/administrador/perfil",
+      name: "PerfilEmpresaView",
+      component: PerfilUsuarioEmpresaView,
+    },
+
+    {
+      path: "/empresa/estudiante/:idEstudiante/solicitud/:idSolicitud",
+      name: "PerfilEstudianteEmpresa",
+      component: PerfilEstudianteEmpresa,
     },
 
     //administrador
@@ -159,6 +177,11 @@ const router = createRouter({
       name: "EmpresaSolicitudUsuarioAdministrador",
       component: EmpresaSolicitudUsuarioAdministrador,
     },
+    {
+      path: "/administrador/estudiante/:idEstudiante/solicitud/:idSolicitud",
+      name: "PerfilEstudianteAdministrador",
+      component: PerfilEstudianteAdministrador,
+    },
 
     //completado de registro
     {
@@ -170,7 +193,7 @@ const router = createRouter({
       path: "/finish/register-empresa",
       name: "FinishRegisterEmpresa",
       component: FinishRegisterEmpresa,
-    }
+    },
   ],
 });
 

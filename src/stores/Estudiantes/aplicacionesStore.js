@@ -26,5 +26,19 @@ export const useAplicacionesStore = defineStore({
             }
         },
         
+        async getAplicacionesPasantias(uuid) {
+            try {
+
+                const response = await axios.get(RutaApi + '/estudiante/'+uuid+'/aplicaciones/pasantias')
+                if (response.data.code == '200') {
+                    return response.data.response;
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        
     },
 })

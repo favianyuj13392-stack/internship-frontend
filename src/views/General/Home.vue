@@ -159,6 +159,7 @@ export default {
     let loader = this.$loading.show( );
     try {
      const existencia = await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
+     console.log(this.$keycloak.tokenParsed);
      console.log(existencia);
       if(this.$keycloak.tokenParsed.resource_access['internship-cliente'] == undefined && existencia==false){
         this.$router.push("/finish/register-empresa");
