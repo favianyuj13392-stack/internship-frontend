@@ -321,6 +321,7 @@ export default {
     return { pasantiasStore };
   },
   async mounted() {
+    this.setInitialFilters();
     await this.fetchPasantias();
     await this.fetchAreas();
     await this.fetchCarreras();
@@ -364,6 +365,15 @@ export default {
       this.totalPages = response.totalPages;
       loader.hide();
       this.attachIsHovered();
+    },
+    setInitialFilters() {
+      const { searchValue, selectedCarreraId } = this.$route.query;
+      if (searchValue) {
+        this.searchValue = searchValue;
+      }
+      if (selectedCarreraId) {
+        this.selectedCarrera = selectedCarreraId;
+      }
     },
     nextPage() {
       if (this.currentPage < this.totalPages - 1) {

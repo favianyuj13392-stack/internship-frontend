@@ -22,14 +22,13 @@
           aprendizaje se transforma en experiencia y las conexiones se
           convierten en oportunidades concretas para el futuro.
         </p>
-
         <div class="d-flex" id="reserve-form">
           <div class="md:w-5/6 mx-auto">
             <div class="lg:col-span-10 mt-8">
               <div
                 class="bg-white dark:bg-slate-900 border-0 shadow rounded-md p-3"
               >
-                <form action="#">
+                <form @submit.prevent="redirectToPasantias">
                   <div class="registration-form text-dark text-start">
                     <div
                       class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 lg:gap-0 gap-6"
@@ -42,6 +41,7 @@
                           id="job-keyword"
                           class="form-input filter-input-box bg-gray-50 dark:bg-slate-800 border-0"
                           placeholder="Busca tu interes..."
+                           v-model="searchValue"
                         />
                       </div>
 
@@ -49,11 +49,14 @@
                         class="filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800"
                       >
                         <i class="uil uil-graduation-cap icons"></i>
-                        <vSelect
-                          :options="options"
-                          v-model="selected"
+                        <v-select
+                          :options="carrerasOptions"
+                          v-model="selectedCarreraId"
+                          placeholder="Selecciona tu carrera..."
+                          label="nombre"
+                          :reduce="(carrera) => carrera.idCarreras"
                           class="ms-10"
-                        ></vSelect>
+                        ></v-select>
                       </div>
 
                       <input
@@ -136,78 +139,125 @@ import question from "@/components/General/Home/job-questions.vue";
 import explore from "@/components/General/Home/explore-job.vue";
 import switcher from "@/components/General/switcher.vue";
 import footers from "@/components/footer/footer.vue";
-
-
-
-
-
-import {useAuthStore} from "@/stores/authStore.js";
-
+import { useCarrerasStore } from "@/stores/carrerasStore.js";
+import { useAuthStore } from "@/stores/authStore.js";
 
 export default {
-  setup(){
+  setup() {
     const authStore = useAuthStore();
-    return{
-      authStore
-    }
+    const carrerasStore = useCarrerasStore();
+    return {
+      authStore,
+      carrerasStore,
+    };
   },
 
   async beforeMount() {
-    if(!this.$keycloak.authenticated){
+    if (!this.$keycloak.authenticated) {
       return;
     }
-    let loader = this.$loading.show( );
+    let loader = this.$loading.show();
     try {
-     const existencia = await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
-     console.log(this.$keycloak.tokenParsed);
-     console.log(existencia);
-      if(this.$keycloak.tokenParsed.resource_access['internship-cliente'] == undefined && existencia==false){
+      const existencia = await this.authStore.checkExistencia(
+        this.$keycloak.tokenParsed.sub
+      );
+      console.log(this.$keycloak.tokenParsed);
+      console.log(existencia);
+      if (
+        this.$keycloak.tokenParsed.resource_access["internship-cliente"] ==
+          undefined &&
+        existencia == false
+      ) {
         this.$router.push("/finish/register-empresa");
         loader.hide();
         return;
       }
 
-      try{
-        if(existencia==true && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("EMPRESA")){
-        this.$router.push("/empresa/administrador/informacion");
-        loader.hide();
-        return;
-     }
-      }catch(error){
+      try {
+        if (
+          existencia == true &&
+          this.$keycloak.tokenParsed.resource_access[
+            "internship-cliente"
+          ].roles.includes("EMPRESA")
+        ) {
+          this.$router.push("/empresa/administrador/informacion");
+          loader.hide();
+          return;
+        }
+      } catch (error) {
         console.log(error);
         //reload page
         window.location.reload();
-        this.$keycloak
+        this.$keycloak;
       }
-      
-      
-     if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("ESTUDIANTE")){
+
+      if (
+        existencia == false &&
+        this.$keycloak.tokenParsed.resource_access[
+          "internship-cliente"
+        ].roles.includes("ESTUDIANTE")
+      ) {
         this.$router.push("/finish/register-estudiante");
         loader.hide();
         return;
-
-
-
-
-
-     }else if(existencia==false && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("ADMIN")){
+      } else if (
+        existencia == false &&
+        this.$keycloak.tokenParsed.resource_access[
+          "internship-cliente"
+        ].roles.includes("ADMIN")
+      ) {
         this.$router.push("/administrador/dashboard");
         loader.hide();
         return;
-     }else if(existencia==true && this.$keycloak.tokenParsed.resource_access['internship-cliente'].roles.includes("EMPRESA")){
+      } else if (
+        existencia == true &&
+        this.$keycloak.tokenParsed.resource_access[
+          "internship-cliente"
+        ].roles.includes("EMPRESA")
+      ) {
         this.$router.push("/empresa/administrador/informacion");
         loader.hide();
         return;
-     }
+      }
       loader.hide();
     } catch (error) {
       loader.hide();
       console.log(error);
     }
   },
+  async mounted() {
+    await this.fetchRecuento();
+  },
+  methods: {
+    async fetchRecuento() {
+      try {
+        const response = await this.carrerasStore.getCarreras();
+        if (response) {
+          this.carreras = response;
+          console.log("carrera", this.carreras);
+        } else {
+          console.error("Error al obtener los datos de recuento");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    redirectToPasantias() {
+      this.$router.push({
+        name: "Pasantias",
+        query: {
+          searchValue: this.searchValue,
+          selectedCarreraId: this.selectedCarreraId,
+        },
+      });
+    },
+  },
 
   data() {
     return {
+      searchValue: "",
+      selectedCarreraId: 25,
+      carreras: [],
       options: [
         "Ingenieria de Sistemas",
         "Comunicación",
@@ -217,6 +267,7 @@ export default {
       selected: "Ingenieria de Sistemas",
     };
   },
+
   components: {
     navbar,
     switcher,
@@ -229,6 +280,14 @@ export default {
     question,
     explore,
     counter,
+  },
+  computed: {
+    carrerasOptions() {
+      return this.carreras.map((carrera) => ({
+        nombre: carrera.nombre,
+        idCarreras: carrera.idCarreras,
+      }));
+    },
   },
 };
 </script>

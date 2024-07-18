@@ -24,16 +24,13 @@
 
             <div class="lg:col-span-4 md:col-span-5">
               <div class="text-end relative z-1">
-                <router-link
-                  to="/employer-detail"
+         
+                <div
+                 @click="$keycloak.login"
                   class="btn bg-cyan-600 hover:bg-cyan-500 border-cyan-600 dark:border-cyan-600 text-white rounded-md"
-                  >Aplicar</router-link
+                  >Inscribir</div
                 >
-                <router-link
-                  to="/aboutus"
-                  class="btn border-cyan-600 bg-cyan-600/5 hover:bg-cyan-600 border-cyan-600/10 hover:border-cyan-600 text-cyan-600 hover:text-white rounded-md ms-2"
-                  >Leer más</router-link
-                >
+                
               </div>
             </div>
             <!--end col-->
