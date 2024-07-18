@@ -22,14 +22,13 @@
           aprendizaje se transforma en experiencia y las conexiones se
           convierten en oportunidades concretas para el futuro.
         </p>
-
         <div class="d-flex" id="reserve-form">
           <div class="md:w-5/6 mx-auto">
             <div class="lg:col-span-10 mt-8">
               <div
                 class="bg-white dark:bg-slate-900 border-0 shadow rounded-md p-3"
               >
-                <form action="#">
+                <form @submit.prevent="redirectToPasantias">
                   <div class="registration-form text-dark text-start">
                     <div
                       class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 lg:gap-0 gap-6"
@@ -42,6 +41,7 @@
                           id="job-keyword"
                           class="form-input filter-input-box bg-gray-50 dark:bg-slate-800 border-0"
                           placeholder="Busca tu interes..."
+                           v-model="searchValue"
                         />
                       </div>
 
@@ -52,6 +52,7 @@
                         <v-select
                           :options="carrerasOptions"
                           v-model="selectedCarreraId"
+                          placeholder="Selecciona tu carrera..."
                           label="nombre"
                           :reduce="(carrera) => carrera.idCarreras"
                           class="ms-10"
@@ -241,11 +242,21 @@ export default {
         console.error(error);
       }
     },
+    redirectToPasantias() {
+      this.$router.push({
+        name: "Pasantias",
+        query: {
+          searchValue: this.searchValue,
+          selectedCarreraId: this.selectedCarreraId,
+        },
+      });
+    },
   },
 
   data() {
     return {
-      selectedCarreraId: "INGENIERÍA DE SISTEMAS",
+      searchValue: "",
+      selectedCarreraId: 25,
       carreras: [],
       options: [
         "Ingenieria de Sistemas",

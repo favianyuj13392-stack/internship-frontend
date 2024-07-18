@@ -73,10 +73,15 @@
                     class="block text-[16px] font-semibold hover:text-emerald-600 transition-all duration-500"
                     >{{ item.name }}</router-link
                   > -->
-                    <span class="block text-sm text-cyan-600">{{
+                
+                    <router-link  :to="{
+                  name: 'empresas-detalle',
+                  params: { id: item.idInstituciones },
+                }"
+                class="block text-sm text-cyan-600">{{
                       item.nombre
-                    }}</span>
-                    {{ item.cantidadPasantias }} Pasantias
+                    }}</router-link>
+                    {{ item.cantidadPasantias }}  pasantias disponibles
                   </div>
                 </div>
               </div>
@@ -84,12 +89,12 @@
 
             <div class="grid md:grid-cols-12 grid-cols-1 mt-6">
               <div class="md:col-span-12">
-                <a
-                  href="/empresas"
+                <router-link
+                  to="/empresas"
                   class="btn btn-link text-slate-400 hover:text-cyan-600 after:bg-cyan-600 duration-500 ease-in-out"
                   >Ver más empresas
                   <i class="uil uil-arrow-right align-middle"></i
-                ></a>
+                ></router-link>
               </div>
             </div>
             <!--end grid-->
@@ -140,6 +145,7 @@
 </template>
 
 <script>
+import router from "@/router";
 import { usePaginaPrincipalStore } from "@/stores/paginaPrincipal";
 
 export default {
