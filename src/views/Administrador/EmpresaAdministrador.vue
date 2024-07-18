@@ -95,7 +95,10 @@
 
                       />
                     </div>
-
+                    <div class="filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800">
+                      <i class="uil uil-briefcase-alt icons"></i>
+                      <v-select :options="sectores" v-model="selectedSector" class="ms-10"></v-select>
+                    </div>
                     <input
                       type="submit"
                       id="search"
@@ -134,7 +137,7 @@
       >
         <div class="relative overflow-hidden h-40">
           <img
-            :src="item.fotoInstitucion"
+            :src="item.logoEmpresa"
             class="absolute inset-0 w-full h-full object-cover object-center transition-all duration-500"
             alt=""
           />
@@ -264,11 +267,14 @@ import footers from "@/components/footer/footer.vue";
 import { useEmpresasAdminStore } from "@/stores/Administradores/empresasAdminStore"; 
 
 export default {
-  mounted() {
-    this.fetchEmpresas();
+  async mounted() {
+    await this.fetchEmpresas();
+    await this.fetchSectores();
   },
   data() {
     return {
+      sectores: [],
+      selectedSector: [],
       isActive: false,
       options: [
         "Ingenieria de Sistemas",
@@ -299,19 +305,35 @@ export default {
     counter,
   },
   methods: {
+    async fetchSectores(){
+      let loader = this.$loading.show();
+      const response = await this.empresaStore.getSectores();
+      if (response == null) {
+        loader.hide();
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se pudo cargar los sectores",
+        });
+        return;
+      }
+      this.sectores = response;
+      loader.hide();
+    },
     toggle() {
       this.isActive = !this.isActive;
     },
     async fetchEmpresas() {
       const loader = this.$loading.show();
       try{
-        //getEmpresas(pageValue,sizeValue,searchValue, active, kkid)
         const response = await this.empresaStore.getEmpresas(
           this.currentPage,
           this.pageSize,
           this.searchValue,
-          true,
-          this.$keycloak.idTokenParsed.sub);
+          "true",
+          this.$keycloak.idTokenParsed.sub,
+          this.selectedSector
+        );
         console.log(response);
         if(response==null){
           this.totalPages = 0;

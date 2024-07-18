@@ -9,7 +9,7 @@ export const useEmpresasAdminStore = defineStore({
     }),
 
     actions: {
-        async getEmpresas(pageValue,sizeValue,searchValue, active, kkid) {
+        async getEmpresas(pageValue,sizeValue,searchValue, active, kkid,sector) {
             try {                    //añade los params page, size
 
                 const response = await axios.get(RutaApi + '/admin/'+kkid+'/instituciones',
@@ -18,7 +18,8 @@ export const useEmpresasAdminStore = defineStore({
                             page: pageValue,
                             size: sizeValue,
                             search: searchValue,
-                            active: active
+                            active: active,
+                            sector: sector
                         }
                     }
                 )
@@ -152,6 +153,18 @@ export const useEmpresasAdminStore = defineStore({
                     return null;
                 } 
             }catch (error){
+                console.log(error)
+            }
+        },
+        async getSectores(){
+            try {
+                const response = await axios.get(RutaApi + '/institucion/sectores')
+                if (response.data.code == '200') {
+                    return response.data.response
+                } else {
+                    return null;
+                }
+            } catch (error) {
                 console.log(error)
             }
         }

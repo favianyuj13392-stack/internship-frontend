@@ -285,9 +285,6 @@ export default {
       try {
         const empresa = await this.empresasStore.getEmpresaById(id, this.$keycloak.idTokenParsed.sub)
         if(empresa){
-          empresa.pasantias.forEach(pasantia => {
-            pasantia.areas = JSON.parse(pasantia.areas);
-          });
           this.data = empresa;
           return;
         }
