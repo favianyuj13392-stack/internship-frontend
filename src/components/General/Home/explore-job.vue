@@ -27,7 +27,7 @@
          
                 <div
                  @click="$keycloak.login"
-                  class="btn bg-cyan-600 hover:bg-cyan-500 border-cyan-600 dark:border-cyan-600 text-white rounded-md"
+                  class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md cursor-pointer "
                   >Inscribir</div
                 >
                 

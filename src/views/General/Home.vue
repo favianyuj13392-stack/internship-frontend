@@ -17,7 +17,7 @@
           INTERNSHIP <br />
           by Universidad Católica Boliviana
         </h4>
-        <p class="text-white/50 text-lg max-w-xl mx-auto">
+        <p class="text-white/70 text-lg max-w-xl mx-auto">
           Únete a nosotros en esta emocionante etapa de tu educación, donde el
           aprendizaje se transforma en experiencia y las conexiones se
           convierten en oportunidades concretas para el futuro.
@@ -80,13 +80,13 @@
         <!--end grid-->
 
         <div class="mt-4">
-          <span class="text-white/60"
-            ><span class="text-white"
-              >Tu primer paso en el mundo laboral por :</span
-            >
-            Universidad Católica Boliviana "San Pablo"</span
-          >
-        </div>
+  <span class="text-yellow-400">
+    <span class="text-white">Tu primer paso en el mundo laboral por :</span>
+    <a href="https://lpz.ucb.edu.bo" class="text-yellow-400" target="_blank">
+      Universidad Católica Boliviana "San Pablo"
+    </a>
+  </span>
+</div>
       </div>
       <!--end grid-->
     </div>
