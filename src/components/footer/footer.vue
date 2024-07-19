@@ -51,7 +51,7 @@
               © {{ date }} INTERNSHIP. Diseñado y desarrollado con
               <i class="mdi mdi-heart text-red-600"></i> por
               <a
-                href="https://shreethemes.in/"
+                href="https://www.instagram.com/bitsandbytes.ucb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                 target="_blank"
                 class="text-reset"
               >
@@ -65,7 +65,7 @@
               <a
                 :href="item.link"
                 target="_blank"
-                class="btn btn-icon btn-sm border-2 border-gray-800 dark:border-gray-700 rounded-md hover:border-emerald-600 dark:hover:border-emerald-600 hover:bg-emerald-600 dark:hover:bg-emerald-600 text-white"
+                class="btn btn-icon btn-sm border-2 border-gray-800 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 text-white"
                 ><i :class="item.icon" title="Buy Now"></i
               ></a>
             </li>
@@ -87,22 +87,7 @@ export default {
     return {
       date: new Date().getFullYear(),
       icons: [
-        {
-          icon: "uil uil-shopping-cart align-middle",
-          link: "https://1.envato.market/jobstack-vue",
-        },
-        {
-          icon: "uil uil-dribbble align-middle",
-          link: "https://dribbble.com/shreethemes",
-        },
-        {
-          icon: "uil uil-behance",
-          link: "https://www.behance.net/shreethemes",
-        },
-        {
-          icon: "uil uil-linkedin",
-          link: "http://linkedin.com/company/shreethemes",
-        },
+    
         {
           icon: "uil uil-facebook-f align-middle",
           link: "https://www.facebook.com/shreethemes",
@@ -112,13 +97,10 @@ export default {
           link: "https://www.instagram.com/shreethemes/",
         },
         {
-          icon: "uil uil-twitter align-middle",
+          icon: "uil uil-youtube",
           link: "https://twitter.com/shreethemes",
         },
-        {
-          icon: "uil uil-envelope align-middle",
-          link: "mailto:support@shreethemes.in",
-        },
+       
       ],
       datas: [
         {
