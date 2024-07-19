@@ -23,7 +23,7 @@
     </div>
   </div>
   <!-- End Hero -->
-  <section class="relative md:py-24 py-16">
+  <section class="relative py-8">
     <div class="container">
       <div class="grid lg:grid-cols-12 md:grid-cols-4 grid-cols-1 gap-[30px]">
         <div class="lg:col-span-4 md:col-span-6">
@@ -56,8 +56,7 @@
                 <div>
                   <label class="font-semibold">Carrera</label>
                   <select class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-1"
-                    v-model="selectedCarrera">
-
+                    v-model="selectedCarrera" >
                     <option value="" selected disabled>Seleccione una carrera</option>
 
                     <option v-for="carrera in carreras" :value="carrera.idCarreras">{{ carrera.nombre }}</option>
@@ -403,7 +402,7 @@ export default {
       areas: [],
       carreras: [],
       selectedAreas: [],
-      selectedCarrera: null,
+      selectedCarrera: "",
     };
   },
   components: {

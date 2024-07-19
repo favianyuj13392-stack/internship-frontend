@@ -32,28 +32,22 @@
             <div class="bg-white dark:bg-slate-900 border-0 shadow rounded-md p-3">
               <form @submit.prevent="searchEmpresas">
                 <div class="registration-form text-dark text-start">
-                  <div class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-0 gap-6">
+                  <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 lg:gap-0 gap-6">
                     <div class="filter-search-form relative filter-border">
                       <i class="uil uil-briefcase-alt icons"></i>
                       <input name="name" type="text" id="job-keyword"
                         class="form-input filter-input-box bg-gray-50 dark:bg-slate-800 border-0"
-                        placeholder="Buscar empresa" v-model="searchValue" />
+                        placeholder="Buscar empresa..." v-model="searchValue" />
                     </div>
 
-
-
-                    <!-- <div class="filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800">
-                      <i class="uil uil-map-marker icons"></i>
-                      <v-select :options="options" v-model="selected" class="ms-10"></v-select>
-                    </div> -->
-
-                    <div class="filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800">
+                    <div class="filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800" >
                       <i class="uil uil-briefcase-alt icons"></i>
-                      <v-select :options="sectores" v-model="selectedSector" class="ms-10"></v-select>
+                      <v-select :options="sectores" v-model="selectedSector" class="ms-10"   placeholder="Selecciona la área..."></v-select>
                     </div>
 
                     <input type="submit" id="search" name="Buscar" style="height: 60px"
-                      class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white searchbtn submit-btn w-100"
+                  
+                    class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white searchbtn submit-btn w-100"
                       value="Buscar" />
                   </div>
                   <!--end grid-->
