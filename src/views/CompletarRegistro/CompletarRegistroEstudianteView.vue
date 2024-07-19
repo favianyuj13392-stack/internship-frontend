@@ -71,6 +71,7 @@
           id="pro-banner"
           name="profile-banner"
           type="file"
+          accept="image/*"  
           class="hidden"
           @change="handleFileUploadBannerPerfil"
         />
@@ -96,6 +97,8 @@
                 id="pro-img"
                 name="profile-image"
                 type="file"
+                accept="image/*"
+
                 class="hidden"
                 @change="handleFileUploadFotoPerfil"
               />
@@ -341,15 +344,65 @@
             <div
               class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
             >
+            <div class="flex justify-end">
+                <h5 class="text-m font mb-4">Por favor llena las estrellas</h5>
+              </div>
+
+
               <div class="grid grid-cols-1 gap-4">
+                
+
+
+
+
+
+
+
                 <div>
-                  <h5 class="text-lg font-semibold mb-4">Habilidades :</h5>
                   <div>
+
+
+                    <h5 class="text-lg font-semibold mb-4">Habilidades Genéricas :</h5>
+
+
+
+
+
+                    <div class="grid grid-cols-1 gap-4">
+                      <div
+                        class="grid sm:grid-cols-2 gap-4 mt-5 pt-3"
+                        v-for="habilidad in estudianteDto.persona.habilidades
+                          .habilidades.slice(0,cantidadHabilididadesGenericas) "
+                        id="contenedor-habilidad"
+                      >
+                        <label class="form-label font-medium" for="WordPress">{{
+                          habilidad.habilidad
+                        }}</label>
+
+                        <StarRatingComponent
+                          name="rating"
+                          v-model="habilidad.nivel"
+                          :disabled="false"
+                        >
+                        </StarRatingComponent>
+                        
+                      </div>
+                    </div>
+
+
+
+
+
+
+
+
+                    <h5 class="text-lg font-semibold mb-4 mt-16">Habilidades :</h5>
+
                     <div class="grid grid-cols-1 gap-4">
                       <div
                         class="grid sm:grid-cols-3 gap-4 mt-5 pt-3"
                         v-for="habilidad in estudianteDto.persona.habilidades
-                          .habilidades"
+                          .habilidades.slice(cantidadHabilididadesGenericas)"
                         id="contenedor-habilidad"
                       >
                         <label class="form-label font-medium" for="WordPress">{{
@@ -368,7 +421,7 @@
                             name="send"
                             v-if="habilidad.principal == false"
                             @click="habilidad.principal = true"
-                            class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer"
+                            class="btn border-zinc-500 bg-zinc-500 hover:bg-zinc-500 text-white text-sm p-0 rounded-md cursor-pointer"
                           >
                             Secundario
                           </button>
@@ -378,7 +431,8 @@
                             name="send"
                             v-if="habilidad.principal == true"
                             @click="habilidad.principal = false"
-                            class="btn border-yellow-600 bg-yellow-600 hover:bg-yellow-700 text-white text-sm p-0 rounded-md cursor-pointer"
+                            
+                            class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer"
                           >
                             Principal
                           </button>
@@ -388,19 +442,19 @@
                             name="send"
                             @click="eliminarHabilidad(habilidad)"
                             class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                          >
+                            >
                             Eliminar
                           </button>
                         </div>
                       </div>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-4 mt-5">
+                    <div class="grid grid-cols-1 gap-4 mt-12">
                       <button
                         id="submit"
                         name="send"
                         @click="showNuevaHabilidadModal = true"
-                        class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
+                        class="btn border-emerald-600 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md cursor-pointer"
                       >
                         Agregar Nueva Habilidad
                       </button>
@@ -427,6 +481,7 @@
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -484,21 +539,21 @@
                           id="submit"
                           name="send"
                           @click="eliminarExperiencia(experiencia)"
-                          class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+                          class="btn border-red-700 bg-red-700 hover:bg-red-700 text-white rounded-md cursor-pointer"
                           style="max-height: 3rem"
                         >
                           Eliminar
                         </button>
                       </div>
 
-                      <div class="grid grid-cols-1 gap-4 mt-5">
+                      <div class="grid grid-cols-1 gap-4 mt-8">
                         <button
                           id="submit"
                           name="send"
                           @click="showNuevaExperienciaModal = true"
-                          class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
-                        >
-                          Agregar Nueva Habilidad
+                          class="btn border-emerald-600 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md cursor-pointer"
+                          >
+                          Agregar Nueva Experiencia
                         </button>
                       </div>
                     </div>
@@ -739,7 +794,7 @@
                 id="submit"
                 name="send"
                 @click="registrarEstudiante()"
-                class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
+                class="btn border-emerald-600 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md cursor-pointer"
               >
                 Completar
               </button>
@@ -1083,6 +1138,7 @@ export default {
       image2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
 
       paginaFormulario: 1,
+      cantidadHabilididadesGenericas: 5,
 
       estudianteDto: {
         idUsuarios: null,
@@ -1113,30 +1169,34 @@ export default {
           habilidades: {
             habilidades: [
               {
-                habilidad: "Java",
-                nivel: 5,
-                principal: true,
-              },
-              {
-                habilidad: "Python",
-                nivel: 4,
-                principal: true,
-              },
-              {
-                habilidad: "C++",
-                nivel: 3,
-                principal: true,
-              },
-              {
-                habilidad: "C#",
-                nivel: 2,
-                principal: false,
-              },
-              {
-                habilidad: "JavaScript",
+                habilidad: "Habilididad Genérica1",
                 nivel: 1,
                 principal: false,
               },
+              {
+                habilidad: "Habilididad Genérica2",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Habilididad Genérica3",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Habilididad Genérica4",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Habilididad Genérica5",
+                nivel: 1,
+                principal: false,
+              },
+
+
+
+
             ],
           },
 
