@@ -31,30 +31,34 @@
               class="bg-white dark:bg-slate-900 rounded-md shadow dark:shadow-gray-700 p-6"
             >
               <h3 class="mb-6 text-2xl leading-normal font-semibold">
-                Contactanos !
+                ¡Contáctanos!
               </h3>
 
-              <form>
+              <form @submit.prevent="sendEmail">
                 <div class="grid lg:grid-cols-12 lg:gap-6">
                   <div class="lg:col-span-6 mb-5">
-                    <label for="name" class="font-semibold">Tu nombre:</label>
+                    <label for="name" class="font-semibold"
+                      >Nombre completo</label
+                    >
                     <input
                       name="name"
                       id="name"
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      placeholder="Nombre :"
+                      placeholder="Nombre..."
+                      v-model="formData.name"
                     />
                   </div>
 
                   <div class="lg:col-span-6 mb-5">
-                    <label for="email" class="font-semibold">Tu correo:</label>
+                    <label for="email" class="font-semibold">Email</label>
                     <input
                       name="email"
                       id="email"
                       type="email"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      placeholder="Correo :"
+                      placeholder="Email... "
+                      v-model="formData.email"
                     />
                   </div>
                 </div>
@@ -62,13 +66,14 @@
                 <div class="grid grid-cols-1">
                   <div class="mb-5">
                     <label for="subject" class="font-semibold"
-                      >Tu consulta:</label
+                      >Número de celular</label
                     >
                     <input
                       name="subject"
                       id="subject"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                      placeholder="Asunto :"
+                      placeholder=" (Opcional)"
+                      v-model="formData.numero"
                     />
                   </div>
 
@@ -81,6 +86,7 @@
                       id="comments"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2 textarea"
                       placeholder="Mensaje :"
+                      v-model="formData.comments"
                     ></textarea>
                   </div>
                 </div>
@@ -136,26 +142,35 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import navbar from "@/components/General/navbarGeneral.vue";
 import footers from "@/components/footer/footer.vue";
-
 import switcher from "@/components/General/switcher.vue";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 export default {
   data() {
     return {
+      formData: {
+        name: "",
+        email: "",
+        subject: "",
+        comments: "",
+        numero: "",
+      },
       datas: [
         {
           icon: "uil uil-phone",
-          name: "Telefono",
+          name: "Teléfono",
           desc: "Lunes a jueves de 08:30 a las 16:00",
-          href: "tel:+ 591 (2) 2782222",
-          title: "+ 591 (2) 2782222",
+          href: "tel:+59122782222",
+          title: "+591 (2) 2782222",
         },
         {
           icon: "uil uil-envelope",
           name: "Email",
-          desc: "Comunicate con nosotros atraves de correo electronico",
-          href: "email :pzapata@ucb.edu.bo",
+          desc: "Comunicate con nosotros a través de correo electrónico",
+          href: "mailto:pzapata@ucb.edu.bo",
           title: "pzapata@ucb.edu.bo",
         },
         {
@@ -167,6 +182,55 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    validateEmail(email) {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    },
+
+    async sendEmail() {
+      if (this.formData.name === "") {
+        toast.error("Te falta poner tu nombre");
+        return;
+      }
+      if (this.formData.email === "") {
+        toast.error("Te falta poner tu correo");
+        return;
+      }
+      if (!this.validateEmail(this.formData.email)) {
+        toast.error("Por favor ingresa un correo electrónico válido.");
+        return;
+      }
+
+      if (this.formData.comments === "") {
+        toast.error("Te falta poner el mensaje");
+        return;
+      }
+      /** 
+      
+      Swal.fire({
+  title: "Informacion completa",
+  text: "Se te dirrecionara a tu correo electronico ${this.formData.email}",
+  icon: "success",
+});*/
+      this.formData.subject = "CONSULTA DE USUARIO SOBRE LA INTERNSHIP";
+if(this.formData.numero){
+  this.formData.numero = `Número para contactarse con ${this.formData.name}:\n${this.formData.numero}`;
+      
+}
+      const { name, email, subject, comments, numero } = this.formData;
+
+      const remitente = "jhessikazarate@gmail.com";
+      const mailtoLink = `mailto:${remitente}?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(
+        `Nombre de la persona interesada: ${name}\n\n\n${comments}\n\n \n${numero}`
+      )}`;
+      window.location.href = mailtoLink;
+      this.formData.numero="";
+    },
+    
   },
   components: {
     navbar,

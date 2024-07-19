@@ -256,7 +256,7 @@ export default {
   data() {
     return {
       searchValue: "",
-      selectedCarreraId: 25,
+      selectedCarreraId: "",
       carreras: [],
       options: [
         "Ingenieria de Sistemas",
@@ -264,7 +264,7 @@ export default {
         "Psicopedagogia",
         "Administracion",
       ],
-      selected: "Ingenieria de Sistemas",
+      selected: "",
     };
   },
 
