@@ -987,6 +987,7 @@
                     v-model="nuevaExperiencia.titulo"
                     class="form-input border border-slate-100 dark:border-slate-800"
                     placeholder="Título :"
+                    maxlength="40"
                   />
                 </div>
                 <!--end col-->
@@ -1003,6 +1004,8 @@
                     v-model="nuevaExperiencia.empresa"
                     class="form-input border border-slate-100 dark:border-slate-800"
                     placeholder="Compañia :"
+                    maxlength="40"
+
                   />
                 </div>
                 <!--end col-->
@@ -1019,6 +1022,7 @@
                     v-model="nuevaExperiencia.duracion"
                     class="form-input border border-slate-100 dark:border-slate-800"
                     placeholder="Duración :"
+                    maxlength="40"
                   />
                 </div>
                 <!--end col-->
@@ -1031,6 +1035,7 @@
                     v-model="nuevaExperiencia.descripcion"
                     class="form-input border border-slate-100 dark:border-slate-800 textarea"
                     placeholder="Descripción :"
+                    maxlength="100"
                   ></textarea>
                 </div>
                 <!--end col-->
@@ -1073,6 +1078,7 @@
                   id="WordPress"
                   name="number"
                   required=""
+                  maxlength="40"
                   v-model="nuevaHabilidad"
                 />
               </div>
@@ -1206,41 +1212,22 @@ export default {
 
           experiencia: {
             experiencia: [
-              {
-                idExperiencia: 1,
-                titulo: "Desarrollador de Software",
-                empresa: "Empresa 1",
-                duracion: "2020-2021",
-                descripcion: "Desarrollador de Software en la empresa 1",
-              },
-              {
-                idExperiencia: 1,
-                titulo: "Desarrollador de Software",
-                empresa: "Empresa 1",
-                duracion: "2020-2021",
-                descripcion: "Desarrollador de Software en la empresa 1",
-              },
-              {
-                idExperiencia: 1,
-                titulo: "Desarrollador de Software",
-                empresa: "Empresa 1",
-                duracion: "2020-2021",
-                descripcion: "Desarrollador de Software en la empresa 1",
-              },
+              
+              
             ],
           },
           redesSociales: {
             linkedin: {
-              url: "https://www.linkedin.com/in/daniel-aldazosa-miranda-0b0b3b1b4/",
+              url: "",
             },
             facebook: {
-              url: "https://www.facebook.com/daniel.aldazosa",
+              url: "",
             },
             twitter: {
-              url: "https://twitter.com/daniel_aldazosa",
+              url: "",
             },
             instagram: {
-              url: "https://www.instagram.com/daniel_aldazosa/",
+              url: "",
             },
           },
         },
