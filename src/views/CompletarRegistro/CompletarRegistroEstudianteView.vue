@@ -78,7 +78,7 @@
         <div class="relative shrink-0">
           <img
             :src="this.imageSrc2"
-            class="h-64 w-full object-cover lg:rounded-xl shadow dark:shadow-gray-700"
+            class="h-64 w-full bg-white object-cover lg:rounded-xl shadow dark:shadow-gray-700"
             id="profile-banner"
             alt=""
           />
@@ -108,7 +108,7 @@
                 >
                   <img
                     :src="this.imageSrc"
-                    class="rounded-full shadow dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800"
+                    class="rounded-full bg-white shadow dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800"
                     id="profile-image"
                     alt=""
                   />
@@ -278,14 +278,20 @@
                       >*</span
                     ></label
                   >
-                  <input
-                    type="number"
-                    id="birthday"
-                    name="birthday"
+                  <select
                     v-model="estudianteDto.persona.anioIngresoUniversidad"
-                    @input="validateInputYear"
-                    class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                  />
+                    class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-2"
+                  >
+                    <option v-for="anio in aniosIngresoDisponibles" :value="anio">{{ anio }}</option>
+
+                  </select>
+
+
+                  
+
+
+
+
                 </div>
 
                 <!--
@@ -303,13 +309,14 @@
               <div class="grid grid-cols-1">
                 <div class="mt-5">
                   <label class="form-label font-medium"
-                    >Descripción : <span class="text-red-600">*</span>
+                    >Descripción : <span class="text-red-600">*</span>  {{ estudianteDto.persona.descripcion.length }}/1000
                   </label>
                   <textarea
                     name="comments"
                     id="comments"
                     class="form-input border border-slate-100 dark:border-slate-800 mt-2 textarea"
                     v-model="estudianteDto.persona.descripcion"
+                    @input="checkLength"
                     placeholder="Descripción :"
                   ></textarea>
                 </div>
@@ -1028,7 +1035,7 @@
                 <!--end col-->
 
                 <div class="col-span-12">
-                  <label class="form-label font-medium"> Descripción : </label>
+                  <label class="form-label font-medium"> Descripción :  </label>
                   <textarea
                     name="comments"
                     id="Description"
@@ -1145,6 +1152,7 @@ export default {
 
       paginaFormulario: 1,
       cantidadHabilididadesGenericas: 5,
+      aniosIngresoDisponibles:[],
 
       estudianteDto: {
         idUsuarios: null,
@@ -1269,8 +1277,25 @@ export default {
     //second word of the family name
     this.estudianteDto.persona.apellidoMaterno = this.$keycloak.idTokenParsed.family_name.split(" ")[1];
     this.estudianteDto.correo = this.$keycloak.tokenParsed.email;
+
+    //llenar el arreglo aniosIngresoDisponibles
+    let anioActual = new Date().getFullYear();
+    for(let i = anioActual; i >= 2000; i--){
+      this.aniosIngresoDisponibles.push(i).toString();
+    }
+    this.estudianteDto.persona.anioIngresoUniversidad = anioActual;
+
+    
+
   },
   methods: {
+    checkLength() {
+      if (this.estudianteDto.persona.descripcion.length > 1000) {
+        this.estudianteDto.persona.descripcion = this.estudianteDto.persona.descripcion.substring(0, 1000);
+      }
+    },
+
+
     async fetchCarreras() {
       let loader = this.$loading.show();
       const response = await this.carrerasStore.getCarreras();
@@ -1285,13 +1310,25 @@ export default {
 
       console.log(response);
 
-      this.estudianteDto.idCarreras = response[0].idCarreras;
 
       this.carreras = response;
+
+      //ordenar
+      this.carreras.sort((a, b) => {
+        if (a.nombre > b.nombre) {
+          return 1;
+        }
+        if (a.nombre < b.nombre) {
+          return -1;
+        }
+        return 0;
+      });
+      this.estudianteDto.idCarreras = this.carreras[0].idCarreras;
+
     },
 
 
-    irAPaginaFormulario2() {
+    async irAPaginaFormulario2() {
       if(this.estudianteDto.persona.ci == null || this.estudianteDto.persona.ci == ""){
         toast.error("Por favor ingrese su CI");
         return;
@@ -1318,15 +1355,7 @@ export default {
       }
       console.log(this.estudianteDto.persona.fotoPerfil);
 
-      if(this.estudianteDto.persona.fotoPerfil == null || this.estudianteDto.persona.fotoPerfil == "" || this.estudianteDto.persona.fotoPerfil == "https://cdn-icons-png.flaticon.com/512/84/84099.png"){
-        toast.error("Por favor suba una foto de perfil");
-        return;
-      }
-
-      if(this.estudianteDto.persona.bannerPerfil == null || this.estudianteDto.persona.bannerPerfil == ""){
-        toast.error("Por favor suba una foto de banner");
-        return;
-      }
+      
 
       //comprobar si la fecha de nacimiento es mayor a la fecha actual
       let fechaNacimiento = new Date(this.estudianteDto.persona.fechaDeNacimiento);
@@ -1350,6 +1379,53 @@ export default {
       if(fechaNacimiento > fechaMinima){
         toast.error("Debes tener al menos 17 años para registrarte");
         return;
+      }
+
+
+      if(this.estudianteDto.persona.fotoPerfil == null || this.estudianteDto.persona.fotoPerfil == "" || this.estudianteDto.persona.fotoPerfil == "https://cdn-icons-png.flaticon.com/512/84/84099.png"){
+        //swal seguro que desea continuar sin foto de perfil
+        await Swal.fire({
+          title: "¿Estás seguro?",
+          text: "Estás a punto de continuar sin subir una foto de perfil, ¿Deseas continuar?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Sí",
+          cancelButtonText: "No",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            //foto por defecto
+            this.estudianteDto.persona.fotoPerfil='http://imgfz.com/i/dMyF894.png';
+            this.imageSrc = 'http://imgfz.com/i/dMyF894.png';
+           
+          }else{
+            return;
+          }
+        });
+      }
+
+      if(this.estudianteDto.persona.bannerPerfil == null || this.estudianteDto.persona.bannerPerfil == "" || this.estudianteDto.persona.bannerPerfil == "https://cdn-icons-png.flaticon.com/512/84/84099.png"){
+        //swal seguro que desea continuar sin foto de perfil
+        await Swal.fire({
+          title: "¿Estás seguro?",
+          text: "Estás a punto de continuar sin subir una foto de portada, ¿Deseas continuar?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Sí",
+          cancelButtonText: "No",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.estudianteDto.persona.bannerPerfil="http://imgfz.com/i/sgXW19O.png";
+            this.imageSrc2= "http://imgfz.com/i/sgXW19O.png"
+;           
+          }
+          else{
+            return;
+          }
+        });
       }
 
 
