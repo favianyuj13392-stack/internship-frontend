@@ -92,7 +92,7 @@ try {
 
     const keycloakVar=  keycloak.init({
         onLoad: 'check-sso',
-        silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+        //silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
         redirectUri: window.location.origin,
     }).then(authenticated  => {
         app.use(router(keycloak));
