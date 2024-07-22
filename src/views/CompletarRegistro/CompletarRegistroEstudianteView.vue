@@ -1122,15 +1122,19 @@ import { useFilesStore } from "@/stores/fileStore.js";
 import Swal from "sweetalert2";
 import Compressor from "compressorjs";
 import {useCarrerasStore} from "@/stores/carrerasStore.js";
+import { useAuthStore } from "@/stores/authStore";
 export default {
   setup() {
     const estudianteStore = useEstudiantesStore();
     const filesStore = useFilesStore();
     const carrerasStore = useCarrerasStore();
+    const authStore = useAuthStore();
+
     return {
       estudianteStore,
       filesStore,
       carrerasStore,
+      authStore,
     };
   },
 
@@ -1266,11 +1270,27 @@ export default {
     },
   },
 
-  beforeMount() {
+  async beforeMount() {
     if (!this.$keycloak.authenticated) {
       this.$router.push("/");
     }
+
+
+
+
+
     this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
+
+
+const existencia = await this.authStore.checkExistencia(
+        this.$keycloak.tokenParsed.sub
+      );
+      if(existencia == true){
+        this.$router.push("/");
+      }
+
+
+
     this.estudianteDto.persona.nombre = this.$keycloak.idTokenParsed.given_name;
     //first word of the family name
     this.estudianteDto.persona.apellidoPaterno = this.$keycloak.idTokenParsed.family_name.split(" ")[0];
