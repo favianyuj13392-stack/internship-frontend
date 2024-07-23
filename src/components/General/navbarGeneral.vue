@@ -197,7 +197,7 @@
             class="jhessika"
           >
             <li :class="activeMenu === '/contact' ? 'active' : ''">
-              <router-link class="sub-menu-item">Iniciar Sesión</router-link>
+              <a class="sub-menu-item">Iniciar Sesión</a>
             </li>
           </div>
        
