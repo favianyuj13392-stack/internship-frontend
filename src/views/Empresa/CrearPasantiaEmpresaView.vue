@@ -13,7 +13,8 @@
                             alt="" />
 
                         <div class="md:ms-4 md:mt-0 mt-6">
-                            <input type="text" class="text-l font-semibold p-2" v-model="data.pasantiasDto.titulo" placeholder="Título Pasantía" />
+                            <input type="text" class="text-l font-semibold p-2" v-model="data.pasantiasDto.titulo"
+                                placeholder="Título Pasantía" />
                             <div class="mt-2">
                                 <span class="text-slate-400 font-medium me-2 inline-block"><i
                                         class="uil uil-building text-[18px] text-cyan-600 me-1"></i>
@@ -22,8 +23,8 @@
                                 <span class="text-slate-400 font-medium me-2 inline-block"><i
                                         class="uil uil-map-marker text-[18px] text-cyan-600 me-1"></i>
                                     {{
-                                        data?.institucion.direccion ? data?.institucion.direccion : "Beijing, China"
-                                    }}</span>
+        data?.institucion.direccion ? data?.institucion.direccion : "Beijing, China"
+    }}</span>
                             </div>
                         </div>
                     </div>
@@ -37,7 +38,8 @@
                     <div class="flex items
                     -center space-x-40 mt-6">
                         <h5 class="text-lg font-semibold">Fecha de Cierre:</h5>
-                        <input type="date" class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-600 w-full p-2"
+                        <input type="date"
+                            class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-600 w-full p-2"
                             v-model="data.pasantiasDto.fechaCierre" />
                     </div>
 
@@ -45,8 +47,7 @@
 
                     <div class="flex items-center space-x-40 mt-6">
                         <h5 class="text-lg font-semibold">Áreas:</h5>
-                        <button
-                            @click="agregarArea()"
+                        <button @click="agregarArea()"
                             class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
                             Agregar
                         </button>
@@ -58,28 +59,28 @@
                     <ul class="list-none">
                         <li v-for="item in this.data.pasantiasDto.areas" :key="item" class="text-slate-400 mt-2">
                             <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
-                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2" @click="data.pasantiasDto.areas = data.pasantiasDto.areas.filter(e => e !== item)"></i>
+                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2"
+                                @click="data.pasantiasDto.areas = data.pasantiasDto.areas.filter(e => e !== item)"></i>
 
                         </li>
                     </ul>
 
                     <div class="flex items-center space-x-40 mt-6">
                         <h5 class="text-lg font-semibold">Requisistos:</h5>
-                        
-                        <button
-                        @click="agregarRequisitos()"
 
+                        <button @click="agregarRequisitos()"
                             class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
                             Agregar
                         </button>
                     </div>
 
-                 
+
 
                     <ul class="list-none">
                         <li v-for="item in this.data.pasantiasDto.requisitos" :key="item" class="text-slate-400 mt-2">
                             <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
-                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2" @click="data.pasantiasDto.requisitos = data.pasantiasDto.requisitos.filter(e => e !== item)"></i>
+                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2"
+                                @click="data.pasantiasDto.requisitos = data.pasantiasDto.requisitos.filter(e => e !== item)"></i>
                         </li>
                     </ul>
 
@@ -87,9 +88,7 @@
 
                     <div class="flex items-center space-x-40 mt-6">
                         <h5 class="text-lg font-semibold">Funciones:</h5>
-                        <button
-                        @click="agregarFunciones()"
-
+                        <button @click="agregarFunciones()"
                             class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
                             Agregar
                         </button>
@@ -98,16 +97,15 @@
                     <ul class="list-none">
                         <li v-for="item in this.data.pasantiasDto.funciones" :key="item" class="text-slate-400 mt-2">
                             <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
-                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2" @click="data.pasantiasDto.funciones = data.pasantiasDto.funciones.filter(e => e !== item)"></i>
+                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2"
+                                @click="data.pasantiasDto.funciones = data.pasantiasDto.funciones.filter(e => e !== item)"></i>
                         </li>
                     </ul>
 
 
                     <div class="flex items-center space-x-40 mt-6">
                         <h5 class="text-lg font-semibold">Beneficios:</h5>
-                        <button
-                        @click="agregarBeneficios()"
-
+                        <button @click="agregarBeneficios()"
                             class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
                             Agregar
                         </button>
@@ -116,79 +114,97 @@
                     <ul class="list-none">
                         <li v-for="item in this.data.pasantiasDto.beneficios" :key="item" class="text-slate-400 mt-2">
                             <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
-                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2" @click="data.pasantiasDto.beneficios = data.pasantiasDto.beneficios.filter(e => e !== item)"></i>
+                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2"
+                                @click="data.pasantiasDto.beneficios = data.pasantiasDto.beneficios.filter(e => e !== item)"></i>
                         </li>
                     </ul>
 
+                    <div>
+                        <div class="flex items-center space-x-40 mt-6">
+                            <h5 class="text-lg font-semibold">Carreras:</h5>
+                            <select v-model="carreraSelected" @change="agregarCarrera($event.target.value)"
+                                class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
+                                <option value="" disabled selected>Seleccionar Carrera</option>
+                                <option v-for="carrera in carreras" :key="carrera.idCarreras" :value="carrera">{{
+        carrera.nombre }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <ul class="list-none">
+                            <li v-for="carrera in selectedCarreras" :key="carrera.idCarreras"
+                                class="text-slate-400 mt-2">
+                                <i class="uil uil-arrow-right text-cyan-600 me-1"></i>
+                                <span>{{ carrera.nombre }}</span>
+                                <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2"
+                                    @click="removerCarrera(carrera)"></i>
+                            </li>
+                        </ul>
+                    </div>
+
                     <div class="mt-5">
-                        <a
-                        @click="guardarPasantia()"
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto">Guardar Pasantía</a>
+                        <a @click="guardarPasantia()"
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto">Guardar
+                            Pasantía</a>
                     </div>
                 </div>
                 <!--end col-->
 
                 <div class="lg:col-span-4 md:col-span-5">
-          <div
-            class="bg-slate-50 dark:bg-slate-800 rounded-md shadow dark:shadow-gray-700 p-6 sticky top-20"
-          >
-            <div class="w-full leading-[0] border-0">
-              <iframe
-                  :src="mapSrc"
-                  style="border: 0"
-                  class="w-full h-[350px] rounded-md shadow dark:shadow-gray-700"
-                  allowfullscreen
-                ></iframe>
-            </div>
+                    <div class="bg-slate-50 dark:bg-slate-800 rounded-md shadow dark:shadow-gray-700 p-6 sticky top-20">
+                        <div class="w-full leading-[0] border-0">
+                            <iframe :src="mapSrc" style="border: 0"
+                                class="w-full h-[350px] rounded-md shadow dark:shadow-gray-700"
+                                allowfullscreen></iframe>
+                        </div>
 
-            <ul class="list-none mt-4">
-              <li class="flex justify-between mt-2">
-                <span class="text-slate-400 font-medium">Dirección:</span>
-                <span class="font-medium">{{ data.institucion.direccion }}</span>
-              </li>
+                        <ul class="list-none mt-4">
+                            <li class="flex justify-between mt-2">
+                                <span class="text-slate-400 font-medium">Dirección:</span>
+                                <span class="font-medium">{{ data.institucion.direccion }}</span>
+                            </li>
 
-             
 
-              <li class="flex justify-between mt-2">
-                <span class="text-slate-400 font-medium">Correo:</span>
-                <span class="font-medium">{{ this.data.institucion.correo }}</span>
-              </li>
 
-              <li class="flex justify-between mt-2">
-                <span class="text-slate-400 font-medium">Sectores:</span>
-                <div class="flex flex-wrap ml-16">
-                  <span class="font-medium" v-for="sector in this.data.institucion.sectores">{{ sector}}</span>
+                            <li class="flex justify-between mt-2">
+                                <span class="text-slate-400 font-medium">Correo:</span>
+                                <span class="font-medium">{{ this.data.institucion.correo }}</span>
+                            </li>
+
+                            <li class="flex justify-between mt-2">
+                                <span class="text-slate-400 font-medium">Sectores:</span>
+                                <div class="flex flex-wrap ml-16">
+                                    <span class="font-medium" v-for="sector in this.data.institucion.sectores">{{
+        sector }}</span>
+                                </div>
+                            </li>
+
+
+
+                            <li class="flex justify-between mt-2" v-if="this.data.institucion.redesSociales.web">
+                                <span class="text-slate-400 font-medium">Website:</span>
+                                <span class="font-medium">{{ this.data.institucion.redesSociales.web }}</span>
+                            </li>
+
+                            <li class="flex justify-between mt-2">
+                                <span class="text-slate-400 font-medium">Social:</span>
+
+                                <ul class="list-none text-end space-x-0.5">
+                                    <li class="inline" v-for="(url, name) in data.institucion.redesSociales"
+                                        :key="name">
+                                        <a :href="url" target="_blank"
+                                            class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400">
+                                            <i :class="`uil uil-${name}`" :title="name" class="align-middle"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!--end icon-->
+                            </li>
+                        </ul>
+
+
+                    </div>
                 </div>
-              </li>
-
-              
-
-              <li class="flex justify-between mt-2" v-if="this.data.institucion.redesSociales.web">
-                <span class="text-slate-400 font-medium">Website:</span>
-                <span class="font-medium">{{ this.data.institucion.redesSociales.web }}</span>
-              </li>
-
-              <li class="flex justify-between mt-2">
-                <span class="text-slate-400 font-medium">Social:</span>
-
-                <ul class="list-none text-end space-x-0.5">
-                  <li class="inline" v-for="(url, name) in data.institucion.redesSociales" :key="name">
-                    <a
-                      :href="url"
-                      target="_blank"
-                      class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
-                    >
-                      <i :class="`uil uil-${name}`" :title="name" class="align-middle"></i>
-                    </a>
-                  </li>
-                </ul>
-                <!--end icon-->
-              </li>
-            </ul>
-
-            
-          </div>
-        </div>
 
 
 
@@ -272,31 +288,33 @@ import footers from "@/components/footer/footer.vue";
 import switcher from "@/components/General/switcher.vue";
 
 import { usePasantiasAdministracionInstitucionStore } from "@/stores/Instituciones/PasantiasAdministracionInstitucionStore.js";
-import {useInstitucionesAdministracionStore} from "@/stores/Instituciones/InstitucionesAdministracionStore.js";
+import { useInstitucionesAdministracionStore } from "@/stores/Instituciones/InstitucionesAdministracionStore.js";
+import { useCarrerasStore } from "@/stores/carrerasStore";
 import Swal from "sweetalert2";
 export default {
 
     setup() {
         const pasantiasAdministracionInstitucionStore = usePasantiasAdministracionInstitucionStore();
-        const institucionesAdministracionStore  = useInstitucionesAdministracionStore();
+        const institucionesAdministracionStore = useInstitucionesAdministracionStore();
+        const carrerasStore = useCarrerasStore();
         return {
-            pasantiasAdministracionInstitucionStore,institucionesAdministracionStore
+            pasantiasAdministracionInstitucionStore, institucionesAdministracionStore, carrerasStore
         }
     },
 
 
     computed: {
-    mapSrc() {
-      // Construir la URL del mapa de Google con la dirección
-      const direccionEncoded = encodeURIComponent(this.data.institucion.direccion);
-      return `https://www.google.com/maps/embed/v1/place?q=${direccionEncoded}&key=AIzaSyCoOVExrC3ADb7HXkXLyBZB3zyVqClHZ7w`;
-      // Reemplaza TU_API_KEY con tu propia clave de API de Google Maps
+        mapSrc() {
+            // Construir la URL del mapa de Google con la dirección
+            const direccionEncoded = encodeURIComponent(this.data.institucion.direccion);
+            return `https://www.google.com/maps/embed/v1/place?q=${direccionEncoded}&key=AIzaSyCoOVExrC3ADb7HXkXLyBZB3zyVqClHZ7w`;
+            // Reemplaza TU_API_KEY con tu propia clave de API de Google Maps
+        },
     },
-  },
 
 
     methods: {
-        async agregarArea(){
+        async agregarArea() {
             //agregar un area con swal
             const { value: area } = await Swal.fire({
                 title: 'Agregar Area',
@@ -318,7 +336,7 @@ export default {
         },
 
 
-        async agregarRequisitos(){
+        async agregarRequisitos() {
             //agregar un area con swal
             const { value: requisito } = await Swal.fire({
                 title: 'Agregar Requisito',
@@ -337,10 +355,10 @@ export default {
                 this.data.pasantiasDto.requisitos.push(requisito);
             }
 
-      
+
         },
 
-        async agregarFunciones(){
+        async agregarFunciones() {
             //agregar un area con swal
             const { value: funcion } = await Swal.fire({
                 title: 'Agregar Funcion',
@@ -360,11 +378,11 @@ export default {
                 console.log(this.data.pasantiasDto.funciones)
             }
 
-      
-    
+
+
         },
 
-        async agregarBeneficios(){
+        async agregarBeneficios() {
             //agregar un area con swal
             const { value: beneficio } = await Swal.fire({
                 title: 'Agregar Beneficio',
@@ -384,6 +402,16 @@ export default {
             }
         },
 
+        agregarCarrera() {
+            if (this.carreraSelected && !this.selectedCarreras.includes(this.carreraSelected)) {
+                this.selectedCarreras.push(this.carreraSelected);
+            }
+            console.log(this.selectedCarreras)
+            this.carreraSelected = null;
+        },
+        removerCarrera(carrera) {
+            this.selectedCarreras = this.selectedCarreras.filter(item => item.idCarreras !== carrera.idCarreras);
+        },
 
 
         async fetchPasantiaActual() {
@@ -407,11 +435,11 @@ export default {
 
         },
 
-        async fetchInstitucion(){
+        async fetchInstitucion() {
             let loader = this.$loading.show();
             const response = await this.institucionesAdministracionStore.fetchInstitucionByUUID(this.$keycloak.tokenParsed.sub);
             loader.hide();
-            if(response==null){
+            if (response == null) {
                 Swal.fire({
                     title: "Error",
                     text: "No se pudo cargar la informacion de la empresa",
@@ -423,15 +451,31 @@ export default {
             this.data.institucion = response;
         },
 
+        async fetchCarreras() {
+            let loader = this.$loading.show();
+            const response = await this.carrerasStore.getCarreras();
+            loader.hide();
+            if (response == null) {
+                Swal.fire({
+                    title: "Error",
+                    text: "No se pudo cargar las carreras",
+                    icon: "error",
+                    confirmButtonText: "Ok",
+                });
+                return;
+            }
+            this.carreras = response;
+        },
 
-
-        async guardarPasantia(){
+        async guardarPasantia() {
             let loader = this.$loading.show();
             const idInstituciones = this.data.institucion.idInstituciones;
+            this.data.pasantiasDto.idCarreras = this.selectedCarreras.map(carrera => carrera.idCarreras);
             const pasantiaDto = this.data.pasantiasDto;
-            const response = await this.pasantiasAdministracionInstitucionStore.postPasantiaInstitucion(this.$keycloak.tokenParsed.sub, idInstituciones,pasantiaDto);
+            console.log(pasantiaDto)
+            const response = await this.pasantiasAdministracionInstitucionStore.postPasantiaInstitucion(this.$keycloak.tokenParsed.sub, idInstituciones, pasantiaDto);
             loader.hide();
-            if(response==null){
+            if (response == null) {
                 Swal.fire({
                     title: "Error",
                     text: "No se pudo guardar la pasantia",
@@ -466,6 +510,7 @@ export default {
     data() {
         return {
             data: {
+                carreraSelected: "",
                 pasantiasDto: {
                     titulo: "",
                     descripcion: "",
@@ -475,7 +520,7 @@ export default {
                     funciones: [],
                     beneficios: [],
                     fechaCierre: "",
-
+                    idCarreras: [],
 
                 },
                 institucion: {
@@ -489,7 +534,7 @@ export default {
                         twitter: "",
                         linkedin: "",
                         instagram: "",
-            
+
                     },
                     sectores: [],
 
@@ -658,6 +703,13 @@ export default {
                 "Sound knowledge of            application architecture and design.",
                 "Excellent problem solving and analytical skills",
             ],
+            carreras: [],
+            selectedCarreras: [
+                {
+                    idCarreras: "",
+                    nombre: "",
+                },
+            ],
         };
     },
     components: {
@@ -669,7 +721,10 @@ export default {
         //this.id = this.$route.params.id;
 
         //this.fetchPasantiaActual();
+        this.fetchCarreras();
         this.fetchInstitucion();
+        this.selectedCarreras = [];
+
     },
 };
 </script>
