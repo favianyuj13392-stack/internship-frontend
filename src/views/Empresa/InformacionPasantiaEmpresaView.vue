@@ -672,7 +672,6 @@ export default {
       window.open(url, '_blank');
     },
     async aceptarSolicitud(){
-      const loader = this.$loading;
       try{
         const comentarios = await Swal.fire({
           title: 'Comentarios',
@@ -695,7 +694,8 @@ export default {
 
         });
         if(comentarios.isConfirmed){
-          loader.show();
+          
+          let loader= this.$loading.show();
           
           const dataComment = {
             comentarios: comentarios.value
@@ -727,9 +727,8 @@ export default {
         }
       }catch(error){
         console.log(error);
-      }finally{
-        loader.hide();
       }
+
     },
     async rechazarSolicitud(){
       const loader = this.$loading.show();

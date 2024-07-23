@@ -39,7 +39,7 @@ app.use(LoadingPlugin, {
 function tokenInterceptor () {
   axios.interceptors.request.use(config => {
     if (app.config.globalProperties.$keycloak.authenticated) {
-      //config.headers.Authorization = `Bearer ${app.config.globalProperties.$keycloak.token}`
+      config.headers.Authorization = `Bearer ${app.config.globalProperties.$keycloak.token}`
     }
     return config
   }, error => {
@@ -91,8 +91,8 @@ try {
     };
 
     const keycloakVar=  keycloak.init({
-        //onLoad: 'check-sso',
-        //silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
         redirectUri: window.location.origin,
     }).then(authenticated  => {
         app.use(router(keycloak));
