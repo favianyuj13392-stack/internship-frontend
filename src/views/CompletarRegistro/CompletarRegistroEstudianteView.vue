@@ -71,7 +71,7 @@
           id="pro-banner"
           name="profile-banner"
           type="file"
-          accept="image/*"  
+          accept="image/*"
           class="hidden"
           @change="handleFileUploadBannerPerfil"
         />
@@ -98,7 +98,6 @@
                 name="profile-image"
                 type="file"
                 accept="image/*"
-
                 class="hidden"
                 @change="handleFileUploadFotoPerfil"
               />
@@ -193,7 +192,6 @@
                     name="name"
                     required=""
                     disabled
-
                   />
                 </div>
 
@@ -212,7 +210,6 @@
                     name="name"
                     required=""
                     disabled
-
                   />
                 </div>
 
@@ -228,7 +225,6 @@
                     name="email"
                     required=""
                     disabled
-
                   />
                 </div>
 
@@ -267,8 +263,12 @@
                     v-model="estudianteDto.idCarreras"
                     class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-2"
                   >
-                    <option v-for="carrera in carreras" :value="carrera.idCarreras">{{ carrera.nombre }}</option>
-
+                    <option
+                      v-for="carrera in carreras"
+                      :value="carrera.idCarreras"
+                    >
+                      {{ carrera.nombre }}
+                    </option>
                   </select>
                 </div>
 
@@ -282,16 +282,13 @@
                     v-model="estudianteDto.persona.anioIngresoUniversidad"
                     class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-2"
                   >
-                    <option v-for="anio in aniosIngresoDisponibles" :value="anio">{{ anio }}</option>
-
+                    <option
+                      v-for="anio in aniosIngresoDisponibles"
+                      :value="anio"
+                    >
+                      {{ anio }}
+                    </option>
                   </select>
-
-
-                  
-
-
-
-
                 </div>
 
                 <!--
@@ -309,7 +306,8 @@
               <div class="grid grid-cols-1">
                 <div class="mt-5">
                   <label class="form-label font-medium"
-                    >Descripción : <span class="text-red-600">*</span>  {{ estudianteDto.persona.descripcion.length }}/1000
+                    >Descripción : <span class="text-red-600">*</span>
+                    {{ estudianteDto.persona.descripcion.length }}/1000
                   </label>
                   <textarea
                     name="comments"
@@ -335,7 +333,7 @@
                 <button
                   id="submit"
                   name="send"
-                  @click=" irAPaginaFormulario2()  "
+                  @click="irAPaginaFormulario2()"
                   class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
                 >
                   Siguiente
@@ -351,35 +349,24 @@
             <div
               class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
             >
-            <div class="flex justify-end">
+              <div class="flex justify-end">
                 <h5 class="text-m font mb-4">Por favor llena las estrellas</h5>
               </div>
 
-
               <div class="grid grid-cols-1 gap-4">
-                
-
-
-
-
-
-
-
                 <div>
                   <div>
-
-
-                    <h5 class="text-lg font-semibold mb-4">Habilidades Genéricas :</h5>
-
-
-
-
+                    <h5 class="text-lg font-semibold mb-4">
+                      Habilidades Genéricas :
+                    </h5>
 
                     <div class="grid grid-cols-1 gap-4">
                       <div
                         class="grid sm:grid-cols-2 gap-4 mt-5 pt-3"
-                        v-for="habilidad in estudianteDto.persona.habilidades
-                          .habilidades.slice(0,cantidadHabilididadesGenericas) "
+                        v-for="habilidad in estudianteDto.persona.habilidades.habilidades.slice(
+                          0,
+                          cantidadHabilididadesGenericas
+                        )"
                         id="contenedor-habilidad"
                       >
                         <label class="form-label font-medium" for="WordPress">{{
@@ -392,24 +379,19 @@
                           :disabled="false"
                         >
                         </StarRatingComponent>
-                        
                       </div>
                     </div>
 
-
-
-
-
-
-
-
-                    <h5 class="text-lg font-semibold mb-4 mt-16">Habilidades :</h5>
+                    <h5 class="text-lg font-semibold mb-4 mt-16">
+                      Habilidades :
+                    </h5>
 
                     <div class="grid grid-cols-1 gap-4">
                       <div
                         class="grid sm:grid-cols-3 gap-4 mt-5 pt-3"
-                        v-for="habilidad in estudianteDto.persona.habilidades
-                          .habilidades.slice(cantidadHabilididadesGenericas)"
+                        v-for="habilidad in estudianteDto.persona.habilidades.habilidades.slice(
+                          cantidadHabilididadesGenericas
+                        )"
                         id="contenedor-habilidad"
                       >
                         <label class="form-label font-medium" for="WordPress">{{
@@ -438,7 +420,6 @@
                             name="send"
                             v-if="habilidad.principal == true"
                             @click="habilidad.principal = false"
-                            
                             class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer"
                           >
                             Principal
@@ -449,7 +430,7 @@
                             name="send"
                             @click="eliminarHabilidad(habilidad)"
                             class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-                            >
+                          >
                             Eliminar
                           </button>
                         </div>
@@ -488,7 +469,6 @@
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -559,7 +539,7 @@
                           name="send"
                           @click="showNuevaExperienciaModal = true"
                           class="btn border-emerald-600 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md cursor-pointer"
-                          >
+                        >
                           Agregar Nueva Experiencia
                         </button>
                       </div>
@@ -1012,7 +992,6 @@
                     class="form-input border border-slate-100 dark:border-slate-800"
                     placeholder="Compañia :"
                     maxlength="40"
-
                   />
                 </div>
                 <!--end col-->
@@ -1035,7 +1014,7 @@
                 <!--end col-->
 
                 <div class="col-span-12">
-                  <label class="form-label font-medium"> Descripción :  </label>
+                  <label class="form-label font-medium"> Descripción : </label>
                   <textarea
                     name="comments"
                     id="Description"
@@ -1121,7 +1100,7 @@ import { useEstudiantesStore } from "@/stores/Estudiantes/estudiantesStore.js";
 import { useFilesStore } from "@/stores/fileStore.js";
 import Swal from "sweetalert2";
 import Compressor from "compressorjs";
-import {useCarrerasStore} from "@/stores/carrerasStore.js";
+import { useCarrerasStore } from "@/stores/carrerasStore.js";
 import { useAuthStore } from "@/stores/authStore";
 export default {
   setup() {
@@ -1156,7 +1135,7 @@ export default {
 
       paginaFormulario: 1,
       cantidadHabilididadesGenericas: 5,
-      aniosIngresoDisponibles:[],
+      aniosIngresoDisponibles: [],
 
       estudianteDto: {
         idUsuarios: null,
@@ -1178,8 +1157,7 @@ export default {
           apellidoMaterno: "",
           telefono: 0,
           ci: "",
-          fotoPerfil:
-            "",
+          fotoPerfil: "",
           anioIngresoUniversidad: 0,
           descripcion: "",
           fechaDeNacimiento: "",
@@ -1211,10 +1189,6 @@ export default {
                 nivel: 1,
                 principal: false,
               },
-
-
-
-
             ],
           },
 
@@ -1223,10 +1197,7 @@ export default {
           },
 
           experiencia: {
-            experiencia: [
-              
-              
-            ],
+            experiencia: [],
           },
           redesSociales: {
             linkedin: {
@@ -1275,46 +1246,38 @@ export default {
       this.$router.push("/");
     }
 
-
-
-
-
     this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
 
-
-const existencia = await this.authStore.checkExistencia(
-        this.$keycloak.tokenParsed.sub
-      );
-      if(existencia == true){
-        this.$router.push("/");
-      }
-
-
+    const existencia = await this.authStore.checkExistencia(
+      this.$keycloak.tokenParsed.sub
+    );
+    if (existencia == true) {
+      this.$router.push("/");
+    }
 
     this.estudianteDto.persona.nombre = this.$keycloak.idTokenParsed.given_name;
     //first word of the family name
-    this.estudianteDto.persona.apellidoPaterno = this.$keycloak.idTokenParsed.family_name.split(" ")[0];
+    this.estudianteDto.persona.apellidoPaterno =
+      this.$keycloak.idTokenParsed.family_name.split(" ")[0];
     //second word of the family name
-    this.estudianteDto.persona.apellidoMaterno = this.$keycloak.idTokenParsed.family_name.split(" ")[1];
+    this.estudianteDto.persona.apellidoMaterno =
+      this.$keycloak.idTokenParsed.family_name.split(" ")[1];
     this.estudianteDto.correo = this.$keycloak.tokenParsed.email;
 
     //llenar el arreglo aniosIngresoDisponibles
     let anioActual = new Date().getFullYear();
-    for(let i = anioActual; i >= 2000; i--){
+    for (let i = anioActual; i >= 2000; i--) {
       this.aniosIngresoDisponibles.push(i).toString();
     }
     this.estudianteDto.persona.anioIngresoUniversidad = anioActual;
-
-    
-
   },
   methods: {
     checkLength() {
       if (this.estudianteDto.persona.descripcion.length > 1000) {
-        this.estudianteDto.persona.descripcion = this.estudianteDto.persona.descripcion.substring(0, 1000);
+        this.estudianteDto.persona.descripcion =
+          this.estudianteDto.persona.descripcion.substring(0, 1000);
       }
     },
-
 
     async fetchCarreras() {
       let loader = this.$loading.show();
@@ -1330,7 +1293,6 @@ const existencia = await this.authStore.checkExistencia(
 
       console.log(response);
 
-
       this.carreras = response;
 
       //ordenar
@@ -1344,65 +1306,88 @@ const existencia = await this.authStore.checkExistencia(
         return 0;
       });
       this.estudianteDto.idCarreras = this.carreras[0].idCarreras;
-
     },
 
-
     async irAPaginaFormulario2() {
-      if(this.estudianteDto.persona.ci == null || this.estudianteDto.persona.ci == ""){
+      if (
+        this.estudianteDto.persona.ci == null ||
+        this.estudianteDto.persona.ci == ""
+      ) {
         toast.error("Por favor ingrese su CI");
         return;
       }
 
-      if(this.estudianteDto.persona.fechaDeNacimiento == null || this.estudianteDto.persona.fechaDeNacimiento == ""){
+      if (
+        this.estudianteDto.persona.fechaDeNacimiento == null ||
+        this.estudianteDto.persona.fechaDeNacimiento == ""
+      ) {
         toast.error("Por favor ingrese su fecha de nacimiento");
         return;
       }
 
-      if(this.estudianteDto.persona.anioIngresoUniversidad == null || this.estudianteDto.persona.anioIngresoUniversidad == "" || this.estudianteDto.persona.anioIngresoUniversidad == 0){
+      if (
+        this.estudianteDto.persona.anioIngresoUniversidad == null ||
+        this.estudianteDto.persona.anioIngresoUniversidad == "" ||
+        this.estudianteDto.persona.anioIngresoUniversidad == 0
+      ) {
         toast.error("Por favor ingrese su año de ingreso a la universidad");
         return;
       }
 
-      if(this.estudianteDto.persona.descripcion == null || this.estudianteDto.persona.descripcion == ""){
+      if (
+        this.estudianteDto.persona.descripcion == null ||
+        this.estudianteDto.persona.descripcion == ""
+      ) {
         toast.error("Por favor ingrese una descripción");
         return;
       }
 
-      if(this.estudianteDto.persona.telefono == null || this.estudianteDto.persona.telefono == "" || this.estudianteDto.persona.telefono == 0){
+      if (
+        this.estudianteDto.persona.telefono == null ||
+        this.estudianteDto.persona.telefono == "" ||
+        this.estudianteDto.persona.telefono == 0
+      ) {
         toast.error("Por favor ingrese su número de teléfono");
         return;
       }
       console.log(this.estudianteDto.persona.fotoPerfil);
 
-      
-
       //comprobar si la fecha de nacimiento es mayor a la fecha actual
-      let fechaNacimiento = new Date(this.estudianteDto.persona.fechaDeNacimiento);
+      let fechaNacimiento = new Date(
+        this.estudianteDto.persona.fechaDeNacimiento
+      );
       let fechaActual = new Date();
-      if(fechaNacimiento > fechaActual){
+      if (fechaNacimiento > fechaActual) {
         toast.error("No puedes nacer en el futuro >:c payaso");
         return;
       }
 
-
       //comprobar si el año de ingreso a la universidad es mayor a la fecha actual
-      let fechaIngreso = new Date(this.estudianteDto.persona.anioIngresoUniversidad);
-      if(fechaIngreso > fechaActual){
-        toast.error("No puedes ingresar a la universidad en el futuro >:c payaso");
+      let fechaIngreso = new Date(
+        this.estudianteDto.persona.anioIngresoUniversidad
+      );
+      if (fechaIngreso > fechaActual) {
+        toast.error(
+          "No puedes ingresar a la universidad en el futuro >:c payaso"
+        );
         return;
       }
 
       //comprobar si la persona tiene al menos 17 años
       let fechaMinima = new Date();
       fechaMinima.setFullYear(fechaMinima.getFullYear() - 17);
-      if(fechaNacimiento > fechaMinima){
+      if (fechaNacimiento > fechaMinima) {
         toast.error("Debes tener al menos 17 años para registrarte");
         return;
       }
-
-
-      if(this.estudianteDto.persona.fotoPerfil == null || this.estudianteDto.persona.fotoPerfil == "" || this.estudianteDto.persona.fotoPerfil == "https://cdn-icons-png.flaticon.com/512/84/84099.png"){
+      this.paginaFormulario = 1;
+      let continuarSinFotoPerfil = false;
+      if (
+        this.estudianteDto.persona.fotoPerfil == null ||
+        this.estudianteDto.persona.fotoPerfil == "" ||
+        this.estudianteDto.persona.fotoPerfil ==
+          "https://cdn-icons-png.flaticon.com/512/84/84099.png"
+      ) {
         //swal seguro que desea continuar sin foto de perfil
         await Swal.fire({
           title: "¿Estás seguro?",
@@ -1416,16 +1401,24 @@ const existencia = await this.authStore.checkExistencia(
         }).then((result) => {
           if (result.isConfirmed) {
             //foto por defecto
-            this.estudianteDto.persona.fotoPerfil='http://imgfz.com/i/dMyF894.png';
-            this.imageSrc = 'http://imgfz.com/i/dMyF894.png';
-           
-          }else{
+            this.estudianteDto.persona.fotoPerfil =
+              "http://imgfz.com/i/dMyF894.png";
+            this.imageSrc = "http://imgfz.com/i/dMyF894.png";
+            continuarSinFotoPerfil = true;
+          } else {
+          
+            console.log("no continuar sin foto de perfil");
             return;
           }
         });
       }
-
-      if(this.estudianteDto.persona.bannerPerfil == null || this.estudianteDto.persona.bannerPerfil == "" || this.estudianteDto.persona.bannerPerfil == "https://cdn-icons-png.flaticon.com/512/84/84099.png"){
+      let continuarSinBannerPerfil = false;
+      if (
+        this.estudianteDto.persona.bannerPerfil == null ||
+        this.estudianteDto.persona.bannerPerfil == "" ||
+        this.estudianteDto.persona.bannerPerfil ==
+          "https://cdn-icons-png.flaticon.com/512/84/84099.png"
+      ) {
         //swal seguro que desea continuar sin foto de perfil
         await Swal.fire({
           title: "¿Estás seguro?",
@@ -1438,21 +1431,34 @@ const existencia = await this.authStore.checkExistencia(
           cancelButtonText: "No",
         }).then((result) => {
           if (result.isConfirmed) {
-            this.estudianteDto.persona.bannerPerfil="http://imgfz.com/i/sgXW19O.png";
-            this.imageSrc2= "http://imgfz.com/i/sgXW19O.png"
-;           
-          }
-          else{
+            this.estudianteDto.persona.bannerPerfil =
+              "http://imgfz.com/i/sgXW19O.png";
+            this.imageSrc2 = "http://imgfz.com/i/sgXW19O.png";
+            continuarSinBannerPerfil = true;
+          } else {
+            console.log("no continuar sin banner");
+           
             return;
           }
         });
       }
+if(        this.estudianteDto.persona.bannerPerfil ==   "http://imgfz.com/i/sgXW19O.png" || !this.estudianteDto.persona.bannerPerfil ==  "" ){
+continuarSinBannerPerfil  =true;
+}
+if(        this.estudianteDto.persona.fotoPerfil ==  "http://imgfz.com/i/dMyF894.png" || !this.estudianteDto.persona.fotoPerfil ==  "" ){
+continuarSinFotoPerfil  =true;
+}
 
+      if (!continuarSinFotoPerfil || !continuarSinBannerPerfil) {
+        console.log("continuar sin foto de perfil", continuarSinFotoPerfil, continuarSinBannerPerfil);
+        this.paginaFormulario = 1;
+      } else{
+        this.paginaFormulario = 2;
+      }
 
-
-      this.paginaFormulario = 2;
+      console.log("continuar sin foto de perfil", continuarSinFotoPerfil, continuarSinBannerPerfil);
+      console.log("pagina formulario", this.paginaFormulario);
     },
-
 
     updateField(field, value) {
       this.estudianteDto.persona[field] = value.toUpperCase();
@@ -1595,10 +1601,6 @@ const existencia = await this.authStore.checkExistencia(
     },
 
     async registrarEstudiante() {
-  
-
-
-
       let loader = this.$loading.show();
       try {
         this.estudianteDto.persona.habilidadesSeleccionada.habilidades_seleccionadas =
