@@ -100,7 +100,7 @@
                   id="submit"
                   name="send"
                   v-if="habilidad.principal == false"
-                  class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer"
+                  class="btn border-zinc-600 bg-zinc-600 hover:bg-zinc-700 text-white text-sm p-0 rounded-md cursor-pointer"
                 >
                   Secundario
                 </button>
@@ -110,7 +110,7 @@
                   id="submit"
                   name="send"
                   v-if="habilidad.principal == true"
-                  class="btn border-yellow-600 bg-yellow-600 hover:bg-yellow-700 text-white text-sm p-0 rounded-md cursor-pointer"
+                  class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer"
                 >
                   Principal
                 </button>

@@ -194,11 +194,15 @@
                     v-model="estudianteDto.idCarreras"
                     class="form-select form-input border border-slate-100 dark:border-slate-800 block w-full mt-2"
                   >
-                    <option value="1">Ing. en Sistemas</option>
-                    <option value="2">Psicopedagogía</option>
-                    <option value="3">Comunicación Social</option>
+                    <option
+                      v-for="carrera in carreras"
+                      :value="carrera.idCarreras"
+                    >
+                      {{ carrera.nombre }}
+                    </option>
                   </select>
                 </div>
+
 
                 <div class="lg:col-span-6">
                   <label class="form-label font-medium" for="birthday"
@@ -280,7 +284,7 @@
                             name="send"
                             v-if="habilidad.principal == false"
                             @click="habilidad.principal = true"
-                            class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer"
+                            class="btn border-zinc-600 bg-zinc-600 hover:bg-zinc-700 text-white text-sm p-0 rounded-md cursor-pointer"
                           >
                             Secundario
                           </button>
@@ -290,7 +294,7 @@
                             name="send"
                             v-if="habilidad.principal == true"
                             @click="habilidad.principal = false"
-                            class="btn border-yellow-600 bg-yellow-600 hover:bg-yellow-700 text-white text-sm p-0 rounded-md cursor-pointer"
+                            class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer"
                           >
                             Principal
                           </button>
@@ -312,7 +316,7 @@
                         id="submit"
                         name="send"
                         @click="showNuevaHabilidadModal = true"
-                        class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
+                        class="btn border-emerald-600 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md cursor-pointer"
                       >
                         Agregar Nueva Habilidad
                       </button>
@@ -388,9 +392,9 @@
                           id="submit"
                           name="send"
                           @click="showNuevaExperienciaModal = true"
-                          class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
+                          class="btn border-emerald-600 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md cursor-pointer"
                         >
-                          Agregar Nueva Habilidad
+                          Agregar Nueva Experiencia
                         </button>
                       </div>
                     </div>
@@ -602,7 +606,7 @@
                 id="submit"
                 name="send"
                 @click="registrarEstudiante()"
-                class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
+                class="btn border-emerald-600 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md cursor-pointer"
               >
                 Guardar
               </button>
@@ -914,14 +918,17 @@ import Swal from "sweetalert2";
 import { useFilesStore } from "@/stores/fileStore.js";
 import Compressor from "compressorjs";
 import StarRatingComponent from "@/components/General/Extras/StartRatingComponent.vue";
+import { useCarrerasStore } from "@/stores/carrerasStore.js";
 
 export default {
   setup() {
     const estudiantesStore = useEstudiantesStore();
     const filesStore = useFilesStore();
+    const carrerasStore = useCarrerasStore();
     return {
       estudiantesStore,
       filesStore,
+      carrerasStore,
     };
   },
   data() {
@@ -1061,8 +1068,39 @@ export default {
     }
     this.estudianteDto.persona.anioIngresoUniversidad = 2000;
     this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
+    this.fetchCarreras();
   },
   methods: {
+    async fetchCarreras() {
+      let loader = this.$loading.show();
+      const response = await this.carrerasStore.getCarreras();
+      loader.hide();
+      if (response === null) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Error al cargar las carreras, porfavor intenta de nuevo",
+        });
+      }
+
+      console.log(response);
+
+      this.carreras = response;
+
+      //ordenar
+      this.carreras.sort((a, b) => {
+        if (a.nombre > b.nombre) {
+          return 1;
+        }
+        if (a.nombre < b.nombre) {
+          return -1;
+        }
+        return 0;
+      });
+      this.estudianteDto.idCarreras = this.carreras[0].idCarreras;
+    },
+
+
     updateField(field, value) {
       this.estudianteDto.persona[field] = value.toUpperCase();
     },
