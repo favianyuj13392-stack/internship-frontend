@@ -47,7 +47,7 @@
                         <h5 class="text-lg font-semibold">Áreas:</h5>
                         <button
                             @click="agregarArea()"
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
                             Agregar
                         </button>
                     </div>
@@ -69,7 +69,7 @@
                         <button
                         @click="agregarRequisitos()"
 
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
                             Agregar
                         </button>
                     </div>
@@ -90,7 +90,7 @@
                         <button
                         @click="agregarFunciones()"
 
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
                             Agregar
                         </button>
                     </div>
@@ -109,7 +109,7 @@
                         <button
                         @click="agregarBeneficios()"
 
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
                             Agregar
                         </button>
                     </div>
@@ -124,7 +124,7 @@
                     <div class="mt-20">
                         <a
                         @click="actualizarPasantia()"
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto">Actualizar Pasantía</a>
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-full">Actualizar Pasantía</a>
                     </div>
                 </div>
                 <!--end col-->

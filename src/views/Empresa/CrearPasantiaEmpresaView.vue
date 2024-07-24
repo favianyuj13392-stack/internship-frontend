@@ -29,10 +29,12 @@
                         </div>
                     </div>
                     <!--detallesssss-->
-                    <h5 class="text-lg font-semibold">Detalles de la pasantia:</h5>
+                    <h5 class="text-lg font-semibold">Detalles de la pasantia: <span>{{ data.pasantiasDto.descripcion.length }}/1000</span></h5>
 
                     <textarea class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-600 w-full p-2"
-                        placeholder="Escribe aquí..." v-model="data.pasantiasDto.descripcion">
+                        placeholder="Escribe aquí..." v-model="data.pasantiasDto.descripcion"
+                        maxlength="1000"
+                        >
                     </textarea>
 
                     <div class="flex items
@@ -50,7 +52,7 @@
                     <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
                         <h5 class="text-lg font-semibold">Áreas:</h5>
                         <button @click="agregarArea()"
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
                             Agregar
                         </button>
                         
@@ -70,7 +72,7 @@
                         <h5 class="text-lg font-semibold">Requisistos:</h5>
 
                         <button @click="agregarRequisitos()"
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
                             Agregar
                         </button>
                     </div>
@@ -90,7 +92,7 @@
                     <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
                         <h5 class="text-lg font-semibold">Funciones:</h5>
                         <button @click="agregarFunciones()"
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
                             Agregar
                         </button>
                     </div>
@@ -107,7 +109,7 @@
                     <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
                         <h5 class="text-lg font-semibold">Beneficios:</h5>
                         <button @click="agregarBeneficios()"
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
                             Agregar
                         </button>
                     </div>
@@ -124,7 +126,7 @@
                         <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
                             <h5 class="text-lg font-semibold">Carreras:</h5>
                             <select v-model="carreraSelected" @change="agregarCarrera($event.target.value)"
-                                class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
+                                class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
                                 <option value="" disabled selected>Seleccionar Carrera</option>
                                 <option v-for="carrera in carreras" :key="carrera.idCarreras" :value="carrera">{{
         carrera.nombre }}
@@ -153,7 +155,7 @@
 
                     <div class="mt-16">
                         <a @click="guardarPasantia()"
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto">Guardar
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-full">Guardar
                             Pasantía</a>
                     </div>
                 </div>
@@ -474,9 +476,50 @@ export default {
                 return;
             }
             this.carreras = response;
+            //ordenar las carreras
+            this.carreras.sort((a, b) => a.nombre.localeCompare(b.nombre));
+            this.carreraSelected = this.carreras[0];
+
         },
 
         async guardarPasantia() {
+            //comprobar los campos
+            if (this.data.pasantiasDto.titulo == "" || this.data.pasantiasDto.descripcion == "" || this.data.pasantiasDto.areas.length == 0 || this.data.pasantiasDto.requisitos.length == 0 || this.data.pasantiasDto.funciones.length == 0 || this.data.pasantiasDto.beneficios.length == 0 || this.data.pasantiasDto.fechaCierre == "" || this.selectedCarreras.length == 0) {
+                Swal.fire({
+                    title: "Error",
+                    text: "Debes llenar todos los campos",
+                    icon: "error",
+                    confirmButtonText: "Ok",
+                });
+                return;
+            }
+
+            if(this.data.pasantiasDto.descripcion.length > 1000){
+                Swal.fire({
+                    title: "Error",
+                    text: "La descripción no puede tener más de 1000 caracteres",
+                    icon: "error",
+                    confirmButtonText: "Ok",
+                });
+                return;
+            }
+
+            //fecha de cierre no puede ser menor a la fecha actual
+            const fechaCierre = new Date(this.data.pasantiasDto.fechaCierre);
+            const fechaActual = new Date();
+            if (fechaCierre < fechaActual) {
+                Swal.fire({
+                    title: "Error",
+                    text: "La fecha de cierre no puede ser menor a la fecha actual",
+                    icon: "error",
+                    confirmButtonText: "Ok",
+                });
+                return;
+            }
+
+
+
+
             let loader = this.$loading.show();
             const idInstituciones = this.data.institucion.idInstituciones;
             this.data.pasantiasDto.idCarreras = this.selectedCarreras.map(carrera => carrera.idCarreras);
