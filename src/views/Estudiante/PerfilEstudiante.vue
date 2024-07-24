@@ -243,8 +243,10 @@
                     class="inline"
                     v-for="(url, name) in data.persona.redesSociales"
                     :key="name"
+                    
                   >
                     <a
+                      v-if="url.url"
                       :href="url.url"
                       target="_blank"
                       class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
