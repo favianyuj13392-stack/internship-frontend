@@ -44,18 +44,19 @@
                     </div>
 
 
+                   
 
-                    <div class="flex items-center space-x-40 mt-6">
+
+                    <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
                         <h5 class="text-lg font-semibold">Áreas:</h5>
                         <button @click="agregarArea()"
                             class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
                             Agregar
                         </button>
+                        
                     </div>
 
-                    <p class="text-slate-400 mt-4">
-                        Áreas a las cuales esta dirigida la pasantía
-                    </p>
+                    
                     <ul class="list-none">
                         <li v-for="item in this.data.pasantiasDto.areas" :key="item" class="text-slate-400 mt-2">
                             <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
@@ -65,7 +66,7 @@
                         </li>
                     </ul>
 
-                    <div class="flex items-center space-x-40 mt-6">
+                    <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
                         <h5 class="text-lg font-semibold">Requisistos:</h5>
 
                         <button @click="agregarRequisitos()"
@@ -86,7 +87,7 @@
 
 
 
-                    <div class="flex items-center space-x-40 mt-6">
+                    <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
                         <h5 class="text-lg font-semibold">Funciones:</h5>
                         <button @click="agregarFunciones()"
                             class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
@@ -103,7 +104,7 @@
                     </ul>
 
 
-                    <div class="flex items-center space-x-40 mt-6">
+                    <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
                         <h5 class="text-lg font-semibold">Beneficios:</h5>
                         <button @click="agregarBeneficios()"
                             class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
@@ -120,7 +121,7 @@
                     </ul>
 
                     <div>
-                        <div class="flex items-center space-x-40 mt-6">
+                        <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
                             <h5 class="text-lg font-semibold">Carreras:</h5>
                             <select v-model="carreraSelected" @change="agregarCarrera($event.target.value)"
                                 class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
@@ -142,7 +143,15 @@
                         </ul>
                     </div>
 
-                    <div class="mt-5">
+
+
+
+
+
+
+
+
+                    <div class="mt-16">
                         <a @click="guardarPasantia()"
                             class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto">Guardar
                             Pasantía</a>
