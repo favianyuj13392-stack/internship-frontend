@@ -13,7 +13,7 @@
                             alt="" />
 
                         <div class="md:ms-4 md:mt-0 mt-6">
-                            <input type="text" class="text-l font-semibold p-2" v-model="data.pasantiasDto.titulo"
+                            <input type="text" class="text-l font-semibold p-2 form-input border border-slate-100 dark:border-slate-800  " v-model="data.pasantiasDto.titulo"
                                 placeholder="Título Pasantía" />
                             <div class="mt-2">
                                 <span class="text-slate-400 font-medium me-2 inline-block"><i
@@ -31,7 +31,7 @@
                     <!--detallesssss-->
                     <h5 class="text-lg font-semibold">Detalles de la pasantia: <span>{{ data.pasantiasDto.descripcion.length }}/1000</span></h5>
 
-                    <textarea class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-600 w-full p-2"
+                    <textarea class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-600 w-full p-2  form-input border border-slate-100 dark:border-slate-800 h-24 "
                         placeholder="Escribe aquí..." v-model="data.pasantiasDto.descripcion"
                         maxlength="1000"
                         >
@@ -41,7 +41,7 @@
                     -center space-x-40 mt-6">
                         <h5 class="text-lg font-semibold">Fecha de Cierre:</h5>
                         <input type="date"
-                            class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-600 w-full p-2"
+                            class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-600 w-full p-2 form-input border border-slate-100 dark:border-slate-800"
                             v-model="data.pasantiasDto.fechaCierre" />
                     </div>
 
@@ -185,8 +185,10 @@
                             <li class="flex justify-between mt-2">
                                 <span class="text-slate-400 font-medium">Sectores:</span>
                                 <div class="flex flex-wrap ml-16">
-                                    <span class="font-medium" v-for="sector in this.data.institucion.sectores">{{
-        sector }}</span>
+                                    <a v-for="sector in this.data.institucion.sectores" v-bind:key="sector">
+                <span 
+                      class="bg-cyan-600/5 hover:bg-cyan-600/20 dark:bg-cyan-600/10 hover:dark:bg-cyan-600/30 inline-block text-cyan-600 text-[12px] font-medium rounded-md mt-2 me-1 transition-all duration-500 p-1">{{ sector }}</span>
+                    </a> 
                                 </div>
                             </li>
 
@@ -233,54 +235,7 @@
     </section>
 
 
-    <section class="relative md:py-24 py-16">
-        <div v-if="this.data.activoPasantia">
-            <div v-if="this.data.postulantes" class="grid grid-cols-1 mt-10 pb-2 text-center">
-                <h3 class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold text-red-400">
-                    No hay aún postulantes
-                </h3>
-
-            </div>
-
-            <div v-else>
-                <div class="grid grid-cols-1 mt-10 pb-2 text-center">
-                    <h3 class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold">
-                        Pasantea aprobados en la pasantia
-                    </h3>
-                    <span>Pasantes aprobados: 2</span>
-                    <span>Pasantes pendientes: 10</span>
-                </div>
-                <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]">
-                    <div v-for="item in this.data.postulantes" :key="item.idPersona"
-                        class="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6">
-                        <div
-                            class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md relative -mt-12">
-                            <img :src="item.fotoPerfil" class="size-8" :alt="item.nombre" />
-                        </div>
-                        <div class="mt-4">
-                            <router-link class="text-lg hover:text-cyan-600 font-semibold">
-                                {{ item.nombre }} {{ item.apellidoPaterno }} {{ item.apellidoMaterno }}
-                            </router-link>
-                            <p class="text-slate-400 mt-2">{{ item.descripcion }}</p>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between">
-                            <span class="text-slate-400">
-                                <i class="fas fa-envelope pr-1"></i> {{ item.telefono }}
-                            </span>
-                            <span class="block font-semibold text-green-600"
-                                v-if="postulantesEstado.find(e => e.idUsuarios === item.idPersona)?.activo">
-                                Aprobado
-                            </span>
-                            <span class="block font-semibold text-yellow-600" v-else>
-                                Pendiente
-                            </span>
-                        </div>
-                    </div>
-                    <!--end content-->
-                </div>
-            </div>
-        </div>
-    </section>
+  
 
 
 

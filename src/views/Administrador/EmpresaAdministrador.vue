@@ -97,7 +97,7 @@
                     </div>
                     <div class="filter-search-form relative filter-border bg-gray-50 dark:bg-slate-800">
                       <i class="uil uil-briefcase-alt icons"></i>
-                      <v-select :options="sectores" v-model="selectedSector" class="ms-10"></v-select>
+                      <v-select  placeholder="Buscar sectores..." :options="sectores" v-model="selectedSector" class="ms-10"></v-select>
                     </div>
                     <input
                       type="submit"

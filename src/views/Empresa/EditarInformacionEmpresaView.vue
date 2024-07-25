@@ -147,8 +147,11 @@
               <li class="flex justify-between mt-2">
                 <span class="text-slate-400 font-medium">Sectores:</span>
                 <div class="flex flex-wrap ml-16">
-                  <span class="font-medium" v-for="sector in this.data.sectores">{{ sector}}</span>
-                </div>
+                  
+                  <a v-for="sector in this.data.sectores">
+                <span 
+                      class="bg-cyan-600/5 hover:bg-cyan-600/20 dark:bg-cyan-600/10 hover:dark:bg-cyan-600/30 inline-block text-cyan-600 text-[12px] font-medium rounded-md mt-2 me-1 transition-all duration-500 p-1">{{ sector }}</span>
+                    </a> </div>
               </li>
 
               
