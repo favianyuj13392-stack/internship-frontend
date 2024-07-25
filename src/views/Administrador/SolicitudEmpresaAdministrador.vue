@@ -135,12 +135,13 @@
           <div
             class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md"
           >
-            <img :src="item.logoEmpresa" class="size-8" alt="" />
+            <img :src="item.logoEmpresa" class="size-14" alt="" />
           </div>
           <div
             class="text-lg hover:text-cyan-600 font-semibold transition-all duration-500 ms-3 min-w-[180px]"
-            >{{ item.nombreInstitucion  }}</div
           >
+            {{ item.nombreInstitucion }}
+          </div>
         </div>
 
         <div class="md:block flex justify-between md:mt-0 mt-2 mr-1">
@@ -148,8 +149,7 @@
             ><span
               class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full"
               >Empresa:
-              </span
-            ></span
+            </span></span
           >
           <span class="text-slate-400"
             ><i class="uil uil-map-marker"></i> {{ item.direccion }}</span
@@ -166,28 +166,34 @@
             ></span
           >
           <span class="block text-slate-400 text-sm md:mt-1 mt-0"
-            ><i class="uil uil-user"></i>
-            {{ item.nombre }} {{ item.apellidoPaterno }}</span
-
+            ><i class="uil uil-user"></i> {{ item.nombre }}
+            {{ item.apellidoPaterno }}</span
           >
           <span class="block text-slate-400 text-sm md:mt-1 mt-0"
             ><i class="uil uil-fast-mail"></i>
-             {{ item.correo }}
-             </span
-          >
+            {{ item.correo }}
+          </span>
         </div>
-        <div class="md:block flex justify-between md:mt-0 mt-2">
-        </div>
+        <div class="md:block flex justify-between md:mt-0 mt-2"></div>
 
         <div class="md:mt-0 mt-4">
-          <a
+          <button
+            @click="sendEmail(item.correo)"
             href=""
             class="btn btn-icon rounded-full bg-yellow-600/5 hover:bg-yellow-600 border-yellow-600/10 hover:border-yellow-600 text-yellow-600 hover:text-white md:relative absolute top-0 end-0 md:m-0 m-3"
-            >
+          >
             <i class="uil-fast-mail"></i>
-          </a>
-          <router-link v-if="item.idUsuariosInstitucion"
-            :to="{ name: 'EmpresaSolicitudUsuarioAdministrador', params: {idEmpresa: item.idInstituciones, idSolicitud: item.idUsuariosInstitucion, idUsuario: item.idUsuarios}}"
+          </button>
+          <router-link
+            v-if="item.idUsuariosInstitucion"
+            :to="{
+              name: 'EmpresaSolicitudUsuarioAdministrador',
+              params: {
+                idEmpresa: item.idInstituciones,
+                idSolicitud: item.idUsuariosInstitucion,
+                idUsuario: item.idUsuarios,
+              },
+            }"
             class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto mt-2"
             >Más información</router-link
           >
@@ -217,7 +223,7 @@ import question from "@/components/General/Home/job-questions.vue";
 import explore from "@/components/General/Home/explore-job.vue";
 import switcher from "@/components/General/switcher.vue";
 import footers from "@/components/footer/footer.vue";
-import { useEmpresasAdminStore } from "@/stores/Administradores/empresasAdminStore"; 
+import { useEmpresasAdminStore } from "@/stores/Administradores/empresasAdminStore";
 export default {
   mounted() {
     this.fetchEmpresas();
@@ -238,6 +244,13 @@ export default {
       searchValue: "",
       totalPages: 0,
       datas: [],
+      formData: {
+        name: "",
+        email: "",
+        subject: "INTERNSHIP",
+        comments: "",
+        numero: "",
+      },
     };
   },
   components: {
@@ -259,28 +272,40 @@ export default {
     },
     async fetchEmpresas() {
       const loader = this.$loading.show();
-      try{
+      try {
         const response = await this.empresaStore.getSolicitudes(
           this.searchValue,
-          this.$keycloak.idTokenParsed.sub);
+          this.$keycloak.idTokenParsed.sub
+        );
         console.log(response);
-        if(response==null){
+        if (response == null) {
           this.datas = [];
           return;
         }
         console.log(response);
         this.datas = response;
-
-      }catch(error){
+      } catch (error) {
         console.log(error);
-      }finally{
+      } finally {
         loader.hide();
       }
     },
     searchEmpresas() {
       this.currentPage = 0;
       this.fetchEmpresas();
-    }
+    },
+    async sendEmail(Correo) {
+      this.formData.subject = "INTERNSHIP";
+      const remitente = "usei.lpz@ucb.edu.bo";
+      this.formData.email = remitente;
+      const { name, email, subject, comments, numero } = this.formData;
+
+      const mailtoLink = `mailto:${Correo}?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(`Mensaje de la Internship`)}`;
+      window.location.href = mailtoLink;
+      this.formData.numero = "";
+    },
   },
 };
 </script>

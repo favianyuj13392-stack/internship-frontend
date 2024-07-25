@@ -35,7 +35,7 @@
         </div>
 
         <!--end grid-->
-
+<div class="responsive-container">
         <div class="absolute -top-10 start-1/2 -translate-x-1/2">
           <div
             class="size-10 animate-[bounce_2s_infinite] bg-white dark:bg-slate-900 flex items-center justify-center shadow dark:shadow-gray-700 rounded-md"
@@ -107,6 +107,7 @@
             />
           </div>
         </div>
+      </div>
       </div>
       <!--end grid-->
     </div>
@@ -251,5 +252,10 @@ export default {
 <style lang="scss" scoped>
 img {
   filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.1));
+}
+@media (max-width: 768px) {
+  .responsive-container {
+    display: none;
+  }
 }
 </style>

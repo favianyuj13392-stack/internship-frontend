@@ -40,18 +40,7 @@
           <div
             class="p-6 shadow dark:shadow-gray-700 rounded-md bg-white dark:bg-slate-900 sticky top-20"
           >
-            <div class="relative flex justify-center items-center mb-4">
-              <div
-                @click="aceptarSolicitud"
-                class="btn rounded-md bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700 text-white ms-0 w-auto"
-                >Aprobar</div
-              >
-              <div
-                @click="rechazarSolicitud"
-                class="btn rounded-md bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700 text-white ms-2 w-auto"
-                >Rechazar</div
-              >
-            </div>
+       
             <div class="flex justify-center">
               <div
                 class="size-20 bg-cyan-600/5 group-hover:bg-cyan-600 text-cyan-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-700 transition duration-500 mx-auto"
@@ -91,7 +80,18 @@
                 >
               </div>
             </div>
-
+            <div class="relative flex justify-center items-center mb-4 mt-4">
+              <div
+                @click="aceptarSolicitud"
+                class="btn rounded-md bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700 text-white ms-0 w-auto cursor-pointer "
+                >Aprobar</div
+              >
+              <div
+                @click="rechazarSolicitud"
+                class="btn rounded-md bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700 text-white ms-2 w-auto cursor-pointer"
+                >Rechazar</div
+              >
+            </div>
             <div
               class="bg-slate-50 dark:bg-slate-800 rounded-md shadow dark:shadow-gray-700 p-2 sticky top-20 mt-5"
             >
@@ -114,9 +114,11 @@
 
                 <li class="flex justify-between mt-2">
                 <span class="text-slate-400 font-medium">Sectores:</span>
-                <div class="flex flex-wrap ml-16">
-                  <span class="font-medium" v-for="sector in this.data.institucion.sectores" v-bind:key="sector">{{sector}}</span>
-                </div>
+                <div class="flex flex-wrap ml-6">
+                  <a v-for="sector in this.data.institucion.sectores" v-bind:key="sector">
+                <span 
+                      class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 text-[10px] font-medium rounded-md mt-2 me-1 transition-all duration-500 p-1">{{ sector }}</span>
+                    </a> </div>
               </li>
 
                 <li class="flex justify-between mt-2">

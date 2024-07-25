@@ -119,25 +119,8 @@
                   v-show="dropdownOpen"
                 >
                   <ul class="py-2 text-start">
-                    <li>
-                      <router-link
-                        to="/perfil/estudiante"
-                        class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
-                        ><i data-feather="user" class="size-4 me-2"></i
-                        >Perfil</router-link
-                      >
-                    </li>
-                    <li>
-                      <router-link
-                        to="/perfil/estudiante/editar"
-                        class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
-                        ><i data-feather="settings" class="size-4 me-2"></i
-                        >Configuraciones</router-link
-                      >
-                    </li>
-                    <li
-                      class="border-t border-gray-100 dark:border-gray-800 my-2"
-                    ></li>
+                 
+                   
                     <li>
                       <a
                         @click="block()"
@@ -191,7 +174,7 @@
                             <li :class="activeMenu === '/administrador/empresa' ? 'active' : ''"><router-link to="/administrador/empresa"
                                     class="sub-menu-item ">Empresas</router-link></li>
                             <li :class="activeMenu === '/administrador/solicitud/empresa' ? 'active' : ''"><router-link to="/administrador/solicitud/empresa"
-                                    class="sub-menu-item">Solicitudes Empresa</router-link></li>
+                                    class="sub-menu-item">Solicitudes de usuarios</router-link></li>
                          
                         </ul>
                     </li>

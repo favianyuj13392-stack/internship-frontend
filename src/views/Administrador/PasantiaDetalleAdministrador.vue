@@ -163,13 +163,13 @@
             <div class="p-4" v-if="!activo">
               <button
                 @click="aprobarPasantia()"
-                class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto"
+                class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto mt-1"
               >
                 Aprobar
               </button>
               <button
                 @click="rechazarPasantia()"
-                class="btn rounded-md bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700 text-white md:ms-2 w-full md:w-auto"
+                class="btn rounded-md bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700 text-white md:ms-2 w-full md:w-auto mt-1"
               >
                 Rechazar
               </button>
@@ -179,7 +179,7 @@
                 @click="observar()"
                 class="btn rounded-md bg-yellow-500 hover:bg-yellow-600 border-yellow-500 hover:border-yellow-600 text-white md:ms-2 w-full md:w-auto"
               >
-                Observacion
+                Observación
               </button>
             </div>
           </div>
@@ -220,42 +220,44 @@
           <div
             class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
           >
-            <div
-              v-for="(item,index) in postulantes"
-              :key="item.idPersona"
-              class="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6"
-            >
-              <div
-                class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md relative -mt-12"
-              >
-                <img :src="item.fotoPerfil" class="size-8" :alt="item.nombre" />
-              </div>
-              <div class="mt-4">
-                <div
-                @click="redirectTO(index)"
-                class="text-lg hover:text-cyan-600 font-semibold">
-                  {{ item.nombre }} {{ item.apellidoPaterno }}
-                  {{ item.apellidoMaterno }}
-                </div>
-                <p class="text-slate-400 mt-2">{{ item.descripcion }}</p>
-              </div>
-              <div
-                class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between"
-              >
-                <span class="text-slate-400">
-                  <i class="fas fa-phone pr-1"></i> {{ item.telefono }}
-                </span>
-                <span
-                  class="block font-semibold text-green-600"
-                  v-if="getEstado(index)"
-                >
-                  Aprobado
-                </span>
-                <span class="block font-semibold text-yellow-600" v-else>
-                  Pendiente
-                </span>
-              </div>
-            </div>
+          <div
+  v-for="(item, index) in postulantes"
+  :key="item.idPersona"
+  class="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6 flex flex-col"
+>
+  <div
+    class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md relative -mt-12"
+  >
+    <img :src="item.fotoPerfil" class="size-14" :alt="item.nombre" />
+  </div>
+  <div class="mt-4 flex-1">
+    <div
+      @click="redirectTO(index)"
+      class="text-lg hover:text-cyan-600 font-semibold"
+    >
+      {{ item.nombre }} {{ item.apellidoPaterno }} {{ item.apellidoMaterno }}
+    </div>
+    <p class="text-slate-400 mt-2">{{ truncateDescription(item.descripcion) }}</p>
+  </div>
+  <div
+    class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between"
+    style="margin-top: auto;"
+  >
+    <span class="text-slate-400">
+      <i class="fas fa-phone pr-1"></i> {{ item.telefono }}
+    </span>
+    <span
+      class="block font-semibold text-green-600"
+      v-if="getEstado(index)"
+    >
+      Aprobado
+    </span>
+    <span class="block font-semibold text-yellow-600" v-else>
+      Pendiente
+    </span>
+  </div>
+</div>
+
             <!--end content-->
           </div>
         </div>
@@ -306,6 +308,13 @@ export default {
     switcher,
   },
   methods:{
+    truncateDescription(description) {
+      if (description.length > 70) {
+        return description.slice(0, 70) + '...';
+      } else {
+        return description;
+      }
+    },
     redirectTO(index){
       this.$router.push(
         { name: 'PerfilEstudianteAdministrador', params: 

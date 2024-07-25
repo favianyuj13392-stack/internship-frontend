@@ -40,7 +40,7 @@
           <div class="flex items-center">
             <img
               :src="data?.logoEmpresa ? data?.logoEmpresa : logoEmpresa"
-              class="size-20 p-3 shadow dark:shadow-gray-700 rounded-md bg-slate-50 dark:bg-slate-800"
+              class="size-20 shadow dark:shadow-gray-700 rounded-md bg-slate-50 dark:bg-slate-800"
               alt=""
             />
 
@@ -57,6 +57,7 @@
 
           <div class="md:mt-0 mt-4">
             <a
+             href="#pasantias"
               class="btn btn-sm bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md"
               >Ver Pasantías</a
             >
@@ -86,7 +87,7 @@
                 alt=""
               />
             </div>
-            <div class="col-span-6" v-for="imagen in data?.fotos" v-bind:key="imagen">
+            <div id="pasantias" class="col-span-6" v-for="imagen in data?.fotos" v-bind:key="imagen">
               <img
                 :src="imagen"
                 class="rounded-md shadow dark:shadow-gray-700"
@@ -95,20 +96,20 @@
             </div>
           </div>
 
-          <h5 class="text-xl font-semibold mt-6">Pasantias disponibles:</h5>
+          <h5  class="text-xl font-semibold mt-6">Pasantias disponibles aprobadas:</h5>
 
           <div class="grid lg:grid-cols-2 grid-cols-1 gap-6 mt-6">
-            <div
+            <div  
               class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800"
               v-for="item in data?.pasantias" :key="item"
               >
               <div class="p-6">
-                <a
-                  href=""
+                <router-link
+                                  :to="{ name: 'PasantiaDetalleAdministrador', params: { id: item.idPasantias } }"
                   class="title h5 text-lg font-semibold hover:text-cyan-600"
                   >
                   {{ item.titulo ? item.titulo : "Digital Marketing Solutions for Tomorrow" }}
-                  </a
+                  </router-link
                 >
                 <p class="text-slate-400 mt-2">
                   <i class="uil uil-clock text-cyan-600"></i> Cierre:
@@ -129,7 +130,7 @@
               >
                 <img
                   :src="data?.logoEmpresa ? data?.logoEmpresa : logoEmpresa"
-                  class="size-12 shadow-md dark:shadow-gray-800 rounded-md p-2 bg-white dark:bg-slate-900"
+                  class="size-12 shadow-md dark:shadow-gray-800 rounded-md p-1.5 bg-white dark:bg-slate-900"
                   alt=""
                 />
 
@@ -178,10 +179,10 @@
 
               <li class="flex justify-between mt-2">
                 <span class="text-slate-400 font-medium">Sectores:</span>
-                <span class="font-medium" v-for="sector in data?.sectores" :key="sector">
-                  {{ sector }}
-                </span>
-              </li>
+                <a v-for="sector in this.data.institucion.sectores" v-bind:key="sector">
+                <span 
+                      class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 text-[10px] font-medium rounded-md mt-2 me-1 transition-all duration-500 p-1">{{ sector }}</span>
+                    </a> </li>
               <li class="flex justify-between mt-2">
                 <span class="text-slate-400 font-medium">Social:</span>
 
@@ -243,7 +244,7 @@
           >
             <img
               :src="item.fotoPerfil"
-              class="size-8"
+              class="size-16"
               alt=""
             />
           </div>

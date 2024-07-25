@@ -42,7 +42,7 @@
                     class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md w-full"
                     download
                   >
-                    <i class="uil uil-file-download-alt"></i> Descargar CV
+                    <i class="uil uil-file-download-alt"></i> Ver currículum
                   </a>
                 </div>
               </div>
@@ -211,7 +211,7 @@
                 Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "No se encontraron curriculums, por favor carga en tu perfil uno para poder aplicar a la pasantía",
+                text: "No se encontraron curriculums, por favor sube un curriculum desde tu perfil para poder aplicar a la pasantía",
                 });
                 window.scrollTo(0, 0);
 

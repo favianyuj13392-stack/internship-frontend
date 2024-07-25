@@ -194,7 +194,7 @@
 
               <div>
                 <span
-                  v-for="language in item.language"
+                  v-for="language in item.pasantiasDto.beneficios"
                   :key="language"
                   class="bg-slate-100 dark:bg-slate-800 inline-block text-slate-900 dark:text-slate-300 text-xs px-2.5 py-0.5 font-semibold rounded-full me-1"
                   >{{ language }}</span
