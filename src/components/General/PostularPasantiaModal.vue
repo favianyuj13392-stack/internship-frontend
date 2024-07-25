@@ -211,7 +211,7 @@
                 Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "No se encontraron curriculums, por favor carga en tu perfil uno para poder aplicar a la pasantía",
+                text: "No se encontraron curriculums, por favor sube un curriculum desde las configuraciones de tu perfil para poder aplicar a la pasantía",
                 });
                 window.scrollTo(0, 0);
 
