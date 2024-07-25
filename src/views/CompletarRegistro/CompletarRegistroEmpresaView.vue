@@ -1959,6 +1959,7 @@ export default {
 
     toUpperCase(event) {
       event.target.value = event.target.value.toUpperCase();
+      this.usuarioInstitucion.persona.apellidoMaterno = this.usuarioInstitucion.persona.apellidoMaterno.toUpperCase();
     },
     toLowerCaseMail(event) {
       event.target.value = event.target.value.toLowerCase();
