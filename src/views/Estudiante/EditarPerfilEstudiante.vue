@@ -339,9 +339,10 @@
                     <div>
                       <div
                         class="grid sm:grid-cols-3 gap-4 mt-5 pt-3"
-                        v-for="experiencia in this.estudianteDto.persona
+                        v-for="(experiencia,index) in this.estudianteDto.persona
                           .experiencia.experiencia"
-                        :id="experiencia.titulo"
+                          :id="experiencia.titulo"
+                          :key="experiencia.titulo"
                       >
                         <div
                           class="text-slate-400 font-semibold min-w-[80px] text-center"
@@ -379,7 +380,7 @@
                         <button
                           id="submit"
                           name="send"
-                          @click="eliminarExperiencia(experiencia)"
+                          @click="eliminarExperiencia(index)"
                           class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
                           style="max-height: 3rem"
                         >
@@ -937,8 +938,15 @@ export default {
       image: "",
       imageSrc2: "../assets/images/team/01.jpg",
       image2: "",
+      nuevaHabilidad: "",
       showNuevaHabilidadModal: false,
       showNuevaExperienciaModal: false,
+      nuevaExperiencia: {
+        titulo: "",
+        empresa: "",
+        duracion: "",
+        descripcion: "",
+      },
       estudianteDto: {
         idUsuarios: null,
         kc_UUID: "asdkasdja-sdajfsdbkfasd-32",
@@ -1314,6 +1322,19 @@ export default {
     },
 
     agregarNuevaExperiencia(experiencia) {
+      if (
+        experiencia.titulo == "" ||
+        experiencia.empresa == "" ||
+        experiencia.duracion == "" ||
+        experiencia.descripcion == ""
+      ) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Porfavor llene todos los campos",
+        });
+        return;
+      }
       console.log("duracion: " + experiencia.duracion);
       this.estudianteDto.persona.experiencia.experiencia.push({
         titulo: experiencia.titulo,
@@ -1330,12 +1351,18 @@ export default {
       this.showNuevaExperienciaModal = false;
     },
 
-    eliminarExperiencia(experiencia) {
-      const index = this.estudianteDto.persona.experiencia.indexOf(experiencia);
+    eliminarExperiencia(index) {
       this.estudianteDto.persona.experiencia.experiencia.splice(index, 1);
     },
-
     agregarHabilidad(habilidad) {
+      if (habilidad == "") {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Porfavor ingrese una habilidad",
+        });
+        return;
+      }
       this.estudianteDto.persona.habilidades.habilidades.push({
         habilidad: habilidad,
         nivel: 0,

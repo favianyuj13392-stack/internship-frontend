@@ -25,7 +25,7 @@
                 class="size-28 rounded-full shadow dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800"
                 alt=""
               />
-              <div class="ms-4">
+              <div class="ms-4" id="contenedor-nombre">
                 <h5 class="text-lg font-semibold">
                   {{
                     data.persona.nombre +
@@ -292,7 +292,7 @@
                     class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md w-full"
                     download
                   >
-                    <i class="uil uil-file-download-alt"></i> Descargar CV
+                    <i class="uil uil-file-download-alt"></i> Ver currículum
                   </a>
                 </li>
               </div>
@@ -456,6 +456,9 @@ export default {
         this.$router.push("/");
         return;
       }
+      let habilidades = response.persona.habilidades.habilidades;
+      habilidades.sort((a, b) => b.principal - a.principal);
+      response.persona.habilidades.habilidades = habilidades;
 
       this.data = response;
       console.log(this.data);
@@ -677,5 +680,10 @@ export default {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+@media (max-width: 480px) {
+  #contenedor-nombre {
+    margin-top: 70px;
+  }
 }
 </style>

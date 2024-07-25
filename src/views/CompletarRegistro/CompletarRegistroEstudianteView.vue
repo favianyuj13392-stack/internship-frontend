@@ -1690,12 +1690,24 @@ continuarSinFotoPerfil  =true;
       this.showNuevaExperienciaModal = false;
     },
 
-    eliminarExperiencia(experiencia) {
-      //WIthout using indexOf
-      const index = this.estudianteDto.persona.experiencia.experiencia.findIndex(
-        (exp) => exp === experiencia
-      );
-      this.estudianteDto.persona.experiencia.experiencia.splice(index, 1);
+    async eliminarExperiencia(experiencia) {
+      await Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Estás a punto de eliminar una experiencia, ¿Deseas continuar?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí",
+        cancelButtonText: "No",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const index = this.estudianteDto.persona.experiencia.experiencia.findIndex(
+            (exp) => exp === experiencia
+          );
+          this.estudianteDto.persona.experiencia.experiencia.splice(index, 1);
+        }
+      });
     },
 
     agregarHabilidad(habilidad) {
@@ -1708,10 +1720,22 @@ continuarSinFotoPerfil  =true;
       this.showNuevaHabilidadModal = false;
     },
 
-    eliminarHabilidad(habilidad) {
-      const index =
-        this.estudianteDto.persona.habilidades.habilidades.indexOf(habilidad);
-      this.estudianteDto.persona.habilidades.habilidades.splice(index, 1);
+    async eliminarHabilidad(habilidad) {
+      await Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Estás a punto de eliminar una habilidad, ¿Deseas continuar?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí",
+        cancelButtonText: "No",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const index = this.estudianteDto.persona.habilidades.habilidades.indexOf(habilidad);
+          this.estudianteDto.persona.habilidades.habilidades.splice(index, 1);
+        }
+      });
     },
 
     validateInputYear(event) {

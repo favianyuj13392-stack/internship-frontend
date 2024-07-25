@@ -6,18 +6,20 @@
   />
   <!-- Hero Start -->
   <section
+    id="hero-image"
     class="relative h-screen flex justify-center items-center bg-[url('../../assets/images/hero/bg.jpg')] bg-cover"
   >
     <div class="absolute inset-0 bg-slate-900/30"></div>
-    <div class="container z-1">
-      <div class="grid grid-cols-1 text-center mt-10 relative">
+    <div class="container z-1" id="hero-container">
+      <div class="grid grid-cols-1 text-center mt-10 relative" id="hero">
         <h4
           class="lg:leading-normal leading-normal text-4xl lg:text-6xl mb-5 font-bold text-white"
-        >
+          id="hero-title"
+          >
           INTERNSHIP <br />
           by Universidad Católica Boliviana
         </h4>
-        <p class="text-white/70 text-lg max-w-xl mx-auto">
+        <p class="text-white/70 text-lg max-w-xl mx-auto" id="hero-description">
           Únete a nosotros en esta emocionante etapa de tu educación, donde el
           aprendizaje se transforma en experiencia y las conexiones se
           convierten en oportunidades concretas para el futuro.
@@ -80,7 +82,7 @@
         <!--end grid-->
 
         <div class="mt-4">
-  <span class="text-yellow-400">
+  <span class="text-yellow-400" id="hero-footer">
     <span class="text-white">Tu primer paso en el mundo laboral por :</span>
     <a href="https://lpz.ucb.edu.bo" class="text-yellow-400" target="_blank">
       Universidad Católica Boliviana "San Pablo"
@@ -295,5 +297,27 @@ export default {
 <style lang="scss" scoped>
 .map-marker-icon {
   color: #00ff00;
+}
+@media (max-width:400px){
+  #hero-image{
+    margin-top: 3rem;
+  }
+  #hero-container{
+    padding: 0 1rem;
+  }
+  #hero-title{
+    font-size: 1.5rem!important;
+  }
+}
+@media (max-width: 388px) {
+  #hero-title {
+    font-size: 1.5rem !important;
+  }
+  #hero-description {
+    font-size: 0.8rem !important;
+  }
+  #hero-footer {
+    display: none;
+  }
 }
 </style>
