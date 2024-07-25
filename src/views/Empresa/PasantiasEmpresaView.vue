@@ -95,7 +95,7 @@
                   </a>
                   <a href="" v-for="carrera in item.carreras">
                     <span
-                      class="bg-purple-600/5 hover:bg-yellow-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{{
+                      class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{{
                       carrera.nombre }}</span>
                   </a>
                   <a href="">
