@@ -332,11 +332,11 @@
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
                       v-model="usuarioInstitucion.persona.apellidoMaterno"
-                      placeholder="Apellido Paterno:"
+                      placeholder="Apellido Materno:"
                       id="lastname"
                       name="name"
                       required=""
-                      disabled
+                      :disabled="usuarioInstitucion.persona.apellidoMaterno.length > 0"
                       @input="toUpperCase($event)"
 
                     />
