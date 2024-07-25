@@ -1518,7 +1518,7 @@ export default {
       image2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       searchQuery: "",
       selectedAreas: [],
-      allAreas: ["Área 1", "Área 2", "Área 3", "Área 4"], // Lista de todas las áreas disponibles
+      allAreas: ["BANCA", "PRODUCTIVO", "SERVICIOS CONSULTORÍA", "SERVICIOS LEGALES", "FARMACÉUTICO", "ONG", "TRANSPORTE", "SEGUROS", "TECNOLOGÍA", "TELECOMUNICACIÓN", "GOBIERNO", "FUNDACIÓN", "CONSTRUCCIÓN", "DISTRIBUCIÓN", "EDUCACIÓN", "SERVICIOS EDUCATIVOS", "TURISMO Y HOSPITALIDAD", "MEDIOS DE COMUNICACIÓN", "MARKETING Y PUBLICIDAD", "ENERGÍA Y MINERÍA", "SALUD", "RECURSOS HUMANOS", "INVESTIGACIÓN Y DESARROLLO", "INDUSTRIA TEXTIL Y MODA", "SOCIAL MEDIA", "AUTOMOTRIZ", "DESARROLLO INMOBILIARIO", "ALIMENTACIÓN", "ARTES Y ENTRETENIMIENTO", "AGRICULTURA", "BIOTECNOLOGÍA", "COMERCIO ELECTRÓNICO"], // Lista de todas las áreas disponibles
       selectedSocial: "",
       socialLink: "",
       availableSocials: [
