@@ -11,7 +11,7 @@
                             <img src="${url.resourcesPath}/img/logo-dark.png" alt="logo" class="logo" height="100px">
                         </a>
                         <h5 class="form_header_title">
-                        Iniciar sesión
+                        Inicio de sesión de empresa
                         </h5>
                     </div> 
                     
@@ -25,7 +25,7 @@
 
                             <div class="form_content_item_input">
                                  <span class="input_container ${properties.kcInputClass!} ${messagesPerField.existsError('username','password')?then('pf-m-error', '')}">
-                                <input tabindex="1" id="username" name="username" value="${(login.username!'')}" type="text" autofocus autocomplete="off" placeholder="name@example.com"
+                                <input tabindex="1" id="username" name="username" value="${(login.username!'')}" type="text" autofocus autocomplete="off" placeholder="Nombre de usuario"
                                        aria-invalid="<#if messagesPerField.existsError('username','password')>true</#if>"
                                 />
                                 <#if messagesPerField.existsError('username','password')>
@@ -54,7 +54,7 @@
 
                         <div class="form_content_item_input">
                             <span class="input_container ${properties.kcInputClass!}">
-                                <input tabindex="2" id="password" placeholder="Password:" name="password" type="password" autocomplete="off"
+                                <input tabindex="2" id="password" placeholder="Contraseña:" name="password" type="password" autocomplete="off"
                                        aria-invalid="<#if messagesPerField.existsError('username','password')>true</#if>"
                                 />
                             </span>
@@ -193,6 +193,7 @@
                                     <img src="${url.resourcesPath}/img/google.png" alt="google" />
                                     <span class="${properties.kcFormSocialAccountNameClass!}">${p.displayName!}</span>
                                 </#if>
+                               (@ucb.edu.bo)
                             </a>
                         </li>
                     </#list>

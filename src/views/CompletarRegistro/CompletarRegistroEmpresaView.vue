@@ -332,11 +332,11 @@
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
                       v-model="usuarioInstitucion.persona.apellidoMaterno"
-                      placeholder="Apellido Paterno:"
+                      placeholder="Apellido Materno:"
                       id="lastname"
                       name="name"
                       required=""
-                      disabled
+                      :disabled="this.$keycloak.idTokenParsed.family_name.split(' ').length > 2"
                       @input="toUpperCase($event)"
 
                     />
@@ -1959,6 +1959,7 @@ export default {
 
     toUpperCase(event) {
       event.target.value = event.target.value.toUpperCase();
+      this.usuarioInstitucion.persona.apellidoMaterno = this.usuarioInstitucion.persona.apellidoMaterno.toUpperCase();
     },
     toLowerCaseMail(event) {
       event.target.value = event.target.value.toLowerCase();
