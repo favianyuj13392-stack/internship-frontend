@@ -336,7 +336,7 @@
                       id="lastname"
                       name="name"
                       required=""
-                      :disabled="usuarioInstitucion.persona.apellidoMaterno.length > 0"
+                      :disabled="this.$keycloak.idTokenParsed.family_name.split(" ").length > 2"
                       @input="toUpperCase($event)"
 
                     />
