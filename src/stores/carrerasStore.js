@@ -15,6 +15,10 @@ export const useCarrerasStore = defineStore({
             try {
                 const response = await axios.get(RutaApi + '/pasantia/carreras')
                 if (response.data.code == '200') {
+                    //Ordenar por nombre
+                    response.data.response.sort((a, b) => {
+                        return a.nombre.localeCompare(b.nombre);
+                    });
                     return response.data.response
                 } else {
                     return null;

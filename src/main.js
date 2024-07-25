@@ -94,6 +94,7 @@ try {
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
         redirectUri: window.location.origin,
+        checkLoginIframe: false,
     }).then(authenticated  => {
         app.use(router(keycloak));
         app.mount("#app");

@@ -43,11 +43,11 @@
 
 
 
-                    <div class="flex items-center space-x-40 mt-6">
+                    <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
                         <h5 class="text-lg font-semibold">Áreas:</h5>
                         <button
                             @click="agregarArea()"
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
                             Agregar
                         </button>
                     </div>
@@ -63,13 +63,13 @@
                         </li>
                     </ul>
 
-                    <div class="flex items-center space-x-40 mt-6">
+                    <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
                         <h5 class="text-lg font-semibold">Requisistos:</h5>
                         
                         <button
                         @click="agregarRequisitos()"
 
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
                             Agregar
                         </button>
                     </div>
@@ -85,12 +85,12 @@
 
 
 
-                    <div class="flex items-center space-x-40 mt-6">
+                    <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
                         <h5 class="text-lg font-semibold">Funciones:</h5>
                         <button
                         @click="agregarFunciones()"
 
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
                             Agregar
                         </button>
                     </div>
@@ -104,12 +104,12 @@
                     </ul>
 
 
-                    <div class="flex items-center space-x-40 mt-6">
+                    <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
                         <h5 class="text-lg font-semibold">Beneficios:</h5>
                         <button
                         @click="agregarBeneficios()"
 
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-auto">
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
                             Agregar
                         </button>
                     </div>
@@ -121,10 +121,10 @@
                         </li>
                     </ul>
 
-                    <div class="mt-5">
+                    <div class="mt-20">
                         <a
                         @click="actualizarPasantia()"
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto">Actualizar Pasantía</a>
+                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-full">Actualizar Pasantía</a>
                     </div>
                 </div>
                 <!--end col-->

@@ -248,12 +248,13 @@
                     >Número Celular :<span class="text-red-600">*</span></label
                   >
                   <input
-                    type="number"
+                    type="text"
                     class="form-input border border-slate-100 dark:border-slate-800 mt-2"
                     v-model="estudianteDto.persona.telefono"
                     placeholder="Número Celular"
                     name="address"
                     required=""
+                    @input="validarInputTelefono"
                   />
                 </div>
 
@@ -1034,6 +1035,7 @@
                 name="send"
                 @click="agregarNuevaExperiencia(nuevaExperiencia)"
                 class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+                :disabled="nuevaExperiencia.titulo.length < 2 || nuevaExperiencia.empresa.length < 2 || nuevaExperiencia.duracion.length < 2"
               >
                 Agregar
               </button>
@@ -1075,6 +1077,7 @@
                 name="send"
                 @click="agregarHabilidad(nuevaHabilidad)"
                 class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+                :disabled="nuevaHabilidad.length < 2"
               >
                 Agregar
               </button>
@@ -1155,7 +1158,7 @@ export default {
           nombre: "",
           apellidoPaterno: "",
           apellidoMaterno: "",
-          telefono: 0,
+          telefono: "",
           ci: "",
           fotoPerfil: "",
           anioIngresoUniversidad: 0,
@@ -1272,6 +1275,26 @@ export default {
     this.estudianteDto.persona.anioIngresoUniversidad = anioActual;
   },
   methods: {
+    validarInputTelefono() {
+      if (this.estudianteDto.persona.telefono < 0) {
+        this.estudianteDto.persona.telefono = 0;
+      }
+
+      if (this.estudianteDto.persona.telefono.toString().length > 9) {
+        this.estudianteDto.persona.telefono = this.estudianteDto.persona.telefono.toString().substring(0, 9);
+      }
+      //que si se ingresa una letra se borre solo esa letra 
+      if (isNaN(this.estudianteDto.persona.telefono)) {
+        this.estudianteDto.persona.telefono = this.estudianteDto.persona.telefono.substring(0, this.estudianteDto.persona.telefono.length - 1);
+      }
+
+      
+
+    
+      
+    },
+
+
     checkLength() {
       if (this.estudianteDto.persona.descripcion.length > 1000) {
         this.estudianteDto.persona.descripcion =
@@ -1668,7 +1691,10 @@ continuarSinFotoPerfil  =true;
     },
 
     eliminarExperiencia(experiencia) {
-      const index = this.estudianteDto.persona.experiencia.indexOf(experiencia);
+      //WIthout using indexOf
+      const index = this.estudianteDto.persona.experiencia.experiencia.findIndex(
+        (exp) => exp === experiencia
+      );
       this.estudianteDto.persona.experiencia.experiencia.splice(index, 1);
     },
 

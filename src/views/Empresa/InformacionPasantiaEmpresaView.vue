@@ -431,6 +431,7 @@
             <ul class="list-none text-end space-x-0.5">
               <li class="inline" v-for="(url, name) in personaInfo.persona.redesSociales" :key="name">
                 <a :href="url.url" target="_blank"
+                v-if="url.url.length > 0"
                   class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400">
                   <i :class="`uil uil-${name}`" :title="name" class="align-middle"></i>
                 </a>
@@ -542,7 +543,7 @@
 
         <!-- Botones de aceptar y rechazar -->
         <div class="flex justify-end mt-6" v-if="personaInfo.aplicacionPasantia.activo == false">
-          <button class="btn bg-green-600 hover:bg-green-700 text-white mr-2"
+          <button class="btn bg-emerald-600 hover:bg-emerald-700 text-white mr-2"
             @click="aceptarSolicitud">
             Aceptar
           </button>
@@ -585,9 +586,11 @@ import footers from "@/components/footer/footer.vue";
 import switcher from "@/components/General/switcher.vue";
 
 import { usePasantiasAdministracionInstitucionStore } from "@/stores/Instituciones/PasantiasAdministracionInstitucionStore.js";
-import loader from "sass-loader";
 import Swal from "sweetalert2";
+import StarRatingComponent from "@/components/General/Extras/StartRatingComponent.vue";
+
 export default {
+  
   setup() {
     const pasantiasAdministracionInstitucionStore =
       usePasantiasAdministracionInstitucionStore();
@@ -1053,6 +1056,7 @@ export default {
     navbar,
     footers,
     switcher,
+    StarRatingComponent,
   },
   mounted() {
     this.id = this.$route.params.id;

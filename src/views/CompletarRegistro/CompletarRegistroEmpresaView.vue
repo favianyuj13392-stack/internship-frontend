@@ -281,6 +281,8 @@
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
                       v-model="usuarioInstitucion.persona.nombre"
+                      disabled
+
                       placeholder="Nombres:"
                       id="firstname"
                       name="name"
@@ -315,6 +317,7 @@
                       id="lastname"
                       name="name"
                       required=""
+                      disabled
                       @input="toUpperCase($event)"
 
                     />
@@ -333,6 +336,7 @@
                       id="lastname"
                       name="name"
                       required=""
+                      disabled
                       @input="toUpperCase($event)"
 
                     />
@@ -349,6 +353,7 @@
                       placeholder="Email"
                       name="email"
                       required=""
+                      disabled
                       @input="toLowerCaseMail($event)"
 
                     />
@@ -451,7 +456,7 @@
                     <div>
                       <div
                         class="grid grid-cols-3 gap-4 mt-5 pt-3"
-                        v-for="experiencia in this.estudianteDto.persona
+                        v-for="experiencia in this.usuarioInstitucion.persona
                           .experiencia"
                         :id="experiencia.titulo"
                       >
@@ -626,7 +631,7 @@
                     <input
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2 ps-12"
-                      v-model="estudianteDto.persona.redesSociales.linkedin.url"
+                      v-model="usuarioInstitucion.persona.redesSociales.linkedin.url"
                       placeholder="Linkedin Url"
                       id="linkedin_name"
                       name="name"
@@ -656,7 +661,7 @@
                     <input
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2 ps-12"
-                      v-model="estudianteDto.persona.redesSociales.facebook.url"
+                      v-model="usuarioInstitucion.persona.redesSociales.facebook.url"
                       placeholder="Facebook Profile Name"
                       id="facebook_name"
                       name="name"
@@ -686,7 +691,7 @@
                     <input
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2 ps-12"
-                      v-model="estudianteDto.persona.redesSociales.twitter.url"
+                      v-model="usuarioInstitucion.persona.redesSociales.twitter.url"
                       placeholder="X (Twitter) Url "
                       id="twitter_name"
                       name="name"
@@ -717,7 +722,7 @@
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2 ps-12"
                       v-model="
-                        estudianteDto.persona.redesSociales.instagram.url
+                        usuarioInstitucion.persona.redesSociales.instagram.url
                       "
                       placeholder="Instagram Url"
                       id="insta_name"
@@ -1189,13 +1194,14 @@
                 </div>
                 <!--end col-->
                 <div class="col-span-12">
-                  <label class="form-label font-medium"> Descripción : </label>
+                  <label class="form-label font-medium"> Descripción :  <span v-if="nuevaEmpresa.descripcion">{{ nuevaEmpresa.descripcion.length }}/1000</span></label>
                   <textarea
                     name="comments"
                     id="Description"
                     v-model="nuevaEmpresa.descripcion"
                     class="form-input border border-slate-100 dark:border-slate-800 textarea"
                     placeholder="Descripción :"
+                    maxlength="1000"
                   ></textarea>
                 </div>
                 <!--end col-->
@@ -1403,9 +1409,10 @@
                     nuevaEmpresa.redesSociales
                   "
                   :key="social"
-                  class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center"
+                  class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center "
                 >
-                  {{ url[0] }}: {{ url[1] }}
+                {{ url }}
+                
                   <button
                     @click="removeRedSocial(social)"
                     class="ml-2 bg-red-600 text-white px-2 py-1 rounded-md"
@@ -1562,7 +1569,7 @@ export default {
       },
       paginaFormulario: 1,
       Busqueda: "",
-      estudianteDto: {
+      usuarioInstitucion: {
         idUsuarios: 10001,
         kc_UUID: "asdkasdja-sdajfsdbkfasd-32",
         correo: "daniel.aldazosa@ucb.edu.bo",
@@ -1834,8 +1841,8 @@ export default {
     };
   },
   watch: {
-    "estudianteDto.idCarreras"(newValue) {
-      this.estudianteDto.carrera.idCarreras = newValue;
+    "usuarioInstitucion.idCarreras"(newValue) {
+      this.usuarioInstitucion.carrera.idCarreras = newValue;
     },
   },
 
@@ -1843,14 +1850,27 @@ export default {
     if (!this.$keycloak.authenticated) {
       this.$router.push("/");
     }
-    this.estudianteDto.persona.anioIngresoUniversidad = 2000;
-    this.estudianteDto.kc_UUID = this.$keycloak.idTokenParsed.sub;
-    this.estudianteDto.persona.nombre = this.$keycloak.idTokenParsed.given_name;
+    this.usuarioInstitucion.persona.anioIngresoUniversidad = 2000;
+    this.usuarioInstitucion.kc_UUID = this.$keycloak.idTokenParsed.sub;
+    
+
+
+    this.usuarioInstitucion.persona.nombre = this.$keycloak.idTokenParsed.given_name.toUpperCase();
+
     //first word of the family name
-    //this.estudianteDto.persona.apellidoPaterno = this.$keycloak.idTokenParsed.family_name.split(" ")[0];
+    this.usuarioInstitucion.persona.apellidoPaterno =
+      this.$keycloak.idTokenParsed.family_name.split(" ")[0].toUpperCase();
     //second word of the family name
-    //this.estudianteDto.persona.apellidoMaterno = this.$keycloak.idTokenParsed.family_name.split(" ")[1];
-    this.estudianteDto.persona.correo = this.$keycloak.tokenParsed.email;
+    if (this.$keycloak.idTokenParsed.family_name.split(" ").length > 1){
+      this.usuarioInstitucion.persona.apellidoMaterno =
+      this.$keycloak.idTokenParsed.family_name.split(" ")[1].toUpperCase();
+    }else{
+      this.usuarioInstitucion.persona.apellidoMaterno = "";
+    }
+    this.usuarioInstitucion.correo = this.$keycloak.tokenParsed.email;
+
+
+
 
   },
   mounted() {
@@ -2117,7 +2137,7 @@ export default {
     },
     agregarNuevaExperiencia(experiencia) {
       console.log("duracion: " + experiencia.duracion);
-      this.estudianteDto.persona.experiencia.push({
+      this.usuarioInstitucion.persona.experiencia.push({
         titulo: experiencia.titulo,
         empresa: experiencia.empresa,
         duracion: experiencia.duracion,
@@ -2133,12 +2153,12 @@ export default {
     },
 
     eliminarExperiencia(experiencia) {
-      const index = this.estudianteDto.persona.experiencia.indexOf(experiencia);
-      this.estudianteDto.persona.experiencia.splice(index, 1);
+      const index = this.usuarioInstitucion.persona.experiencia.indexOf(experiencia);
+      this.usuarioInstitucion.persona.experiencia.splice(index, 1);
     },
 
     agregarHabilidad(habilidad) {
-      this.estudianteDto.persona.habilidades.push({
+      this.usuarioInstitucion.persona.habilidades.push({
         habilidad: habilidad,
         nivel: 0,
         principal: false,
@@ -2148,17 +2168,17 @@ export default {
     },
 
     eliminarHabilidad(habilidad) {
-      const index = this.estudianteDto.persona.habilidades.indexOf(habilidad);
-      this.estudianteDto.persona.habilidades.splice(index, 1);
+      const index = this.usuarioInstitucion.persona.habilidades.indexOf(habilidad);
+      this.usuarioInstitucion.persona.habilidades.splice(index, 1);
     },
 
     validateInputYear(event) {
       const value = event.target.value;
       // Limita la entrada a 4 dígitos numéricos
       if (/^\d{0,4}$/.test(value)) {
-        this.estudianteDto.persona.anioIngresoUniversidad = value;
+        this.usuarioInstitucion.persona.anioIngresoUniversidad = value;
       } else {
-        event.target.value = this.estudianteDto.persona.anioIngresoUniversida;
+        event.target.value = this.usuarioInstitucion.persona.anioIngresoUniversida;
       }
     },
 

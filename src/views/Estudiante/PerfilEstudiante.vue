@@ -100,7 +100,7 @@
                   id="submit"
                   name="send"
                   v-if="habilidad.principal == false"
-                  class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer"
+                  class="btn border-zinc-600 bg-zinc-600 hover:bg-zinc-700 text-white text-sm p-0 rounded-md cursor-pointer"
                 >
                   Secundario
                 </button>
@@ -110,7 +110,7 @@
                   id="submit"
                   name="send"
                   v-if="habilidad.principal == true"
-                  class="btn border-yellow-600 bg-yellow-600 hover:bg-yellow-700 text-white text-sm p-0 rounded-md cursor-pointer"
+                  class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white text-sm p-0 rounded-md cursor-pointer"
                 >
                   Principal
                 </button>
@@ -243,8 +243,10 @@
                     class="inline"
                     v-for="(url, name) in data.persona.redesSociales"
                     :key="name"
+                    
                   >
                     <a
+                      v-if="url.url"
                       :href="url.url"
                       target="_blank"
                       class="btn btn-icon btn-sm border-2 border-gray-200 dark:border-gray-700 rounded-md hover:border-cyan-600 dark:hover:border-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-600 hover:text-white dark:text-white text-slate-400"
