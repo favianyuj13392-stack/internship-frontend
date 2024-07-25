@@ -9,7 +9,7 @@
                      <#if messageHeader??>
             ${kcSanitize(msg("${messageHeader}"))?no_esc}
         <#else>
-            ${msg("registerTitle")}
+            ${msg("registerTitle")} para empresa
         </#if>
         </div>
 
