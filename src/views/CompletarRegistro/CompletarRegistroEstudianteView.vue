@@ -1137,7 +1137,7 @@ export default {
       image2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
 
       paginaFormulario: 1,
-      cantidadHabilididadesGenericas: 5,
+      cantidadHabilididadesGenericas: 10,
       aniosIngresoDisponibles: [],
 
       estudianteDto: {
@@ -1168,30 +1168,55 @@ export default {
           habilidades: {
             habilidades: [
               {
-                habilidad: "Habilididad Genérica1",
+                habilidad: "Administracion de tiempo",
                 nivel: 1,
                 principal: false,
               },
               {
-                habilidad: "Habilididad Genérica2",
+                habilidad: "Comunicacion",
                 nivel: 1,
                 principal: false,
               },
               {
-                habilidad: "Habilididad Genérica3",
+                habilidad: "Adaptabilidad",
                 nivel: 1,
                 principal: false,
               },
               {
-                habilidad: "Habilididad Genérica4",
+                habilidad: "Resolucion de problemas",
                 nivel: 1,
                 principal: false,
               },
               {
-                habilidad: "Habilididad Genérica5",
+                habilidad: "Trabajo en equipo",
                 nivel: 1,
                 principal: false,
               },
+              {
+                habilidad: "Creatividad",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Liderazgo",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Habilidades interpersonales",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Etica de trabajo",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Atencion al detalle",
+                nivel: 1,
+                principal: false,
+              }
             ],
           },
 
