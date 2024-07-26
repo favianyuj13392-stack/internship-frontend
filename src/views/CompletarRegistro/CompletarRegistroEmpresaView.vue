@@ -80,16 +80,19 @@
               </h5>
               <h6 class="text-base text-slate-400">
                 <i class="uil uil-map-marker"></i>
-                {{ this.empresaSeleccionada.direccion }}
+                {{ splitLongWords(
+                  
+                  this.empresaSeleccionada.direccion)  }}
+             
               </h6>
               <h6 class="text-base text-slate-400">
                 <i class="uil uil-envelope align-middle" title="email"></i>
-                {{ this.empresaSeleccionada.correo }}
+                {{ splitLongWords(this.empresaSeleccionada.correo) }}
               </h6>
             </div>
           </div>
           <div class="ms-4">
-            <h5 class="text-base">Redes Sociales de la empresa:</h5>
+            <h5 class="text-base">Redes sociales de la empresa:</h5>
             <div class="mt-0">
               <a
                 v-for="sector in empresaSeleccionada.redesSociales"
@@ -99,7 +102,9 @@
                 <span
                   class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500"
                 >
-                  {{ sector }}
+                  {{ splitLongWords(
+                  
+                  sector)  }}
                 </span>
               </a>
             </div>
@@ -188,7 +193,7 @@
       <div class="grid lg:grid-cols-12 grid-cols-1 gap-[30px]">
         <div v-if="paginaFormulario == 1" class="lg:col-span-12">
           <div
-            class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
+            class="p-4 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
           >
             <div class="grid grid-cols-4 gap-4 mb-2">
               <h5 class="col-span-3">Selecciona tu empresa:</h5>
@@ -202,25 +207,32 @@
                     (nuevaEmpresa = {
                       fotos: [],
                       sectores: [],
+                      selectedAreas: [],
                       redesSociales: {},
-        activo: true, 
+                      activo: true,
                     }),
-                    (this.imageSrc='https://cdn-icons-png.flaticon.com/512/84/84099.png'),
-                    (this.imageSrc2='https://cdn-icons-png.flaticon.com/512/84/84099.png'),
-                    (this.imageSrc3='https://cdn-icons-png.flaticon.com/512/84/84099.png')
+                    (this.imageSrc =
+                      'https://cdn-icons-png.flaticon.com/512/84/84099.png'),
+                    (this.imageSrc2 =
+                      'https://cdn-icons-png.flaticon.com/512/84/84099.png'),
+                    (this.imageSrc3 =
+                      'https://cdn-icons-png.flaticon.com/512/84/84099.png')
                 "
-                class="col-span-1 btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
+                class="col-span-1 btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer p-1"
               >
-                Agregar tu empresa
+                <!-- Texto para pantallas grandes -->
+                <span class="hidden lg:inline">Agrega tu empresa</span>
+                <!-- Texto para pantallas pequeñas -->
+                <span class="inline lg:hidden">Agregar</span>
               </button>
             </div>
 
-            <div class="grid grid-cols-4 gap-4">
-              <h5 class="col-span-1">Buscar por nombre:</h5>
+            <div class="grid grid-cols-5 gap-4">
+              <h5 class="col-span-1 mt-2">Buscar:</h5>
               <input
                 type="text"
                 v-model="Busqueda"
-                class="col-span-3 bg-gray-100 p-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-600"
+                class="col-span-4 p-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-600 text-l font-semibold p-2 form-input border border-slate-100 dark:border-slate-800"
               />
             </div>
             <div
@@ -256,8 +268,6 @@
               >
                 Cancelar
               </button>
-
-            
             </div>
             <!--end form-->
           </div>
@@ -282,7 +292,6 @@
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2"
                       v-model="usuarioInstitucion.persona.nombre"
                       disabled
-
                       placeholder="Nombres:"
                       id="firstname"
                       name="name"
@@ -319,7 +328,6 @@
                       required=""
                       disabled
                       @input="toUpperCase($event)"
-
                     />
                   </div>
 
@@ -336,9 +344,11 @@
                       id="lastname"
                       name="name"
                       required=""
-                      :disabled="this.$keycloak.idTokenParsed.family_name.split(' ').length > 2"
+                      :disabled="
+                        this.$keycloak.idTokenParsed.family_name.split(' ')
+                          .length > 2
+                      "
                       @input="toUpperCase($event)"
-
                     />
                   </div>
 
@@ -355,7 +365,6 @@
                       required=""
                       disabled
                       @input="toLowerCaseMail($event)"
-
                     />
                   </div>
 
@@ -381,15 +390,15 @@
                       ></label
                     >
                     <input
-      type="number"
-      class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-      v-model="usuarioInstitucion.persona.telefono"
-      placeholder="Número Celular"
-      name="address"
-      required=""
-      maxlength="8"
-      @input="limitInputLength"
-    />
+                      type="number"
+                      class="form-input border border-slate-100 dark:border-slate-800 mt-2"
+                      v-model="usuarioInstitucion.persona.telefono"
+                      placeholder="Número Celular"
+                      name="address"
+                      required=""
+                      maxlength="8"
+                      @input="limitInputLength"
+                    />
                   </div>
                   <div class="lg:col-span-6">
                     <label class="form-label font-medium"
@@ -434,7 +443,7 @@
                 <button
                   id="submit"
                   name="send"
-                  @click=" registrarUsuarioInstitucion()"
+                  @click="registrarUsuarioInstitucion()"
                   class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
                 >
                   Registrar
@@ -631,7 +640,9 @@
                     <input
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2 ps-12"
-                      v-model="usuarioInstitucion.persona.redesSociales.linkedin.url"
+                      v-model="
+                        usuarioInstitucion.persona.redesSociales.linkedin.url
+                      "
                       placeholder="Linkedin Url"
                       id="linkedin_name"
                       name="name"
@@ -661,7 +672,9 @@
                     <input
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2 ps-12"
-                      v-model="usuarioInstitucion.persona.redesSociales.facebook.url"
+                      v-model="
+                        usuarioInstitucion.persona.redesSociales.facebook.url
+                      "
                       placeholder="Facebook Profile Name"
                       id="facebook_name"
                       name="name"
@@ -691,7 +704,9 @@
                     <input
                       type="text"
                       class="form-input border border-slate-100 dark:border-slate-800 mt-2 ps-12"
-                      v-model="usuarioInstitucion.persona.redesSociales.twitter.url"
+                      v-model="
+                        usuarioInstitucion.persona.redesSociales.twitter.url
+                      "
                       placeholder="X (Twitter) Url "
                       id="twitter_name"
                       name="name"
@@ -1057,58 +1072,72 @@
       class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
     >
       <span class="close" @click="showNuevaEmpresaModal = false">&times;</span>
-<div  v-if="showNuevaEmpresaModalForms == 10"
+      <div
+        v-if="showNuevaEmpresaModalForms == 10"
         class="grid grid-cols-1 gap-4"
       >
-      <div>
-  <h5 class="text-lg font-semibold mb-4">
-    ¿Tu empresa aún no está registrada?
-  </h5>
+        <div>
+          <h5 class="text-lg font-semibold mb-4">
+            ¿Tu empresa aún no está registrada?
+          </h5>
 
-  <div>
-    <div>
-      <!-- Selección de áreas -->
-      <div class="mt-6">
-        <h5 class="text-lg font-semibold mb-4">¿Qué necesitas para agregar tu empresa?</h5>
-        <div class="flex flex-wrap gap-2">
-          <span>Para poder registrar tu empresa, necesitarás la siguiente información:</span>
-        </div>
+          <div>
+            <div>
+              <!-- Selección de áreas -->
+              <div class="mt-6">
+                <h5 class="text-lg font-semibold mb-4">
+                  ¿Qué necesitas para agregar tu empresa?
+                </h5>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    >Para poder registrar tu empresa, necesitarás la siguiente
+                    información:</span
+                  >
+                </div>
 
-        <div class="mt-4">
-          <ul class="list-disc list-inside">
-            <li><strong>Nombre de la empresa</strong></li>
-            <li><strong>Dirección de la empresa</strong></li>
-            <li><strong>Correo electrónico</strong></li>
-            <li><strong>Logo de la empresa</strong></li>
-            <li><strong>Descripción de la empresa</strong></li>
-            <li><strong>Áreas de la empresa</strong></li>
-            <li><strong>Foto de las instalaciones</strong> (para usar como banner en la portada)</li>
-            <li><strong>Fotos extra</strong> (opcionales para mostrar más de la empresa)</li>
-            <li><strong>Link de las redes sociales de la empresa</strong> (IG, FB, Twitter, TikTok, etc.)</li>
-          </ul>
-        </div>
+                <div class="mt-4">
+                  <ul class="list-disc list-inside">
+                    <li><strong>Nombre de la empresa</strong></li>
+                    <li><strong>Dirección de la empresa</strong></li>
+                    <li><strong>Correo electrónico</strong></li>
+                    <li><strong>Logo de la empresa</strong></li>
+                    <li><strong>Descripción de la empresa</strong></li>
+                    <li><strong>Áreas de la empresa</strong></li>
+                    <li>
+                      <strong>Foto de las instalaciones</strong> (para usar como
+                      banner en la portada)
+                    </li>
+                    <li>
+                      <strong>Fotos extra</strong> (opcionales para mostrar más
+                      de la empresa)
+                    </li>
+                    <li>
+                      <strong>Link de las redes sociales de la empresa</strong>
+                      (IG, FB, Twitter, TikTok, etc.)
+                    </li>
+                  </ul>
+                </div>
 
-        <div class="mt-4 grid grid-cols-2 gap-2">
-          <!-- Opcional: aquí podrías añadir cualquier otro contenido o diseño adicional -->
+                <div class="mt-4 grid grid-cols-2 gap-2">
+                  <!-- Opcional: aquí podrías añadir cualquier otro contenido o diseño adicional -->
+                </div>
+              </div>
+              <!--end col-->
+            </div>
+
+            <div class="flex gap-4 mt-5 justify-end">
+              <button
+                id="submit"
+                name="send"
+                @click="showNuevaEmpresaModalForms = 1"
+                class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
+              >
+                ¡Empezar ahora!
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-      <!--end col-->
-    </div>
-
-    <div class="flex gap-4 mt-5 justify-end">
-      <button
-        id="submit"
-        name="send"
-        @click="showNuevaEmpresaModalForms = 1"
-        class="btn border-green-600 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
-      >
-        ¡Empezar ahora!
-      </button>
-    </div>
-  </div>
-</div>
-
-</div>
       <div
         v-if="showNuevaEmpresaModalForms == 1"
         class="grid grid-cols-1 gap-4"
@@ -1193,8 +1222,13 @@
                   </div>
                 </div>
                 <!--end col-->
-                <div class="col-span-12">
-                  <label class="form-label font-medium"> Descripción :  <span v-if="nuevaEmpresa.descripcion">{{ nuevaEmpresa.descripcion.length }}/1000</span></label>
+                <div class="col-span-12 mt-4">
+                  <label class="form-label font-medium">
+                    Descripción :
+                    <span v-if="nuevaEmpresa.descripcion"
+                      >{{ nuevaEmpresa.descripcion.length }}/1000</span
+                    ></label
+                  >
                   <textarea
                     name="comments"
                     id="Description"
@@ -1221,7 +1255,7 @@
               <button
                 id="submit"
                 name="send"
-                @click="formEmpresaPaso2();"
+                @click="formEmpresaPaso2()"
                 class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
               >
                 Siguiente
@@ -1244,7 +1278,7 @@
               <!-- Selección de áreas -->
               <div class="mt-6">
                 <h5 class="text-lg font-semibold mb-4">Áreas seleccionadas:</h5>
-                <div class="flex flex-wrap gap-2">
+                <div class="flex flex-wrap gap-2 max-h-64 overflow-y-auto">
                   <div
                     v-for="(area, index) in selectedAreas"
                     :key="area"
@@ -1252,7 +1286,7 @@
                   >
                     {{ area }}
                     <button
-                      @click="removeArea(index)"
+                      @click="removeArea(area)"
                       class="ml-2 bg-red-600 text-white px-2 py-1 rounded-md"
                     >
                       x
@@ -1268,13 +1302,14 @@
                     placeholder="Buscar áreas..."
                   />
                 </div>
-
-                <div class="mt-4 grid grid-cols-2 gap-2">
+                <div
+                  class="mt-4 grid grid-cols-2 gap-2 max-h-64 overflow-y-auto"
+                >
                   <div
                     v-for="area in filteredAreas"
                     :key="area"
                     @click="selectArea(area)"
-                    class="cursor-pointer border border-slate-100 dark:border-slate-800 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                    class="cursor-pointer border border-slate-100 dark:border-slate-800 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 overflow-hidden truncate"
                   >
                     {{ area }}
                   </div>
@@ -1323,7 +1358,10 @@
             />
             <div class="relative shrink-0">
               <img
-                :src="this.nuevaEmpresa.fotoInstitucion"
+                :src="
+                  this.nuevaEmpresa.fotoInstitucion ||
+                  'https://cdn-icons-png.flaticon.com/512/84/84099.png'
+                "
                 class="h-64 w-full object-scale-down lg:rounded-xl shadow dark:shadow-gray-700"
                 id="profile-banner"
                 alt=""
@@ -1359,9 +1397,10 @@
 
               <div class="mt-4">
                 <input
+                  class="relative form-input border border-slate-100 dark:border-slate-800 file:h-10 file:-mx-3 file:-my-2 file:cursor-pointer file:rounded-none file:border-0 file:px-3 file:text-neutral-700 bg-clip-padding px-3 py-1.5 file:me-3 mt-2"
+                  id="file_input"
                   type="file"
                   @change="handleFileUploadFotosGeneral"
-                  class="form-input border border-slate-100 dark:border-slate-800 w-full"
                 />
               </div>
             </div>
@@ -1400,19 +1439,17 @@
           <div>
             <!-- Redes sociales seleccionadas -->
             <div class="mt-6">
-              <h5  class="text-lg font-semibold mb-4">
+              <h5 class="text-lg font-semibold mb-4">
                 Redes sociales agregadas:
               </h5>
               <div class="flex flex-wrap gap-2">
                 <div
-                  v-for="(url, social) in 
-                    nuevaEmpresa.redesSociales
-                  "
+                  v-for="(url, social) in nuevaEmpresa.redesSociales"
                   :key="social"
-                  class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center "
+                  class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center"
                 >
-                {{ url }}
-                
+                {{splitLongWords( url)  }}
+
                   <button
                     @click="removeRedSocial(social)"
                     class="ml-2 bg-red-600 text-white px-2 py-1 rounded-md"
@@ -1424,10 +1461,10 @@
             </div>
 
             <div class="mt-4 grid grid-cols-12 gap-2">
-              <div class="col-span-4">
+              <div class="col-span-4 ">
                 <select
                   v-model="selectedSocial"
-                  class="form-select border border-slate-100 dark:border-slate-800 w-full"
+                  class="form-select border border-slate-100 dark:border-slate-800  dark:bg-cyan-600 w-full"
                 >
                   <option value="" disabled selected>
                     Seleccione una red social
@@ -1499,7 +1536,7 @@ import StarRatingComponent from "@/components/General/Extras/StartRatingComponen
 import { useInstitucionesStore } from "@/stores/Instituciones/InstitucionesPublicStore.js";
 import { useFilesStore } from "@/stores/fileStore.js";
 import Swal from "sweetalert2";
-import Compressor from 'compressorjs';
+import Compressor from "compressorjs";
 
 export default {
   components: {
@@ -1518,7 +1555,40 @@ export default {
       image2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       searchQuery: "",
       selectedAreas: [],
-      allAreas: ["BANCA", "PRODUCTIVO", "SERVICIOS CONSULTORÍA", "SERVICIOS LEGALES", "FARMACÉUTICO", "ONG", "TRANSPORTE", "SEGUROS", "TECNOLOGÍA", "TELECOMUNICACIÓN", "GOBIERNO", "FUNDACIÓN", "CONSTRUCCIÓN", "DISTRIBUCIÓN", "EDUCACIÓN", "SERVICIOS EDUCATIVOS", "TURISMO Y HOSPITALIDAD", "MEDIOS DE COMUNICACIÓN", "MARKETING Y PUBLICIDAD", "ENERGÍA Y MINERÍA", "SALUD", "RECURSOS HUMANOS", "INVESTIGACIÓN Y DESARROLLO", "INDUSTRIA TEXTIL Y MODA", "SOCIAL MEDIA", "AUTOMOTRIZ", "DESARROLLO INMOBILIARIO", "ALIMENTACIÓN", "ARTES Y ENTRETENIMIENTO", "AGRICULTURA", "BIOTECNOLOGÍA", "COMERCIO ELECTRÓNICO"], // Lista de todas las áreas disponibles
+      allAreas: [
+        "BANCA",
+        "PRODUCTIVO",
+        "SERVICIOS CONSULTORÍA",
+        "SERVICIOS LEGALES",
+        "FARMACÉUTICO",
+        "ONG",
+        "TRANSPORTE",
+        "SEGUROS",
+        "TECNOLOGÍA",
+        "TELECOMUNICACIÓN",
+        "GOBIERNO",
+        "FUNDACIÓN",
+        "CONSTRUCCIÓN",
+        "DISTRIBUCIÓN",
+        "EDUCACIÓN",
+        "SERVICIOS EDUCATIVOS",
+        "TURISMO Y HOSPITALIDAD",
+        "MEDIOS DE COMUNICACIÓN",
+        "MARKETING Y PUBLICIDAD",
+        "ENERGÍA Y MINERÍA",
+        "SALUD",
+        "RECURSOS HUMANOS",
+        "INVESTIGACIÓN Y DESARROLLO",
+        "INDUSTRIA TEXTIL Y MODA",
+        "SOCIAL MEDIA",
+        "AUTOMOTRIZ",
+        "DESARROLLO INMOBILIARIO",
+        "ALIMENTACIÓN",
+        "ARTES Y ENTRETENIMIENTO",
+        "AGRICULTURA",
+        "BIOTECNOLOGÍA",
+        "COMERCIO ELECTRÓNICO",
+      ], // Lista de todas las áreas disponibles
       selectedSocial: "",
       socialLink: "",
       availableSocials: [
@@ -1559,7 +1629,7 @@ export default {
         nombre: "",
         descripcion: "",
         direccion: "",
-        fotoInstitucion: "https://cdn-icons-png.flaticon.com/512/84/84099.pn",
+        fotoInstitucion: "",
         correo: "",
         sectores: [],
         logoEmpresa: "",
@@ -1852,33 +1922,42 @@ export default {
     }
     this.usuarioInstitucion.persona.anioIngresoUniversidad = 2000;
     this.usuarioInstitucion.kc_UUID = this.$keycloak.idTokenParsed.sub;
-    
 
-
-    this.usuarioInstitucion.persona.nombre = this.$keycloak.idTokenParsed.given_name.toUpperCase();
+    this.usuarioInstitucion.persona.nombre =
+      this.$keycloak.idTokenParsed.given_name.toUpperCase();
 
     //first word of the family name
     this.usuarioInstitucion.persona.apellidoPaterno =
       this.$keycloak.idTokenParsed.family_name.split(" ")[0].toUpperCase();
     //second word of the family name
-    if (this.$keycloak.idTokenParsed.family_name.split(" ").length > 1){
+    if (this.$keycloak.idTokenParsed.family_name.split(" ").length > 1) {
       this.usuarioInstitucion.persona.apellidoMaterno =
-      this.$keycloak.idTokenParsed.family_name.split(" ")[1].toUpperCase();
-    }else{
+        this.$keycloak.idTokenParsed.family_name.split(" ")[1].toUpperCase();
+    } else {
       this.usuarioInstitucion.persona.apellidoMaterno = "";
     }
     this.usuarioInstitucion.correo = this.$keycloak.tokenParsed.email;
-
-
-
-
   },
   mounted() {
     this.getInstitucionesWithName();
   },
   methods: {
-    formEmpresaPaso4(){
-      if (this.nuevaEmpresa.fotoInstitucion == "" || this.nuevaEmpresa.fotoInstitucion == undefined) {
+    splitLongWords(text, maxLength = 15) {
+      return text
+        .split(" ")
+        .map((word) => {
+          if (word.length > maxLength) {
+            return word.match(new RegExp(`.{1,${maxLength}}`, "g")).join(" ");
+          }
+          return word;
+        })
+        .join(" ");
+    },
+    formEmpresaPaso4() {
+      if (
+        this.nuevaEmpresa.fotoInstitucion == "" ||
+        this.nuevaEmpresa.fotoInstitucion == undefined
+      ) {
         Swal.fire({
           title: "Suba una foto de las instalaciones de la empresa",
           icon: "error",
@@ -1887,7 +1966,7 @@ export default {
         });
         return;
       }
-      if(this.nuevaEmpresa.fotos.length == 0){
+      if (this.nuevaEmpresa.fotos.length == 0) {
         Swal.fire({
           title: "Suba al menos una foto extra",
           icon: "error",
@@ -1898,26 +1977,18 @@ export default {
       }
 
       this.showNuevaEmpresaModalForms = 4;
-
     },
-
-    
-
-
-
-
 
     formEmpresaPaso2() {
       if (
         this.nuevaEmpresa.nombre == "" ||
         this.nuevaEmpresa.nombre == undefined ||
-
         this.nuevaEmpresa.direccion == "" ||
         this.nuevaEmpresa.direccion == undefined ||
         this.nuevaEmpresa.correo == "" ||
         this.nuevaEmpresa.correo == undefined ||
         this.nuevaEmpresa.logoEmpresa == "" ||
-        this.nuevaEmpresa.logoEmpresa == undefined 
+        this.nuevaEmpresa.logoEmpresa == undefined
       ) {
         Swal.fire({
           title: "Complete todos los campos",
@@ -1938,10 +2009,8 @@ export default {
         return;
       }
 
-
       this.showNuevaEmpresaModalForms = 2;
     },
-
 
     formEmpresaPaso3() {
       if (this.selectedAreas.length == 0) {
@@ -1953,20 +2022,20 @@ export default {
         });
         return;
       }
+    
       this.showNuevaEmpresaModalForms = 3;
     },
 
-
     toUpperCase(event) {
       event.target.value = event.target.value.toUpperCase();
-      this.usuarioInstitucion.persona.apellidoMaterno = this.usuarioInstitucion.persona.apellidoMaterno.toUpperCase();
+      this.usuarioInstitucion.persona.apellidoMaterno =
+        this.usuarioInstitucion.persona.apellidoMaterno.toUpperCase();
     },
     toLowerCaseMail(event) {
       event.target.value = event.target.value.toLowerCase();
       if (event.target.value.includes(" ")) {
         event.target.value = event.target.value.replace(" ", "");
       }
-    
     },
     limitInputLength() {
       const telefono = this.usuarioInstitucion.persona.telefono;
@@ -1984,13 +2053,15 @@ export default {
       console.log("usuarioInstitucion", this.usuarioInstitucion);
       this.usuarioInstitucion.kc_UUID = this.$keycloak.idTokenParsed.sub;
       this.usuarioInstitucion.idUsuarios = null;
-      this.usuarioInstitucion.horaRegistro = '12:12:12'
+      this.usuarioInstitucion.horaRegistro = "12:12:12";
       this.usuarioInstitucion.institucion = this.empresaSeleccionada;
       //converir nombre , apellido paterno y apellido materno a mayusculas
-      this.usuarioInstitucion.persona.nombre = this.usuarioInstitucion.persona.nombre.toUpperCase();
-      this.usuarioInstitucion.persona.apellidoPaterno = this.usuarioInstitucion.persona.apellidoPaterno.toUpperCase();
-      this.usuarioInstitucion.persona.apellidoMaterno = this.usuarioInstitucion.persona.apellidoMaterno.toUpperCase();
-
+      this.usuarioInstitucion.persona.nombre =
+        this.usuarioInstitucion.persona.nombre.toUpperCase();
+      this.usuarioInstitucion.persona.apellidoPaterno =
+        this.usuarioInstitucion.persona.apellidoPaterno.toUpperCase();
+      this.usuarioInstitucion.persona.apellidoMaterno =
+        this.usuarioInstitucion.persona.apellidoMaterno.toUpperCase();
 
       //check the data before send
       if (
@@ -2000,10 +2071,7 @@ export default {
         this.usuarioInstitucion.persona.ci == "" ||
         this.usuarioInstitucion.persona.telefono == "" ||
         this.usuarioInstitucion.persona.fechaDeNacimiento == "" ||
-        this.usuarioInstitucion.cargo == "" 
-
-
-   
+        this.usuarioInstitucion.cargo == ""
       ) {
         Swal.fire({
           title: "Complete todos los campos, incluida la foto de perfil",
@@ -2037,10 +2105,6 @@ export default {
         return;
       }
 
-
-      
-
-
       let loader = this.$loading.show();
       try {
         const response =
@@ -2048,14 +2112,14 @@ export default {
             this.usuarioInstitucion
           );
         if (response) {
-           Swal.fire({
+          Swal.fire({
             title: "Usuario registrado correctamente",
             icon: "success",
             showConfirmButton: false,
             timer: 1500,
           });
         } else {
-           Swal.fire({
+          Swal.fire({
             title: "Error al registrar usuario",
             icon: "error",
             showConfirmButton: false,
@@ -2081,12 +2145,25 @@ export default {
         this.nuevaEmpresa.sectores.push(area);
       }
     },
-    removeArea(index) {
-      this.selectedAreas.splice(index, 1);
+    removeArea(areaName) {
+      console.log("area", areaName);
+      const index = this.selectedAreas.indexOf(areaName);
+      if (index !== -1) {
+        this.selectedAreas.splice(index, 1);
+      } else {
+        console.log("Area not found");
+      }
     },
     guardarNuevaEmpresa() {
       console.log(this.nuevaEmpresa.redesSociales);
-      if(this.nuevaEmpresa.redesSociales.facebook == undefined & this.nuevaEmpresa.redesSociales.twitter == undefined & this.nuevaEmpresa.redesSociales.instagram == undefined & this.nuevaEmpresa.redesSociales.linkedin == undefined & this.nuevaEmpresa.redesSociales.youtube == undefined & this.nuevaEmpresa.redesSociales.tiktok == undefined ){
+      if (
+        (this.nuevaEmpresa.redesSociales.facebook == undefined) &
+        (this.nuevaEmpresa.redesSociales.twitter == undefined) &
+        (this.nuevaEmpresa.redesSociales.instagram == undefined) &
+        (this.nuevaEmpresa.redesSociales.linkedin == undefined) &
+        (this.nuevaEmpresa.redesSociales.youtube == undefined) &
+        (this.nuevaEmpresa.redesSociales.tiktok == undefined)
+      ) {
         Swal.fire({
           title: "Agregue al menos una red social",
           icon: "error",
@@ -2095,7 +2172,6 @@ export default {
         });
         return;
       }
-
 
       console.log("guardar empresa");
       console.log(this.selectedAreas);
@@ -2154,7 +2230,8 @@ export default {
     },
 
     eliminarExperiencia(experiencia) {
-      const index = this.usuarioInstitucion.persona.experiencia.indexOf(experiencia);
+      const index =
+        this.usuarioInstitucion.persona.experiencia.indexOf(experiencia);
       this.usuarioInstitucion.persona.experiencia.splice(index, 1);
     },
 
@@ -2169,7 +2246,8 @@ export default {
     },
 
     eliminarHabilidad(habilidad) {
-      const index = this.usuarioInstitucion.persona.habilidades.indexOf(habilidad);
+      const index =
+        this.usuarioInstitucion.persona.habilidades.indexOf(habilidad);
       this.usuarioInstitucion.persona.habilidades.splice(index, 1);
     },
 
@@ -2179,7 +2257,8 @@ export default {
       if (/^\d{0,4}$/.test(value)) {
         this.usuarioInstitucion.persona.anioIngresoUniversidad = value;
       } else {
-        event.target.value = this.usuarioInstitucion.persona.anioIngresoUniversida;
+        event.target.value =
+          this.usuarioInstitucion.persona.anioIngresoUniversida;
       }
     },
 
@@ -2281,9 +2360,7 @@ export default {
             // Corrected code: use push() to add the new link to the array
             this.nuevaEmpresa.fotos.push(this.filesStore.link);
             console.log("fotos", this.nuevaEmpresa.fotos);
-
           }
-
         }
       }
     },
@@ -2297,10 +2374,8 @@ export default {
         console.log("tamaño imagen anterior " + file.size);
         if (file.size > 4000000) {
           auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.3);
-         
         } else if (file.size > 1000000) {
           auxLink = await this.comprimirYSubirImagenBannerPerfil(file, 0.5);
-          
         } else {
           let loader = this.$loading.show();
           const response = await this.filesStore.uploadFile(file);
@@ -2418,7 +2493,6 @@ export default {
           } else {
             this.nuevaEmpresa.logoEmpresa = this.filesStore.link;
             this.imageSrc = this.filesStore.link;
-
           }
         },
         error(err) {
@@ -2450,8 +2524,6 @@ export default {
             });
           } else {
             this.nuevaEmpresa.fotoInstitucion = this.filesStore.link;
-
-
           }
         },
         error(err) {
@@ -2486,8 +2558,6 @@ export default {
             this.nuevaEmpresa.fotos = this.nuevaEmpresa.fotos.filter(
               (element) => element !== undefined
             );
-
-
           }
         },
         error(err) {
@@ -2495,7 +2565,6 @@ export default {
         },
       });
     },
-
 
     async comprimirYSubirImagenFotoPerfil(file, cantidadCompresion) {
       new Compressor(file, {
@@ -2521,8 +2590,6 @@ export default {
           } else {
             this.imageSrc3 = this.filesStore.link;
             this.usuarioInstitucion.persona.fotoPerfil = this.filesStore.link;
-
-
           }
         },
         error(err) {
@@ -2530,7 +2597,6 @@ export default {
         },
       });
     },
-
   },
   computed: {
     filteredDatas() {
@@ -2614,5 +2680,12 @@ export default {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+@media (max-width: 451px) {
+  .modal-content {
+    top: 5rem;
+    width: 90%;
+  }
 }
 </style>
