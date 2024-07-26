@@ -284,7 +284,7 @@
                     <div class="flex items-center mb-3">
                       <i data-feather="file" class="size-8 text-slate-400"></i>
 
-                      <span class="font-medium ms-2">{{ curri.titulo }}</span>
+                      <span class="font-medium ms-2">{{ splitLongWords(curri.titulo) }}</span>
                     </div>
                   </div>
                   <a
@@ -430,6 +430,14 @@ export default {
   },
 
   methods: {
+    splitLongWords(text, maxLength = 15) {
+      return text.split(' ').map(word => {
+        if (word.length > maxLength) {
+          return word.match(new RegExp(`.{1,${maxLength}}`, 'g')).join(' ');
+        }
+        return word;
+      }).join(' ');
+    },
     FormularioCV() {
       this.showFormularioCV = true;
       console.log("hola");
