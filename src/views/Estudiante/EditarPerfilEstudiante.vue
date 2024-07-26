@@ -94,6 +94,7 @@
                     id="firstname"
                     name="name"
                     required
+                    disabled
                   />
                 </div>
                 <div class="lg:col-span-4">
@@ -124,6 +125,7 @@
                     @input="updateField('apellidoPaterno', $event.target.value)"
                     name="name"
                     required=""
+                    disabled
                   />
                 </div>
 
@@ -142,6 +144,7 @@
                     id="lastname"
                     name="name"
                     required=""
+                    disabled
                   />
                 </div>
 
@@ -156,6 +159,7 @@
                     placeholder="Email"
                     name="email"
                     required=""
+                    disabled
                   />
                 </div>
 
@@ -1053,6 +1057,60 @@ export default {
           descripcion: "INGENIERIA EN SISTEMAS",
         },
       },
+      habilidadesGenericas: {
+            habilidades: [
+              {
+                habilidad: "Administracion de tiempo",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Comunicacion",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Adaptabilidad",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Resolucion de problemas",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Trabajo en equipo",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Creatividad",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Liderazgo",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Habilidades interpersonales",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Etica de trabajo",
+                nivel: 1,
+                principal: false,
+              },
+              {
+                habilidad: "Atencion al detalle",
+                nivel: 1,
+                principal: false,
+              }
+            ],
+          },
     };
   },
   components: {
@@ -1373,6 +1431,18 @@ export default {
     },
 
     eliminarHabilidad(habilidad) {
+      if (
+        this.habilidadesGenericas.habilidades.find(
+          (habilidadGenerica) => habilidadGenerica.habilidad == habilidad.habilidad
+        )
+      ) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se puede eliminar esta habilidad",
+        });
+        return;
+      }
       const index =
         this.estudianteDto.persona.habilidades.habilidades.indexOf(habilidad);
       this.estudianteDto.persona.habilidades.habilidades.splice(index, 1);

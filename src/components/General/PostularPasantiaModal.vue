@@ -1,66 +1,98 @@
 <template>
-    <div id="myModalCurriculum"  class="modal" >
-      <div
-        class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
-        ref="myModalCurriculum"
-      >
-        <span class="close" @click="$emit('cancel')">&times;</span>
-  
-        <div class="grid grid-cols-1 gap-4">
-          <div>
-            <h5 class="text-lg font-semibold mb-4">Selecciona un cv para aplicar a la Pasantía:</h5>
-            <div class="mt-3">
-                <a
-                  @click="goToModificar()"
-                  class="btn bg-indigo-500 hover:bg-indigo-700 border-indigo-500 dark:border-indigo-500 text-white rounded-md w-full"
-                  ><i class="uil uil-file-download-alt"></i> Modificar
-                  curriculums</a
-                >
-            </div>
-            <div class="mt-4" style="max-height: 40vh; overflow-y: auto;">
-              <div v-for="(curri, index) in cv" :key="index">
-                <div
-                  @click="selectCv(index)"
-                  :class="['mt-3 w-full p-3 rounded-md shadow', selectedCv === index ? 'bg-emerald-500 dark:bg-blue-800' : 'bg-white dark:bg-slate-900']"
-                >
-                  <div class="relative">
-                    <div class="flex items-center mb-3 grid">
-                      <i data-feather="file" class="size-8 text-slate-400"></i>
-                      <span
-                      :class="selectedCv === index ? 'text-white' : 'font-medium ms-2'"
-                        
+  <div id="myModalCurriculum" class="modal">
+    <div
+      class="modal-content p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900"
+      ref="myModalCurriculum"
+    >
+      <span class="close" @click="$emit('cancel')">&times;</span>
 
-                      
-                      >{{ curri.titulo }}</span>
-                      <span 
-                        :class="selectedCv === index ? 'text-white' : 'text-slate-400 ms-2'"
-                      >Fecha de carga: {{ curri.fechaCreacion }}</span>
+      <div class="grid grid-cols-1 gap-4">
+        <div>
+          <h5 class="text-lg font-semibold mt-4">Tus curriculums:</h5>
+          <div class="mt-4 max-h-40vh overflow-y-auto">
+            <table class="min-w-full leading-normal">
+              <thead>
+                <tr>
+                  <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"></th>
+                  <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">CV</th>
+                  <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider" id="dateCV">Fecha de carga</th>
+                  <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(curri, index) in paginatedCv" :key="index" :class="{'bg-cyan-600 text-white': selectedCv === index, 'bg-white': selectedCv !== index}" @click="selectCv(index)">
+                  <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                    <input
+                      type="radio"
+                      :id="curri.idCurriculums"
+                      :value="index"
+                      v-model="selectedCv"
+                      @change="selectCv(index)"
+                    />
+                  </td>
+                  <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0">
+                        <i data-feather="file" class="size-8 text-slate-400"></i>
+                      </div>
+                      <div class="ml-3">
+                        <p class="text-gray-900 whitespace-no-wrap">{{ curri.titulo }}</p>
+                      </div>
                     </div>
-                  </div>
-                  <a
-                    @click.stop="downloadPDF(curri.pdfCurriculum)"
-                    class="btn bg-cyan-600 hover:bg-cyan-700 border-cyan-600 dark:border-cyan-600 text-white rounded-md w-full"
-                    download
-                  >
-                    <i class="uil uil-file-download-alt"></i> Ver currículum
-                  </a>
-                </div>
-              </div>
-            </div>
+                  </td>
+                  <td class="px-5 py-5 border-b border-gray-200 text-sm" id="dateCVData">
+                    <p class="text-gray-900 whitespace-no-wrap">{{ curri.fechaCreacion }}</p>
+                  </td>
+                  <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                    <button 
+                      @click="downloadPDF(curri.pdfCurriculum)" 
+                      class="btn bg-teal-600 hover:bg-teal-700 text-white rounded-md"
+                    >
+                      Ver currículum
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="flex justify-between items-center mt-4" id="pagination" v-if="cv.length > itemsPerPage">
+            <button
+              @click="previousPage"
+              :disabled="currentPage === 1"
+              class="btn bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-md"
+            >
+              Anterior
+            </button>
+            <span>Página {{ currentPage }} de {{ totalPages }}</span>
+            <button
+              @click="nextPage"
+              :disabled="currentPage === totalPages"
+              class="btn bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-md"
+            >
+              Siguiente
+            </button>
+          </div>
 
-            <div class="mt-10">
-                <a
-                  @click="aplicarPasantia()"
-                  class="btn bg-emerald-600 hover:bg-emerald-700 border-emerald-600 dark:border-emerald-600 text-white rounded-md w-full"
-                  >Aplicar Pasantia</a
-                >
-            </div>
+          <h5 class="text-lg font-semibold mb-4">
+            ¿No encuentras tu curriculum? Sube uno nuevo
+            <i
+              @click="goToModificar()"
+              class="uil uil-file-download-alt cursor-pointer text-cyan-600 hover:text-cyan-700"
+            ></i>
+          </h5>
+
+          <div class="mt-10">
+            <a
+              @click="aplicarPasantia()"
+              class="btn bg-teal-600 hover:bg-teal-700 border-teal-600 dark:border-teal-600 text-white rounded-md w-full"
+            >Aplicar Pasantia</a>
           </div>
         </div>
       </div>
     </div>
-  </template>
-  
+  </div>
+</template>
+
   <script>
   import Swal from 'sweetalert2';
   import { useCurriculumsStore } from "@/stores/Estudiantes/curriculumsStore";
@@ -87,17 +119,34 @@
         pdfFile: null,
         selectedCv: null,
         cv: [
-          {
-            idCurriculums: 1,
-            titulo: "Curriculum 1",
-            pdfCurriculum: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-            fechaCreacion: "2021-10-10",
-          },
-          
         ],
+        currentPage: 1,
+        itemsPerPage: 3,
       };
     },
+    computed: {
+      paginatedCv() {
+        const start = (this.currentPage - 1) * this.itemsPerPage;
+        const end = start + this.itemsPerPage;
+        return this.cv.slice(start, end);
+      },
+      totalPages() {
+        return Math.ceil(this.cv.length / this.itemsPerPage);
+    },
+  },
     methods: {
+      nextPage() {
+        this.selectCv(null);
+        if (this.currentPage < this.totalPages) {
+          this.currentPage++;
+        }
+      },
+      previousPage() {
+        this.selectCv(null);
+        if (this.currentPage > 1) {
+          this.currentPage--;
+        }
+      },
 
         downloadPDF(url){
             window.open(url, '_blank');
@@ -118,6 +167,7 @@
                 });
                 return;
             }
+            let confirm = false;
             await Swal.fire({
                 title: '¿Estás seguro de aplicar a esta pasantía?',
                 text: 'Una vez aplicada no podrás deshacer esta acción',
@@ -128,21 +178,25 @@
                 confirmButtonText: 'Sí, aplicar',
                 cancelButtonText: 'Cancelar',
             }).then((result) => {
+              console.log(result);
                 if (!result.isConfirmed) {
-                    window.scrollTo(0, 0);
-
-                    this.$emit('cancel');
+                  confirm = false;
                     return;
                 }
+                confirm = true;
             });
-
+            if (!confirm) {
+                return;
+            }
+            this.selectedCv = this.selectedCv + ((this.currentPage - 1) * this.itemsPerPage);
+            console.log(this.cv[this.selectedCv]);
 
 
             let loader = this.$loading.show();
             const response = await this.aplicacionesStore.postAplicacion(
                 this.$keycloak.idTokenParsed.sub,
                 this.pasantiaId,
-                this.cv[this.selectedCv].idCurriculums,
+                this.cv[this.selectedCv].idCurriculums
             );
             console.log(response);
             loader.hide();
@@ -218,53 +272,40 @@
                 this.$emit('cancel');
                 return;
             }
-
             this.cv = response;
             console.log(this.cv);
             loader.hide();
-            },
-        
-
-      
+          },
       selectCv(index) {
         this.selectedCv = index;
+        console.log(this.selectedCv);
       },
       
     },
-  };
+  }
   </script>
   
   <style scoped>
   .modal {
-    /* Hidden by default */
     position: fixed;
-    /* Stay in place */
     z-index: 1;
-    /* Sit on top */
     left: 0;
     top: 0;
     width: 100%;
-    /* Full width */
     height: 100%;
-    /* Full height */
     overflow: auto;
-    /* Enable scroll if needed */
     background-color: rgb(0, 0, 0);
-    /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
   }
   
   .modal-content {
     position: relative;
-    top: 20%;
+    top: 10%;
     margin: auto;
     padding: 0;
     border: 1px solid #888;
     width: 80%;
-    /* Could be more or less, depending on screen size */
-    max-width: 600px;
-    /* Max width */
+    max-width: 1000px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     animation-name: animatetop;
     animation-duration: 0.4s;
@@ -294,5 +335,33 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+@media (max-width: 640px) {
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+  }
+  th,
+  td {
+    text-align: left;
+    padding: 8px!important;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  #dateCVData, #dateCV {
+    display: none;
+  }
+  /*CSS para la paginación*/
+  #pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
   </style>
   
