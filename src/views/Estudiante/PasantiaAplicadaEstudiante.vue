@@ -76,6 +76,18 @@
             <div v-if="this.estadoPasantia" class="p-4 bg-green-100">
               ESTADO DE POSTULACIÓN:
               <h5 class="text-lg font-semibold text-green-500">APROBADO</h5>
+              FECHA DE SELECCIÓN:
+              <h5 class="text-lg font-semibold text-green-500">
+                 {{seleccionAplicante.fechaSeleccion}}
+              </h5>
+              COMENTARIO DE LA EMPRESA:
+              <h5 class="text-lg font-semibold text-green-500">
+                 {{seleccionAplicante.comentarios}}
+              </h5>
+              
+
+              
+
             </div>
             <div v-else class="p-4 bg-yellow-100">
               ESTADO DE POSTULACIÓN:
@@ -362,6 +374,7 @@ export default {
       pasantiaActual: [],
       pasantiasAprobadas: [],
       pasantiasPendientes: [],
+      seleccionAplicante:{},
       data: {
         titulo: "",
         funciones: [],
@@ -433,6 +446,7 @@ export default {
       this.idPasantiaActual = this.pasantiaActual[0].idPasantias;
       this.estadoPasantia = this.pasantiaActual[0].activo;
       this.urlCurriculum = this.pasantiaActual[0].urlCurriculum;
+      this.seleccionAplicante = this.pasantiaActual[0].seleccionAplicante;
       console.log("iestado actual " + this.estadoPasantia);
       console.log("id pasantia actual " + this.idPasantiaActual);
       loader.hide();

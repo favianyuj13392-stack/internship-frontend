@@ -12,11 +12,13 @@
             <h4
               class="lg:leading-normal leading-normal text-4xl lg:text-5xl mb-5 font-bold"
             >
-              Encuentra
+              Administra
               <span
                 class="before:block before:absolute before:-inset-2 before:-skew-y-6 before:bg-cyan-600 relative inline-block"
                 ><span class="relative text-white font-bold"
-                  >tu pasantia</span
+                  >
+                  tus solicitudes
+                  </span
                 ></span
               >
               <br class="sm:mt-10" />
@@ -24,7 +26,7 @@
             <h4
               class="lg:leading-normal leading-normal text-4xl lg:text-5xl mb-5 font-bold"
             >
-              soñada
+              de pasantías
               <span
                 class="before:block before:absolute before:-inset-2 before:-skew-y-6 before:bg-cyan-500 relative inline-block"
                 ><span class="relative text-white font-bold"
@@ -34,8 +36,8 @@
             </h4>
 
             <p class="text-slate-400 text-lg max-w-xl">
-              Haz contacto con las mejores empresas a nivel nacional, junto a la
-              Universidad Católica Boliviana.
+              Gestiona y sigue el estado de tus solicitudes a 
+              pasantías con las mejores empresas a nivel nacional, junto a la Universidad Católica Boliviana.
             </p>
           </div>
         </div>
@@ -51,11 +53,13 @@
               <div
                 class="absolute lg:bottom-20 -bottom-24 xl:-end-20 lg:-end-10 end-2 p-4 rounded-lg shadow-md dark:shadow-gray-800 bg-white dark:bg-slate-900 w-60 z-2"
               >
-                <h5 class="text-lg font-semibold mb-3">Más de 100 pasantias</h5>
+                <h5 class="text-lg font-semibold mb-3">
+                  Solicita pasantías
+                </h5>
 
                 <ul class="list-none relative">
                   <li class="inline-block relative">
-                    <a href=""
+                    <a 
                       ><img
                         src="../../assets/images/team/01.jpg"
                         class="size-10 rounded-full shadow-md dark:shadow-gray-700 border-4 border-white dark:border-slate-900 relative hover:z-1 hover:scale-105 transition-all duration-500"
@@ -63,7 +67,7 @@
                     /></a>
                   </li>
                   <li class="inline-block relative -ms-3">
-                    <a href=""
+                    <a 
                       ><img
                         src="../../assets/images/team/02.jpg"
                         class="size-10 rounded-full shadow-md dark:shadow-gray-700 border-4 border-white dark:border-slate-900 relative hover:z-1 hover:scale-105 transition-all duration-500"
@@ -71,7 +75,7 @@
                     /></a>
                   </li>
                   <li class="inline-block relative -ms-3">
-                    <a href=""
+                    <a 
                       ><img
                         src="../../assets/images/team/03.jpg"
                         class="size-10 rounded-full shadow-md dark:shadow-gray-700 border-4 border-white dark:border-slate-900 relative hover:z-1 hover:scale-105 transition-all duration-500"
@@ -79,7 +83,7 @@
                     /></a>
                   </li>
                   <li class="inline-block relative -ms-3">
-                    <a href=""
+                    <a 
                       ><img
                         src="../../assets/images/team/04.jpg"
                         class="size-10 rounded-full shadow-md dark:shadow-gray-700 border-4 border-white dark:border-slate-900 relative hover:z-1 hover:scale-105 transition-all duration-500"
@@ -87,7 +91,7 @@
                     /></a>
                   </li>
                   <li class="inline-block relative -ms-3">
-                    <a href=""
+                    <a 
                       ><img
                         src="../../assets/images/team/05.jpg"
                         class="size-10 rounded-full shadow-md dark:shadow-gray-700 border-4 border-white dark:border-slate-900 relative hover:z-1 hover:scale-105 transition-all duration-500"
@@ -96,7 +100,7 @@
                   </li>
                   <li class="inline-block relative -ms-3">
                     <a
-                      to="/pasantias"
+                      
                       class="btn btn-icon table-cell rounded-full bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white hover:z-1 hover:scale-105"
                       ><i class="uil uil-plus"></i
                     ></a>
