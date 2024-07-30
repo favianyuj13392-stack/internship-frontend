@@ -588,14 +588,16 @@ import switcher from "@/components/General/switcher.vue";
 import { usePasantiasAdministracionInstitucionStore } from "@/stores/Instituciones/PasantiasAdministracionInstitucionStore.js";
 import Swal from "sweetalert2";
 import StarRatingComponent from "@/components/General/Extras/StartRatingComponent.vue";
+import { useAuthStore } from "@/stores/authStore";
 
 export default {
   
   setup() {
     const pasantiasAdministracionInstitucionStore =
       usePasantiasAdministracionInstitucionStore();
+    const authStore = useAuthStore();
     return {
-      pasantiasAdministracionInstitucionStore,
+      pasantiasAdministracionInstitucionStore, authStore
     };
   },
 
@@ -1058,10 +1060,26 @@ export default {
     switcher,
     StarRatingComponent,
   },
+  async beforeMount() {
+    let existencia = false;
+    if(this.$keycloak.authenticated){
+      existencia = await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
+      console.log(existencia);
+      if(existencia==false){
+        this.$router.push("/");
+        return
+      }
+    }
+  },
+
   mounted() {
     this.id = this.$route.params.id;
 
     this.fetchPasantiaActual();
+
+    
+
+    
   },
 };
 </script>

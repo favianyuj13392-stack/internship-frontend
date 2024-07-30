@@ -305,11 +305,14 @@ import footers from "@/components/footer/footer.vue";
 import switcher from "@/components/General/switcher.vue";
 import { usePasantiasStore } from "@/stores/Pasantias/pasantiasStore";
 import Swal from "sweetalert2";
-import PostularPasantiaModal from "@/components/General/PostularPasantiaModal.vue"; 
+import PostularPasantiaModal from "@/components/General/PostularPasantiaModal.vue";
+import { useAuthStore } from "@/stores/authStore";
+
 export default {
   setup(){
     const pasantiasStore = usePasantiasStore();
-    return {pasantiasStore}
+    const authStore = useAuthStore();
+    return {pasantiasStore, authStore};
   },
   data() {
     return {
@@ -448,6 +451,17 @@ export default {
     this.id = this.$route.params.id;
     this.fetchPasantia();
     this.fetchPasantiasRelacionadas();
+  },
+  async beforeMount() {
+    let existencia = false;
+    if(this.$keycloak.authenticated){
+      existencia = await this.authStore.checkExistencia(this.$keycloak.tokenParsed.sub);
+      console.log(existencia);
+      if(existencia==false){
+        this.$router.push("/");
+        return
+      }
+    }
   },
   props: {
     id: {
