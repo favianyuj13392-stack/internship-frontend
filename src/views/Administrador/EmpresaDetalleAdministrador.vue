@@ -179,7 +179,7 @@
 
               <li class="flex justify-between mt-2">
                 <span class="text-slate-400 font-medium">Sectores:</span>
-                <a v-for="sector in this.data.institucion.sectores" v-bind:key="sector">
+                <a v-for="sector in this.data.sectores" v-bind:key="sector">
                 <span 
                       class="bg-purple-600/5 hover:bg-purple-600/20 dark:bg-purple-600/10 hover:dark:bg-purple-600/30 inline-block text-purple-600 text-[10px] font-medium rounded-md mt-2 me-1 transition-all duration-500 p-1">{{ sector }}</span>
                     </a> </li>
