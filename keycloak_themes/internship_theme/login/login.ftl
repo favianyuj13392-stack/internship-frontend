@@ -107,9 +107,10 @@
         <#if realm.password && realm.registrationAllowed && !registrationDisabled??>
             <div id="kc-registration-container">
                 <div id="kc-registration">
-                    <span>${msg("noAccount")} <a tabindex="6"
+                    <span>${msg("noAccount")} <a tabindex="6" id="registerButton"
                                                  href="${url.registrationUrl}">${msg("doRegister")}</a></span>
                 </div>
+                para empresas
             </div>
         </#if>
     <#elseif section = "socialProviders" >
@@ -193,7 +194,7 @@
                                     <img src="${url.resourcesPath}/img/google.png" alt="google" />
                                     <span class="${properties.kcFormSocialAccountNameClass!}">${p.displayName!}</span>
                                 </#if>
-                               (@ucb.edu.bo)
+                               @ucb.edu.bo
                             </a>
                         </li>
                     </#list>
