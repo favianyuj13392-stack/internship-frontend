@@ -80,7 +80,7 @@
               <form action="#">
                 <div class="registration-form text-dark text-start">
                   <div
-                    class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-0 gap-6"
+                    class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 lg:gap-0 gap-6"
                   >
                     <div class="filter-search-form relative filter-border">
                       <i class="uil uil-briefcase-alt icons"></i>
