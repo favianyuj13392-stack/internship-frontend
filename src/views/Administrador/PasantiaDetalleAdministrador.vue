@@ -402,11 +402,6 @@ export default {
     observar() {
     },
     async aprobarPasantia() {
-      Swal.fire({
-        icon: "success",
-        title: "Pasantia aprobada",
-        text: "La pasantia fue aprobada con exito",
-      });
       let loader = this.$loading.show();
       try {
         const response = await this.pasantiasStore.aceptarPasantia(
