@@ -73,6 +73,18 @@ export const useEmpresasStore = defineStore({
                 } catch (error) {
                     console.log(error)
                 }
+            },
+            async getEmpresasNombre(){
+                try {
+                    const response = await axios.get(RutaApi + '/institucion/nombre')
+                    if (response.data.code == '200') {
+                        return response.data.response
+                    } else {
+                        return null;
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
             }
           
            

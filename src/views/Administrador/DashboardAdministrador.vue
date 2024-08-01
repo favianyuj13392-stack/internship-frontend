@@ -114,31 +114,173 @@
     <section class="relative md:py-24 py-16">
       <!-- Start -->
       <div v-if="contenedor" class="container">
-        <div
-          class="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[30px]"
-        >
-          <div
-            v-for="item in datas"
-            :key="item"
-            class="group px-3 py-10 rounded-md shadow dark:shadow-gray-700 hover:shadow-cyan-600/10 dark:hover:shadow-cyan-600/10 text-center bg-white dark:bg-slate-900 hover:bg-cyan-600/5 dark:hover:bg-cyan-600/5 transition duration-500"
-          >
-            <div
-              class="size-16 bg-cyan-600/5 group-hover:bg-cyan-600 text-cyan-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-700 transition duration-500 mx-auto"
-            >
-              <i :class="item.icon"></i>
+        <!--KPIS SIN PARAMETROS-->
+        <h2 class="text-3xl font-bold text-center text-slate-900 dark:text-white mb-10">
+          KPIs
+        </h2>
+        <div class="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[30px]">
+          <div v-for="kpi in KpiSinParametros" :key="kpi" class="group px-3 py-10 rounded-md shadow dark:shadow-gray-700 hover:shadow-cyan-600/10 dark:hover:shadow-cyan-600/10 text-center bg-white dark:bg-slate-900 hover:bg-cyan-600/5 dark:hover:bg-cyan-600/5 transition duration-500">
+            <div class="size-16 bg-cyan-600/5 group-hover:bg-cyan-600 text-cyan-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-700 transition duration-500 mx-auto">
+              <div class="flex items-center justify-center">
+                {{ kpi.value }}
+              </div>
             </div>
-
             <div class="content mt-6">
-              <a href="" class="title text-lg font-semibold hover:text-cyan-600"
-                >{{ item.name }} <br />
-                {{ item.name2 }}</a
-              >
-              <p class="text-slate-400 mt-3">{{ item.job }}</p>
+              <p class="text-slate-400 mt-3">{{ kpi.title }}</p>
             </div>
           </div>
-          <!--end content-->
         </div>
-        <!--end grid-->
+        <!--KPIS POR CARRERA-->
+        <div class="mt-10">
+          <h2 class="text-3xl font-bold text-center text-slate-900 dark:text-white">
+            KPIs por Carrera
+          </h2>
+          <v-select
+            :options="carreras"
+            v-model="selectedIdCarrera"
+            placeholder="Selecciona una carrera..."
+            label="nombre"
+            :reduce="(carrera) => carrera.idCarreras"
+            class="w-full mt-5 mb-5"
+          ></v-select>
+          <div v-if="selectedIdCarrera" class="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[30px]">
+            <div v-for="kpi in KpiCarrera" :key="kpi" class="group px-3 py-10 rounded-md shadow dark:shadow-gray-700 hover:shadow-cyan-600/10 dark:hover:shadow-cyan-600/10 text-center bg-white dark:bg-slate-900 hover:bg-cyan-600/5 dark:hover:bg-cyan-600/5 transition duration-500">
+              <div class="size-16 bg-cyan-600/5 group-hover:bg-cyan-600 text-cyan-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-700 transition duration-500 mx-auto">
+                <div class="flex items-center justify-center">
+                  {{ kpi.value }}
+                </div>
+              </div>
+              <div class="content mt-6">
+                <p class="text-slate-400 mt-3">{{ kpi.title }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--KPIS POR FECHA-->
+        <div class="mt-10">
+          <h2 class="text-3xl font-bold text-center text-slate-900 dark:text-white mb-5">
+            KPIs por Fecha
+          </h2>
+          <div class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-4 mb-5">
+            <div>
+              <h6 class="text-slate-400 dark:text-white mb-1">Fecha de Inicio</h6>
+              <input
+                type="date"
+                v-model="selectedFechaInicio"
+                class="w-full p-2 rounded-md border border-slate-300 dark:border-slate-800"
+                placeholder="Selecciona la fecha de inicio"
+              />
+            </div>
+            <div>
+              <h6 class="text-slate-400 dark:text-white mb-1">Fecha de Fin</h6>
+              <input
+                type="date"
+                v-model="selectedFechaFin"
+                class="w-full p-2 rounded-md border border-slate-300 dark:border-slate-800"
+                placeholder="Selecciona la fecha de fin"
+              />
+            </div>
+            <div class="flex items-end">
+              <button
+                class="w-full bg-cyan-600 text-white rounded-md p-2 hover:bg-cyan-700 transition duration-500"
+                @click="getKPIWithDate()"
+              >
+                Buscar
+              </button>
+            </div>
+          </div>
+         <div v-if="selectedFechaInicio && selectedFechaFin" class="grid lg:grid-cols-2 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[30px]">
+            <div v-for="kpi in KpiFecha" :key="kpi" class="group px-3 py-10 rounded-md shadow dark:shadow-gray-700 hover:shadow-cyan-600/10 dark:hover:shadow-cyan-600/10 text-center bg-white dark:bg-slate-900 hover:bg-cyan-600/5 dark:hover:bg-cyan-600/5 transition duration-500">
+              <div class="size-16 bg-cyan-600/5 group-hover:bg-cyan-600 text-cyan-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-700 transition duration-500 mx-auto">
+                <div class="flex items-center justify-center">
+                  {{ kpi.value }}
+                </div>
+              </div>
+              <div class="content mt-6">
+                <p class="text-slate-400 mt-3">{{ kpi.title }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--KPIS POR EMPRESA-->
+        <div class="mt-10">
+          <h2 class="text-3xl font-bold text-center text-slate-900 dark:text-white">
+            KPIs por Empresa
+          </h2>
+          <v-select
+            :options="empresas"
+            v-model="selectedIdEmpresa"
+            placeholder="Selecciona una empresa..."
+            label="nombre"
+            :reduce="(empresa) => empresa.idInstituciones"
+            class="w-full mt-5 mb-5"
+          ></v-select>
+          <div v-if="selectedIdEmpresa" class="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[30px]">
+            <div v-for="kpi in KpiEmpresa" :key="kpi" class="group px-3 py-10 rounded-md shadow dark:shadow-gray-700 hover:shadow-cyan-600/10 dark:hover:shadow-cyan-600/10 text-center bg-white dark:bg-slate-900 hover:bg-cyan-600/5 dark:hover:bg-cyan-600/5 transition duration-500">
+              <div class="size-16 bg-cyan-600/5 group-hover:bg-cyan-600 text-cyan-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-700 transition duration-500 mx-auto">
+                <div class="flex items-center justify-center">
+                  {{ kpi.value }}
+                </div>
+              </div>
+              <div class="content mt-6">
+                <p class="text-slate-400 mt-3">{{ kpi.title }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--KPIS POR SECTOR-->
+        <div class="mt-10">
+          <h2 class="text-3xl font-bold text-center text-slate-900 dark:text-white">
+            KPIs por Sector
+          </h2>
+          <v-select
+            :options="sectores"
+            v-model="selectedSector"
+            placeholder="Selecciona un sector..."
+            label="nombre"
+            :reduce="(sector) => sector"
+            class="w-full mt-5 mb-5"
+          ></v-select>
+          <div v-if="selectedSector" class="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[30px]">
+            <div v-for="kpi in KpiSector" :key="kpi" class="group px-3 py-10 rounded-md shadow dark:shadow-gray-700 hover:shadow-cyan-600/10 dark:hover:shadow-cyan-600/10 text-center bg-white dark:bg-slate-900 hover:bg-cyan-600/5 dark:hover:bg-cyan-600/5 transition duration-500">
+              <div class="size-16 bg-cyan-600/5 group-hover:bg-cyan-600 text-cyan-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-700 transition duration-500 mx-auto">
+                <div class="flex items-center justify-center">
+                  {{ kpi.value }}
+                </div>
+              </div>
+              <div class="content mt-6">
+                <p class="text-slate-400 mt-3">{{ kpi.title }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--KPIS POR AREA-->
+        <div class="mt-10">
+          <h2 class="text-3xl font-bold text-center text-slate-900 dark:text-white">
+            KPIs por Area
+          </h2>
+          <v-select
+            :options="areas"
+            v-model="selectedArea"
+            placeholder="Selecciona un area..."
+            label="nombre"
+            :reduce="(area) => area"
+            class="w-full mt-5 mb-5"
+          ></v-select>
+          <div v-if="selectedArea" class="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[30px]">
+            <div v-for="kpi in KpiArea" :key="kpi" class="group px-3 py-10 rounded-md shadow dark:shadow-gray-700 hover:shadow-cyan-600/10 dark:hover:shadow-cyan-600/10 text-center bg-white dark:bg-slate-900 hover:bg-cyan-600/5 dark:hover:bg-cyan-600/5 transition duration-500">
+              <div class="size-16 bg-cyan-600/5 group-hover:bg-cyan-600 text-cyan-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-700 transition duration-500 mx-auto">
+                <div class="flex items-center justify-center">
+                  {{ kpi.value }}
+                </div>
+              </div>
+              <div class="content mt-6">
+                <p class="text-slate-400 mt-3">{{ kpi.title }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
       <!--end container-->
       <!-- Start -->
@@ -165,71 +307,51 @@
 </template>
 
 <script>
+import vSelect from "vue-select";
 import navbar from "@/components/Administrador/navbarAdministrador.vue";
 import footers from "@/components/footer/footer.vue";
-
+import { useDashboardAdminStore } from "@/stores/Administradores/dashboardAdminStore";
+import { useCarrerasStore } from "@/stores/carrerasStore";
+import { useEmpresasStore } from "@/stores/Estudiantes/empresasStore";
+import { usePasantiasStore } from "@/stores/Pasantias/pasantiasStore";
 import switcher from "@/components/General/switcher.vue";
+import Swal from "sweetalert2";
 export default {
+  setup() {
+    const dashboardStore = useDashboardAdminStore();
+    const carrerasStore = useCarrerasStore();
+    const empresasStore = useEmpresasStore();
+    const pasantiasStore = usePasantiasStore();
+    return { dashboardStore, carrerasStore, empresasStore, pasantiasStore };
+  },
+  mounted() {
+    this.uuid = this.$keycloak.idTokenParsed.sub;
+    this.getKPIWithoutParams();
+    this.getCarreras();
+    this.getEmpresas();
+    this.getSectores();
+    this.getAreas();
+  },
   data() {
     return {
+      uuid: "",
       contenedor: false,
-      datas: [
-        {
-          icon: "uil uil-phone",
-          name: "Telefono",
-          desc: "Lunes a jueves de 08:30 a las 16:00",
-          href: "tel:+ 591 (2) 2782222",
-          title: "+ 591 (2) 2782222",
-          icon: "uil uil-gitlab",
-          name: "Business",
-          name2: "Development",
-          job: "74 Jobs",
-        },
-        {
-          icon: "uil uil-envelope",
-          name: "Email",
-          desc: "Comunicate con nosotros atraves de correo electronico",
-          href: "email :pzapata@ucb.edu.bo",
-          title: "pzapata@ucb.edu.bo",
-          icon: "uil uil-gitlab",
-          name: "Business",
-          name2: "Development",
-          job: "74 Jobs",
-        },
-        {
-          icon: "uil uil-map-marker",
-          name: "Ubicación",
-          desc: "Av. 14 de Septiembre Nº 4807 esq. calle 2 de Obrajes",
-          href: "https://maps.app.goo.gl/kYtnX1WQKetvAHqf7",
-          title: "Ver en Google Maps",
-          icon: "uil uil-gitlab",
-          name: "Business",
-          name2: "Development",
-          job: "74 Jobs",
-        },
-        {
-          icon: "uil uil-map-marker",
-          name: "Ubicación",
-          desc: "Av. 14 de Septiembre Nº 4807 esq. calle 2 de Obrajes",
-          href: "https://maps.app.goo.gl/kYtnX1WQKetvAHqf7",
-          title: "Ver en Google Maps",
-          icon: "uil uil-gitlab",
-          name: "Business",
-          name2: "Development",
-          job: "74 Jobs",
-        },
-        {
-          icon: "uil uil-map-marker",
-          name: "Ubicación",
-          desc: "Av. 14 de Septiembre Nº 4807 esq. calle 2 de Obrajes",
-          href: "https://maps.app.goo.gl/kYtnX1WQKetvAHqf7",
-          title: "Ver en Google Maps",
-          icon: "uil uil-gitlab",
-          name: "Business",
-          name2: "Development",
-          job: "74 Jobs",
-        },
-      ],
+      KpiSinParametros: [],
+      selectedIdCarrera: "",
+      KpiCarrera: [],
+      selectedFechaInicio: "",
+      selectedFechaFin: "",
+      KpiFecha: [],
+      selectedIdEmpresa: "",
+      KpiEmpresa: [],
+      selectedSector: "",
+      KpiSector: [],
+      selectedArea: "",
+      KpiArea: [],
+      carreras: [],
+      empresas: [],
+      sectores: [],
+      areas: [],
     };
   },
   methods: {
@@ -240,11 +362,82 @@ export default {
         this.contenedor = true;
       }
     },
+    async getKPIWithoutParams() {
+      this.KpiSinParametros = await this.dashboardStore.getKPIWithoutParams(
+        this.uuid
+      );
+    },
+    async getCarreras() {
+      this.carreras = await this.carrerasStore.getCarreras();
+    },
+    async getEmpresas() {
+      this.empresas = await this.empresasStore.getEmpresasNombre();
+    },
+    async getSectores() {
+      this.sectores = await this.empresasStore.getSectores();
+    },
+    async getAreas() {
+      this.areas = await this.pasantiasStore.getAreas();
+    },
+    async getKPICarrera() {
+      this.KpiCarrera = await this.dashboardStore.getKPIWithCareerParams(
+        this.uuid,
+        this.selectedIdCarrera
+      );
+    },
+    async getKPIWithDate() {
+      if (this.selectedFechaInicio > this.selectedFechaFin) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "La fecha de inicio no puede ser mayor a la fecha de fin",
+        });
+        return;
+      }
+      this.KpiFecha = await this.dashboardStore.getKPIWithDateParams(
+        this.uuid,
+        this.selectedFechaInicio,
+        this.selectedFechaFin
+      );
+    },
+    async getKPIEmpresa() {
+      this.KpiEmpresa = await this.dashboardStore.getKPIWithEmpresaParams(
+        this.uuid,
+        this.selectedIdEmpresa
+      );
+    },
+    async getKPISector() {
+      this.KpiSector = await this.dashboardStore.getKPIWithSectorParams(
+        this.uuid,
+        this.selectedSector
+      );
+    },
+    async getKPIArea() {
+      this.KpiArea = await this.dashboardStore.getKPIWithAreaParams(
+        this.uuid,
+        this.selectedArea
+      );
+    },
   },
   components: {
     navbar,
     footers,
     switcher,
+    vSelect,
+  },
+  watch: {
+    selectedIdCarrera() {
+      this.getKPICarrera();
+    },
+    selectedIdEmpresa() {
+      this.getKPIEmpresa();
+    },
+    selectedSector() {
+      this.getKPISector();
+    },
+    selectedArea() {
+      this.getKPIArea();
+    },
   },
 };
 </script>
