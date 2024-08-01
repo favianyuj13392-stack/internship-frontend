@@ -13,8 +13,9 @@
                             alt="" />
 
                         <div class="md:ms-4 md:mt-0 mt-6">
-                            <input type="text" class="text-l font-semibold p-2 form-input border border-slate-100 dark:border-slate-800  " v-model="data.pasantiasDto.titulo"
-                                placeholder="Título Pasantía" />
+                            <input type="text"
+                                class="text-l font-semibold p-2 form-input border border-slate-100 dark:border-slate-800  "
+                                v-model="data.pasantiasDto.titulo" placeholder="Título Pasantía" />
                             <div class="mt-2">
                                 <span class="text-slate-400 font-medium me-2 inline-block"><i
                                         class="uil uil-building text-[18px] text-cyan-600 me-1"></i>
@@ -29,12 +30,12 @@
                         </div>
                     </div>
                     <!--detallesssss-->
-                    <h5 class="text-lg font-semibold">Detalles de la pasantia: <span>{{ data.pasantiasDto.descripcion.length }}/1000</span></h5>
+                    <h5 class="text-lg font-semibold">Detalles de la pasantia: <span>{{
+            data.pasantiasDto.descripcion.length }}/1000</span></h5>
 
-                    <textarea class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-600 w-full p-2  form-input border border-slate-100 dark:border-slate-800 h-24 "
-                        placeholder="Escribe aquí..." v-model="data.pasantiasDto.descripcion"
-                        maxlength="1000"
-                        >
+                    <textarea
+                        class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-600 w-full p-2  form-input border border-slate-100 dark:border-slate-800 h-24 "
+                        placeholder="Escribe aquí..." v-model="data.pasantiasDto.descripcion" maxlength="1000">
                     </textarea>
 
                     <div class="flex items
@@ -45,28 +46,25 @@
                             v-model="data.pasantiasDto.fechaCierre" />
                     </div>
 
+                    <div>
+                        <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
+                            <h5 class="text-lg font-semibold">Áreas:</h5>
+                            <select v-model="areaSelected" @change="handleSelectChange"
+                                class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
+                                <option value="" disabled selected>Seleccionar Área</option>
+                                <option v-for="area in areas" :key="area" :value="area">{{ area }}</option>
+                                <option value="nuevaArea">Agregar nueva área</option>
+                            </select>
+                        </div>
 
-                   
-
-
-                    <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
-                        <h5 class="text-lg font-semibold">Áreas:</h5>
-                        <button @click="agregarArea()"
-                            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
-                            Agregar
-                        </button>
-                        
+                        <ul class="list-none mt-4">
+                            <li v-for="area in data.pasantiasDto.areas" :key="area" class="text-slate-400 mt-2">
+                                <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ area }}
+                                <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2"
+                                    @click="removerArea(area)"></i>
+                            </li>
+                        </ul>
                     </div>
-
-                    
-                    <ul class="list-none">
-                        <li v-for="item in this.data.pasantiasDto.areas" :key="item" class="text-slate-400 mt-2">
-                            <i class="uil uil-arrow-right text-cyan-600 me-1"></i>{{ item }}
-                            <i class="uil uil-trash-alt text-red-600 cursor-pointer p-2"
-                                @click="data.pasantiasDto.areas = data.pasantiasDto.areas.filter(e => e !== item)"></i>
-
-                        </li>
-                    </ul>
 
                     <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
                         <h5 class="text-lg font-semibold">Requisistos:</h5>
@@ -186,9 +184,10 @@
                                 <span class="text-slate-400 font-medium">Sectores:</span>
                                 <div class="flex flex-wrap ml-16">
                                     <a v-for="sector in this.data.institucion.sectores" v-bind:key="sector">
-                <span 
-                      class="bg-cyan-600/5 hover:bg-cyan-600/20 dark:bg-cyan-600/10 hover:dark:bg-cyan-600/30 inline-block text-cyan-600 text-[12px] font-medium rounded-md mt-2 me-1 transition-all duration-500 p-1">{{ sector }}</span>
-                    </a> 
+                                        <span
+                                            class="bg-cyan-600/5 hover:bg-cyan-600/20 dark:bg-cyan-600/10 hover:dark:bg-cyan-600/30 inline-block text-cyan-600 text-[12px] font-medium rounded-md mt-2 me-1 transition-all duration-500 p-1">{{
+        sector }}</span>
+                                    </a>
                                 </div>
                             </li>
 
@@ -235,7 +234,7 @@
     </section>
 
 
-  
+
 
 
 
@@ -256,6 +255,7 @@ import switcher from "@/components/General/switcher.vue";
 import { usePasantiasAdministracionInstitucionStore } from "@/stores/Instituciones/PasantiasAdministracionInstitucionStore.js";
 import { useInstitucionesAdministracionStore } from "@/stores/Instituciones/InstitucionesAdministracionStore.js";
 import { useCarrerasStore } from "@/stores/carrerasStore";
+import { useAreasStore } from "@/stores/areasStore";
 import Swal from "sweetalert2";
 export default {
 
@@ -263,8 +263,9 @@ export default {
         const pasantiasAdministracionInstitucionStore = usePasantiasAdministracionInstitucionStore();
         const institucionesAdministracionStore = useInstitucionesAdministracionStore();
         const carrerasStore = useCarrerasStore();
+        const areasStore = useAreasStore();
         return {
-            pasantiasAdministracionInstitucionStore, institucionesAdministracionStore, carrerasStore
+            pasantiasAdministracionInstitucionStore, institucionesAdministracionStore, carrerasStore, areasStore
         }
     },
 
@@ -280,7 +281,7 @@ export default {
 
 
     methods: {
-        async agregarArea() {
+        async agregarNuevaArea() {
             //agregar un area con swal
             const { value: area } = await Swal.fire({
                 title: 'Agregar Area',
@@ -301,6 +302,26 @@ export default {
 
         },
 
+        handleSelectChange(){
+            if(this.areaSelected == "nuevaArea"){
+                this.agregarNuevaArea();
+                this.areaSelected = null;
+            }else{
+                this.agregarArea();
+            }
+        },
+
+        agregarArea() {
+            if (this.areaSelected && !this.data.pasantiasDto.areas.includes(this.areaSelected)) {
+                this.data.pasantiasDto.areas.push(this.areaSelected);
+            }
+            console.log(this.data.pasantiasDto.areas)
+            this.areaSelected = null;
+        },
+
+        removerArea(area) {
+            this.data.pasantiasDto.areas = this.data.pasantiasDto.areas.filter(item => item !== area);
+        },
 
         async agregarRequisitos() {
             //agregar un area con swal
@@ -437,6 +458,25 @@ export default {
 
         },
 
+        async fetchAreas() {
+            let loader = this.$loading.show();
+            const response = await this.areasStore.getAreas();
+            loader.hide();
+            if (response == null) {
+                Swal.fire({
+                    title: "Error",
+                    text: "No se pudo cargar las areas",
+                    icon: "error",
+                    confirmButtonText: "Ok",
+                });
+                return;
+            }
+            this.areas = response;
+            //ordenar las areas en orden alfabetico
+            this.areas.sort((a, b) => a.localeCompare(b));
+            this.areaSelected = this.areas[0];
+        },
+
         async guardarPasantia() {
             //comprobar los campos
             if (this.data.pasantiasDto.titulo == "" || this.data.pasantiasDto.descripcion == "" || this.data.pasantiasDto.areas.length == 0 || this.data.pasantiasDto.requisitos.length == 0 || this.data.pasantiasDto.funciones.length == 0 || this.data.pasantiasDto.beneficios.length == 0 || this.data.pasantiasDto.fechaCierre == "" || this.selectedCarreras.length == 0) {
@@ -449,7 +489,7 @@ export default {
                 return;
             }
 
-            if(this.data.pasantiasDto.descripcion.length > 1000){
+            if (this.data.pasantiasDto.descripcion.length > 1000) {
                 Swal.fire({
                     title: "Error",
                     text: "La descripción no puede tener más de 1000 caracteres",
@@ -518,6 +558,7 @@ export default {
         return {
             data: {
                 carreraSelected: "",
+                areaSelected: "",
                 pasantiasDto: {
                     titulo: "",
                     descripcion: "",
@@ -711,6 +752,7 @@ export default {
                 "Excellent problem solving and analytical skills",
             ],
             carreras: [],
+            areas: [],
             selectedCarreras: [
                 {
                     idCarreras: "",
@@ -729,6 +771,7 @@ export default {
 
         //this.fetchPasantiaActual();
         this.fetchCarreras();
+        this.fetchAreas();
         this.fetchInstitucion();
         this.selectedCarreras = [];
 
