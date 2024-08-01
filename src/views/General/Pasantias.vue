@@ -69,7 +69,7 @@
 
                 <div>
                   <label class="font-semibold">Areas</label>
-                  <div class="block mt-2">
+                  <div class="block mt-2" style="overflow: auto; max-height: 40rem;">
                     <div class="flex justify-between" v-for="area in areas">
                       <div class="inline-flex items-center mb-0">
                         <input
@@ -343,12 +343,31 @@ export default {
       const response = await this.pasantiasStore.getAreas();
       this.areas = response;
       loader.hide();
+      //
+      this.areas.sort((a, b) => {
+        if (a < b) {
+          return -1;
+        }
+        if (a > b) {
+          return 1;
+        }
+        return 0;
+      });
     },
     async fetchCarreras() {
       let loader = this.$loading.show();
       const response = await this.pasantiasStore.getCarreras();
       this.carreras = response;
       loader.hide();
+      this.carreras.sort((a, b) => {
+        if (a.nombre < b.nombre) {
+          return -1;
+        }
+        if (a.nombre > b.nombre) {
+          return 1;
+        }
+        return 0;
+      });
     },
     async fetchPasantias() {
       let loader = this.$loading.show();
