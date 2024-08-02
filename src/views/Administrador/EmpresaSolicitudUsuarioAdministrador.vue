@@ -235,9 +235,12 @@ export default {
       required: true,
     },
   },
+  setup() {
+    const empresaStore = useEmpresasAdminStore();
+    return { empresaStore };
+  },
   data() {
     return {
-      empresaStore: useEmpresasAdminStore(),
       data: {},
       idEmp: null,
       idSol: null,
