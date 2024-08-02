@@ -2,7 +2,7 @@
   <navbar :container="'container'" :lightNav="'justify-end'" />
   <!-- Start -->
   <section
-    class="py-8 h-[700px] items-center flex relative contendorPrincipal"
+    class="py-8 h-[700px]  items-center flex relative contendorPrincipal"
     id="home"
   >
     <div class="container relative">
@@ -126,6 +126,7 @@
             </div>
 
             <div
+            style="max-width: 80vw !important;"
               class="overflow-hidden absolute md:h-[500px] h-[400px] md:w-[500px] w-[400px] bg-gradient-to-tl to-cyan-600/5 via-cyan-600/50 from-cyan-600 bottom-1/2 translate-y-1/2 start-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 -z-1 rounded-full"
             ></div>
           </div>
@@ -372,6 +373,11 @@ export default {
       const response = await this.aplicacionesStore.getAplicacionesPasantias(
         this.$keycloak.idTokenParsed.sub
       );
+      if(response==null){
+        this.data = [];
+        loader.hide();
+        return;
+      }
       this.data = response;
       this.pasantiasAprobadas = this.data.filter((pasantia) => pasantia.activo);
       this.pasantiasPendientes = this.data.filter(
@@ -521,7 +527,9 @@ export default {
 <style lang="scss" scoped>
 @media screen and (max-width: 767px) {
   .contendorPrincipal {
-    margin-top: 3rem;
+    margin-top: 24%;
+    margin-bottom: 3rem;
+    margin-left: 10%;
   }
 }
 </style>
