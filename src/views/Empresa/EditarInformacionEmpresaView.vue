@@ -110,7 +110,7 @@
             
             </div>
   
-            <h5 class="text-xl font-semibold mt-6">Pasantias disponibles: <span class="text-cyan-600 font-large">{{ data.cantidadPasantias  }}</span></h5>
+            <h5 class="text-xl font-semibold mt-6">Cantidad de pasantias totales como empresa: <span class="text-cyan-600 font-large">{{ data.cantidadPasantias  }}</span></h5>
   
            
   
