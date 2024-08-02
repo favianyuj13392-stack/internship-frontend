@@ -152,6 +152,7 @@
                 name="profile-image"
                 type="file"
                 class="hidden"
+                accept="image/*"
                 @change="handleFileUploadFotoPerfil"
               />
               <div>
@@ -656,6 +657,39 @@
                 </p>
               </div>
             </div>
+
+            <div class="md:flex mt-8">
+              <div class="md:w-1/3">
+                <span class="font-medium">Web</span>
+              </div>
+
+              <div class="md:w-2/3 mt-4 md:mt-0">
+                <form>
+                  <div class="form-icon relative">
+                    <i
+                      data-feather="web"
+                      class="size-4 absolute top-5 start-4"
+                    ></i>
+                    <input
+                      type="text"
+                      class="form-input border border-slate-100 dark:border-slate-800 mt-2 ps-12"
+                      v-model="
+                        usuarioInstitucion.persona.redesSociales.web.url
+                      "
+                      placeholder="Web Profile Name"
+                      id="webb_name"
+                      name="name"
+                      required=""
+                    />
+                  </div>
+                </form>
+
+                <p class="text-slate-400 mt-1">
+                  Agrega el link de su sitio web.
+                </p>
+              </div>
+            </div>
+
 
             <div class="md:flex mt-8">
               <div class="md:w-1/3">
@@ -1201,6 +1235,8 @@
                     id="pro-img"
                     name="profile-image"
                     type="file"
+                    accept="image/*"
+
                     class="hidden"
                     @change="handleFileUploadLogoEmpresa"
                   />
@@ -1353,6 +1389,8 @@
               id="pro-banner"
               name="profile-banner"
               type="file"
+              accept="image/*"
+
               class="hidden"
               @change="handleFileUploadFotoGrande"
             />
@@ -1400,6 +1438,8 @@
                   class="relative form-input border border-slate-100 dark:border-slate-800 file:h-10 file:-mx-3 file:-my-2 file:cursor-pointer file:rounded-none file:border-0 file:px-3 file:text-neutral-700 bg-clip-padding px-3 py-1.5 file:me-3 mt-2"
                   id="file_input"
                   type="file"
+                  accept="image/*"
+
                   @change="handleFileUploadFotosGeneral"
                 />
               </div>
@@ -1598,6 +1638,7 @@ export default {
         "LinkedIn",
         "YouTube",
         "TikTok",
+        "Web"
       ],
       allSocials: [
         "Facebook",
@@ -1606,6 +1647,7 @@ export default {
         "LinkedIn",
         "YouTube",
         "TikTok",
+        "Web"
       ],
       empresaSeleccionada: {
         idInstituciones: "",
@@ -1621,6 +1663,8 @@ export default {
           facebook: "fa",
           twitter: "tw",
           instagram: "instagram",
+          linkedin: "linkedin",
+          web: "web",
         },
         activo: true,
       },
