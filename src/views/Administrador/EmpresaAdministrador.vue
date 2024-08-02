@@ -274,7 +274,7 @@ export default {
   data() {
     return {
       sectores: [],
-      selectedSector: [],
+      selectedSector: null,
       isActive: false,
       options: [
         "Ingenieria de Sistemas",

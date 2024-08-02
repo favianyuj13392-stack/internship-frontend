@@ -29,6 +29,29 @@ export const usePasantiasAdminStore = defineStore({
                 console.log(error)
             }
         },
+        async getPasantiasSinAplicantes(pagina, tamanio, terminoDeBusqueda, kkid) {
+                
+                try {
+                    const response = await axios.get(RutaApi + '/admin/'+kkid+'/pasantia/sinaplicantes', {
+                        params: {
+                            page: pagina,
+                            size: tamanio,
+                            search: terminoDeBusqueda
+                        }
+                    })
+                    if (response.data.code == '200') {
+                        return response.data.response
+                    } else {
+                        return null;
+                    }
+    
+                } catch (error) {
+                    console.log(error)
+                }
+        },
+
+
+
 /**
  @PutMapping("/pasantia/{idPasantias}/aceptar")
     public ResponseEntity<ResponseDto<PasantiasDto>> aceptarPasantia(
