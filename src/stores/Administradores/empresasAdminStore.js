@@ -4,7 +4,7 @@ import RutaApi from '@/assets/rutaApi.js'
 
 export const useEmpresasAdminStore = defineStore({
         
-    id: 'empresas',
+    id: 'empresasAdmin',
     state: () => ({
     }),
 
