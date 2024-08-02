@@ -228,6 +228,10 @@ export default {
   mounted() {
     this.fetchEmpresas();
   },
+  setup() {
+    const empresaStore = useEmpresasAdminStore();
+    return { empresaStore };
+  },
   data() {
     return {
       isActive: false,
@@ -238,7 +242,6 @@ export default {
         "Administracion",
       ],
       selected: "Ingenieria de Sistemas",
-      empresaStore: useEmpresasAdminStore(),
       pageSize: 12,
       currentPage: 0,
       searchValue: "",

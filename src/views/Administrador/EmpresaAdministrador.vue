@@ -267,6 +267,10 @@ import footers from "@/components/footer/footer.vue";
 import { useEmpresasAdminStore } from "@/stores/Administradores/empresasAdminStore"; 
 
 export default {
+  setup() {
+    const empresaStore = useEmpresasAdminStore();
+    return { empresaStore };
+  },
   async mounted() {
     await this.fetchEmpresas();
     await this.fetchSectores();
@@ -283,7 +287,6 @@ export default {
         "Administracion",
       ],
       selected: "Ingenieria de Sistemas",
-      empresaStore: useEmpresasAdminStore(),
       pageSize: 12,
       currentPage: 0,
       searchValue: "",
