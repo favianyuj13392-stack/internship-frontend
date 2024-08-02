@@ -63,13 +63,9 @@
                         ></i>
                       </div>
                       <!-- Título para pantallas grandes -->
-                      <div class="ml-3 hidden lg:block">
-                        <p class="text-gray-900 whitespace-no-wrap">
-                          {{ curri.titulo }}
-                        </p>
-                      </div>
+                   
                       <!-- Título para pantallas pequeñas -->
-                      <div class="ml-3 block lg:hidden">
+                      <div class="ml-3 ">
                         <p class="text-gray-900 whitespace-no-wrap">
                           {{ splitLongWords(curri.titulo) }}
                         </p>
