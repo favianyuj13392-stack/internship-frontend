@@ -189,6 +189,9 @@
                                     class="sub-menu-item">Pasantias</router-link></li>
                             <li :class="activeMenu === '/administrador/solicitud/pasantia' ? 'active' : ''"><router-link to="/administrador/solicitud/pasantia"
                                     class="sub-menu-item">Solicitudes de pasantias</router-link></li>
+                            <li :class="activeMenu === '/administrador/pasantia/sinaplicantes' ? 'active' : ''"><router-link to="/administrador/pasantia/sinaplicantes"
+                                    class="sub-menu-item">Pasantias sin aplicantes</router-link></li>
+                              
                          
                         </ul>
                     </li>

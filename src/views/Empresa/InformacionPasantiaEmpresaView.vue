@@ -176,6 +176,11 @@
               <div v-else>
               
                 <div class="grid grid-cols-1 text-center" v-if="this.isDataLoad">
+                  <h2 
+                  v-if="getPostulantesAprobados == 0"
+                  class="text-lg font-semibold text-red-400">
+                        *Nota: Para marcar a una pasantía como terminada, todos los postulantes deben haber sido rechazados. Si tiene postulantes pendientes, no podrá marcar la pasantía como terminada.
+                  </h2>
                   <h3
                     class="mb-2 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
                   >

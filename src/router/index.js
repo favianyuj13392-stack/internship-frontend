@@ -31,6 +31,7 @@ import EmpresaDetalleAdministrador from "@/views/Administrador/EmpresaDetalleAdm
 import PasantiaDetalleAdministrador from "@/views/Administrador/PasantiaDetalleAdministrador.vue";
 import EmpresaSolicitudUsuarioAdministrador from "@/views/Administrador/EmpresaSolicitudUsuarioAdministrador.vue";
 import PerfilEstudianteAdministrador from "@/views/Administrador/PerfilEstudianteAdministrador.vue";
+import PasantiaSinAplicanteAdministrador from "@/views/Administrador/PasantiaSinAplicanteAdministrador.vue";
 //completar registro
 import FinishRegisterEstudiante from "@/views/CompletarRegistro/CompletarRegistroEstudianteView.vue";
 import FinishRegisterEmpresa from "@/views/CompletarRegistro/CompletarRegistroEmpresaView.vue";
@@ -170,6 +171,12 @@ const routes = [
     path: "/administrador/pasantia",
     name: "PasantiaAdministrador",
     component: PasantiaAdministrador,
+    meta: { requiresAuth: true, roles: ['ADMIN'] }
+  },
+  {
+    path: "/administrador/pasantia/sinaplicantes",
+    name: "PasantiaSinAplicanteAdministrador",
+    component: PasantiaSinAplicanteAdministrador,
     meta: { requiresAuth: true, roles: ['ADMIN'] }
   },
   {
