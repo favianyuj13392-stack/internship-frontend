@@ -49,7 +49,8 @@
           <div class="md:text-start text-center">
             <p class="mb-0 text-gray-300 font-medium">
               © {{ date }} INTERNSHIP. Diseñado y desarrollado con
-              <i class="mdi mdi-heart text-red-600"></i> por
+              <a  href="https://www.instagram.com/jhessika_zarate/"
+              > <i class="mdi mdi-heart text-red-600"></i></a> por
               <a
                 href="https://www.instagram.com/bitsandbytes.ucb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                 target="_blank"
@@ -108,15 +109,15 @@ export default {
     
         {
           icon: "uil uil-facebook-f align-middle",
-          link: "https://www.facebook.com/shreethemes",
+          link: "https://www.facebook.com/usei.lpz",
         },
         {
           icon: "uil uil-instagram align-middle",
-          link: "https://www.instagram.com/shreethemes/",
+          link: "https://www.instagram.com/usei.lapaz?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
         },
         {
           icon: "uil uil-youtube",
-          link: "https://twitter.com/shreethemes",
+          link: "https://www.youtube.com/@UCBLaPazBo",
         },
        
       ],

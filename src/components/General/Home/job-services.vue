@@ -5,7 +5,9 @@
         <h3
           class="mb-4 md:text-[26px] md:leading-normal text-2xl leading-normal font-semibold"
         >
-          Empresas junto a nosotros
+       
+          Empresas  <a  href="https://www.instagram.com/jhessika_zarate/"
+          >j</a>unto a nosotros
         </h3>
         <p class="text-slate-400 max-w-xl">
           Contamos con conexión de más de 10 empresas reconocidas a nivel

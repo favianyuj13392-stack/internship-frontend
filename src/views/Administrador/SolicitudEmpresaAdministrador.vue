@@ -125,62 +125,57 @@
   </section>
 
   <div class="container mt-2">
-    <div class="grid grid-cols-1 gap-[30px]">
-      <div
-        v-for="item in datas"
-        :key="item"
-        class="group relative overflow-hidden md:flex justify-between items-center rounded shadow hover:shadow-md dark:shadow-gray-700 transition-all duration-500 p-5"
-      >
-        <div class="flex items-center">
-          <div
-            class="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md"
-          >
-            <img :src="item.logoEmpresa" class="size-14" alt="" />
-          </div>
-          <div
-            class="text-lg hover:text-cyan-600 font-semibold transition-all duration-500 ms-3 min-w-[180px]"
-          >
-            {{ item.nombreInstitucion }}
-          </div>
+  <div class="grid grid-cols-1 gap-[30px]">
+    <div
+      v-for="item in datas"
+      :key="item"
+      class="group relative overflow-hidden rounded shadow hover:shadow-md dark:shadow-gray-700 transition-all duration-500 p-5"
+    >
+      <!-- Nombre en la parte superior -->
+      <div class="w-full text-lg hover:text-cyan-600 font-semibold transition-all duration-500 mb-4">
+        {{ item.nombreInstitucion }}
+      </div>
+      
+      <!-- Contenedor de columnas -->
+      <div class="grid grid-cols-4 gap-4">
+        <!-- Foto -->
+        <div class="flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md">
+          <img :src="item.logoEmpresa" class="size-14" alt="" />
         </div>
 
-        <div class="md:block flex justify-between md:mt-0 mt-2 mr-1">
-          <span class="block"
-            ><span
-              class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full"
-              >Empresa:
-            </span></span
-          >
-          <span class="text-slate-400"
-            ><i class="uil uil-map-marker"></i> {{ item.direccion }}</span
-          >
-          <span class="block font-semibold md:mt-1 mt-0">{{
-            item.correoInstitucion
-          }}</span>
+        <!-- Datos de la empresa -->
+        <div>
+          <span class="block">
+            <span class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full">
+              Empresa:
+            </span>
+          </span>
+          <span class="text-slate-400 block mt-1">
+            <i class="uil uil-map-marker"></i> {{ item.direccion }}
+          </span>
+          <span class="block font-semibold mt-1">{{ item.correoInstitucion }}</span>
         </div>
-        <div class="md:block flex justify-between md:mt-0 mt-4">
-          <span class="block"
-            ><span
-              class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full"
-              >Solicitante:</span
-            ></span
-          >
-          <span class="block text-slate-400 text-sm md:mt-1 mt-0"
-            ><i class="uil uil-user"></i> {{ item.nombre }}
-            {{ item.apellidoPaterno }}</span
-          >
-          <span class="block text-slate-400 text-sm md:mt-1 mt-0"
-            ><i class="uil uil-fast-mail"></i>
-            {{ item.correo }}
+
+        <!-- Datos del usuario -->
+        <div>
+          <span class="block">
+            <span class="bg-cyan-600/10 inline-block text-cyan-600 text-xs px-2.5 py-0.5 font-semibold rounded-full">
+              Solicitante:
+            </span>
+          </span>
+          <span class="block text-slate-400 text-sm mt-1">
+            <i class="uil uil-user"></i> {{ item.nombre }} {{ item.apellidoPaterno }}
+          </span>
+          <span class="block text-slate-400 text-sm mt-1">
+            <i class="uil uil-fast-mail"></i> {{ item.correo }}
           </span>
         </div>
-        <div class="md:block flex justify-between md:mt-0 mt-2"></div>
 
-        <div class="md:mt-0 mt-4">
+        <!-- Botones -->
+        <div class="flex flex-col items-start">
           <button
             @click="sendEmail(item.correo)"
-            href=""
-            class="btn btn-icon rounded-full bg-yellow-600/5 hover:bg-yellow-600 border-yellow-600/10 hover:border-yellow-600 text-yellow-600 hover:text-white md:relative absolute top-0 end-0 md:m-0 m-3"
+            class="btn btn-icon rounded-full bg-yellow-600/5 hover:bg-yellow-600 border-yellow-600/10 hover:border-yellow-600 text-yellow-600 hover:text-white"
           >
             <i class="uil-fast-mail"></i>
           </button>
@@ -194,14 +189,17 @@
                 idUsuario: item.idUsuarios,
               },
             }"
-            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white md:ms-2 w-full md:w-auto mt-2"
-            >Más información</router-link
+            class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white mt-2 w-full"
           >
+            Más información
+          </router-link>
         </div>
       </div>
-      <!--end content-->
     </div>
+    <!--end content-->
   </div>
+</div>
+
   <!-- iframe end  -->
   <div class="md:my-16 my-16">
     <counter />
