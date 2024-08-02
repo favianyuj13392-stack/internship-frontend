@@ -83,6 +83,24 @@
 
 <script>
 export default {
+  beforeMount() {
+    if(this.$keycloak.authenticated && this.$keycloak.tokenParsed.resource_access["internship-cliente"].roles.includes('ESTUDIANTE')){
+      //remove contactos
+      this.datas.splice(3, 1);
+      //insertar antes de contactos
+      this.datas.push( {
+        name: "Solicitudes",
+        link: "/estudiante/solicitudes",
+      });
+      
+    }
+    if(this.$keycloak.authenticated && this.$keycloak.tokenParsed.resource_access["internship-cliente"].roles.includes('EMPRESA')){
+      this.datas= [];
+    }
+    if(this.$keycloak.authenticated && this.$keycloak.tokenParsed.resource_access["internship-cliente"].roles.includes('ADMIN')){
+      this.datas=[];
+    }
+  },
   data() {
     return {
       date: new Date().getFullYear(),
@@ -115,6 +133,7 @@ export default {
           name: "Empresas",
           link: "/empresas",
         },
+        
         {
           name: "Contactos",
           link: "/contactanos",
