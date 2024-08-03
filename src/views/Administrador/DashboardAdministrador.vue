@@ -289,11 +289,8 @@
         <div
           class="bg-white flex justify-center dark:bg-cyan-700 rounded-md shadow dark:shadow-gray-700 transition duration-500"
         >
-          <img
-            src="https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png"
-            class="size-60 m-2"
-            alt=""
-          />
+        <iframe src="https://matomo-sitio.sis-ucb.online/index.php?module=Widgetize&action=iframe&moduleToWidgetize=Dashboard&actionToWidgetize=index&idSite=2&period=week&date=yesterday" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="100%"></iframe>
+
         </div>
       </div>
       <!--end container-->
