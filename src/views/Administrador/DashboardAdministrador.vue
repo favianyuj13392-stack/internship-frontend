@@ -284,15 +284,24 @@
       </div>
       <!--end container-->
       <!-- Start -->
-      <div v-else class="container">
-        <!--end grid-->
-        <div
-          class="bg-white flex justify-center dark:bg-cyan-700 rounded-md shadow dark:shadow-gray-700 transition duration-500"
-        >
-        <iframe src="https://matomo-sitio.sis-ucb.online/index.php?module=Widgetize&action=iframe&moduleToWidgetize=Dashboard&actionToWidgetize=index&idSite=2&period=week&date=yesterday" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="100%"></iframe>
+      <div v-else class="container center-content" style="height: auto; padding: 1rem; margin: 0; width: 100vw; max-width: 100vw;">
+    <!--end grid-->
+    <div
+        class="bg-white flex justify-center dark:bg-cyan-700 rounded-md shadow dark:shadow-gray-700 transition duration-500"
+        style="height: 80vh; width: 90%;">
+        <iframe
+            src="https://matomo-sitio.sis-ucb.online/index.php?module=Widgetize&action=iframe&moduleToWidgetize=Dashboard&actionToWidgetize=index&idSite=2&period=week&date=yesterday"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+            width="100%"
+            height="100%"
+            >
+        </iframe>
+    </div>
+</div>
 
-        </div>
-      </div>
+
       <!--end container-->
     </section>
     <!--end container-->
@@ -443,6 +452,12 @@ export default {
 img {
   filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.1));
 }
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media (max-width: 768px) {
   .responsive-container {
     display: none;
