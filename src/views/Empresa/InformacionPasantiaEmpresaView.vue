@@ -405,7 +405,12 @@
           </div>
         </div>
         <!-- Detalles personales -->
-        <h5 class="text-lg font-semibold mb-4">Detalles Personales:</h5>
+        <h5 class="text-lg font-semibold mb-4">Descripción:</h5>
+        <p class="text-slate-400">
+          {{ personaInfo.persona.descripcion }}
+        </p>
+
+        <h5 class="text-lg font-semibold mb-4 mt-4">Detalles Personales:</h5>
         <ul class="list-none mt-4">
           <li class="flex justify-between mt-3 items-center font-medium">
             <span><i data-feather="mail" class="size-4 text-slate-400 me-3 inline"></i><span class="text-slate-400 me-3">Email :</span></span>
