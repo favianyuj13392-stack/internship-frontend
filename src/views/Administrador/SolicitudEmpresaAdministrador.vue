@@ -6,7 +6,7 @@
   />
   <!-- Start -->
   <section
-    class="py-20 w-full table relative bg-[url('../../assets/images/hero/bg2.jpg')] bg-top bg-no-repeat bg-cover"
+    class="py-20 w-full table relative bg-[url('../../assets/images/hero/bg2.webp')] bg-top bg-no-repeat bg-cover"
   >
     <div class="absolute inset-0 bg-slate-900/70"></div>
     <div class="container relative">
