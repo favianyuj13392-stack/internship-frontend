@@ -1,15 +1,11 @@
 <template>
   <div class="container md:mt-24 mt-16">
     <div class="grid grid-cols-1">
-      <div
-        class="relative overflow-hidden bg-amber-400 rounded-md shadow dark:shadow-gray-700"
-      >
+      <div class="relative overflow-hidden bg-amber-400 rounded-md shadow dark:shadow-gray-700">
         <div class="grid md:grid-cols-2 items-center gap-[30px]">
           <div class="relative">
             <img src="@/assets/images/about/ab05.webp" alt="" />
-            <div
-              class="absolute md:bottom-1/2 md:translate-y-1/2 md:-end-10 ltr:md:translate-x-0 rtl:md:translate-x-0 -bottom-10 end-1/2 ltr:translate-x-1/2 rtl:-translate-x-1/2 text-center"
-            >
+            <div class="absolute md:bottom-1/2 md:translate-y-1/2 md:-end-10 ltr:md:translate-x-0 rtl:md:translate-x-0 -bottom-10 end-1/2 ltr:translate-x-1/2 rtl:-translate-x-1/2 text-center">
               <a
                 @click="toggle"
                 data-type="youtube"
@@ -66,15 +62,16 @@
   >
     <div class="h-[100%] flex items-center justify-center">
       <iframe
-      v-if="isActive"
+        v-if="isActive"
         width="560"
         height="315"
-        src="https://www.youtube.com/embed/vJl3o_5Mmkw?si=w7jC8V4wzHRp_-lS"
+        :src="videoUrl"
         title="YouTube video player"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerpolicy="strict-origin-when-cross-origin"
         allowfullscreen
+        loading="lazy"
       ></iframe>
     </div>
     <button class="text-slate-400 absolute top-[20px] right-[20px]">
@@ -110,6 +107,7 @@ export default {
   data() {
     return {
       isActive: false,
+      videoUrl: "",
     };
   },
   components: {
@@ -118,6 +116,12 @@ export default {
   methods: {
     toggle() {
       this.isActive = !this.isActive;
+      if (this.isActive) {
+        this.videoUrl =
+          "https://www.youtube.com/embed/vJl3o_5Mmkw?si=w7jC8V4wzHRp_-lS";
+      } else {
+        this.videoUrl = "";
+      }
     },
   },
 };
