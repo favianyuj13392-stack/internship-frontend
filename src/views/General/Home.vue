@@ -7,7 +7,7 @@
   <!-- Hero Start -->
   <section
     id="hero-image"
-    class="relative h-screen flex justify-center items-center bg-[url('../../assets/images/hero/bg.jpg')] bg-cover"
+    class="relative h-screen flex justify-center items-center bg-[url('../../assets/images/hero/bg.webp')] bg-cover"
   >
     <div class="absolute inset-0 bg-slate-900/30"></div>
     <div class="container z-1" id="hero-container">

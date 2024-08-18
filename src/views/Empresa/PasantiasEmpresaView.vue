@@ -1,7 +1,7 @@
 <template>
   <navbar :container="'container'" :lightNav="'nav-light justify-end'" :lightLogo="true" />
   <!-- Start Hero -->
-  <section class="relative table w-full py-36 bg-[url('../../assets/images/hero/bg.jpg')] bg-top bg-no-repeat bg-cover">
+  <section class="relative table w-full py-36 bg-[url('../../assets/images/hero/bg.webp')] bg-top bg-no-repeat bg-cover">
     <div class="absolute inset-0 bg-cyan-900/90"></div>
     <div class="container">
       <div class="grid grid-cols-1 text-center mt-10">

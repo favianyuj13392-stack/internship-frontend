@@ -6,7 +6,7 @@
       >
         <div class="grid md:grid-cols-2 items-center gap-[30px]">
           <div class="relative">
-            <img src="@/assets/images/about/ab05.jpg" alt="" />
+            <img src="@/assets/images/about/ab05.webp" alt="" />
             <div
               class="absolute md:bottom-1/2 md:translate-y-1/2 md:-end-10 ltr:md:translate-x-0 rtl:md:translate-x-0 -bottom-10 end-1/2 ltr:translate-x-1/2 rtl:-translate-x-1/2 text-center"
             >
@@ -66,6 +66,7 @@
   >
     <div class="h-[100%] flex items-center justify-center">
       <iframe
+      v-if="isActive"
         width="560"
         height="315"
         src="https://www.youtube.com/embed/vJl3o_5Mmkw?si=w7jC8V4wzHRp_-lS"

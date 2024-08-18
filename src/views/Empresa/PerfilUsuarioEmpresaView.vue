@@ -6,7 +6,7 @@
           
           <div class="relative shrink-0">
             <div
-              class="h-64 w-full object-cover lg:rounded-xl shadow dark:shadow-gray-700 bg-[url('../../assets/images/hero/bg.jpg')] bg-cover "
+              class="h-64 w-full object-cover lg:rounded-xl shadow dark:shadow-gray-700 bg-[url('../../assets/images/hero/bg.webp')] bg-cover "
               id="profile-banner"
               alt=""
             ></div>
