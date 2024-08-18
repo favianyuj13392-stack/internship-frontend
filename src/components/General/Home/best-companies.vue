@@ -41,12 +41,12 @@
             <h3
               class="mb-6 md:text-[26px] text-2xl md:leading-normal leading-normal font-semibold"
             >
-              Encuentra pasantias en las mejores empresas
+              Encuentra pasantías en las mejores empresas
             </h3>
 
             <p class="text-slate-400 max-w-xl">
               Conoce las empresas que se encuentran en este programa y con todas
-              las pasantias que cuenta cada una en un solo CLICK
+              las pasantías que cuenta cada una en un solo CLICK
             </p>
 
             <div class="grid md:grid-cols-2 grid-cols-1 gap-6 mt-8">
@@ -67,21 +67,15 @@
                   </div>
 
                   <div class="ms-3">
-                    <!--aquiii  
-                  <router-link
-                    :to="{ name: 'employer-detail', params: { id: item.id } }"
-                    class="block text-[16px] font-semibold hover:text-emerald-600 transition-all duration-500"
-                    >{{ item.name }}</router-link
-                  > -->
-                
-                    <router-link  :to="{
-                  name: 'empresas-detalle',
-                  params: { id: item.idInstituciones },
-                }"
-                class="block text-sm text-cyan-600">{{
-                      item.nombre
-                    }}</router-link>
-                    {{ item.cantidadPasantias }}  pasantias disponibles
+                    <router-link
+                      :to="{
+                        name: 'empresas-detalle',
+                        params: { id: item.idInstituciones },
+                      }"
+                      class="block text-sm text-cyan-600"
+                      >{{ item.nombre }}</router-link
+                    >
+                    {{ item.cantidadPasantias }} pasantías disponibles
                   </div>
                 </div>
               </div>
@@ -111,14 +105,16 @@
     >
       <div class="h-[100%] flex items-center justify-center">
         <iframe
+          v-if="isActive"
           width="560"
           height="315"
-          src="https://www.youtube.com/embed/vJl3o_5Mmkw?si=w5e9F26u_KmIbyrd"
+          :src="videoUrl"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen
+          loading="lazy"
         ></iframe>
       </div>
       <button class="text-slate-400 absolute top-[20px] right-[20px]">
@@ -156,6 +152,7 @@ export default {
   data() {
     return {
       isActive: false,
+      videoUrl: "",
       empresasDestacdas: "",
       fullPage: false,
       datas: [
@@ -210,6 +207,12 @@ export default {
   methods: {
     toggle() {
       this.isActive = !this.isActive;
+      if (this.isActive) {
+        this.videoUrl =
+          "https://www.youtube.com/embed/vJl3o_5Mmkw?si=w5e9F26u_KmIbyrd";
+      } else {
+        this.videoUrl = "";
+      }
     },
     async fetchRecuento() {
       try {
