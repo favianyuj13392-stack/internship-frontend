@@ -32,11 +32,7 @@ body {
     width: 100%;
 }
 
-@media (min-width: 768px) {
-    #kc-form {
-        width: 90vw;
-    }
-}
+
 
 #kc-header-wrapper {
     display: none;

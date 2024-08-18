@@ -91,6 +91,5 @@ input:focus {
 @media (max-width: 768px) {
     #kc-register-form {
         padding: 1rem;
-        width: 90vw;
     }
 }
