@@ -1,4 +1,7 @@
 <template>
+    <link rel="preload" fetchpriority="high" as="image" :href=" data?.persona.fotoPerfil ? data?.persona.fotoPerfil : '@/assets/images/team/01.jpg'">
+    <link rel="preload" fetchpriority="high" as="image" :href=" data?.persona.bannerPerfil ? data?.persona.bannerPerfil : '@/assets/images/hero/bg5.jpg'">
+
   <navbar :container="'container'" :lightNav="'justify-end'" />
   <section class="relative lg:mt-24 mt-[74px]">
     <div class="lg:container container-fluid">
@@ -20,7 +23,7 @@
             <div class="relative flex items-end">
               <img
                 :src="
-                  data?.persona.fotoPerfil ? data?.persona.fotoPerfil : image
+                  data?.persona.fotoPerfil ? data?.persona.fotoPerfil : '@/assets/images/team/01.jpg'
                 "
                 class="size-28 rounded-full shadow dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800"
                 alt=""

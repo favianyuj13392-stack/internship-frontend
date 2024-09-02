@@ -1,4 +1,6 @@
 <template>
+  <link rel="preload" fetchpriority="high" as="image" href="@/assets/images/hero/bg.webp" />
+
   <navbar
     :lightLogo="true"
     :lightNav="'nav-light justify-end'"
