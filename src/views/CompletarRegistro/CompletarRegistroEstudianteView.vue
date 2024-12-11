@@ -154,7 +154,7 @@
                   <input
                     type="text"
                     class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    :value="estudianteDto.persona.nombre.toUpperCase()"
+                    :value="estudianteDto.persona.nombre?.toUpperCase()"
                     @input="updateField('nombre', $event.target.value)"
                     placeholder="Nombres:"
                     id="firstname"
@@ -185,7 +185,7 @@
                   <input
                     type="text"
                     class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    :value="estudianteDto.persona.apellidoPaterno.toUpperCase()"
+                    :value="estudianteDto.persona.apellidoPaterno?.toUpperCase()"
                     @input="updateField('apellidoPaterno', $event.target.value)"
                     placeholder="Apellido Paterno:"
                     id="lastname"
@@ -203,7 +203,7 @@
                   <input
                     type="text"
                     class="form-input border border-slate-100 dark:border-slate-800 mt-2"
-                    :value="estudianteDto.persona.apellidoMaterno.toUpperCase()"
+                    :value="estudianteDto.persona.apellidoMaterno?.toUpperCase()"
                     @input="updateField('apellidoMaterno', $event.target.value)"
                     placeholder="Apellido Paterno:"
                     id="lastname"
