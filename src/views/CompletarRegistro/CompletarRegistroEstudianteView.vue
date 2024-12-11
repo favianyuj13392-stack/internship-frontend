@@ -1291,6 +1291,9 @@ export default {
     this.estudianteDto.persona.apellidoMaterno =
       this.$keycloak.idTokenParsed.family_name.split(" ")[1];
     this.estudianteDto.correo = this.$keycloak.tokenParsed.email;
+    if(this.estudianteDto.persona.apellidoMaterno ==  undefined){
+      this.estudianteDto.persona.apellidoMaterno = "";
+    }
 
     //llenar el arreglo aniosIngresoDisponibles
     let anioActual = new Date().getFullYear();
