@@ -218,6 +218,8 @@
                     type="number"
                     id="birthday"
                     name="birthday"
+                    placeholder="Año de Ingreso a la Universidad'"
+
                     v-model="estudianteDto.persona.anioIngresoUniversidad"
                     @input="validateInputYear"
                     class="form-input border border-slate-100 dark:border-slate-800 mt-2"
