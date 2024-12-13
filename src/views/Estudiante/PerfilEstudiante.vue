@@ -200,7 +200,7 @@
                     <div class="flex items-center mb-3">
                       <i data-feather="file" class="size-8 text-slate-400"></i>
                       <!-- Ajuste del texto -->
-                      <span class="font-medium ms-2 truncate" :title="splitLongWords(curri.titulo)">
+                      <span class="font-medium truncate" :title="splitLongWords(curri.titulo)">
                         {{ splitLongWords(curri.titulo) }}
                       </span>
                     </div>
@@ -333,7 +333,7 @@ export default {
   },
 
   methods: {
-    splitLongWords(text, maxLength = 15) {
+    splitLongWords(text, maxLength = 10) {
       return text.split(' ').map(word => {
         if (word.length > maxLength) {
           return word.match(new RegExp(`.{1,${maxLength}}`, 'g')).join(' ');
