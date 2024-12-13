@@ -334,12 +334,14 @@ export default {
 
   methods: {
     splitLongWords(text, maxLength = 10) {
+      /*
       return text.split(' ').map(word => {
         if (word.length > maxLength) {
           return word.match(new RegExp(`.{1,${maxLength}}`, 'g')).join(' ');
         }
         return word;
-      }).join(' ');
+      }).join(' ');*/
+      return text;
     },
     FormularioCV() {
       this.showFormularioCV = true;
