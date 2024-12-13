@@ -72,7 +72,7 @@
               data.persona.apellidoMaterno
             }}
           </h5>
-          <p class="text-slate-400 mt-4">
+          <p class="text-slate-400 mt-4" id="valueDescripcionEstudiante">
             {{
               data?.persona.descripcion
                 ? data?.persona.descripcion
@@ -176,7 +176,7 @@
                   ><span class="text-slate-400 me-3">Email :</span></span
                 >
 
-                <span style="font-size: x-small">{{ data.correo }}</span>
+                <span style="font-size: x-small" id="valueCorreoEstudiante">{{ data.correo }}</span>
               </li>
               <li class="flex justify-between mt-3 items-center font-medium">
                 <span
@@ -189,7 +189,7 @@
                   ></span
                 >
 
-                <span>{{ data.persona.anioIngresoUniversidad }}</span>
+                <span id="valueAnioIngresoEstudiante">{{ data.persona.anioIngresoUniversidad }}</span>
               </li>
               <li class="flex justify-between mt-3 items-center font-medium">
                 <span
@@ -200,7 +200,7 @@
                   ><span class="text-slate-400 me-3">Teléfono :</span></span
                 >
 
-                <span>{{ data.persona.telefono }}</span>
+                <span id="valueTelefonoEstudiante">{{ data.persona.telefono }}</span>
               </li>
               <li class="flex justify-between mt-3 items-center font-medium">
                 <span
