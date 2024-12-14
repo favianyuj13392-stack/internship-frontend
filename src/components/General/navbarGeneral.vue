@@ -129,6 +129,7 @@
                     <li>
                       <router-link
                         to="/perfil/estudiante/editar"
+                        id="editarPerfil"
                         class="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-cyan-600 dark:hover:text-white"
                         ><i data-feather="settings" class="size-4 me-2"></i
                         >Configuraciones</router-link
