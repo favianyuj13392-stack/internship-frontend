@@ -39,6 +39,7 @@
 
             <div class="">
               <router-link to="/perfil/estudiante/editar"
+              id="editarPerfil"
                 class="btn btn-icon rounded-full bg-cyan-600/5 hover:bg-cyan-600 border-cyan-600/10 hover:border-cyan-600 text-cyan-600 hover:text-white"><i
                   data-feather="settings" class="size-4"></i></router-link>
             </div>
