@@ -289,15 +289,10 @@
     <div
         class="bg-white flex justify-center dark:bg-cyan-700 rounded-md shadow dark:shadow-gray-700 transition duration-500"
         style="height: 80vh; width: 90%;">
-        <iframe
-            src="https://matomo-sitio.sis-ucb.online/index.php?module=Widgetize&action=iframe&moduleToWidgetize=Dashboard&actionToWidgetize=index&idSite=2&period=week&date=yesterday"
-            frameborder="0"
-            marginheight="0"
-            marginwidth="0"
-            width="100%"
-            height="100%"
-            >
-        </iframe>
+        <!-- Matomo dashboard disabled until analytics service is provisioned -->
+        <div class="flex items-center justify-center h-full text-gray-500">
+            <p class="text-lg">Métricas analíticas no disponibles temporalmente.</p>
+        </div>
     </div>
 </div>
 
