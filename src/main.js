@@ -37,8 +37,14 @@ app.use(LoadingPlugin, {
 
 
 function tokenInterceptor () {
-  axios.interceptors.request.use(config => {
-    if (app.config.globalProperties.$keycloak.authenticated) {
+  axios.interceptors.request.use(async config => {
+    if (app.config.globalProperties.$keycloak && app.config.globalProperties.$keycloak.authenticated) {
+      try {
+        await app.config.globalProperties.$keycloak.updateToken(30)
+      } catch (error) {
+        console.error('Failed to refresh token', error)
+        app.config.globalProperties.$keycloak.login()
+      }
       config.headers.Authorization = `Bearer ${app.config.globalProperties.$keycloak.token}`
     }
     return config
