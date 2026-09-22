@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [vue()],
   resolve: {
     alias: {
@@ -12,10 +12,11 @@ export default defineConfig({
     },
   },
   esbuild: {
-    sourcemap:false,
+    sourcemap: false,
+    drop: mode === 'production' || process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : [],
   },
   css: {
     devSourcemap: false,
   },
-});
+}));
 
