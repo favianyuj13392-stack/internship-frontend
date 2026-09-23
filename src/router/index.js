@@ -46,6 +46,7 @@ const routes = [
     path: "/pasantias",
     name: "Pasantias",
     component: Pasantias,
+    meta: { requiresAuth: true }
   },
   {
     path: "/pasantias/:id/detalle",
@@ -57,11 +58,18 @@ const routes = [
     path: "/empresas",
     name: "empresas",
     component: Empresas,
+    meta: { requiresAuth: true }
   },
   {
     path: "/empresas/:id/detalle",
     name: "empresas-detalle",
     component: EmpresasDetalle,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/no-autorizado-padron",
+    name: "NoAutorizadoPadron",
+    component: () => import("@/views/General/NoAutorizadoPadron.vue"),
   },
   {
     path: "/contactanos",
@@ -201,6 +209,12 @@ const routes = [
     path: "/administrador/estudiante/:idEstudiante/solicitud/:idSolicitud",
     name: "PerfilEstudianteAdministrador",
     component: PerfilEstudianteAdministrador,
+    meta: { requiresAuth: true, roles: ['ADMIN'] }
+  },
+  {
+    path: "/administrador/estudiantes/padron",
+    name: "PadronEstudiantesAdministrador",
+    component: () => import("@/views/Administrador/PadronEstudiantesView.vue"),
     meta: { requiresAuth: true, roles: ['ADMIN'] }
   },
 
