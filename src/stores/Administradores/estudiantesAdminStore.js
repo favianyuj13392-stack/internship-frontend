@@ -15,8 +15,80 @@ export const useEstudiantesAdminStore = defineStore({
         carreras: [],
         resumenSimulacion: null,
         cargandoPadron: false,
+        kpisDashboard: null,
+        alcancePasantiaActual: null,
+        fichaEstudianteActual: null,
+        cargandoKpis: false,
+        cargandoAlcance: false,
+        cargandoFicha: false,
     }),
     actions: {
+        async fetchDashboardKpis(uuid) {
+            this.cargandoKpis = true
+            try {
+                const response = await axios.get(`${RutaApi}/admin/${uuid}/dashboard/estudiantes/kpi`)
+                if (response.data.code === '200') {
+                    this.kpisDashboard = response.data.response
+                    return this.kpisDashboard
+                }
+                return null
+            } catch (error) {
+                console.error('Error al obtener KPIs del dashboard:', error)
+                return null
+            } finally {
+                this.cargandoKpis = false
+            }
+        },
+        async fetchPasantiaAlcance(uuid, idPasantia) {
+            this.cargandoAlcance = true
+            try {
+                const response = await axios.get(`${RutaApi}/admin/${uuid}/pasantia/${idPasantia}/alcance`)
+                if (response.data.code === '200') {
+                    this.alcancePasantiaActual = response.data.response
+                    return this.alcancePasantiaActual
+                }
+                return null
+            } catch (error) {
+                console.error('Error al obtener alcance de pasantía:', error)
+                return null
+            } finally {
+                this.cargandoAlcance = false
+            }
+        },
+        async fetchEstudianteActividad(uuid, idPadron) {
+            this.cargandoFicha = true
+            try {
+                const response = await axios.get(`${RutaApi}/admin/${uuid}/estudiantes/${idPadron}/actividad`)
+                if (response.data.code === '200') {
+                    this.fichaEstudianteActual = response.data.response
+                    return this.fichaEstudianteActual
+                }
+                return null
+            } catch (error) {
+                console.error('Error al obtener ficha de actividad del estudiante:', error)
+                return null
+            } finally {
+                this.cargandoFicha = false
+            }
+        },
+        async descargarSinAccesoExcel(uuid) {
+            try {
+                const response = await axios.get(`${RutaApi}/admin/${uuid}/estudiantes/sin-acceso/excel`, {
+                    responseType: 'blob'
+                })
+                const blob = new Blob([response.data], {
+                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                })
+                const link = document.createElement('a')
+                link.href = window.URL.createObjectURL(blob)
+                link.download = 'estudiantes_sin_acceso_usei.xlsx'
+                link.click()
+                window.URL.revokeObjectURL(link.href)
+            } catch (error) {
+                console.error('Error al descargar reporte de estudiantes sin acceso:', error)
+                throw error
+            }
+        },
         async fetchUserByUUID(uuid, id) {
             try {
                 const response = await axios.get(RutaApi + '/admin/' + uuid + '/estudiante/' + id)

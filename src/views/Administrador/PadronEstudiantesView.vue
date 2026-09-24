@@ -29,6 +29,92 @@
             <i class="uil uil-cloud-upload text-lg"></i>
             Cargar Padrón (Excel/CSV)
           </button>
+      <!-- Panel de Métricas de Adopción USEI (KPIs Fase 2) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Padrón USEI</p>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-1">
+              {{ adminStore.kpisDashboard?.totalEstudiantesPadron ?? adminStore.totalPadron }}
+            </h3>
+            <p class="text-xs text-slate-400 mt-1">Estudiantes habilitados</p>
+          </div>
+          <div class="size-12 rounded-xl bg-cyan-50 dark:bg-cyan-900/30 text-cyan-600 flex items-center justify-center text-2xl">
+            <i class="uil uil-users-alt"></i>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Acceso a Plataforma</p>
+            <div class="flex items-baseline gap-2 mt-1">
+              <h3 class="text-2xl font-black text-emerald-600">
+                {{ adminStore.kpisDashboard?.estudiantesConAcceso ?? 0 }}
+              </h3>
+              <span class="px-2 py-0.5 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-bold rounded text-xs">
+                {{ adminStore.kpisDashboard?.porcentajeAdopcion ?? 0 }}%
+              </span>
+            </div>
+            <p class="text-xs text-slate-400 mt-1">Tasa de adopción</p>
+          </div>
+          <div class="size-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center text-2xl">
+            <i class="uil uil-user-check"></i>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Sin Primer Acceso</p>
+            <h3 class="text-2xl font-black text-amber-600 mt-1">
+              {{ adminStore.kpisDashboard?.estudiantesSinAcceso ?? 0 }}
+            </h3>
+            <button
+              @click="descargarSinAcceso"
+              class="text-xs text-cyan-600 hover:text-cyan-700 font-semibold underline mt-1 flex items-center gap-1"
+            >
+              <i class="uil uil-file-download-alt"></i> Exportar campaña
+            </button>
+          </div>
+          <div class="size-12 rounded-xl bg-amber-50 dark:bg-amber-900/30 text-amber-600 flex items-center justify-center text-2xl">
+            <i class="uil uil-user-exclamation"></i>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Visualizaciones Pasantías</p>
+            <h3 class="text-2xl font-black text-purple-600 mt-1">
+              {{ adminStore.kpisDashboard?.totalVistasRegistradas ?? 0 }}
+            </h3>
+            <p class="text-xs text-slate-400 mt-1">Interacciones acumuladas</p>
+          </div>
+          <div class="size-12 rounded-xl bg-purple-50 dark:bg-purple-900/30 text-purple-600 flex items-center justify-center text-2xl">
+            <i class="uil uil-eye"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra colapsable de desglose por carreras -->
+      <div v-if="adminStore.kpisDashboard?.carreras?.length" class="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm border border-slate-200 dark:border-slate-700 mb-6">
+        <div class="flex justify-between items-center cursor-pointer" @click="mostrarDesgloseCarreras = !mostrarDesgloseCarreras">
+          <div class="flex items-center gap-2">
+            <i class="uil uil-chart-bar text-cyan-600 text-lg"></i>
+            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200">
+              Desglose de Adopción por Carrera ({{ adminStore.kpisDashboard.carreras.length }} carreras activas)
+            </h4>
+          </div>
+          <i :class="mostrarDesgloseCarreras ? 'uil uil-angle-up' : 'uil uil-angle-down'" class="text-xl text-slate-400"></i>
+        </div>
+        <div v-show="mostrarDesgloseCarreras" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+          <div v-for="c in adminStore.kpisDashboard.carreras" :key="c.carrera" class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-lg">
+            <div class="flex justify-between text-xs font-semibold mb-1">
+              <span class="text-slate-700 dark:text-slate-300 truncate max-w-[200px]" :title="c.carrera">{{ c.carrera }}</span>
+              <span class="text-cyan-600">{{ c.accedieron }}/{{ c.total }} ({{ c.porcentaje }}%)</span>
+            </div>
+            <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+              <div class="bg-cyan-600 h-2 rounded-full transition-all duration-500" :style="{ width: c.porcentaje + '%' }"></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -91,17 +177,18 @@
                 <th class="px-6 py-4">Código / Ingreso</th>
                 <th class="px-6 py-4">Estado</th>
                 <th class="px-6 py-4">Último Acceso</th>
+                <th class="px-6 py-4 text-center">Expediente</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
               <tr v-if="adminStore.cargandoPadron">
-                <td colspan="6" class="px-6 py-12 text-center text-slate-400">
+                <td colspan="7" class="px-6 py-12 text-center text-slate-400">
                   <i class="uil uil-spinner-alt animate-spin text-3xl mb-2"></i>
                   <p>Cargando padrón...</p>
                 </td>
               </tr>
               <tr v-else-if="adminStore.padron.length === 0">
-                <td colspan="6" class="px-6 py-12 text-center text-slate-400">
+                <td colspan="7" class="px-6 py-12 text-center text-slate-400">
                   <i class="uil uil-folder-open text-4xl mb-2"></i>
                   <p>No se encontraron estudiantes en el padrón con los filtros seleccionados.</p>
                 </td>
@@ -139,6 +226,16 @@
                 </td>
                 <td class="px-6 py-4 text-slate-400 text-xs">
                   {{ formatearFecha(item.ultimoAcceso) }}
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <button
+                    @click="verFichaEstudiante(item)"
+                    class="px-2.5 py-1.5 bg-cyan-50 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-300 hover:bg-cyan-100 dark:hover:bg-cyan-800/40 rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 transition"
+                    title="Ver expediente y métricas del estudiante"
+                  >
+                    <i class="uil uil-chart-line text-sm"></i>
+                    <span>Ver Ficha</span>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -270,7 +367,14 @@
         </button>
       </div>
     </div>
-  </div>
+  <!-- Modal Ficha de Actividad y Métricas del Estudiante -->
+  <FichaActividadModal
+    :visible="mostrarModalFicha"
+    :cargando="adminStore.cargandoFicha"
+    :estudiante="estudianteSeleccionado"
+    :ficha="adminStore.fichaEstudianteActual"
+    @cerrar="mostrarModalFicha = false"
+  />
 
   <footers />
 </template>
@@ -279,6 +383,7 @@
 import { ref, onMounted, getCurrentInstance } from 'vue'
 import navbar from "@/components/Administrador/navbarAdministrador.vue"
 import footers from "@/components/footer/footer.vue"
+import FichaActividadModal from "@/components/Administrador/FichaActividadModal.vue"
 import { useEstudiantesAdminStore } from "@/stores/Administradores/estudiantesAdminStore"
 import Swal from 'sweetalert2'
 
@@ -299,10 +404,37 @@ const sincronizacionCompleta = ref(false)
 const resumen = ref(null)
 const procesando = ref(false)
 
+const mostrarModalFicha = ref(false)
+const estudianteSeleccionado = ref(null)
+const mostrarDesgloseCarreras = ref(false)
+
 onMounted(async () => {
   await adminStore.fetchCarreras()
   await cargarPadron()
+  await cargarKpis()
 })
+
+const cargarKpis = async () => {
+  if (uuid.value) {
+    await adminStore.fetchDashboardKpis(uuid.value)
+  }
+}
+
+const verFichaEstudiante = async (item) => {
+  estudianteSeleccionado.value = item
+  mostrarModalFicha.value = true
+  if (uuid.value && item.idpadron) {
+    await adminStore.fetchEstudianteActividad(uuid.value, item.idpadron)
+  }
+}
+
+const descargarSinAcceso = async () => {
+  try {
+    await adminStore.descargarSinAccesoExcel(uuid.value)
+  } catch (e) {
+    Swal.fire('Error', 'No se pudo descargar el reporte de estudiantes sin acceso', 'error')
+  }
+}
 
 const cargarPadron = async () => {
   await adminStore.fetchPadron(uuid.value, {

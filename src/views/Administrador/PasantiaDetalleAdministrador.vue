@@ -183,6 +183,92 @@
               </button>
             </div>
           </div>
+
+          <!-- Widget de Alcance y Métricas USEI (Fase 2) -->
+          <div class="shadow dark:shadow-gray-700 rounded-md bg-white dark:bg-slate-900 mt-6 p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h5 class="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="uil uil-analytics text-cyan-600"></i> Alcance USEI
+              </h5>
+              <span class="px-2 py-0.5 bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 font-bold rounded text-xs">
+                Métricas
+              </span>
+            </div>
+
+            <div v-if="cargandoAlcance" class="py-6 text-center text-slate-400">
+              <i class="uil uil-spinner-alt animate-spin text-2xl text-cyan-600"></i>
+              <p class="text-xs mt-1">Cargando métricas de difusión...</p>
+            </div>
+
+            <div v-else-if="alcance" class="space-y-4">
+              <div class="grid grid-cols-2 gap-3 text-center">
+                <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                  <p class="text-xs font-semibold uppercase text-slate-500">Estudiantes Vieron</p>
+                  <p class="text-xl font-black text-cyan-600 mt-0.5">{{ alcance.estudiantesUnicosVieron || 0 }}</p>
+                </div>
+                <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                  <p class="text-xs font-semibold uppercase text-slate-500">Total Vistas</p>
+                  <p class="text-xl font-black text-purple-600 mt-0.5">{{ alcance.totalVisualizaciones || 0 }}</p>
+                </div>
+              </div>
+
+              <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <p class="text-xs font-semibold uppercase text-slate-500">Conversión a Postulación</p>
+                    <p class="text-xs text-slate-400">
+                      {{ alcance.totalPostulaciones || 0 }} postulaciones / {{ alcance.estudiantesUnicosVieron || 0 }} espectadores
+                    </p>
+                  </div>
+                  <span class="px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 font-black rounded-lg text-sm">
+                    {{ alcance.tasaConversion || 0 }}%
+                  </span>
+                </div>
+                <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden mt-2">
+                  <div class="bg-emerald-500 h-2 rounded-full transition-all duration-500" :style="{ width: Math.min(alcance.tasaConversion || 0, 100) + '%' }"></div>
+                </div>
+              </div>
+
+              <!-- Origen de Tráfico -->
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+                <p class="text-xs font-bold uppercase text-slate-600 dark:text-slate-400 mb-2">Canal de Entrada</p>
+                <div class="space-y-2">
+                  <div>
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                      <span class="flex items-center gap-1 text-purple-600">
+                        <i class="uil uil-envelope"></i> Correo Masivo (?ref=mail)
+                      </span>
+                      <span class="text-slate-600 dark:text-slate-300">{{ alcance.vistasOrigenCorreo || 0 }}</span>
+                    </div>
+                    <div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                      <div
+                        class="bg-purple-600 h-1.5 rounded-full transition-all duration-500"
+                        :style="{ width: calcularPorcentaje(alcance.vistasOrigenCorreo, alcance.totalVisualizaciones) + '%' }"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                      <span class="flex items-center gap-1 text-blue-600">
+                        <i class="uil uil-globe"></i> Portal Web Directo
+                      </span>
+                      <span class="text-slate-600 dark:text-slate-300">{{ alcance.vistasOrigenWeb || 0 }}</span>
+                    </div>
+                    <div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                      <div
+                        class="bg-blue-600 h-1.5 rounded-full transition-all duration-500"
+                        :style="{ width: calcularPorcentaje(alcance.vistasOrigenWeb, alcance.totalVisualizaciones) + '%' }"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-else class="text-center py-4 text-slate-400 text-xs">
+              Sin métricas de visualización registradas para esta pasantía aún.
+            </div>
+          </div>
         </div>
         <!--end col-->
 
@@ -277,6 +363,7 @@
 <script>
 import navbar from "@/components/Administrador/navbarAdministrador.vue";
 import { usePasantiasAdminStore } from "@/stores/Administradores/pasantiasAdminStore";
+import { useEstudiantesAdminStore } from "@/stores/Administradores/estudiantesAdminStore";
 import footers from "@/components/footer/footer.vue";
 import { usePasantiasStore } from "@/stores/Pasantias/pasantiasStore";
 import switcher from "@/components/General/switcher.vue";
@@ -284,7 +371,8 @@ import Swal from "sweetalert2";
 export default {
   setup() {
     const pasantiasStore = usePasantiasAdminStore();
-    return { pasantiasStore };
+    const adminEstudiantesStore = useEstudiantesAdminStore();
+    return { pasantiasStore, adminEstudiantesStore };
   },
   data() {
     return {
@@ -296,6 +384,8 @@ export default {
       postulantesEstado: "",
       pasantia: "",
       id: "",
+      alcance: null,
+      cargandoAlcance: false,
       image:
         "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
 
@@ -458,11 +548,29 @@ export default {
         loader.hide();
       }
     },
+    calcularPorcentaje(parcial, total) {
+      if (!total || total === 0) return 0;
+      return Math.round(((parcial || 0) / total) * 100);
+    },
+    async cargarAlcance() {
+      const uuid = this.$keycloak?.idTokenParsed?.sub || this.$keycloak?.tokenParsed?.sub;
+      if (uuid && this.id) {
+        this.cargandoAlcance = true;
+        try {
+          const res = await this.adminEstudiantesStore.fetchPasantiaAlcance(uuid, this.id);
+          this.alcance = res;
+        } catch (e) {
+          console.error("Error al cargar alcance:", e);
+        } finally {
+          this.cargandoAlcance = false;
+        }
+      }
+    },
   },
   mounted() {
     this.id = this.$route.params.id;
     this.fetchPasantia();
-    
+    this.cargarAlcance();
   },
   computed: {
     aprobados() {
