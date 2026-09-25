@@ -55,6 +55,18 @@ export const useEstudiantesAdminStore = defineStore({
                 this.cargandoAlcance = false
             }
         },
+        async notificarEstudiantesPasantia(uuid, idPasantia) {
+            try {
+                const response = await axios.post(`${RutaApi}/admin/${uuid}/pasantia/${idPasantia}/notificar`)
+                if (response.data.code === '200') {
+                    return response.data.response
+                }
+                throw new Error(response.data.errorMessage || 'Error al notificar estudiantes')
+            } catch (error) {
+                console.error('Error al notificar estudiantes de la pasantía:', error)
+                throw error
+            }
+        },
         async fetchEstudianteActividad(uuid, idPadron) {
             this.cargandoFicha = true
             try {

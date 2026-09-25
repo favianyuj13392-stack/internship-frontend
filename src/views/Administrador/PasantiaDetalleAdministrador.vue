@@ -264,6 +264,31 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Trazabilidad de Correo y Reenvío (Fase 3) -->
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+                <p class="text-xs font-bold uppercase text-slate-600 dark:text-slate-400 mb-2">Difusión por Correo</p>
+                <div class="grid grid-cols-2 gap-2 text-center mb-3">
+                  <div class="p-2 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/40 rounded-lg">
+                    <p class="text-[10px] font-bold uppercase text-emerald-600 dark:text-emerald-400">Enviados</p>
+                    <p class="text-lg font-black text-emerald-700 dark:text-emerald-300 mt-0.5">{{ alcance.correosEnviados || 0 }}</p>
+                  </div>
+                  <div class="p-2 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800/40 rounded-lg">
+                    <p class="text-[10px] font-bold uppercase text-red-600 dark:text-red-400">Fallidos</p>
+                    <p class="text-lg font-black text-red-700 dark:text-red-300 mt-0.5">{{ alcance.correosFallidos || 0 }}</p>
+                  </div>
+                </div>
+
+                <button
+                  v-if="activo"
+                  @click="reenviarNotificacionEstudiantes()"
+                  :disabled="enviandoNotificacion"
+                  class="w-full py-2 px-3 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-xs font-bold rounded-lg transition-colors flex items-center justify-center gap-2 shadow"
+                >
+                  <i class="uil" :class="enviandoNotificacion ? 'uil-spinner animate-spin' : 'uil-envelope-send'"></i>
+                  {{ enviandoNotificacion ? 'Notificando...' : 'Reenviar a Padrón de Carrera' }}
+                </button>
+              </div>
             </div>
             <div v-else class="text-center py-4 text-slate-400 text-xs">
               Sin métricas de visualización registradas para esta pasantía aún.
@@ -386,6 +411,7 @@ export default {
       id: "",
       alcance: null,
       cargandoAlcance: false,
+      enviandoNotificacion: false,
       image:
         "https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png",
 
@@ -564,6 +590,44 @@ export default {
         } finally {
           this.cargandoAlcance = false;
         }
+      }
+    },
+    async reenviarNotificacionEstudiantes() {
+      const result = await Swal.fire({
+        title: "¿Reenviar notificación a estudiantes?",
+        text: "Se enviará un correo institucional individual a todos los estudiantes habilitados en el padrón para las carreras de esta pasantía.",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#7c3aed",
+        cancelButtonColor: "#64748b",
+        confirmButtonText: "Sí, notificar por correo",
+        cancelButtonText: "Cancelar"
+      });
+
+      if (!result.isConfirmed) return;
+
+      const uuid = this.$keycloak?.idTokenParsed?.sub || this.$keycloak?.tokenParsed?.sub;
+      if (!uuid || !this.id) return;
+
+      this.enviandoNotificacion = true;
+      try {
+        await this.adminEstudiantesStore.notificarEstudiantesPasantia(uuid, this.id);
+        Swal.fire({
+          icon: "success",
+          title: "Notificación iniciada",
+          text: "El proceso asíncrono de notificación por correo se ha puesto en marcha.",
+        });
+        setTimeout(() => {
+          this.cargarAlcance();
+        }, 1500);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error al notificar",
+          text: error.message || "Ocurrió un error al intentar notificar a los estudiantes.",
+        });
+      } finally {
+        this.enviandoNotificacion = false;
       }
     },
   },

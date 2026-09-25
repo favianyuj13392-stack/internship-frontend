@@ -391,7 +391,8 @@ export default {
     async fetchPasantia() {
       let loader = this.$loading.show();
       try {
-        const response = await this.pasantiasStore.getPasantiaById(this.id);
+        const ref = this.$route.query.ref;
+        const response = await this.pasantiasStore.getPasantiaById(this.id, ref);
         this.data = response;
         this.parsedData = this.data.descripcion.split("\n");
         console.log(this.parsedData);
