@@ -29,6 +29,9 @@
             <i class="uil uil-cloud-upload text-lg"></i>
             Cargar Padrón (Excel/CSV)
           </button>
+        </div>
+      </div>
+
       <!-- Panel de Métricas de Adopción USEI (KPIs Fase 2) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div class="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 flex items-center justify-between">
