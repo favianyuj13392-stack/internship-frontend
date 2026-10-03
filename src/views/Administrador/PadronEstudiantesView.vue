@@ -142,11 +142,11 @@
             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Carrera</label>
             <select
               v-model="filtroCarrera"
-              @change="cargarPadron"
+              @change="onCambioFiltro"
               class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:border-cyan-600 dark:text-white"
             >
               <option :value="null">Todas las carreras</option>
-              <option v-for="carrera in adminStore.carreras" :key="carrera.idcarreras" :value="carrera.idcarreras">
+              <option v-for="carrera in adminStore.carreras" :key="carrera.idCarreras || carrera.idcarreras" :value="carrera.idCarreras || carrera.idcarreras">
                 {{ carrera.nombre }}
               </option>
             </select>
@@ -156,7 +156,7 @@
             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Estado</label>
             <select
               v-model="filtroEstado"
-              @change="cargarPadron"
+              @change="onCambioFiltro"
               class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:border-cyan-600 dark:text-white"
             >
               <option :value="null">Todos los estados</option>
@@ -444,14 +444,24 @@ const descargarSinAcceso = async () => {
   }
 }
 
+const onCambioFiltro = () => {
+  paginaActual.value = 0
+  cargarPadron()
+}
+
 const cargarPadron = async () => {
-  await adminStore.fetchPadron(uuid.value, {
-    carreraId: filtroCarrera.value,
-    estado: filtroEstado.value,
-    search: filtroSearch.value,
+  const params = {
+    search: filtroSearch.value || '',
     page: paginaActual.value,
     size: 15
-  })
+  }
+  if (filtroCarrera.value !== null && filtroCarrera.value !== undefined && filtroCarrera.value !== '') {
+    params.carreraId = filtroCarrera.value
+  }
+  if (filtroEstado.value) {
+    params.estado = filtroEstado.value
+  }
+  await adminStore.fetchPadron(uuid.value, params)
 }
 
 const debounceBuscar = () => {
