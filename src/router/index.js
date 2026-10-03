@@ -212,7 +212,8 @@ const routes = [
     meta: { requiresAuth: true, roles: ['ADMIN'] }
   },
   {
-    path: "/administrador/estudiantes/padron",
+    path: "/administrador/estudiantes",
+    alias: "/administrador/estudiantes/padron",
     name: "PadronEstudiantesAdministrador",
     component: () => import("@/views/Administrador/PadronEstudiantesView.vue"),
     meta: { requiresAuth: true, roles: ['ADMIN'] }

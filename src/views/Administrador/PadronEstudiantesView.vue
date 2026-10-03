@@ -392,11 +392,11 @@ import FichaActividadModal from "@/components/Administrador/FichaActividadModal.
 import { useEstudiantesAdminStore } from "@/stores/Administradores/estudiantesAdminStore"
 import Swal from 'sweetalert2'
 
-const { appContext } = getCurrentInstance()
-const keycloak = appContext.config.globalProperties.$keycloak
+const instance = getCurrentInstance()
+const keycloak = instance?.appContext?.config?.globalProperties?.$keycloak
 const adminStore = useEstudiantesAdminStore()
 
-const uuid = ref(keycloak?.idTokenParsed?.sub || '')
+const uuid = ref(keycloak?.idTokenParsed?.sub || keycloak?.tokenParsed?.sub || '')
 const filtroSearch = ref('')
 const filtroCarrera = ref(null)
 const filtroEstado = ref(null)
@@ -414,6 +414,9 @@ const estudianteSeleccionado = ref(null)
 const mostrarDesgloseCarreras = ref(false)
 
 onMounted(async () => {
+  if (!uuid.value && keycloak) {
+    uuid.value = keycloak.idTokenParsed?.sub || keycloak.tokenParsed?.sub || ''
+  }
   await adminStore.fetchCarreras()
   await cargarPadron()
   await cargarKpis()
