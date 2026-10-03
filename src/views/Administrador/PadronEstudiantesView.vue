@@ -370,6 +370,8 @@
         </button>
       </div>
     </div>
+  </div>
+
   <!-- Modal Ficha de Actividad y Métricas del Estudiante -->
   <FichaActividadModal
     :visible="mostrarModalFicha"
