@@ -196,6 +196,10 @@
                         </ul>
                     </li>
 
+                    <li :class="activeMenu === '/administrador/estudiantes' ? 'active' : ''">
+                        <router-link to="/administrador/estudiantes" class="sub-menu-item">Estudiantes</router-link>
+                    </li>
+
 
           <div
             v-if="!$keycloak.authenticated && !isLoading"
