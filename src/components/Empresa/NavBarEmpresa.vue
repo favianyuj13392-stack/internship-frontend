@@ -303,7 +303,7 @@
       }
     },
     handleClickOutside(event) {
-      if (!this.$refs.dropdownToggle.contains(event.target)) {
+      if (this.$refs.dropdownToggle && !this.$refs.dropdownToggle.contains(event.target)) {
         this.dropdownOpen = false;
       }
     },
