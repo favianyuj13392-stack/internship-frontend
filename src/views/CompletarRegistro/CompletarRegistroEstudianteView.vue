@@ -17,7 +17,7 @@
         <a
           @click="toggle"
           data-type="youtube"
-          data-id="S_CGed6E610"
+          :data-id="tutorialVideo.key"
           class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-800 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-cyan-600 mx-auto mt-10 cursor-pointer"
         >
           <i
@@ -39,10 +39,13 @@
   >
     <div class="h-[100%] flex items-center justify-center">
       <iframe
-        src="https://www.youtube.com/embed/S_CGed6E610?feature=oembed"
+        v-if="isActive"
+        :src="tutorialVideo.embedUrl"
         width="700"
         height="500"
         frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
       ></iframe>
     </div>
     <button class="text-slate-400 absolute top-[20px] right-[20px]">
@@ -1105,6 +1108,8 @@ import Swal from "sweetalert2";
 import Compressor from "compressorjs";
 import { useCarrerasStore } from "@/stores/carrerasStore.js";
 import { useAuthStore } from "@/stores/authStore";
+import { getTutorialVideo } from "@/config/tutorialVideos";
+
 export default {
   setup() {
     const estudianteStore = useEstudiantesStore();
@@ -1131,6 +1136,7 @@ export default {
   data() {
     return {
       isActive: false,
+      tutorialVideo: getTutorialVideo("REGISTRO_ESTUDIANTE"),
       imageSrc: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       image: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
       imageSrc2: "https://cdn-icons-png.flaticon.com/512/84/84099.png",

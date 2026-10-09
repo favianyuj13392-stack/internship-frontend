@@ -22,7 +22,7 @@
         <a
           @click="toggle"
           data-type="youtube"
-          data-id="S_CGed6E610"
+          :data-id="tutorialVideo.key"
           class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-800 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-cyan-600 mx-auto mt-10 cursor-pointer"
         >
           <i
@@ -44,10 +44,13 @@
   >
     <div class="h-[100%] flex items-center justify-center">
       <iframe
-        src="https://www.youtube.com/embed/S_CGed6E610?feature=oembed"
+        v-if="isActive"
+        :src="tutorialVideo.embedUrl"
         width="700"
         height="500"
         frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
       ></iframe>
     </div>
     <button class="text-slate-400 absolute top-[20px] right-[20px]">
@@ -265,6 +268,7 @@ import explore from "@/components/General/Home/explore-job.vue";
 import switcher from "@/components/General/switcher.vue";
 import footers from "@/components/footer/footer.vue";
 import { useEmpresasAdminStore } from "@/stores/Administradores/empresasAdminStore"; 
+import { getTutorialVideo } from "@/config/tutorialVideos";
 
 export default {
   setup() {
@@ -277,6 +281,7 @@ export default {
   },
   data() {
     return {
+      tutorialVideo: getTutorialVideo("ADMIN_EMPRESAS"),
       sectores: [],
       selectedSector: null,
       isActive: false,

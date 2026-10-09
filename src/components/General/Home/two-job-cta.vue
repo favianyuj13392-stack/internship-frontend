@@ -9,7 +9,7 @@
               <a
                 @click="toggle"
                 data-type="youtube"
-                data-id="S_CGed6E610"
+                :data-id="tutorialVideo.key"
                 class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-700 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-amber-600 dark:text-white cursor-pointer"
               >
                 <i
@@ -104,9 +104,12 @@
 
 <script>
 import counter from "@/components/General/Home/counter.vue";
+import { getTutorialVideo } from "@/config/tutorialVideos";
+
 export default {
   data() {
     return {
+      tutorialVideo: getTutorialVideo("HOME_TWO_JOB_CTA"),
       isActive: false,
       videoUrl: "",
     };
@@ -118,8 +121,7 @@ export default {
     toggle() {
       this.isActive = !this.isActive;
       if (this.isActive) {
-        this.videoUrl =
-          "https://www.youtube.com/embed/vJl3o_5Mmkw?si=w7jC8V4wzHRp_-lS";
+        this.videoUrl = this.tutorialVideo.embedUrl;
       } else {
         this.videoUrl = "";
       }

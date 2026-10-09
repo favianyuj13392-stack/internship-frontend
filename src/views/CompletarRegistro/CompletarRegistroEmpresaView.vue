@@ -18,7 +18,7 @@
         <a
           @click="toggle"
           data-type="youtube"
-          data-id="S_CGed6E610"
+          :data-id="tutorialVideo.key"
           class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-800 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-cyan-600 mx-auto mt-10 cursor-pointer"
         >
           <i
@@ -122,7 +122,18 @@
     :class="isActive ? 'fixed' : 'hidden'"
     class="bg-black/[0.9] top-0 left-0 bottom-0 w-[100%] h-[100%] z-999"
   >
-    <button class="text-slate-400 absolute right-[20px]">
+    <div class="h-[100%] flex items-center justify-center">
+      <iframe
+        v-if="isActive"
+        :src="tutorialVideo.embedUrl"
+        width="700"
+        height="500"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <button class="text-slate-400 absolute top-[20px] right-[20px]" @click="toggle">
       <svg
         stroke="currentColor"
         fill="none"
@@ -134,7 +145,6 @@
         height="1em"
         width="1em"
         xmlns="http://www.w3.org/2000/svg"
-        @click="toggle"
       >
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -1117,43 +1127,29 @@
 
           <div>
             <div>
-              <!-- Selección de áreas -->
               <div class="mt-6">
                 <h5 class="text-lg font-semibold mb-4">
-                  ¿Qué necesitas para agregar tu empresa?
+                  ¿Qué necesitas para registrar tu empresa?
                 </h5>
                 <div class="flex flex-wrap gap-2">
                   <span
-                    >Para poder registrar tu empresa, necesitarás la siguiente
-                    información:</span
+                    >Para dar de alta tu empresa, solo necesitas completar la información básica:</span
                   >
                 </div>
 
                 <div class="mt-4">
-                  <ul class="list-disc list-inside">
+                  <ul class="list-disc list-inside space-y-1">
                     <li><strong>Nombre de la empresa</strong></li>
                     <li><strong>Dirección de la empresa</strong></li>
                     <li><strong>Correo electrónico</strong></li>
                     <li><strong>Logo de la empresa</strong></li>
                     <li><strong>Descripción de la empresa</strong></li>
-                    <li><strong>Áreas de la empresa</strong></li>
-                    <li>
-                      <strong>Foto de las instalaciones</strong> (para usar como
-                      banner en la portada)
-                    </li>
-                    <li>
-                      <strong>Fotos extra</strong> (opcionales para mostrar más
-                      de la empresa)
-                    </li>
-                    <li>
-                      <strong>Link de las redes sociales de la empresa</strong>
-                      (IG, FB, Twitter, TikTok, etc.)
-                    </li>
                   </ul>
                 </div>
 
-                <div class="mt-4 grid grid-cols-2 gap-2">
-                  <!-- Opcional: aquí podrías añadir cualquier otro contenido o diseño adicional -->
+                <div class="mt-4 p-3 bg-cyan-50 dark:bg-cyan-900/30 border border-cyan-200 dark:border-cyan-800 rounded-md text-sm text-cyan-800 dark:text-cyan-200">
+                  <i class="uil uil-info-circle me-1 font-bold"></i>
+                  <strong>Nota:</strong> Las áreas de la empresa, fotos de instalaciones y redes sociales son opcionales y podrás completarlas o actualizarlas más adelante desde el perfil de la empresa.
                 </div>
               </div>
               <!--end col-->
@@ -1278,233 +1274,76 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-4 mt-5">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-3 mt-5">
               <button
-                id="submit"
-                name="send"
                 @click="showNuevaEmpresaModal = false"
-                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer w-full sm:w-auto"
               >
                 Cancelar
               </button>
 
-              <button
-                id="submit"
-                name="send"
-                @click="formEmpresaPaso2()"
-                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-              >
-                Siguiente
-              </button>
+              <div class="flex gap-2 w-full sm:w-auto justify-end">
+                <button
+                  @click="guardarEmpresaDirectamente"
+                  class="btn border-emerald-600 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md cursor-pointer"
+                  title="Guardar empresa de inmediato"
+                >
+                  Guardar empresa
+                </button>
+                <button
+                  @click="formEmpresaPaso2"
+                  class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
+                  title="Continuar para agregar redes sociales opcionales"
+                >
+                  Siguiente (Redes)
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
       <div
         v-if="showNuevaEmpresaModalForms == 2"
         class="grid grid-cols-1 gap-4"
       >
         <div>
-          <h5 class="text-lg font-semibold mb-4">
-            Selecciona las areas de la empresa :
+          <h5 class="text-lg font-semibold mb-2">
+            Redes sociales de la empresa (Opcional):
           </h5>
-
-          <div>
-            <div>
-              <!-- Selección de áreas -->
-              <div class="mt-6">
-                <h5 class="text-lg font-semibold mb-4">Áreas seleccionadas:</h5>
-                <div class="flex flex-wrap gap-2 max-h-64 overflow-y-auto">
-                  <div
-                    v-for="(area, index) in selectedAreas"
-                    :key="area"
-                    class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center"
-                  >
-                    {{ area }}
-                    <button
-                      @click="removeArea(area)"
-                      class="ml-2 bg-red-600 text-white px-2 py-1 rounded-md"
-                    >
-                      x
-                    </button>
-                  </div>
-                </div>
-
-                <div class="mt-4">
-                  <input
-                    type="text"
-                    v-model="searchQuery"
-                    class="form-input border border-slate-100 dark:border-slate-800 w-full"
-                    placeholder="Buscar áreas..."
-                  />
-                </div>
-                <div
-                  class="mt-4 grid grid-cols-2 gap-2 max-h-64 overflow-y-auto"
-                >
-                  <div
-                    v-for="area in filteredAreas"
-                    :key="area"
-                    @click="selectArea(area)"
-                    class="cursor-pointer border border-slate-100 dark:border-slate-800 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 overflow-hidden truncate"
-                  >
-                    {{ area }}
-                  </div>
-                </div>
-              </div>
-              <!--end col-->
-            </div>
-
-            <div class="grid grid-cols-2 gap-4 mt-5">
-              <button
-                id="submit"
-                name="send"
-                @click="showNuevaEmpresaModalForms = 1"
-                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-              >
-                Atras
-              </button>
-
-              <button
-                id="submit"
-                name="send"
-                @click="formEmpresaPaso3()"
-                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-              >
-                Siguiente
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        v-if="showNuevaEmpresaModalForms == 3"
-        class="grid grid-cols-1 gap-4"
-      >
-        <div>
-          <h5 class="text-lg font-semibold mb-4">
-            Selecciona una foto de las instalaciones de la empresa :
-          </h5>
-          <div class="profile-banner relative text-transparent">
-            <input
-              id="pro-banner"
-              name="profile-banner"
-              type="file"
-              accept="image/*"
-
-              class="hidden"
-              @change="handleFileUploadFotoGrande"
-            />
-            <div class="relative shrink-0">
-              <img
-                :src="
-                  this.nuevaEmpresa.fotoInstitucion ||
-                  'https://cdn-icons-png.flaticon.com/512/84/84099.png'
-                "
-                class="h-64 w-full object-scale-down lg:rounded-xl shadow dark:shadow-gray-700"
-                id="profile-banner"
-                alt=""
-              />
-              <label
-                class="absolute inset-0 cursor-pointer"
-                for="pro-banner"
-              ></label>
-            </div>
-          </div>
-
-          <div>
-            <!-- Selección de fotos -->
-            <div class="mt-6">
-              <h5 class="text-lg font-semibold mb-4">
-                Seleccione fotos extra:
-              </h5>
-              <div class="flex flex-wrap gap-2">
-                <div
-                  v-for="(foto, index) in nuevaEmpresa.fotos"
-                  :key="foto"
-                  class="relative"
-                >
-                  <img :src="foto" class="w-32 h-32 object-cover rounded-md" />
-                  <button
-                    @click="removeFoto(index)"
-                    class="absolute top-0 right-0 bg-red-600 text-white p-1 rounded-md"
-                  >
-                    x
-                  </button>
-                </div>
-              </div>
-
-              <div class="mt-4">
-                <input
-                  class="relative form-input border border-slate-100 dark:border-slate-800 file:h-10 file:-mx-3 file:-my-2 file:cursor-pointer file:rounded-none file:border-0 file:px-3 file:text-neutral-700 bg-clip-padding px-3 py-1.5 file:me-3 mt-2"
-                  id="file_input"
-                  type="file"
-                  accept="image/*"
-
-                  @change="handleFileUploadFotosGeneral"
-                />
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4 mt-5">
-              <button
-                id="submit"
-                name="send"
-                @click="showNuevaEmpresaModalForms = 2"
-                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
-              >
-                Atras
-              </button>
-
-              <button
-                id="submit"
-                name="send"
-                @click="formEmpresaPaso4()"
-                class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
-              >
-                Siguiente
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        v-if="showNuevaEmpresaModalForms == 4"
-        class="grid grid-cols-1 gap-4"
-      >
-        <div>
-          <h5 class="text-lg font-semibold mb-4">
-            Selecciona tus redes sociales :
-          </h5>
+          <p class="text-sm text-slate-400 mb-4">
+            Puedes agregar las redes sociales oficiales de la empresa o continuar directamente.
+          </p>
 
           <div>
             <!-- Redes sociales seleccionadas -->
-            <div class="mt-6">
-              <h5 class="text-lg font-semibold mb-4">
+            <div class="mt-4" v-if="nuevaEmpresa.redesSociales && Object.keys(nuevaEmpresa.redesSociales).length > 0">
+              <h5 class="text-md font-semibold mb-2">
                 Redes sociales agregadas:
               </h5>
               <div class="flex flex-wrap gap-2">
                 <div
                   v-for="(url, social) in nuevaEmpresa.redesSociales"
                   :key="social"
-                  class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center"
+                  class="bg-cyan-600 text-white px-3 py-1 rounded-md flex items-center text-sm"
                 >
-                {{splitLongWords( url)  }}
-
+                  <strong class="uppercase me-1">{{ social }}:</strong> {{ splitLongWords(url) }}
                   <button
                     @click="removeRedSocial(social)"
-                    class="ml-2 bg-red-600 text-white px-2 py-1 rounded-md"
+                    class="ml-2 bg-red-600 hover:bg-red-700 text-white px-2 py-0.5 rounded-md font-bold"
+                    title="Eliminar red social"
                   >
-                    x
+                    ×
                   </button>
                 </div>
               </div>
             </div>
 
             <div class="mt-4 grid grid-cols-12 gap-2">
-              <div class="col-span-4 ">
+              <div class="col-span-12 sm:col-span-4">
                 <select
                   v-model="selectedSocial"
-                  class="form-select border border-slate-100 dark:border-slate-800  dark:bg-cyan-600 w-full"
+                  class="form-select border border-slate-100 dark:border-slate-800 dark:bg-slate-800 w-full"
                 >
                   <option value="" disabled selected>
                     Seleccione una red social
@@ -1519,42 +1358,40 @@
                 </select>
               </div>
 
-              <div class="col-span-6">
+              <div class="col-span-10 sm:col-span-6">
                 <input
                   type="text"
                   v-model="socialLink"
                   class="form-input border border-slate-100 dark:border-slate-800 w-full"
-                  placeholder="Enlace de la red social"
+                  placeholder="https://... o enlace de perfil"
+                  @keyup.enter="addRedSocial"
                 />
               </div>
 
-              <div class="col-span-2">
+              <div class="col-span-2 sm:col-span-2">
                 <button
                   @click="addRedSocial"
                   class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer w-full"
+                  title="Agregar red social"
                 >
                   +
                 </button>
               </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-4 mt-5">
+            <div class="flex justify-between items-center gap-4 mt-6">
               <button
-                id="submit"
-                name="send"
-                @click="showNuevaEmpresaModalForms = 3"
-                class="btn border-red-600 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
+                @click="showNuevaEmpresaModalForms = 1"
+                class="btn border-slate-400 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white rounded-md cursor-pointer"
               >
                 Atrás
               </button>
 
               <button
-                id="submit"
-                name="send"
                 @click="guardarNuevaEmpresa"
                 class="btn border-cyan-600 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md cursor-pointer"
               >
-                Confirmación de empresa
+                Confirmar y guardar empresa
               </button>
             </div>
           </div>
@@ -1577,6 +1414,7 @@ import { useInstitucionesStore } from "@/stores/Instituciones/InstitucionesPubli
 import { useFilesStore } from "@/stores/fileStore.js";
 import Swal from "sweetalert2";
 import Compressor from "compressorjs";
+import { getTutorialVideo } from "@/config/tutorialVideos";
 
 export default {
   components: {
@@ -1586,6 +1424,7 @@ export default {
 
   data() {
     return {
+      tutorialVideo: getTutorialVideo("REGISTRO_EMPRESA"),
       institucionesPublicStore: useInstitucionesStore(),
       isActive: false,
       imageSrc: "https://cdn-icons-png.flaticon.com/512/84/84099.png",
@@ -1997,32 +1836,6 @@ export default {
         })
         .join(" ");
     },
-    formEmpresaPaso4() {
-      if (
-        this.nuevaEmpresa.fotoInstitucion == "" ||
-        this.nuevaEmpresa.fotoInstitucion == undefined
-      ) {
-        Swal.fire({
-          title: "Suba una foto de las instalaciones de la empresa",
-          icon: "error",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        return;
-      }
-      if (this.nuevaEmpresa.fotos.length == 0) {
-        Swal.fire({
-          title: "Suba al menos una foto extra",
-          icon: "error",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        return;
-      }
-
-      this.showNuevaEmpresaModalForms = 4;
-    },
-
     formEmpresaPaso2() {
       if (
         this.nuevaEmpresa.nombre == "" ||
@@ -2035,39 +1848,42 @@ export default {
         this.nuevaEmpresa.logoEmpresa == undefined
       ) {
         Swal.fire({
-          title: "Complete todos los campos",
+          title: "Complete los campos obligatorios",
+          text: "Nombre, dirección, correo y logo de la empresa son requeridos.",
           icon: "error",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 2000,
         });
-        return;
+        return false;
       }
       //check that the mail is valid
       if (!this.validateEmail(this.nuevaEmpresa.correo)) {
         Swal.fire({
           title: "Correo no válido",
+          text: "Por favor ingrese un correo electrónico con formato correcto.",
           icon: "error",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 2000,
         });
-        return;
+        return false;
       }
 
       this.showNuevaEmpresaModalForms = 2;
+      return true;
+    },
+
+    guardarEmpresaDirectamente() {
+      const valid = this.formEmpresaPaso2();
+      if (!valid) return;
+      this.guardarNuevaEmpresa();
     },
 
     formEmpresaPaso3() {
-      if (this.selectedAreas.length == 0) {
-        Swal.fire({
-          title: "Seleccione al menos un área",
-          icon: "error",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        return;
-      }
-    
-      this.showNuevaEmpresaModalForms = 3;
+      this.showNuevaEmpresaModalForms = 2;
+    },
+
+    formEmpresaPaso4() {
+      this.showNuevaEmpresaModalForms = 2;
     },
 
     toUpperCase(event) {
@@ -2198,32 +2014,128 @@ export default {
         console.log("Area not found");
       }
     },
-    guardarNuevaEmpresa() {
-      console.log(this.nuevaEmpresa.redesSociales);
-      if (
-        (this.nuevaEmpresa.redesSociales.facebook == undefined) &
-        (this.nuevaEmpresa.redesSociales.twitter == undefined) &
-        (this.nuevaEmpresa.redesSociales.instagram == undefined) &
-        (this.nuevaEmpresa.redesSociales.linkedin == undefined) &
-        (this.nuevaEmpresa.redesSociales.youtube == undefined) &
-        (this.nuevaEmpresa.redesSociales.tiktok == undefined)
-      ) {
-        Swal.fire({
-          title: "Agregue al menos una red social",
-          icon: "error",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        return;
+    validateSocialUrl(social, url) {
+      if (!url || typeof url !== "string") {
+        return { valid: false, message: "Ingrese un enlace válido." };
+      }
+      let trimmed = url.trim();
+      if (!trimmed) {
+        return { valid: false, message: "El enlace no puede estar vacío." };
       }
 
-      console.log("guardar empresa");
-      console.log(this.selectedAreas);
-      console.log(this.nuevaEmpresa);
+      // Normalizar esquema https:// si el usuario no incluyó protocolo
+      if (!/^https?:\/\//i.test(trimmed)) {
+        trimmed = "https://" + trimmed;
+      }
+
+      let parsedUrl;
+      try {
+        parsedUrl = new URL(trimmed);
+        if (parsedUrl.protocol !== "http:" && parsedUrl.protocol !== "https:") {
+          return { valid: false, message: "El protocolo debe ser http:// o https://." };
+        }
+      } catch (e) {
+        return {
+          valid: false,
+          message: `El enlace "${url}" no tiene un formato de URL válido (ej: https://ejemplo.com).`,
+        };
+      }
+
+      const host = parsedUrl.hostname.toLowerCase();
+      const socialLower = (social || "").toLowerCase();
+
+      switch (socialLower) {
+        case "facebook":
+          if (!host.includes("facebook.com") && !host.includes("fb.com") && !host.includes("fb.me")) {
+            return {
+              valid: false,
+              message: "El enlace debe pertenecer a Facebook (ej: https://facebook.com/tuempresa).",
+            };
+          }
+          break;
+        case "twitter":
+          if (!host.includes("twitter.com") && !host.includes("x.com")) {
+            return {
+              valid: false,
+              message: "El enlace debe pertenecer a Twitter / X (ej: https://x.com/tuempresa).",
+            };
+          }
+          break;
+        case "instagram":
+          if (!host.includes("instagram.com")) {
+            return {
+              valid: false,
+              message: "El enlace debe pertenecer a Instagram (ej: https://instagram.com/tuempresa).",
+            };
+          }
+          break;
+        case "linkedin":
+          if (!host.includes("linkedin.com")) {
+            return {
+              valid: false,
+              message: "El enlace debe pertenecer a LinkedIn (ej: https://linkedin.com/company/tuempresa).",
+            };
+          }
+          break;
+        case "youtube":
+          if (!host.includes("youtube.com") && !host.includes("youtu.be")) {
+            return {
+              valid: false,
+              message: "El enlace debe pertenecer a YouTube (ej: https://youtube.com/@tuempresa).",
+            };
+          }
+          break;
+        case "tiktok":
+          if (!host.includes("tiktok.com")) {
+            return {
+              valid: false,
+              message: "El enlace debe pertenecer a TikTok (ej: https://tiktok.com/@tuempresa).",
+            };
+          }
+          break;
+        case "web":
+          if (!host.includes(".") || host.endsWith(".")) {
+            return {
+              valid: false,
+              message: "Ingrese una dirección web válida (ej: https://tuempresa.com).",
+            };
+          }
+          break;
+        default:
+          if (!host.includes(".")) {
+            return { valid: false, message: "El dominio ingresado no es válido." };
+          }
+      }
+
+      return { valid: true, normalizedUrl: trimmed };
+    },
+
+    guardarNuevaEmpresa() {
+      // Valores por defecto seguros para nutrir fotos y áreas después sin causar inconsistencias
+      if (!this.nuevaEmpresa.fotoInstitucion) {
+        this.nuevaEmpresa.fotoInstitucion = "https://cdn-icons-png.flaticon.com/512/84/84099.png";
+      }
+      if (!this.nuevaEmpresa.sectores) {
+        this.nuevaEmpresa.sectores = [];
+      }
+      if (!this.nuevaEmpresa.fotos) {
+        this.nuevaEmpresa.fotos = [];
+      }
+      if (!this.nuevaEmpresa.redesSociales) {
+        this.nuevaEmpresa.redesSociales = {};
+      }
+
       this.showNuevaEmpresaModal = false;
       this.paginaFormulario = 2;
-      this.empresaSeleccionada = this.nuevaEmpresa;
-      console.log("nombre empresa seleccionada: " + this.empresaSeleccionada);
+      this.empresaSeleccionada = { ...this.nuevaEmpresa };
+
+      Swal.fire({
+        title: "¡Empresa registrada!",
+        text: "La empresa se configuró correctamente. Podrás agregar fotos e información adicional más adelante.",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1800,
+      });
     },
     addFoto(event) {
       const file = event.target.files[0];
@@ -2239,18 +2151,54 @@ export default {
       this.nuevaEmpresa.fotos.splice(index, 1);
     },
     addRedSocial() {
-      if (
-        this.selectedSocial &&
-        this.socialLink &&
-        !(this.selectedSocial.toLowerCase() in this.nuevaEmpresa.redesSociales)
-      ) {
-        this.nuevaEmpresa.redesSociales = {
-          ...this.nuevaEmpresa.redesSociales,
-          [this.selectedSocial.toLowerCase()]: this.socialLink,
-        };
-        this.selectedSocial = "";
-        this.socialLink = "";
+      if (!this.selectedSocial) {
+        Swal.fire({
+          title: "Seleccione una red social",
+          text: "Elija qué red social desea agregar antes de ingresar el enlace.",
+          icon: "warning",
+          confirmButtonColor: "#0891b2",
+        });
+        return;
       }
+
+      if (!this.socialLink || !this.socialLink.trim()) {
+        Swal.fire({
+          title: "Enlace requerido",
+          text: `Ingrese el enlace para ${this.selectedSocial}.`,
+          icon: "warning",
+          confirmButtonColor: "#0891b2",
+        });
+        return;
+      }
+
+      const socialKey = this.selectedSocial.toLowerCase();
+      if (this.nuevaEmpresa.redesSociales && socialKey in this.nuevaEmpresa.redesSociales) {
+        Swal.fire({
+          title: "Red social ya agregada",
+          text: `Ya agregaste un enlace para ${this.selectedSocial}. Si deseas cambiarlo, elimínalo primero.`,
+          icon: "info",
+          confirmButtonColor: "#0891b2",
+        });
+        return;
+      }
+
+      const validation = this.validateSocialUrl(this.selectedSocial, this.socialLink);
+      if (!validation.valid) {
+        Swal.fire({
+          title: "URL no válida",
+          text: validation.message,
+          icon: "error",
+          confirmButtonColor: "#0891b2",
+        });
+        return;
+      }
+
+      this.nuevaEmpresa.redesSociales = {
+        ...this.nuevaEmpresa.redesSociales,
+        [socialKey]: validation.normalizedUrl,
+      };
+      this.selectedSocial = "";
+      this.socialLink = "";
     },
     removeRedSocial(social) {
       const { [social]: _, ...rest } = this.nuevaEmpresa.redesSociales;

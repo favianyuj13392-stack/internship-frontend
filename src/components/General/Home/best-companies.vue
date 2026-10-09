@@ -14,7 +14,7 @@
                 <a
                   @click="toggle"
                   data-type="youtube"
-                  data-id="S_CGed6E610"
+                  :data-id="tutorialVideo.key"
                   class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-700 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-cyan-600 dark:text-white cursor-pointer"
                 >
                   <i
@@ -143,6 +143,7 @@
 <script>
 import router from "@/router";
 import { usePaginaPrincipalStore } from "@/stores/paginaPrincipal";
+import { getTutorialVideo } from "@/config/tutorialVideos";
 
 export default {
   setup() {
@@ -151,6 +152,7 @@ export default {
   },
   data() {
     return {
+      tutorialVideo: getTutorialVideo("HOME_BEST_COMPANIES"),
       isActive: false,
       videoUrl: "",
       empresasDestacdas: "",
@@ -208,8 +210,7 @@ export default {
     toggle() {
       this.isActive = !this.isActive;
       if (this.isActive) {
-        this.videoUrl =
-          "https://www.youtube.com/embed/vJl3o_5Mmkw?si=w5e9F26u_KmIbyrd";
+        this.videoUrl = this.tutorialVideo.embedUrl;
       } else {
         this.videoUrl = "";
       }
