@@ -161,6 +161,10 @@ export default {
   },
   mounted() {
     this.getCurriculum();
+    window.addEventListener("keydown", this.handleKeyDown);
+  },
+  unmounted() {
+    window.removeEventListener("keydown", this.handleKeyDown);
   },
   data() {
     return {
@@ -332,6 +336,11 @@ export default {
     selectCv(index) {
       this.selectedCv = index;
       console.log(this.selectedCv);
+    },
+    handleKeyDown(e) {
+      if (e.key === "Escape") {
+        this.$emit("cancel");
+      }
     },
   },
 };

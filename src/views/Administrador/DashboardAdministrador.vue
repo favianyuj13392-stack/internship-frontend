@@ -19,6 +19,7 @@
               type="checkbox"
               class="checkbox opacity-0 absolute"
               id="cual"
+              :checked="contenedor"
               @change="cambioContendor($event)"
             />
             <label
@@ -336,7 +337,7 @@ export default {
   data() {
     return {
       uuid: "",
-      contenedor: false,
+      contenedor: true,
       KpiSinParametros: [],
       selectedIdCarrera: "",
       KpiCarrera: [],

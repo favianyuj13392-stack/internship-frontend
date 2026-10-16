@@ -4,28 +4,40 @@
  */
 
 /**
- * Convierte cualquier formato de URL de YouTube (embed, watch, youtu.be, shorts)
- * a una URL embed válida y segura.
+ * Convierte cualquier formato de URL (YouTube o Canva)
+ * a una URL embed válida y segura para iframe.
  *
- * @param {string} url - URL original de YouTube
+ * @param {string} url - URL original
  * @returns {string} URL lista para iframe embed
  */
 export function toYouTubeEmbedUrl(url) {
   if (!url || typeof url !== "string") return "";
   const trimmed = url.trim();
 
-  // Si ya es una URL de embed, retornarla directamente
-  if (trimmed.includes("/embed/")) {
+  // Si ya es una URL de embed directa
+  if (trimmed.includes("/embed/") || trimmed.includes("?embed")) {
     return trimmed;
   }
 
-  // Formato corto: https://youtu.be/<id>
+  // Canva shortlinks y design links
+  if (trimmed.includes("canva.link/msonhvatgph8agd")) {
+    return "https://www.canva.com/design/DAHFjnjuaV8/l3kiN2ybL0SGM6fHJHUO1w/view?embed";
+  }
+  if (trimmed.includes("canva.link/yayrt09qlu50bhk")) {
+    return "https://www.canva.com/design/DAHFNRhChGw/fJtbglrOcpME9t70Cnczsg/view?embed";
+  }
+  const canvaMatch = trimmed.match(/canva\.com\/design\/([a-zA-Z0-9_-]+)\/([a-zA-Z0-9_-]+)/);
+  if (canvaMatch) {
+    return `https://www.canva.com/design/${canvaMatch[1]}/${canvaMatch[2]}/view?embed`;
+  }
+
+  // Formato corto YouTube: https://youtu.be/<id>
   const shortMatch = trimmed.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
   if (shortMatch && shortMatch[1]) {
     return `https://www.youtube.com/embed/${shortMatch[1]}?autoplay=1`;
   }
 
-  // Formato estándar: https://www.youtube.com/watch?v=<id>
+  // Formato estándar YouTube: https://www.youtube.com/watch?v=<id>
   const watchMatch = trimmed.match(/[?&]v=([a-zA-Z0-9_-]+)/);
   if (watchMatch && watchMatch[1]) {
     return `https://www.youtube.com/embed/${watchMatch[1]}?autoplay=1`;
@@ -44,37 +56,37 @@ export const TUTORIAL_VIDEOS = {
   // Administrador - Solicitud de Pasantías
   ADMIN_SOLICITUD_PASANTIA: {
     key: "ADMIN_SOLICITUD_PASANTIA",
-    title: "Solicitudes de pasantías",
-    description: "Lugar donde podrás ver las solicitudes de pasantías.",
-    videoUrl: "https://www.youtube.com/embed/S_CGed6E610?feature=oembed",
+    title: "Cómo crear una pasantía en Internship by Cato | Guía para empresas",
+    description: "En este tutorial te mostramos cómo crear y publicar una pasantía en Internship by Cato, la plataforma de la UCB que conecta a empresas con talento universitario.",
+    videoUrl: "https://www.canva.com/design/DAHFNRhChGw/fJtbglrOcpME9t70Cnczsg/view?embed",
   },
   // Administrador - Empresas
   ADMIN_EMPRESAS: {
     key: "ADMIN_EMPRESAS",
-    title: "Empresas",
-    description: "Gestión y administración de empresas registradas.",
-    videoUrl: "https://www.youtube.com/embed/S_CGed6E610?feature=oembed",
+    title: "Cómo crear una cuenta de empresa en Internship by Cato | Guía paso a paso",
+    description: "En este tutorial te mostramos, paso a paso, cómo crear una cuenta de empresa en Internship by Cato, la plataforma de la UCB que conecta a organizaciones con estudiantes y egresados.",
+    videoUrl: "https://www.canva.com/design/DAHFjnjuaV8/l3kiN2ybL0SGM6fHJHUO1w/view?embed",
   },
   // Administrador - Solicitudes de Registro de Empresa
   ADMIN_SOLICITUD_EMPRESAS: {
     key: "ADMIN_SOLICITUD_EMPRESAS",
-    title: "Solicitudes de empresas",
-    description: "Revisión y aprobación de nuevas empresas solicitantes.",
-    videoUrl: "https://www.youtube.com/embed/S_CGed6E610?feature=oembed",
+    title: "Cómo crear una cuenta de empresa en Internship by Cato | Guía paso a paso",
+    description: "En este tutorial te mostramos, paso a paso, cómo crear una cuenta de empresa en Internship by Cato, la plataforma de la UCB que conecta a organizaciones con estudiantes y egresados.",
+    videoUrl: "https://www.canva.com/design/DAHFjnjuaV8/l3kiN2ybL0SGM6fHJHUO1w/view?embed",
   },
   // Administrador - Pasantías
   ADMIN_PASANTIAS: {
     key: "ADMIN_PASANTIAS",
-    title: "Pasantías",
-    description: "Administración y supervisión de ofertas de pasantías.",
-    videoUrl: "https://www.youtube.com/embed/S_CGed6E610?feature=oembed",
+    title: "Cómo crear una pasantía en Internship by Cato | Guía para empresas",
+    description: "En este tutorial te mostramos cómo crear y publicar una pasantía en Internship by Cato, la plataforma de la UCB que conecta a empresas con talento universitario.",
+    videoUrl: "https://www.canva.com/design/DAHFNRhChGw/fJtbglrOcpME9t70Cnczsg/view?embed",
   },
   // Administrador - Pasantías sin Aplicantes
   ADMIN_PASANTIAS_SIN_APLICANTES: {
     key: "ADMIN_PASANTIAS_SIN_APLICANTES",
-    title: "Pasantías sin postulantes",
-    description: "Revisión de ofertas de pasantías que aún no tienen postulantes.",
-    videoUrl: "https://www.youtube.com/embed/S_CGed6E610?feature=oembed",
+    title: "Cómo crear una pasantía en Internship by Cato | Guía para empresas",
+    description: "En este tutorial te mostramos cómo crear y publicar una pasantía en Internship by Cato, la plataforma de la UCB que conecta a empresas con talento universitario.",
+    videoUrl: "https://www.canva.com/design/DAHFNRhChGw/fJtbglrOcpME9t70Cnczsg/view?embed",
   },
   // Completar Registro - Estudiante
   REGISTRO_ESTUDIANTE: {
@@ -86,23 +98,23 @@ export const TUTORIAL_VIDEOS = {
   // Completar Registro - Empresa
   REGISTRO_EMPRESA: {
     key: "REGISTRO_EMPRESA",
-    title: "Registro de empresa",
-    description: "Guía para dar de alta tu empresa en el programa de pasantías.",
-    videoUrl: "https://www.youtube.com/embed/S_CGed6E610?feature=oembed",
+    title: "Cómo crear una cuenta de empresa en Internship by Cato | Guía paso a paso",
+    description: "En este tutorial te mostramos, paso a paso, cómo crear una cuenta de empresa en Internship by Cato, la plataforma de la UCB que conecta a organizaciones con estudiantes y egresados.",
+    videoUrl: "https://www.canva.com/design/DAHFjnjuaV8/l3kiN2ybL0SGM6fHJHUO1w/view?embed",
   },
   // Home - Mejores Empresas
   HOME_BEST_COMPANIES: {
     key: "HOME_BEST_COMPANIES",
-    title: "Encuentra pasantías en las mejores empresas",
-    description: "Conoce las mejores empresas asociadas.",
-    videoUrl: "https://www.youtube.com/embed/vJl3o_5Mmkw?si=w5e9F26u_KmIbyrd",
+    title: "Cómo crear una cuenta de empresa en Internship by Cato | Guía paso a paso",
+    description: "En este tutorial te mostramos cómo crear una cuenta de empresa en Internship by Cato y formar parte del ecosistema de empleabilidad.",
+    videoUrl: "https://www.canva.com/design/DAHFjnjuaV8/l3kiN2ybL0SGM6fHJHUO1w/view?embed",
   },
   // Home - Two Job CTA
   HOME_TWO_JOB_CTA: {
     key: "HOME_TWO_JOB_CTA",
-    title: "Video Tutorial General",
-    description: "Plataforma de pasantías UCB.",
-    videoUrl: "https://www.youtube.com/embed/vJl3o_5Mmkw?si=w7jC8V4wzHRp_-lS",
+    title: "Cómo crear una pasantía en Internship by Cato | Guía para empresas",
+    description: "En este tutorial te mostramos cómo crear y publicar una pasantía en Internship by Cato, la plataforma de la UCB que conecta a empresas con talento universitario.",
+    videoUrl: "https://www.canva.com/design/DAHFNRhChGw/fJtbglrOcpME9t70Cnczsg/view?embed",
   },
 };
 
@@ -119,8 +131,8 @@ export function getTutorialVideo(key) {
       key: key || "DEFAULT",
       title: "Tutorial",
       description: "",
-      videoUrl: "https://www.youtube.com/embed/S_CGed6E610?feature=oembed",
-      embedUrl: "https://www.youtube.com/embed/S_CGed6E610?feature=oembed",
+      videoUrl: "https://www.canva.com/design/DAHFjnjuaV8/l3kiN2ybL0SGM6fHJHUO1w/view?embed",
+      embedUrl: "https://www.canva.com/design/DAHFjnjuaV8/l3kiN2ybL0SGM6fHJHUO1w/view?embed",
     };
   }
   return {

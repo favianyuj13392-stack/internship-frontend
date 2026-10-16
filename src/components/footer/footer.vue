@@ -49,8 +49,7 @@
           <div class="md:text-start text-center">
             <p class="mb-0 text-gray-300 font-medium">
               © {{ date }} INTERNSHIP. Diseñado y desarrollado con
-              <a  href="https://www.instagram.com/jhessika_zarate/"
-              > <i class="mdi mdi-heart text-red-600"></i></a> por
+              <i class="mdi mdi-heart text-red-600"></i> por
               <a
                 href="https://www.instagram.com/bitsandbytes.ucb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                 target="_blank"

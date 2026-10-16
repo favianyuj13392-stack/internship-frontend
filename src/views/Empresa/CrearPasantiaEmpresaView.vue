@@ -38,10 +38,10 @@
                         placeholder="Escribe aquí..." v-model="data.pasantiasDto.descripcion" maxlength="1000">
                     </textarea>
 
-                    <div class="flex items
-                    -center space-x-40 mt-6">
+                    <div class="flex items-center space-x-40 mt-6">
                         <h5 class="text-lg font-semibold">Fecha de Cierre:</h5>
                         <input type="date"
+                            :min="minDate"
                             class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-cyan-600 w-full p-2 form-input border border-slate-100 dark:border-slate-800"
                             v-model="data.pasantiasDto.fechaCierre" />
                     </div>
@@ -67,7 +67,7 @@
                     </div>
 
                     <div class="flex grid items-center grid-cols-2 space-x-40 mt-6 mr-36">
-                        <h5 class="text-lg font-semibold">Requisistos:</h5>
+                        <h5 class="text-lg font-semibold">Requisitos:</h5>
 
                         <button @click="agregarRequisitos()"
                             class="btn rounded-md bg-cyan-600 hover:bg-cyan-700 border-cyan-600 hover:border-cyan-700 text-white w-full md:w-full">
@@ -271,6 +271,9 @@ export default {
 
 
     computed: {
+        minDate() {
+            return new Date().toISOString().split('T')[0];
+        },
         mapSrc() {
             // Construir la URL del mapa de Google con la dirección
             const direccionEncoded = encodeURIComponent(this.data.institucion.direccion);
@@ -500,9 +503,8 @@ export default {
             }
 
             //fecha de cierre no puede ser menor a la fecha actual
-            const fechaCierre = new Date(this.data.pasantiasDto.fechaCierre);
-            const fechaActual = new Date();
-            if (fechaCierre < fechaActual) {
+            const todayStr = new Date().toISOString().split('T')[0];
+            if (this.data.pasantiasDto.fechaCierre < todayStr) {
                 Swal.fire({
                     title: "Error",
                     text: "La fecha de cierre no puede ser menor a la fecha actual",

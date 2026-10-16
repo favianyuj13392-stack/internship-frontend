@@ -9,9 +9,9 @@
         >
           <count-up
             class="counter-value"
-            :start-val="-1000"
+            :start-val="0"
             :end-val="this.cantidadEstudiantes"
-            >1010</count-up
+            >0</count-up
           >
         
         </h1>
@@ -27,9 +27,9 @@
         >
           <count-up
             class="counter-value"
-            :start-val="-1000"
+            :start-val="0"
             :end-val="this.cantidadPasantias"
-            >2</count-up
+            >0</count-up
           >
         </h1>
         <h5 class="counter-head text-sm font-semibold text-slate-400 uppercase">
@@ -42,7 +42,7 @@
         <h1
           class="lg:text-5xl text-4xl font-semibold mb-2 dark:text-white flex justify-center"
         >
-          <count-up class="counter-value" :start-val="-1000" :end-val="this.cantidadInstituciones"
+          <count-up class="counter-value" :start-val="0" :end-val="this.cantidadInstituciones"
             >0</count-up
           >
         </h1>

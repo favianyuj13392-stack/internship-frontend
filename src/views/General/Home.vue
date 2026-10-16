@@ -1,6 +1,4 @@
 <template>
-  <link rel="preload" fetchpriority="high" as="image" href="@/assets/images/hero/bg.webp" />
-
   <navbar
     :lightLogo="true"
     :lightNav="'nav-light justify-end'"
@@ -24,8 +22,7 @@
         <p class="text-white/70 text-lg max-w-xl mx-auto" id="hero-description">
           Únete a nosotros en esta emocionante etapa de tu educación, donde el
           aprendizaje se transforma en experiencia y las conexiones se
-          convierten en   <a  href="https://www.instagram.com/jhessika_zarate/"
-          >oportunidades</a> concretas para el futuro.
+          convierten en oportunidades concretas para el futuro.
         </p>
         <div class="d-flex" id="reserve-form">
           <div class="md:w-5/6 mx-auto">

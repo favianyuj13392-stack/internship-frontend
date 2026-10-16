@@ -106,13 +106,12 @@
       <div class="h-[100%] flex items-center justify-center">
         <iframe
           v-if="isActive"
-          width="560"
-          height="315"
+          width="700"
+          height="400"
           :src="videoUrl"
-          title="YouTube video player"
+          :title="tutorialVideo.title"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen
           loading="lazy"
         ></iframe>
